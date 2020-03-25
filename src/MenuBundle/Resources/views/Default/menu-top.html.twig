@@ -1,0 +1,34 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-fixed-top  " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <div class="client-name" style="display:inline-block;margin-top:20px;color:#fff;font-weight:bold;float:right;">
+                {% if is_granted('ROLE_CLIENT_FINAL_SCAN') %}
+                    {% set clientid = app.user.client.id %}
+                    {% if clientid == 503 %}
+                        Cabinet AVEC Expertise
+                    {% else %}
+                        {{ app.user.client.nom | upper }}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <a class="" style="background: none;padding-left: 0;padding-right: 0"><span class="btn btn-white btn-sm"><i class="fa fa-lightbulb-o" style="margin-right: 0!important;"></i></span></a>
+            </li>
+            <li>
+                <a class="" style="background: none;padding-left: 0;padding-right: 0" id="js_open_miniature"><span class="btn btn-white btn-sm"><i class="fa fa-question" style="margin-right: 0!important;"></i></span></a>
+            </li>
+            {% if visudataVersion %}
+                <li>
+                    <a href="{{ asset('download/' ~ visudataVersion.nom) }}" style="background: none;padding-left: 0;padding-right: 0" title="Télécharger VisuData"><span class="btn btn-white btn-sm"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;VisuData</span></a>
+                </li>
+            {% endif %}
+            <li>
+                <a href="{{ path('logout') }}" title="Se déconnecter" style="font-size: 1em;padding-left: 0;padding-right: 0"><span class="btn btn-white btn-sm"><i class="fa fa-sign-out"></i> Se déconnecter</span></a>
+            </li>
+        </ul>
+    </nav>
+</div>

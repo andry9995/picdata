@@ -1,0 +1,8 @@
+<label class="col-lg-2 control-label" for="js_utilisateur">Par</label>
+<div class="col-lg-10">
+    <select class="chosen-select form-control" id="js_utilisateur" multiple data-placeholder="Utilisateur">
+        {% for u in users %}
+            <option value="{{ u.id|boost }}" {{ (u == user) ? 'selected' : '' }}>{{ u.email }}</option>
+        {% endfor %}
+    </select>
+</div>

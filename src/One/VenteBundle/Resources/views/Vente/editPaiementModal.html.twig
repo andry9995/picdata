@@ -1,0 +1,157 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Paiements</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="row unpaid-list">
+            <div class="col-sm-12">
+                <table class="table table-hover">
+                    <thead>
+                    <th>Date</th>
+                    <th>Montant</th>
+                    <th>Payé</th>
+                    <th>Solde</th>
+                    </thead>
+                    <tbody>
+                    <tr id="{{ vente.id }}">
+                        <td>{{ "now"|date("d/m/Y") }}</td>
+                        <td class="totalVisible"></td>
+                        <td>{{ totalpaid|number_format(2, '.', ' ') }}</td>
+                        <td class="unpaidVisible"></td>
+                        <input type="hidden" class="total" value="{{ venteDetails['ttc'] }}">
+                        <input type="hidden" class="paid" value="{{ totalpaid }}">
+                        <input type="hidden" class="unpaid" value="0">
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="row option-button">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-default choose" onclick="createPaiement();">
+                            <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Recevoir Paiement
+                        </button>
+                        <button type="button" class="btn btn-default choose" onclick="loadClientAvoir(true);">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Utiliser un Avoir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row paiement-list {% if paiements|length == 0 %} hidden {% endif %}">
+                    <br/>
+                    <form class="form-horizontal" id="paiement-form">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                <th>Date</th>
+                                <th>Paiement</th>
+                                <th>Payé</th>
+                                <th>Ref Bancaire</th>
+                                <th>Retard Jour</th>
+                                <th>Compte Bancaire</th>
+                                </thead>
+                                <tbody>
+                                {% for paiement in paiements %}
+                                    <tr id="{{ paiement.id~'-'~'now'|date('U') }}" class="item-selectable {{ vente.id }}" onclick="selectItem(this); getSelectedPaiement(this);">
+                                        <td>
+                                            {% if paiementType[paiement.id] == 'enc-avo' %}
+                                                <input type="text" class="form-control date-paiement" value="{{ paiement.dateReception|date("d/m/Y") }}" readonly>
+                                            {% else %}
+                                                <div class="input-group date">
+                                                    <input type="text" class="form-control datepicker date-paiement" value="{{ paiement.dateReception|date("d/m/Y") }}" onchange="updatePaiement(this);">
+                                                    <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if paiementType[paiement.id] == 'enc-avo' %}
+                                                <select class="form-control moyen-paiement" readonly>
+                                                    {% for moyenpaiement in moyenpaiements %}
+                                                        {% if moyenpaiement.id == paiement.oneMoyenPaiement.id %}
+                                                            <option value="{{ moyenpaiement.id }}" selected>{{ moyenpaiement.nom }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            {% else %}
+                                                <select class="form-control moyen-paiement" onchange="updatePaiement(this);">
+                                                    {% for moyenpaiement in moyenpaiements %}
+                                                        <option value="{{ moyenpaiement.id }}" {% if moyenpaiement.id == paiement.oneMoyenPaiement.id %}selected{% endif %}>{{ moyenpaiement.nom }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if paiementType[paiement.id] == 'enc-avo' %}
+                                                <input type="text" class="form-control montant-paiement number" value="{{ paiement.montant|number_format(2, '.', ' ') }}" readonly>
+                                            {% else %}
+                                                <input type="text" class="form-control montant-paiement number" value="{{ paiement.montant|number_format(2, '.', ' ') }}" onchange="updatePaiement(this);" >
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if paiementType[paiement.id] == 'enc-avo' %}
+                                                <input type="text" class="form-control ref-bancaire-paiement" value="{{ paiement.refBanque }}" readonly>
+                                            {% else %}
+                                                <input type="text" class="form-control ref-bancaire-paiement" value="{{ paiement.refBanque }}" onchange="updatePaiement(this);">
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if paiementType[paiement.id] == 'enc-avo' %}
+                                                <input type="integer" class="form-control retard-paiement" value="{{ paiement.retard }}" readonly>
+                                            {% else %}
+                                                <input type="integer" class="form-control retard-paiement" value="{{ paiement.retard }}" onchange="updatePaiement(this);">
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if paiementType[paiement.id] == 'enc-avo' %}
+                                                <select class="form-control compte-paiement" readonly>
+                                                    <option value=""></option>
+                                                    {% for banquecompte in banquecomptes %}
+                                                        {% if paiement.banqueCompte and banquecompte.id == paiement.banqueCompte.id %}
+                                                            <option value="{{ banquecompte.id }}" selected>{{ banquecompte.numcompte }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            {% else %}
+                                                <select class="form-control compte-paiement" onchange="updatePaiement(this);" {% if paiementType == 'enc-avo' %}readonly{% endif %}>
+                                                    <option value=""></option>
+                                                    {% for banquecompte in banquecomptes %}
+                                                        <option value="{{ banquecompte.id }}" {% if paiement.banqueCompte and banquecompte.id == paiement.banqueCompte.id %}selected{% endif %}>{{ banquecompte.numcompte }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% endif %}
+                                            {% if paiement.banqueCompte %}{% set bc = paiement.banqueCompte.id %}{% else %}{% set bc = '' %}{% endif %}
+                                            <input type="hidden" class="form-control encid" value="0">
+                                            <input type="hidden" class="form-control avoid" value="0">
+                                            <input type="hidden" class="form-control paiement" name="paiement[]" value="{{ vente.id~';'~paiement.id~';'~paiement.dateReception|date("d/m/Y")~';'~paiement.montant~';'~paiement.oneMoyenPaiement.id~';'~paiement.refBanque~';'~paiement.retard~';'~bc~';0;0' }}">
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row remove-button hidden">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-default choose" onclick="removeSelectedPaiement();">
+                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Supprimer le Paiement sélectionné
+                </button>
+            </div>
+        </div>
+
+        <input type="hidden" id="facture-selected" value="{{ vente.id }}">
+        <input type="hidden" id="paiement-selected" value="">
+        <input type="hidden" id="clientid" value="">
+        <form class="form-horizontal" id="paiement-deleted-form"></form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closePaiementModal();">Valider</button>
+    </div>
+</div>
+

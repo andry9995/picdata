@@ -1,0 +1,27 @@
+SELECT r.id,
+(
+
+SELECT count(tic.image_id) AS isa
+FROM tva_imputation_controle tic
+JOIN image i ON (i.id = tic.image_id)
+JOIN lot l on (l.id = i.lot_id)
+JOIN separation sep on (sep.image_id = i.id)
+WHERE i.exercice in (2017,2018,2019)
+AND l.dossier_id = 11924 AND i.image_flague_id IS NULL
+GROUP BY tic.image_id,sep.categorie_id
+HAVING (
+	sum(montant_ttc) = (r.debit - r.credit) and sep.categorie_id in (10,12) OR
+    sum(montant_ttc) = -(r.debit - r.credit) and sep.categorie_id not in (10,12)
+)
+LIMIT 1
+
+) AS imag_f
+FROM releve r
+JOIN image i ON (r.image_id = i.id)
+JOIN imputation_controle ic on (ic.image_id = i.id)
+JOIN soussouscategorie ssc on (ic.soussouscategorie_id = ssc.id)
+WHERE r.banque_compte_id = 8139 -- AND i.exercice = 2018
+AND ((ic.periode_d1 BETWEEN '2018-01-01' AND '2018-12-31') OR (ic.periode_f1 BETWEEN '2018-01-01' AND '2018-12-31'))
+AND ic.soussouscategorie_id IS NOT NULL 
+AND ((ssc.libelle <> 'doublon' AND ssc.libelle_new <> 'doublon') OR ssc.libelle IS NULL)
+GROUP BY r.id;

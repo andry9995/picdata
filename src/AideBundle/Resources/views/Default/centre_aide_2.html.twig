@@ -1,0 +1,47 @@
+{% extends('AideBundle:Default:index.html.twig') %}
+
+
+{% block navigation %}
+
+    <ol class="breadcrumb">
+        <li>
+            {% if type == 0 %}
+                <a href="{{ path('centre_aide') }}">Centre d'aide PicData</a>
+            {% else %}
+                <a href="{{ path('guide_utilisation') }}">Guides d'utilisation PicData</a>
+            {% endif %}
+        </li>
+        <li>
+            {{ aide1.titre }}
+        </li>
+    </ol>
+
+{% endblock %}
+
+{% block contenu_aide %}
+
+
+    <div class="col-lg-12">
+        <div class="col-sm-11">
+            <h1>{{ aide1.titre }}</h1>
+        </div>
+        {% if isAdmin %}
+            <div class="input-group-btn col-sm-1">
+                <div class="btn btn-success js_add_aide_2" data-toggle="tooltip" data-placement="bottom" data-id-1="{{ aide1.id }}"><i class="fa fa-plus"></i></div>
+            </div>
+        {% endif %}
+    </div>
+
+    <br/>
+
+
+    <div class="js_contenu_aide_2">
+        {{ include('AideBundle:Default:centre_aide_2_contenu.html.twig') }}
+    </div>
+
+
+    <div class="row">
+        {{ include('AideBundle:Default:centre_aide_2_modal.html.twig') }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+<div class="col-sm-12">
+    <div class="row bande">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-3">{{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'label_col':4, 'select_col':8 } )) }}</div>
+                <div class="col-sm-4">{{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0,'label_col':3,'select_col':9 })) }}</div>
+                <div class="hidden" id="js_conteneur_site"></div>
+                <div class="col-sm-5" id="js_conteneur_dossier"></div>
+            </div>
+        </div>
+        <div class="col-sm-4 filtre-drt" style="display: none;">
+            <div class="row">
+                <div class="col-sm-6">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">
+                                <span>Chrono</span>
+                            </label>
+                            <div class="col-lg-9">
+                                <select class="form-control" name="filtre_chrono" id="filtre_chrono">
+                                    <option value="1">Aujourd'hui</option>
+                                    <option value="2">Depuis une semaine</option>
+                                    <option value="3">Depuis deux semaines</option>
+                                    <option value="4">Depuis un mois</option>
+                                    <option value="5" selected="selected">Tout l'exercice</option>
+                                    <option value="6">Depuis deux exercices</option>
+                                    <option value="7">Fourchette</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">
+                                <span>Statut</span>
+                            </label>
+                            <div class="col-lg-9">
+                                <select class="form-control" id="statut">
+                                    <option value="3" selected="selected">Toutes</option>
+                                    <option value="7">Toutes sauf clôturées</option>
+                                    <option value="5">En cours</option>
+                                    <option value="0">Ouverte</option>
+                                    <option value="1">Clôturées</option>
+                                    <option value="2">Répondues partiellement</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {#<div class="col-sm-1" style="display: block;">
+            <form class="form-horizontal">
+                <span id="btn_drt" class="btn btn-sm btn-primary" style="margin-top: 25px;"><i class="fa fa-check"></i> Go</span>
+            </form>
+        </div>#}
+    </div>
+</div>

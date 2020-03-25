@@ -1,0 +1,32 @@
+{% for article in articles %}
+    <tr id="{{ article['id']~"-"~"now"|date("YmdHis") }}" onclick="selectToRemove(this);">
+        <td style="vertical-align:middle;">
+            <input type="hidden" class="form-control artventeid" value="" />
+            <input type="hidden" class="form-control artid" value="{{ article['id'] }}" />
+            {{ article['code']~' '~article['name'] }}
+        </td>
+        <td style="vertical-align:middle;">
+            <textarea class="form-control description" onblur="updateAmountTTC();"></textarea>
+        </td>
+        <td style="vertical-align:middle;">
+            <input type="number" class="form-control quantite" value="1" onblur="updateAmountTTC();" />
+        </td>
+        <td style="vertical-align:middle;">
+            <input type="text" class="form-control price number" value="{{ article['price']|number_format(0, '.', ' ') }}" onblur="updateAmountTTC();" />
+        </td>
+        <td style="vertical-align:middle;">
+            <input type="number" class="form-control remise" value="0" onblur="updateAmountTTC();" />
+        </td>
+        <td style="vertical-align:middle;">
+            <span class="item-amount">0</span>
+        </td>
+        <td style="vertical-align:middle;">
+            <select class="form-control tva" onchange="updateAmountTTC();">
+            {% for tva in taxes %}
+                <option value="{{ tva.taux }}" {% if tva.taux == article['tva'] %}selected="selected"{% endif %}>{{ tva.taux~'%' }}</option>
+            {% endfor %}
+            </select>
+            <input type="hidden" class="form-control serialized" name="articles[]" value="" />
+        </td>
+    </tr>
+{% endfor %}

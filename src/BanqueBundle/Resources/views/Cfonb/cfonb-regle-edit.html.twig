@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group col-sm-6">
+                <label class="col-lg-4 control-label" for="id_debut">Debut</label>
+                <div class="col-lg-8">
+                    <input type="text" id="id_debut" class="form-control" value="{{ (hasRegle == 1) ? cfonbRegle.debut : '' }}">
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-lg-4 control-label" for="id_fin">Fin</label>
+                <div class="col-lg-8">
+                    <input type="text" id="id_fin" class="form-control" value="{{ (hasRegle == 1) ? cfonbRegle.fin : '' }}">
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <label class="col-lg-4 control-label" for="id_long">Longueur</label>
+                <div class="col-lg-8">
+                    <input type="text" id="id_long" class="form-control" value="{{ (hasRegle == 1) ? cfonbRegle.longueur : '' }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>{#
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Ponctuel
+        <span class="btn btn-xs btn-white pull-right" id="id_add_ponctuel"><i class="fa fa-plus" aria-hidden="true"></i></span>
+    </div>
+    <div class="panel-body" style="height: 200px; overflow-y: auto;">
+        <div class="row" id="id_ponctuel">
+
+        </div>
+    </div>
+</div>#}
+
+<div class="row">
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-sm btn-primary save_regle" data-id="{{ cfonbActivationId }}"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>

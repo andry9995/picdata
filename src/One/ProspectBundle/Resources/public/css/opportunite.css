@@ -1,0 +1,167 @@
+/* 
+    Created by Netbeans
+    Created on : 6 juil. 2017, 18:12:41
+    Author : Mamy Rakotonirina
+*/
+
+.opportunite-note {
+    color: #1BB394;
+    cursor: pointer;
+}
+
+/*Affichage bloc*/
+.opportunite-bloc-view .bloc {
+    background: #F9F9F9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.opportunite-bloc-view .bloc .bloc-content {
+    display: block;
+    padding: 10px;
+}
+.opportunite-bloc-view .bloc .bloc-content .bloc-title {
+    display: block;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+.opportunite-bloc-view .bloc .bloc-content .bloc-prospect {
+    display: block;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+.opportunite-bloc-view .bloc .bloc-content .bloc-status.won {
+    background: #E7F4E7;
+    color: #5DB85D;
+    font-size: 1.1rem;
+    padding: 5px;
+}
+.opportunite-bloc-view .bloc .bloc-content .bloc-status.lost {
+    background: #E7F6FA;
+    color: #5BC0DE;
+    font-size: 1.1rem;
+    padding: 5px;
+}
+.opportunite-bloc-view .bloc .bloc-content .bloc-avancement {
+    background: #F1F3F4;
+    color: #A2AEB8;
+    font-size: 1.1rem;
+    padding: 5px;
+}
+.opportunite-bloc-view .bloc .bloc-content .bloc-montant {
+    font-weight: bold;
+}
+.opportunite-bloc-view .bloc .btn-default {
+    background: none;
+    border: none;
+    color: #1BB394;
+}
+.opportunite-bloc-view .bloc .bloc-footer {
+    background: #FFFFFF;
+    border-top: 1px solid #E7EAEC;
+    display: block;
+    margin-top: 10px;
+    min-height: 50px;
+    padding-top: 10px;
+}
+.opportunite-bloc-view .bloc .bloc-footer .dropdown {
+    min-height: 25px;
+}
+
+/*Affichage détails*/
+.opportunite-detail-infos {
+    background-color: #F9F9F9;
+    border: 1px solid #E7EAEC;
+    padding: 10px;
+}
+.glyphicon.edit-action {
+    cursor: pointer;
+}
+
+.opportunite-detail-infos .item {
+    display: flex;
+}
+.opportunite-detail-infos .item .glyphicon {
+    width: 20px;
+}
+.opportunite-detail-infos .item .info-text {
+    flex: 1.0;
+}
+
+.opportunite-detail-infos .contact-name {
+    color: #1CB394;
+}
+
+.info-tarif {
+    font-weight: bold;
+    font-size: 1.7rem;
+    margin-bottom: 5px;
+}
+
+.info-client {
+    color: #1CB394;
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+}
+
+.info-status {
+    background: #F2F2F2;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+}
+.info-status.won {
+    background: #E7F4E7;
+    color: #5DB85D;
+}
+.info-status.lost {
+    background: #E7F6FA;
+    color: #5BC0DE;
+}
+
+.info-avancement {
+    background: #F2F2F2;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+}
+
+.ibox-content {
+    border: none;
+    padding: 0;
+}
+.ibox-content h3 {
+    border-bottom: 1px solid #e7eaec;
+    cursor: move;
+    padding-bottom: 5px;
+}
+.ibox-content h3 i {
+    cursor: pointer;
+    margin-left: .5em !important;
+}
+.ibox-content .agile-title {
+    display: block;
+    font-weight: bold;
+}
+.ibox-content .agile-detail .fa-trash-o {
+    font-size: 1.7rem;
+}
+.ibox-content .sortable-list {
+    /*min-height: 150px;*/
+    padding-bottom: 100px;
+}
+.ibox-content .dropdown-menu {
+    min-width: 100px;
+}
+.ibox-content .dropdown-menu li a {
+    padding: 0;
+}
+.ibox-content .btn-group.open .dropdown-toggle {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.mesure-view table {
+    border: 1px solid #E7EAEC;
+}
+.mesure-view table td {
+    border: 1px solid #E7EAEC;
+    padding: 10px 15px;
+}

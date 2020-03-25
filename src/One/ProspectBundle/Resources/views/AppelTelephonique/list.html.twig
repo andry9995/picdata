@@ -1,0 +1,337 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button class="btn btn-primary" data-toggle="modal" onclick="loadNewAppel();">Nouvelle Action</button>
+        </div>
+    </div>
+</div>
+
+{% if appels|length >= 0 or period != 'all' %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="filter-bar">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon btn-search" onclick="searchAppel();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </span>
+                        <input type="text" class="form-control search" name="search" value="{{ q }}" placeholder="Recherche dans Actions">
+                        <span class="glyphicon glyphicon-remove hidden init-search" aria-hidden="true" onclick="initSearchAppel();"></span>
+                        
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-12 col-xs-12">
+                    <div class="dropdown pull-right sort-date">
+                        {% if period == 'today' %}{% set sortdate = "Aujourd'hui" %}
+                        {% elseif period == 'lastweek' %}{% set sortdate = 'Semaine dernière' %}
+                        {% elseif period == 'thisweek' %}{% set sortdate = 'Cette semaine' %}
+                        {% elseif period == 'nextweek' %}{% set sortdate = 'Semaine prochaine' %}
+                        {% elseif period == 'lastmonth' %}{% set sortdate = 'Mois dernier' %}
+                        {% elseif period == 'thismonth' %}{% set sortdate = 'Ce mois' %}
+                        {% elseif period == 'nextmonth' %}{% set sortdate = 'Mois prochain' %}
+                        {% elseif period == 'lastyear' %}{% set sortdate = 'Année dernière' %}
+                        {% elseif period == 'thisyear' %}{% set sortdate = 'Cette année' %}
+                        {% elseif period == 'custom' %}{% set sortdate = startperiod ~' - '~ endperiod %}
+                        {% else %}{% set sortdate = 'Toutes les dates' %}
+                        {% endif %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            {{ sortdate }}
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="date-field">
+                                <input type="text" class="form-control datepicker startdate" value="{{ startperiod }}">
+                                <input type="text" class="form-control datepicker enddate" value="{{ endperiod }}">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="setPeriod('custom'); loadListAppel();"></span>
+                            </li>
+                            <li{% if period == 'all' or period == '' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('all'); loadListAppel();">
+                                    {% if period == 'all' or period == '' %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Toutes les dates
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li{% if period == 'today' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('today'); loadListAppel();">
+                                    {% if period == 'today'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Aujourd'hui
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li{% if period == 'thisweek' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('thisweek'); loadListAppel();">
+                                    {% if period == 'thisweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Cette semaine
+                                </a>
+                            </li>
+                            <li{% if period == 'thismonth' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('thismonth'); loadListAppel();">
+                                    {% if period == 'thismonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Ce mois
+                                </a>
+                            </li>
+                            <li{% if period == 'thisyear' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('thisyear'); loadListAppel();">
+                                    {% if period == 'thisyear'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Cette année
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li{% if period == 'nextweek' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('nextweek'); loadListAppel();">
+                                    {% if period == 'nextweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Semaine prochaine
+                                </a>
+                            </li>
+                            <li{% if period == 'nextmonth' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('nextmonth'); loadListAppel();">
+                                    {% if period == 'nextmonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Mois prochain
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li{% if period == 'lastweek' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('lastweek'); loadListAppel();">
+                                    {% if period == 'lastweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Semaine dernière
+                                </a>
+                            </li>
+                            <li{% if period == 'lastmonth' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('lastmonth'); loadListAppel();">
+                                    {% if period == 'lastmonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Mois dernier
+                                </a>
+                            </li>
+                            <li{% if period == 'lastyear' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('lastyear'); loadListAppel();">
+                                    {% if period == 'lastyear'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Année dernière
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown pull-right">
+                        {% if sort == 'echeance' or sort == '' %} {% set sorttext = 'Par Prochaine Echéance' %} {% endif %}
+                        {% if sort == 'datecreation' %} {% set sorttext = 'Par Date de Création' %} {% endif %}
+                        {% if sort == 'clientprospect' %} {% set sorttext = 'Par Client/Prospect' %} {% endif %}
+                        {% if sort == 'status' %} {% set sorttext = 'Par Status' %} {% endif %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{ sorttext }}
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li{% if sort == 'echeance' or sort == '' %} class="active"{% endif %}>
+                                <a onclick="setSort('echeance'); loadListAppel();">
+                                    {% if sort == 'echeance' or sort == '' %}
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                    {% endif %}
+                                    &nbsp;&nbsp;Par Prochaine Echéance
+                                </a>
+                            </li>
+                            <li{% if sort == 'datecreation' %} class="active"{% endif %}>
+                                <a onclick="setSort('datecreation'); loadListAppel();">
+                                    {% if sort == 'datecreation' %}
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                    {% endif %}
+                                    &nbsp;&nbsp;Par Date de Création
+                                </a>
+                            </li>
+                            <li{% if sort == 'clientprospect' %} class="active"{% endif %}>
+                                <a onclick="setSort('clientprospect'); loadListAppel();">
+                                    {% if sort == 'clientprospect' %}
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    {% endif %}
+                                    &nbsp;&nbsp;Par Client/Prospect
+                                </a>
+                            </li>
+                            <li{% if sort == 'status' %} class="status"{% endif %}>
+                                <a onclick="setSort('status'); loadListAppel();">
+                                    {% if sort == 'status' %}
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    {% endif %}
+                                    &nbsp;&nbsp;Par Status
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <span class="pull-right sortorder" onclick="
+                          {% if sortorder == 'ASC' %}setSortOrder('DESC');{% else %}setSortOrder('ASC');{% endif %} loadListAppel();
+                          ">
+                        {% if sortorder == 'ASC' %}<span class="glyphicon glyphicon-arrow-up"></span>{% endif %}
+                        {% if sortorder == 'DESC' %}<span class="glyphicon glyphicon-arrow-down"></span>{% endif %}
+                    </span>
+                </div>
+                <div class="col-md-1 col-sm-12 col-xs-12">
+                    <div class="input-group pull-right">
+                        <span class="input-group-addon view-bloc">
+                            <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                        </span>
+                        <span class="input-group-addon view-list">
+                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="select-bar hidden">
+            <span class="pull-left elements-selected"></span>
+            <a class="pull-left unckecked-all" onclick="uncheckAll();">tout désélectionner</a>
+            <button class="btn btn-danger pull-right delete-selected" onclick="deleteSelectedAppel();">Supprimer</button>
+            <a class="pull-right cancel-select" onclick="uncheckAll();">Annuler</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row stat-filter-bar">
+            <div class="col-md-12">
+                <div class="btn-group">
+                    {% set nball = todo|length + done|length %}
+                    <button type="button" class="btn btn-sm btn-success" onclick="setFilterStat('all'); loadListAppel();">Tout</button>
+                    <button type="button" class="btn btn-sm btn-success" onclick="setFilterStat('all'); loadListAppel();">{{ nball }}</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-warning" onclick="setFilterStat('todo'); loadListAppel();">A faire</button>
+                    <button type="button" class="btn btn-sm btn-warning" onclick="setFilterStat('todo'); loadListAppel();">{{ todo|length }}</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="setFilterStat('done'); loadListAppel();">Fait</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="setFilterStat('done'); loadListAppel();">{{ done|length }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row list-view hidden">
+    <div class="col-sm-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                    <th>Titre</th>
+                    <th>Client/Prospect</th>
+                    <th>Note</th>
+                    <th>Date de Création</th>
+                    <th>Prochaine Echéance</th>
+                    <th>Statut</th>
+                    <th class="action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appel in appels %}
+                <tr>
+                    <td><input type="checkbox" class="element" value="{{ appel.id }}" onchange="toggleThis();" /></td>
+                    <td><a onclick="loadEditAppel({{ appel.id }});">{{ appel.sujet }}</a></td>
+                    <td>
+                        {% if appel.tiers %}
+                            <a onclick="setSort(''); updateView('bloc');loadShowProspect({{ appel.tiers.id }});">{{ appel.tiers.intitule }}</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ appel.note }}</td>
+                    <td>{{ appel.creeLe|date('d/m/Y') }}</td>
+                    <td>{{ appel.echeance|date('d/m/Y') }}</td>
+                    <td>
+                        {% if appel.status == 0 %}
+                            {% set now = date('now'|date('Y/m/d')) %}
+                            {% set echeance = date(appel.echeance|date('Y/m/d')) %}
+                            {% set difference = echeance.diff(now) %}
+                            {% set leftdays = difference.days %}
+                            {% if leftdays == 0 %}
+                                <span class="todo">Aujourd'hui</span>
+                            {% elseif leftdays == 1 and echeance > now %}
+                                <span class="todo">Dans 1 jour</span>
+                            {% elseif leftdays == 1 and echeance < now %}
+                                <span class="overdue">1 jour de retard</span>
+                            {% elseif leftdays > 1 and echeance > now %}
+                                <span class="todo">Dans {{ leftdays }} jours</span>
+                            {% elseif leftdays > 1 and echeance < now %}
+                                <span class="overdue">{{ leftdays }} jours de retard</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="done">Fait</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                            </span>
+                            <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                <li class="remove-action">
+                                    <a onclick="deleteAppel({{ appel.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row bloc-view appel-bloc-view">
+{% for appel in appels %}
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="bloc">
+            <div class="bloc-content">
+                <span class="bloc-title"><a onclick="loadEditAppel({{ appel.id }});">{{ appel.sujet }}</a></span>
+                <span class="bloc-created pull-right">{{ appel.creeLe|date('d/m/Y') }}</span>
+                {% if appel.tiers %}
+                <span class="bloc-prospect">
+                    <a onclick="setSort(''); updateView('bloc'); loadShowProspect({{ appel.tiers.id }});">{{ appel.tiers.intitule }}</a>
+                    {% if appel.oneContactClient %}
+                        {% if appel.oneContactClient.prenom != '' %}
+                            {{ appel.oneContactClient.prenom ~' ' }}
+                        {% endif %}
+                        {{ appel.oneContactClient.nom }}
+                    {% endif %}
+                </span>
+                {% endif %}
+                {% if appel.opportunite %}
+                <span class="bloc-opportunite">{{ appel.opportunite.nom }}</span>
+                {% endif %}
+                
+                {% if appel.status == 0 %}
+                    {% set now = date('now'|date('Y/m/d')) %}
+                    {% set echeance = date(appel.echeance|date('Y/m/d')) %}
+                    {% set difference = echeance.diff(now) %}
+                    {% set leftdays = difference.days %}
+                    
+                    {% if leftdays == 0 %}
+                        {% set classname = "todo" %}
+                        {% set text = "Aujourd'hui" %}
+                    {% elseif leftdays == 1 and echeance > now %}
+                        {% set classname = "todo" %}
+                        {% set text = "Dans 1 jour" %}
+                    {% elseif leftdays == 1 and echeance < now %}
+                        {% set classname = "overdue" %}
+                        {% set text = "1 jour de retard" %}
+                    {% elseif leftdays > 1 and echeance > now %}
+                        {% set classname = "todo" %}
+                        {% set text = "Dans "~leftdays~" jours" %}
+                    {% elseif leftdays > 1 and echeance < now %}
+                        {% set classname = "overdue" %}
+                        {% set text = ""~leftdays~" jours de retard" %}
+                    {% endif %}
+                {% else %}
+                    {% set classname = "done" %}
+                    {% set le = (appel.modifieLe is not null) ? appel.modifieLe|date('d/m/Y') : (appel.creeLe is not null) ? appel.creeLe|date('d/m/Y') : '' %}
+                    {% set text = (le != '') ? "Fait le "~le : "Fait"%}
+                {% endif %}
+                <span class="bloc-status {{ classname }}">{{ text }}</span>
+            </div>
+            <div class="bloc-footer">
+                <div class="dropdown">
+                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                    </span>
+                    <div class="clear-fix"></div>
+                    <ul class="dropdown-menu dropdown-menu-right pull-right">
+                        <li class="remove-action">
+                            <a onclick="deleteAppel({{ appel.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endif %}

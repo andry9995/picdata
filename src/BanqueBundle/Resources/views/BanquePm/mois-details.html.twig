@@ -1,0 +1,52 @@
+<table class="table table-bordered">
+    <thead>
+    {% if type == 0 %}
+        <tr>
+            <th rowspan="2" class="text-center">Image</th>
+            <th colspan="2" class="text-center">P&eacute;riode</th>
+            <th colspan="2" class="text-center">Solde</th>
+        </tr>
+    {% endif %}
+        <tr>
+            {% if type == 0 %}
+                <th class="text-center">D&eacute;but</th>
+                <th class="text-center">Fin</th>
+                <th class="text-center">D&eacute;but</th>
+                <th class="text-center">Fin</th>
+            {% else %}
+                <th class="text-center">Image</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Total</th>
+                <th class="text-center">S.&nbsp;Cat&eacute;gorie</th>
+            {% endif %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for imputationControle in imputationControles %}
+            <tr>
+                <td class="cl_image pointer text-primary" data-id="{{ imputationControle.image.id|boost }}">{{ imputationControle.image.nom }}</td>
+
+                {% if type == 0 %}
+                    <td class="text-center">{{ imputationControle.periodeD1|date('d/m/Y') }}</td>
+                    <td class="text-center">{{ imputationControle.periodeF1|date('d/m/Y') }}</td>
+                    <td class="text-right {{ imputationControle.soldeDebut < 0 ? 'text-danger' : '' }}">{{ imputationControle.soldeDebut|number_format(2, ',', '&nbsp;')|raw }}</td>
+                    <td class="text-right {{ imputationControle.soldeFin < 0 ? 'text-danger' : '' }}">{{ imputationControle.soldeFin|number_format(2, ',', '&nbsp;')|raw }}</td>
+                {% else %}
+                    {% if imputationControle.dateReglement %}
+                        {% set d = imputationControle.dateReglement %}
+                    {% elseif imputationControle.dateFacture %}
+                        {% set d = imputationControle.dateFacture %}
+                    {% elseif imputationControle.dateEcheance %}
+                        {% set d = imputationControle.dateEcheance %}
+                    {% else %}
+                        {% set d = null %}
+                    {% endif %}
+                    <td class="text-right">{{ d ? d|date('d/m/Y') }}</td>
+                    <td class="text-right">{{ imputationControle.montantTtc|number_format(2, ',', '&nbsp;')|raw }}</td>
+                    <td>{{ imputationControle.souscategorie ? imputationControle.souscategorie.libelleNew : '' }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

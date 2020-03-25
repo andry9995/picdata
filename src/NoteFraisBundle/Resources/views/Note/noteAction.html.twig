@@ -1,0 +1,35 @@
+<div class="col-lg-12">
+
+    <div class="form-inline">
+
+        <div class="input-group m-b">
+            <div class="input-group-btn">
+                <button class="btn btn-success dropdown-toggle btn-note-add" type="button"><span><i class="fa fa-plus"></i></span>&nbsp;&nbsp;Notes</button>
+
+            </div>
+        </div>
+
+        {#<div class="input-group m-b">#}
+            {#<div class="input-group-btn">#}
+                {#<button class="btn btn-success dropdown-toggle btn-note-filter" type="button"><span><i class="fa fa-search"></i></span>&nbsp;&nbsp;Filtrer</button>#}
+
+            {#</div>#}
+        {#</div>#}
+
+        <div class="input-group m-b hidden">
+            <div class="input-group-btn">
+                <button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-note-action" type="button"><i class="fa fa-bullseye"></i>&nbsp;&nbsp; Action &nbsp;<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    {#<li><a href="#" class="action-note-supprimer">Supprimer</a></li>#}
+                    <li><a href="#" class="action-note-details">Détails</a></li>
+                    <li><a href="#" class="action-note-apporuver">Approuver</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        {{ include('NoteFraisBundle:Default:tableView.html.twig') }}
+
+    </div>
+
+</div>

@@ -1,0 +1,13 @@
+.table-dpk,.table-dpk td,.table-dpk th
+{
+    text-align: center;
+    vertical-align: middle!important;
+}
+
+.td-active
+{
+    /*box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);*/
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+    background-color: #1ab394!important;
+    color: #FFFFFF;
+}

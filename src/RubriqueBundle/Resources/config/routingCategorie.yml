@@ -1,0 +1,34 @@
+rubrique_categorie_containers:
+    path: /rubrique/categorie/container
+    defaults: { _controller: RubriqueBundle:Categorie:categorieContainers }
+    methods: [POST]
+    options:
+        expose: true
+
+rubrique_categories:
+    path: /rubrique/categories
+    defaults: { _controller: RubriqueBundle:Categorie:categories }
+    methods: [POST]
+    options:
+        expose: true
+
+rubrique_categorie_save:
+    path: /rubrique/categorie/save
+    defaults: { _controller: RubriqueBundle:Categorie:categorieSave }
+    methods:  [POST]
+    options:
+        expose: true
+
+rubrique_categorie_pcg_save:
+    path: /rubrique/categorie/pcg
+    defaults: { _controller: RubriqueBundle:Categorie:categoriePcgSave }
+    methods:  [POST]
+    options:
+        expose: true
+
+rubrique_categorie_delete:
+    path: /rubrique/categorie/delete
+    defaults: { _controller: RubriqueBundle:Categorie:deleteCategorie }
+    methods:  [POST]
+    options:
+        expose: true

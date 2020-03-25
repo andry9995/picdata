@@ -1,0 +1,21 @@
+{% extends 'base-error.html.twig' %}
+
+{% block content %}
+    <div class="alert alert-warning">
+        <h1>500</h1>
+
+        <h3 class="font-bold">Erreur Serveur</h3>
+
+        <div class="error-desc">
+            <p>Le serveur a rencontré un problème lors du traitement de votre demande.</p>
+            {#<p>Message: <code>{{ status_text }}</code></p>#}
+            <p><strong>Merci de réessayer ou contacter l'administrateur si le problème persiste</strong></p>
+
+            <div style="margin-top: 30px;">
+                <a class="btn btn-primary btn-block" href="{{ path('dashboard_homepage') }}">
+                    <i class="fa fa-arrow-circle-o-left"></i> Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

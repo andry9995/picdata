@@ -1,0 +1,29 @@
+{#<tr id="{{ depense.id~'-'~'now'|date('U') }}" class="{{ depense.id }}" onclick="selectToRemoveDepense(this);">#}
+<tr id="{{ 'now'|date('U') }}" onclick="selectToRemoveDepense(this);">
+    <td style="vertical-align:middle;">
+        <input type="hidden" class="form-control iddep" value="0">
+
+        <select class="form-control pccdep">
+            {% for pcc in pccs %}
+                <option value="{{ pcc.id }}">{{ pcc.compte ~ ' '~ pcc.intitule }}</option>
+            {% endfor %}
+        </select>
+
+    </td>
+    <td style="vertical-align:middle;">
+        <input type="text" class="form-control pricedep number item-amount" value="0" onblur="updateAmountTTC();" />
+    </td>
+    <td style="vertical-align:middle;">
+        <input type="number" class="form-control remisedep" value="" onblur="updateAmountTTC();" />
+    </td>
+    <td style="vertical-align:middle;">
+        <select class="form-control tvadep" onchange="updateAmountTTC();">
+            {% for tva in taxes %}
+                <option value="{{ tva.id }}">{{ tva.taux~'%' }}</option>
+            {% endfor %}
+        </select>
+    </td>
+
+    <input type="hidden" class="form-control serializeddep" name="depenses[]" value="">
+
+</tr>

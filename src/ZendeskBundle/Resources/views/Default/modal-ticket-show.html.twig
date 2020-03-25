@@ -1,0 +1,158 @@
+{% set id = random(0, 10000) %}
+<link rel="stylesheet" href="{{ asset('bundles/zendesk/css/bootstrap-tagsinput.css') }}">
+<div class="row">
+	<div class="col-lg-4">
+		<div class="row">
+			<div class="col-lg-6">
+				<label class="control-label">Priorité</label>
+			</div>
+			<div class="col-lg-6">
+				<select id="priority" class="{{ ticket.priority }}">
+					{% for key,value in priorities %}
+						{% if key == ticket.priority %}
+					    	<option class="{{ key }}" value="{{ key }}" selected="" > {{ value }} </option>
+					    {% else %}
+					    	<option class="{{ key }}" value="{{ key }}"> {{ value }} </option>
+						{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<label class="control-label">Marqueurs</label>
+			</div>
+			<div class="col-lg-12">
+				<input type="text" value="{{ tags }}" data-role="tagsinput" placeholder="" />
+			</div>
+		</div>
+    <div class="row">
+      <div class="col-lg-12">
+        <form class="form-horizontal">
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="comment" class="control-label col-lg-4">
+                    <span>Commentaire</span>
+                </label>
+                <div class="col-lg-12">
+                  <textarea id="comment" name="comment" class="form-control"></textarea>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <br><br>
+        <div class="btn-group" style="width: 100%;">
+            <a id="send-update-ticket-{{ id }}" class="btn btn-default" style="width: 85%;background-color: rgb(47, 57, 65) !important;border-left-color: transparent;">
+                {% set status = ticket.status %}
+                Envoyer comme <strong class="with-status">{{ attribute(statuts, status) }}</strong>
+            </a>
+            <div class="btn-group">
+              <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" style="background-color: rgb(47, 57, 65) !important"><span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                  {% for key,value in statuts %}
+                    <li><a href="#" data-value="{{ key }}" class="with-status-list">{{ value }}</a></li>
+                  {% endfor %}
+              </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+	</div>
+	<div class="col-lg-8">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ticket-title"> {{ ticket.subject }} </div>
+			</div> 
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="requester">
+					<img class="img-circle user-avatar" src="{{ requester.avatar_url }}">
+					{{ requester.name }} &nbsp;
+					<span class="badge badge-info">
+						<i class="fa fa-calendar-o" aria-hidden="true"></i> &nbsp;
+						{{ ticket.created_at |date("d M Y H:i") }} &nbsp;&nbsp;
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ticket-description">
+					{% set i = 0 %}
+					{% for comment in comments %}
+						{% if i == 0 %}
+							<pre>{{ comment.html_body |raw }}</pre>
+						{% else %}
+							<div class="author-info">
+								<img class="img-circle user-avatar" src="{{ comment.author.avatar_url }}">
+								{{ comment.author.name }}&nbsp;
+								<span class="badge badge-info">
+									<i class="fa fa-calendar-o" aria-hidden="true"></i> &nbsp;
+									{{ comment.created_at |date("d M Y H:i") }} &nbsp;
+								</span>
+							</div>
+							<pre>{{ comment.html_body |raw }}</pre>
+						{% endif %}
+						{% set i = i + 1 %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="hidden">
+    <div class="col-lg-12">
+        <form class="form-horizontal">
+            <div class="form-group" style="margin-bottom: 10px;">
+                <input type="text" name="status" id="status" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{{ asset('bundles/zendesk/js/bootstrap-tagsinput.js') }}"></script>
+
+<script type="text/javascript">
+  $(document).on('change','#priority',function(vevent) {
+      $(this).attr('class', $(this).val());
+  });
+
+  $(document).on('click','.with-status-list',function(event) {
+      var new_status = $(this).html();
+      var new_status_value = $(this).attr('data-value');
+      $('#status').val(new_status_value);
+      $('.with-status').html(new_status);
+  });
+
+  $(document).on('click',"#send-update-ticket-{{ id }}",function(event) {
+
+    var url = Routing.generate('ticket_send_update');
+
+    var data = {
+      id: 1,
+      status:  $('#status').val(),
+      comment : $('#comment').val()
+    };
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        async: true,
+        data: data,
+        success: function () {
+          go("all","all");
+          
+        }
+    });
+
+  });
+
+  // $(document).on('hidden.bs.modal', '#modal', function () { 
+  //   $(this).remove(); 
+  // });
+
+</script>

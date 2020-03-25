@@ -1,0 +1,12 @@
+{#<option value="-1">Tous</option>#}
+{#{% for datescan in datescans %}#}
+    {#<option value="{{ datescan.date_scan }}">{{ datescan.date_scan|date('d/m/Y') }}</option>#}
+{#{% endfor %}#}
+
+<li class="list-group-item">
+{% set rang = 0 %}
+{% for datescan in datescans %}
+    <span class="simple_tag date_scan_select pointer" data-rang="{{rang}}">{{ datescan.date_scan|date('d/m/Y') }}</span>
+    {% set rang = rang + 1 %}
+{% endfor %}
+</li>

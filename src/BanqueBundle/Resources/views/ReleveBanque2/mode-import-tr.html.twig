@@ -1,0 +1,7 @@
+<tr class="cl_edit_row_mode_import pointer" data-id="{{ banqueCompte.id|boost }}">
+    <td>{{ banqueCompte.banque.nom }}</td>
+    <td>{{ banqueCompte.numcompte }}</td>
+    <td class="cl_mode_jnl_container" data-id{{ banqueCompte.journalDossier ? banqueCompte.journalDossier.id : 0 }}>{{ banqueCompte.journalDossier and banqueCompte.journalDossier.codeStr != 'xx' ? banqueCompte.journalDossier.codeStr : '' }}</td>
+    <td class="cl_mode_pcc_container" data-id="{{ banqueCompte.pcc ? banqueCompte.pcc.id : 0}}">{{ banqueCompte.pcc ? banqueCompte.pcc.compte : '' }}</td>
+    <td class="cl_mode_saisie_container" data-type="{{ banqueCompte.modeSaisie }}">{{ banqueCompte.modeSaisie == 0 ? 'Saisie' : 'Depuis la compta'}}</td>
+</tr>

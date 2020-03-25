@@ -1,0 +1,52 @@
+linxo_index:
+    path:     /linxo
+    defaults: { _controller: LinxoBundle:Linxo:index }
+
+linxo_accounts:
+    path:     /linxo/accounts
+    defaults: { _controller: LinxoBundle:Linxo:accounts }
+    methods:  [POST]
+    options:
+        expose: true
+
+linxo_edit:
+    path:     /linxo/edit
+    defaults: { _controller: LinxoBundle:Linxo:edit }
+    methods:  [POST]
+    options:
+        expose: true
+
+linxo_redirect:
+    path:     linxo/redirect
+    defaults: { _controller: LinxoBundle:Linxo:redirect }
+    methods:  [GET]
+    options:
+        expose: true
+
+linxo_update_linxo_account:
+    path:     Linxo/update
+    defaults: { _controller: LinxoBundle:Linxo:updateCountLinxo }
+    methods:  [POST]
+    options:
+        expose: true
+
+linxo_save_linxo_dossier:
+    path:     Linxo/linxo_dossier/save
+    defaults: { _controller: LinxoBundle:Linxo:saveLinxoDossiers }
+    methods:  [POST]
+    options:
+        expose: true
+
+linxo_banque_compte:
+    path:     Linxo/banque_comptes
+    defaults: { _controller: LinxoBundle:Linxo:comptesBanques }
+    methods:  [POST]
+    options:
+        expose: true
+
+linxo_dossiers:
+    path:     Linxo/dossiers
+    defaults: { _controller: LinxoBundle:Linxo:dossiers }
+    methods:  [POST]
+    options:
+        expose: true

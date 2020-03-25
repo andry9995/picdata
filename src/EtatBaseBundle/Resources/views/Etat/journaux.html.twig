@@ -1,0 +1,97 @@
+{% set total_debit = 0 %}
+{% set total_credit = 0 %}
+
+{% set total_debit_gen = 0 %}
+{% set total_credit_gen = 0 %}
+
+<table class="table table-hover" id="js_eb_table_to_grid">
+    <thead>
+        <tr>
+            <th id="js_eb_est_tiers"></th>
+            <th id="js_eb_id_compte"></th>
+            <th id="js_eb_date">Date</th>
+            <th id="js_eb_journal">Journal</th>
+            <th id="js_eb_compte">Compte</th>
+            <th id="js_eb_piece">Pi&egrave;ce</th>
+            <th id="js_eb_libelle">Libell&eacute; Op&eacute;ration</th>
+            {% if not colSolde %}
+                <th id="js_eb_debit">D&eacute;bit</th>
+                <th id="js_eb_credit">Cr&eacute;dit</th>
+            {% else %}
+                <th id="js_eb_solde">Solde</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% if journaux|length != 0 %}
+            {% for i in 0..(journaux|length - 1) %}
+                {% set journal = journaux[i] %}
+
+                {% set debit = journal.debit %}
+                {% set credit = journal.credit %}
+
+                {% set total_debit = total_debit + debit %}
+                {% set total_credit = total_credit + credit %}
+                <tr>
+                    <td>{{ (journal.pcc != null) ? 0 : 1 }}</td>
+                    <td>{{ (journal.pcc != null) ? journal.pcc.id : journal.tiers.id }}</td>
+                    <td>{{ journal.dateEcr|date("d/m/Y") }}</td>
+                    <td>{{ journal.journalDossier.codeStr }}</td>
+                    <td>{{ (journal.pcc != null) ? journal.pcc.compte : journal.tiers.compteStr }}</td>
+                    <td>{% if journal.image != null %}<span class="js_show_image" data-id_image = "{{ journal.image.id|boost }}">{{ journal.image.nom }}</span>{% else %}{{ journal.imageStr }}{% endif %}</td>
+                    <td>{{ journal.libelle }}</td>
+                    {% if not colSolde %}
+                        <td>{{ debit != 0 ? debit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                        <td>{{ credit != 0 ? credit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                    {% else %}
+                        {% set solde = debit - credit %}
+                        <td>{{ solde != 0 ? solde|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                    {% endif %}
+                </tr>
+
+                {% if i == (journaux|length - 1) or journal.journalDossier.codeStr != journaux[i + 1].journalDossier.codeStr or journal.dateEcr|date("m/Y") != journaux[i + 1].dateEcr|date("m/Y") %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>TOTAL&nbsp;{{ journal.journalDossier.libelle }}&nbsp;{{ journal.dateEcr|date("m/Y") }}</strong></td>
+
+                        {% if not colSolde %}
+                            <td><strong>{{ (total_debit != 0) ? total_debit|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                            <td><strong>{{ (total_credit != 0) ? total_credit|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                        {% else %}
+                            {% set solde = total_debit - total_credit %}
+                            <td><strong>{{ (solde != 0) ? solde|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                        {% endif %}
+
+                        {% set total_debit_gen = total_debit_gen + total_debit %}
+                        {% set total_credit_gen = total_credit_gen + total_credit %}
+
+                        {% set total_debit = 0 %}
+                        {% set total_credit = 0 %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL&nbsp;GENERAL</strong></td>
+            {% if not colSolde %}
+                <td><strong>{{ (total_debit_gen != 0) ? total_debit_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                <td><strong>{{ (total_credit_gen != 0) ? total_credit_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+            {% else %}
+                {% set solde = total_debit_gen - total_credit_gen %}
+                <td><strong>{{ (solde != 0) ? solde|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+            {% endif %}
+        </tr>
+    </tbody>
+</table>

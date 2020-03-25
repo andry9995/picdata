@@ -1,0 +1,39 @@
+{% if releve %}
+    {{ include('BanqueBundle:ReleveBanque:releve-line.html.twig', { 'releve': releve }) }}
+{% endif %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="btn-group" style="margin-bottom: 5px" id="id_datas" data-type="{{ type }}" data-releve="{{ (releve ? releve.id : 0)|boost }}">
+            <span data-toggle="dropdown" class="btn btn-white btn-sm dropdown-toggle"><span id="id_banque_libelle">{{ banqueType.libelle }}</span>&nbsp;<span class="caret"></span></span>
+            <ul class="dropdown-menu" id="id_banque_type">
+                {% for bt in banqueTypes %}
+                    <li class="{{ (bt.id == banqueType.id) ? 'active' : '' }} cl_imp_banque_type" data-id="{{ bt.id|boost }}"><a href="#">{{ bt.libelle }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Bilan</th>
+                    <th>Tva</th>
+                    <th>R&eacute;sultat</th>
+                    <th>Montant</th>
+                </tr>
+            </thead>
+            <tbody id="id_trs">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm cl_save_imputation_directe"><i class="fa fa-floppy-o"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>
+
+<div id="id_test"></div>

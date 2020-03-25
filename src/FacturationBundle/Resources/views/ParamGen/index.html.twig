@@ -1,0 +1,55 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/facturation/js/facturation-functions.js') }}"></script>
+    <script src="{{ asset('bundles/facturation/js/paramGen.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="col-lg-12">
+        <div class="tabs-container jqgrid-tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#domaine">Domaine</a></li>
+                <li class=""><a data-toggle="tab" href="#indice">Indice</a></li>
+                <li class=""><a data-toggle="tab" href="#unite">Unité de prestations</a></li>
+                <li class=""><a data-toggle="tab" href="#remise">Remise volume</a></li>
+                <li class=""><a data-toggle="tab" href="#modele">Modèle de tarification</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="domaine" class="tab-pane active">
+                    <div class="panel-body">
+                        <table id="js_domaine" class="js-jqgrid-table"></table>
+                        <div id="pager_domaine"></div>
+                    </div>
+                </div>
+                <div id="indice" class="tab-pane">
+                    <div class="panel-body">
+                        <table id="js_indice" class="js-jqgrid-table"></table>
+                        <div id="pager_indice"></div>
+                    </div>
+                </div>
+                <div id="unite" class="tab-pane ">
+                    <div class="panel-body">
+                        <table id="js_unite" class="js-jqgrid-table"></table>
+                        <div id="pager_unite"></div>
+                    </div>
+                </div>
+
+                <div id="remise" class="tab-pane ">
+                    <div class="panel-body">
+                        <table id="js_remise" class="js-jqgrid-table"></table>
+                        <div id="pager_remise"></div>
+                    </div>
+                </div>
+
+                <div id="modele" class="tab-pane ">
+                    <div class="panel-body">
+                        <table id="js_modele" class="js-jqgrid-table"></table>
+                        <div id="pager_modele"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

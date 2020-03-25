@@ -1,0 +1,23 @@
+{% if dossier is null %}
+    {# client & site #}
+    <div class="row" id="js_edition_code_analytique">
+        <div class="col-lg-7">
+            {{ render(controller('AppBundle:Commun:clients' , {'conteneur' : 0})) }}
+        </div>
+        <div class="col-lg-5" id="js_conteneur_site"></div>
+    </div>
+
+    {# dossier & exercice #}
+    <div class="row">
+        <div class="col-lg-12" id="js_conteneur_dossier"></div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+
+{% else %}
+    <span class="badge badge-primary"><strong>{{ dossier.nom }}</strong></span>
+{% endif %}
+
+<div class="row">
+    <div class="col-lg-12" id="js_liste_code_analytique"></div>
+</div>

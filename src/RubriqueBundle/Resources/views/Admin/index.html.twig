@@ -1,0 +1,183 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% set class_add = 'fa-plus' %}
+{% set class_remove = 'fa-times' %}
+
+{% block titre %}Admin Rubriques{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/ionRangeSlider/ion.rangeSlider.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jquery-menu-context/jquery.contextMenu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/sweetalert/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/rubrique/css/index.css') }}">
+{% endblock %}
+
+{% block contenu_droite %}
+    <div class="row">
+        <div class="col-sm-12">
+            {{ include('RubriqueBundle:Default:filtre.html.twig', { 'admin_dossier': admin_dossier }) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="cl_tabs active" data-type="0"><a data-toggle="tab" href="#js_tab_rubrique_tableau" id="js_nav_tab_rubrique_tableau">Tableau&nbsp;Rubriques</a></li>
+                    {#<li class=""><a data-toggle="tab" href="#js_tab_compte" id="js_nav_tab_compte">Comptes</a></li>
+                    <li class=""><a data-toggle="tab" href="#js_tab_rubrique">Rubriques</a></li>#}
+                    <li class="cl_tabs" data-type="1"><a data-toggle="tab" href="#js_tab_categorie" id="js_nav_tab_categorie">Cat&eacute;gories</a></li>
+                    <li class="pull-right">
+                        <span class="badge">
+                            <span class="label label-default"><strong>&nbsp;</strong>&nbsp;:&nbsp;Solde</span>
+                            <span class="label label-default"><strong>D</strong>&nbsp;:&nbsp;D&eacute;bit</span>
+                            <span class="label label-default"><strong>C</strong>&nbsp;:&nbsp;Cr&eacute;dit</span>
+                            <span class="label label-default"><strong>E</strong>&nbsp;:&nbsp;Solde&nbsp;D&eacute;bit</span>
+                            <span class="label label-default"><strong>F</strong>&nbsp;:&nbsp;Solde&nbsp;Cr&eacute;dit</span>
+                            <span class="label label-default"><strong>X</strong>&nbsp;:&nbsp;Compte&nbsp;Auxiliaire</span>
+                            <span class="label label-default"><strong>N</strong>&nbsp;:&nbsp;Facture&nbsp;Non&nbsp;Pay&eacute;e</span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="js_tab_rubrique_tableau" class="active tab-pane">
+                        <div class="panel-body">
+                            {#<div class="row" style="margin-bottom: 5px!important;">
+                                <div class="col-sm-6">
+                                    <div class="radio radio-info radio-inline js_table_radio_type">
+                                        <input type="radio" id="js_table_type_r" name="type_radio">
+                                        <label for="js_table_type_r">Rubriques</label>
+                                    </div>
+                                    <div class="radio radio-warning radio-inline js_table_radio_type">
+                                        <input type="radio" id="js_table_type_sr" name="type_radio">
+                                        <label for="js_table_type_sr">Super-Rubriques</label>
+                                    </div>
+                                    <div class="radio radio-primary radio-inline js_table_radio_type">
+                                        <input type="radio" id="js_table_type_hr" name="type_radio" checked>
+                                        <label for="js_table_type_hr">Hyper-Rubriques</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="label label-inverse"><strong>&nbsp;</strong>&nbsp;:&nbsp;Solde</span>
+                                    <span class="label label-primary"><strong>D</strong>&nbsp;:&nbsp;D&eacute;bit</span>
+                                    <span class="label label-danger"><strong>C</strong>&nbsp;:&nbsp;Cr&eacute;dit</span>
+                                    <span class="label label-info"><strong>E</strong>&nbsp;:&nbsp;Solde&nbsp;D&eacute;bit</span>
+                                    <span class="label label-warning"><strong>F</strong>&nbsp;:&nbsp;Solde&nbsp;Cr&eacute;dit</span>
+                                    <span class="label label-success"><strong>X</strong>&nbsp;:&nbsp;Compte&nbsp;Auxiliaire</span>
+                                    <span class="label label-white"><strong>N</strong>&nbsp;:&nbsp;Facture&nbsp;Non&nbsp;Pay&eacute;e</span>
+                                </div>
+                            </div>#}
+                            <div class="ibox ibox-shadow">
+                                <div class="ibox-title">
+                                    <div class="row">
+                                        <div class="col-sm-4" id="js_table_type_rubrique">
+                                            <div class="radio radio-info radio-inline js_table_radio_type">
+                                                <input type="radio" id="table_r" name="type_radio" data-val="0">
+                                                <label for="table_r">Rubriques</label>
+                                            </div>
+                                            <div class="radio radio-warning radio-inline js_table_radio_type">
+                                                <input type="radio" id="table_sr" name="type_radio" data-val="1">
+                                                <label for="table_sr">Super-Rubriques</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline js_table_radio_type">
+                                                <input type="radio" id="table_hr" name="type_radio" data-val="2" checked>
+                                                <label for="table_hr">Hyper-Rubriques</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-7">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="ibox-tools">
+                                                <span class="btn btn-xs btn-primary js_show_add_rubrique"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                                <span class="btn btn-xs btn-warning js_show_rubriques_calcules"><i class="fa fa-building-o" aria-hidden="true"></i></span>
+                                                {#<a class="collapse-link">
+                                                    <i class="fa fa-chevron-up"></i>
+                                                </a>#}
+                                                <a class="fullscreen-link js_full_screen_tableau">
+                                                    <i class="fa fa-expand"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" id="js_conteneur_table_rubrique">
+                                    <table id="js_id_table_rubrique"></table>
+                                </div>
+                                {# form to add rubrique #}
+                                <div id="js_hidden_add_rubrique" class="hidden">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">Nom</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" placeholder="Nom" class="form-control js_table_libelle_rubrique">
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-right">
+                                            <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+                                            <span class="btn btn-sm btn-primary js_table_add_rubrique"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {# fin form to add rubrique #}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="js_tab_compte" class="tab-pane">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="btn-group" id="js_digit" style="margin-bottom: 10px !important;">
+                                        <button class="btn btn-white">Nombre de digits</button>
+                                        <button class="btn btn-white js_btn">1</button>
+                                        <button class="btn btn-white js_btn active">2</button>
+                                        <button class="btn btn-white js_btn">3</button>
+                                        <button class="btn btn-white js_btn">4</button>
+                                        <button class="btn btn-white js_btn">Tous</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 scroller" id="js_scroll">
+                                    {{ include('RubriqueBundle:Admin:pcg-rubriques.html.twig', {'pcgs':pcgs,
+                                        'rubriques':rubriques,
+                                        'superRubriques':superRubriques,
+                                        'hyperRubriques':hyperRubriques}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="js_tab_rubrique" class="tab-pane">
+                        {{ include('RubriqueBundle:Admin:rubriques_admin.html.twig',
+                            {'class_add':class_add, 'class_remove':class_remove,
+                            'rubriques':rubriques, 'superRubriques':superRubriques, 'hyperRubriques':hyperRubriques}) }}
+                    </div>
+                    <div id="js_tab_categorie" class="tab-pane">
+                        <div class="panel-body"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="js_id_new_compte_hidden" class="hidden">
+        {{ include('RubriqueBundle:Admin:new-compte.html.twig') }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {# menu context #}
+    <script src="{{ asset('js/plugins/jquery-menu-context/jquery.contextMenu.js') }}"></script>
+    {# IonRangeSlider #}
+    <script src="{{ asset('js/plugins/ionRangeSlider/ion.rangeSlider.min.js') }}"></script>
+    <script src=""{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/rubrique/js/rubrique.js') }}"></script>
+    <script src="{{ asset('bundles/rubrique/js/formule.js') }}"></script>
+    <script src="{{ asset('bundles/rubrique/js/table.js') }}"></script>
+    <script src="{{ asset('bundles/rubrique/js/pcg.js') }}"></script>
+    <script src="{{ asset('bundles/rubrique/js/categorie.js') }}"></script>
+    <script src="{{ asset('bundles/rubrique/js/index.js') }}"></script>
+{% endblock %}

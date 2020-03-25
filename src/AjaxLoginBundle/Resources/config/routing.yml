@@ -1,0 +1,7 @@
+ajax_login_auto:
+    path: /
+    defaults: { _controller: AjaxLoginBundle:Default:auto }
+    methods:  [GET]
+    options:
+        expose: true
+

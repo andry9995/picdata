@@ -1,0 +1,49 @@
+{# client & site #}
+<div class="row {{ (dossier != null) ? 'hidden' : '' }}">
+    <div class="col-lg-7">
+        {{ render(controller('AppBundle:Commun:clients' , {'conteneur' : 0})) }}
+    </div>
+    <div class="col-lg-5" id="js_conteneur_site"></div>
+</div>
+
+{# dossier & exercice #}
+<div class="row">
+    <div class="col-lg-7" id="js_conteneur_dossier">
+        {% if dossier != null %}
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
+                        <span>Dossier</span>
+                        <span class="label label-warning">1</span>
+                    </label>
+                    <div class="col-lg-10" style="position:relative;">
+                        <select class="form-control" id="dossier">
+                            <option value="{{ dossier.id|boost }}" selected="selected">{{ dossier.nom }}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+    <div class="col-lg-5 text-center">
+        {{ render(controller('AppBundle:Commun:exercices' , { 'tous': 0})) }}
+    </div>
+</div>
+
+<div class="row {{ (is_urgent == 'true') ? '' : 'hidden' }}">
+    <div class="col-lg-12">
+        <fieldset class="form-group">
+            <label>Message pour les envoies en urgence</label>
+            <textarea id="js_message_urgent" class="form-control"></textarea>
+        </fieldset>
+    </div>
+</div>
+
+<div class="row text-right">
+    <div class="col-lg-12">
+        <span class="btn btn-white btn-sm" id="js_upload_file"><i class="fa fa-check"></i>&nbsp;Valider</span>
+        <span class="btn btn-white btn-sm" id="js_cancel_upload"><i class="fa fa-times"></i>&nbsp;Annuler</span>
+    </div>
+</div>
+
+<input type="hidden" id="js_charger_site" value="{{ (dossier != null) ? 0 : 1 }}">

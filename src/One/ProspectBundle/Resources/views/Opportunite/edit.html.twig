@@ -1,0 +1,135 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadShowOpportunite({{ opportunite.id }});"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Opportunité {{ opportunite.nom }}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="opportunite-form">
+            <input type="hidden" id="id" name="id" value="{{ opportunite.id }}">
+            <div class="form-group">
+                <label for="client-prospect" class="col-md-2 col-sm-3 col-xs-12 control-label">Prospect ou Client*</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <select class="form-control" id="client-prospect" name="client-prospect" placeholder="" onchange="getListContacts(this.value);">
+                        <option value=""></option>
+                        {% for clientProspect in clientProspects %}
+                            <option value="{{ clientProspect.id }}" {% if clientProspect.id == opportunite.tiers.id %} selected="selected"{% endif %}>{{ clientProspect.intitule }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {#<label for="avancement" class="col-md-2 col-sm-3 col-xs-12 control-label">Avancement*</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="avancement" name="avancement" placeholder="">#}
+                        {#{% for avancement in avancements %}#}
+                            {#<option value="{{ avancement.id }}" {% if avancement.id == opportunite.oneAvancement.id %} selected="selected"{% endif %}>{{ avancement.nom }}</option>#}
+                        {#{% endfor %}#}
+                    {#</select>#}
+                {#</div>#}
+                <label for="status" class="col-md-2 col-sm-3 col-xs-12 control-label">Avancement</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <select class="form-control" id="status" name="status" placeholder="">
+                        {% for stat in status %}
+                            <option value="{{ stat.id }}" {% if stat.id == opportunite.oneStatusOpp.id %} selected="selected"{% endif %}>{{ stat.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact-client" class="col-md-2 col-sm-3 col-xs-12 control-label">Contact</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <select class="form-control" id="contact-client" name="contact-client" placeholder="">
+                        <option value=""></option>
+                        {% for contact in contacts %}
+                            <option value="{{ contact.id }}" {% if opportunite.oneContactClient and contact.id == opportunite.oneContactClient.id %} selected="selected"{% endif %}>{% if contact.prenom != '' %}{{ contact.prenom ~' ' }}{% endif %}{{ contact.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <label for="cloture" class="col-md-2 col-sm-3 col-xs-12 control-label">Clôture prévue le</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <div class="input-group date">
+                        <input type="text" class="form-control datepicker" id="cloture" name="cloture" placeholder="clôture" value="{{ opportunite.cloture|date('d/m/Y') }}">
+                        <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nom" class="col-md-2 col-sm-3 col-xs-12 control-label">Nom Opportunité*</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="nom opportunité" value="{{ opportunite.nom }}">
+                </div>
+                <label for="montant" class="col-md-2 col-sm-3 col-xs-12 control-label">Montant</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant" name="montant" value="{{ opportunite.montant|number_format(0, '.', ' ') }}" placeholder="montant" {% if articles|length > 0 %}readonly="readonly"{% endif %}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="note" class="col-md-2 col-sm-3 col-xs-12 control-label">Note</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <textarea class="form-control" id="note" name="note">{{ opportunite.note }}</textarea>
+                </div>
+            </div>
+            
+            <hr />
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Avancé</span>
+            <div class="advanced-group hidden">
+                <br />
+                <table class="table table-hover article-list">
+                    <thead>
+                        <tr>
+                            <th>Article</th>
+                            <th>Quantité</th>
+                            <th>Unité</th>
+                            <th>Prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if articles|length > 0 %}
+                            {% for article in articles %}
+                            <tr id="{{ article.id~'-'~'now'|date('U') }}" class="{{ article.id }}" onclick="selectToRemove(this);">
+                                <td>
+                                    <input type="hidden" class="form-control artoppid" value="{{ article.id }}">
+                                    <input type="hidden" class="form-control artid" value="{{ article.oneArticle.id }}">
+                                    {{ article.oneArticle.code ~' - '~ article.oneArticle.nom }}:</td>
+                                <td><input type="text" class="form-control quantite" value="{{ article.quantite }}" onblur="updateOppAmount();"></td>
+                                <td>{{ article.oneArticle.oneUniteArticle.nom }}</td>
+                                <td>
+                                    <input type="text" class="form-control montant number" value="{{ article.prix|number_format(0, '.', ' ') }}" onblur="updateOppAmount();">
+                                    <input type="hidden" class="form-control serialized" name="articles[]" value="id={{ article.id }}&article-id={{ article.oneArticle.id }}&quantite={{ article.quantite }}&montant={{ article.prix }}"></td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-default new-article" onclick="loadListArticleModal('opportunite');">Ajouter un Article</button>
+                <button type="button" class="btn btn-default new-article" onclick="removeArticle();">Retirer l'Article</button>
+                <input type="hidden" id="article-to-remove" value="" />
+            </div>
+            <div id="articles-deleted"></div>
+             <br />
+                        
+            <div class="form-group">
+                <label for="probabilite" class="col-md-4 col-sm-3 col-xs-12 control-label">Probabilité</label>
+                <div class="col-md-6 col-sm-9 col-xs-12">
+                    <select class="form-control" id="probabilite" name="probabilite" placeholder="">
+                        <option value="">Indéfinie</option>
+                        {% for probabilite in probabilites %}
+                            <option value="{{ probabilite.id }}" {% if opportunite.oneProbabilite and probabilite.id == opportunite.oneProbabilite.id %} selected="selected"{% endif %}>{{ probabilite.pourcentage ~'%' }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadShowOpportunite({{ opportunite.id }});">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveOpportunite();">Enregistrer</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<table  class="table table-hover">
+    <tbody>
+        {% for etat in etats %}
+            {% set class_libelle = (etat.calcul == 1 or etat.calcul == 2 or etat.calcul == 5) ? 'total' : '' %}
+            <tr class="js_etat_item pointer" data-id="{{ etat.id }}" data-parent="0">
+                <td class="niveau-1 {{ class_libelle }}">
+                    <span class="js_libelle">{{ etat.libelle }}</span>
+                </td>
+                <td class="text-right"><a class="js_menu_context label label-default js_niveau_1"><i class="fa fa-wrench"></i></a></td>
+            </tr>
+            {% for etat_child in etat.childs %}
+                {% set class_libelle = (etat_child.calcul == 1 or etat_child.calcul == 2 or etat_child.calcul == 5) ? 'total' : '' %}
+                <tr class="js_etat_item js_control_element pointer" data-id="{{ etat_child.id }}" data-parent="{{ etat.id }}">
+                    <td class="niveau-2 {{ class_libelle }}"><i class="fa fa-circle"></i>&nbsp;<span class="js_libelle">{{ etat_child.libelle }}</span></td>
+                    <td class="text-right"><a class="js_menu_context label label-default js_niveau_2"><i class="fa fa-wrench"></i></a></td>
+                </tr>
+                {% for etat_child2 in etat_child.childs %}
+                    {% set class_libelle = (etat_child2.calcul == 1 or etat_child2.calcul == 2 or etat_child2.calcul == 5) ? 'total' : '' %}
+                    <tr class="js_etat_item js_control_element pointer" data-id="{{ etat_child2.id }}" data-parent="{{ etat_child.id }}">
+                        <td class="niveau-3 {{ class_libelle }}"><i class="fa fa-circle-o"></i>&nbsp;<span class="js_libelle">{{ etat_child2.libelle }}</span></td>
+                        <td class="text-right"><a class="js_menu_context label label-default js_niveau_3"><i class="fa fa-wrench"></i></a></td>
+                    </tr>
+                    {% for etat_child3 in etat_child2.childs %}
+                        {% set class_libelle = (etat_child3.calcul == 1 or etat_child3.calcul == 2 or etat_child3.calcul == 5) ? 'total' : '' %}
+                        <tr class="js_etat_item js_control_element pointer" data-id="{{ etat_child3.id }}" data-parent="{{ etat_child2.id }}">
+                            <td class="niveau-4 {{ class_libelle }}"><i class="fa fa-caret-right"></i>&nbsp;<span class="js_libelle">{{ etat_child3.libelle }}</span></td>
+                            <td class="text-right"><a class="js_menu_context label label-default js_niveau_4"><i class="fa fa-wrench"></i></a></td>
+                        </tr>
+                        {% for etat_child4 in etat_child3.childs %}
+                            {% set class_libelle = (etat_child4.calcul == 1 or etat_child4.calcul == 2 or etat_child4.calcul == 5) ? 'total' : '' %}
+                            <tr class="js_etat_item js_control_element pointer" data-id="{{ etat_child4.id }}" data-parent="{{ etat_child3.id }}">
+                                <td class="niveau-4 {{ class_libelle }}"><i class="fa fa-angle-right"></i>&nbsp;<span class="js_libelle">{{ etat_child4.libelle }}</span></td>
+                                <td class="text-right"><a class="js_menu_context label label-default js_niveau_5"><i class="fa fa-wrench"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>

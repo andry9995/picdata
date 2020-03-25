@@ -1,0 +1,4 @@
+services:
+#    etat_financier.example:
+#        class: EtatFinancierBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

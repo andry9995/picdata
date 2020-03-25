@@ -1,0 +1,328 @@
+{% set width_montant = 9 %}
+
+{% set total_brut = {} %}
+{% set total_amort = {} %}
+{% set total_net = {} %}
+{% set total_brut_gen = {} %}
+{% set total_amort_gen = {} %}
+{% set total_net_gen = {} %}
+{% set formule = {} %}
+
+{% for exercice in exercices %}
+    {% set total_brut = total_brut|merge({ ( ',' ~ exercice ) : 0 }) %}
+    {% set total_amort = total_amort|merge({ ( ',' ~ exercice ) : 0 }) %}
+    {% set total_net = total_net|merge({ ( ',' ~ exercice ) : 0 }) %}
+
+    {% set total_brut_gen = total_brut_gen|merge({ ( ',' ~ exercice ) : 0 }) %}
+    {% set total_amort_gen = total_amort_gen|merge({ ( ',' ~ exercice ) : 0 }) %}
+    {% set total_net_gen = total_net_gen|merge({ ( ',' ~ exercice ) : 0 }) %}
+{% endfor %}
+
+<table class="table table-hover table-no-border" id="js_ef_table">
+    <thead>
+        <tr>
+            <th id="js_ef_compte"></th>
+            {% for i in 0..(exercices|length - 1) %}
+                {% if i == 0 %}
+                    <th id="js_ef_brut">Brut</th>
+                    <th id="js_ef_amort">Amort</th>
+                {% endif %}
+                    <th id="js_ef_net_{{ exercices[i] }}">Net</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for parent in etats %}
+            {% set class_libelle = (parent.calcul == 1 or parent.calcul == 2 or parent.calcul == 5) ? 'total' : '' %}
+            <tr>
+                <td><span class="js_padding-top-4 niveau-1 {{ class_libelle }}">{{ parent.libelle }}</span></td>
+                {% for i in (0..exercices|length - 1) %}
+                    {% set brut = parent.brut[exercices[i]] %}
+                    {% set amort = parent.amort[exercices[i]] %}
+                    {% set net = brut - amort %}
+
+                    {# + sous total #}
+                    {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : (total_brut[',' ~ exercices[i]] + brut) }) %}
+                    {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : (total_amort[',' ~ exercices[i]] + amort) }) %}
+                    {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : (total_net[',' ~ exercices[i]] + net) }) %}
+
+                    {# + total general #}
+                    {% set total_brut_gen = total_brut_gen|merge({ ( ',' ~ exercices[i] ) : total_brut_gen[',' ~ exercices[i]] + brut }) %}
+                    {% set total_amort_gen = total_amort_gen|merge({ ( ',' ~ exercices[i] ) : total_amort_gen[',' ~ exercices[i]] + amort }) %}
+                    {% set total_net_gen = total_net_gen|merge({ ( ',' ~ exercices[i] ) : total_net_gen[',' ~ exercices[i]] + net }) %}
+
+                    {# pour sous total, total general , formule , total et formule #}
+                    {% if parent.calcul == 1 or parent.calcul == 2 or parent.calcul == 3 or parent.calcul == 5 %}
+                        {# sous total #}
+                        {% if parent.calcul == 1 %}
+                            {% set brut = total_brut[',' ~ exercices[i]] %}
+                            {% set amort = total_amort[',' ~ exercices[i]] %}
+                            {% set net = total_net[',' ~ exercices[i]] %}
+
+                            {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                            {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                            {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                        {% endif %}
+
+                        {# total general #}
+                        {% if parent.calcul == 2 %}
+                            {% set brut = total_brut_gen[',' ~ exercices[i]] %}
+                            {% set amort = total_amort_gen[',' ~ exercices[i]] %}
+                            {% set net = total_net_gen[',' ~ exercices[i]] %}
+                        {% endif %}
+
+                        {# formule #}
+                        {% if parent.calcul == 3 %}
+
+                        {% endif %}
+
+                        {# total et formule #}
+                        {% if parent.calcul == 5 %}
+
+                        {% endif %}
+                    {% endif %}
+
+                    {% if i == 0 %}
+                        <td class="text-right">{{ (brut != 0) ? brut|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                        <td class="text-right">{{ (amort != 0) ? amort|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                    {% endif %}
+                    <td class="text-right">{{ (net != 0) ? net|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                {% endfor %}
+            </tr>
+            {% for parent1 in parent.childs %}
+                {% set class_libelle = (parent1.calcul == 1 or parent1.calcul == 2 or parent1.calcul == 5) ? 'total' : '' %}
+                <tr>
+                    <td><span class="js_padding-top-3 niveau-2 {{ class_libelle }}"><i class="fa fa-circle"></i>&nbsp;{{ parent1.libelle }}</span></td>
+                    {% for i in (0..exercices|length - 1) %}
+                        {% set brut = parent1.brut[exercices[i]] %}
+                        {% set amort = parent1.amort[exercices[i]] %}
+                        {% set net = brut - amort %}
+
+                        {# + sous total #}
+                        {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : (total_brut[',' ~ exercices[i]] + brut) }) %}
+                        {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : (total_amort[',' ~ exercices[i]] + amort) }) %}
+                        {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : (total_net[',' ~ exercices[i]] + net) }) %}
+
+                        {# + total general #}
+                        {% set total_brut_gen = total_brut_gen|merge({ ( ',' ~ exercices[i] ) : total_brut_gen[',' ~ exercices[i]] + brut }) %}
+                        {% set total_amort_gen = total_amort_gen|merge({ ( ',' ~ exercices[i] ) : total_amort_gen[',' ~ exercices[i]] + amort }) %}
+                        {% set total_net_gen = total_net_gen|merge({ ( ',' ~ exercices[i] ) : total_net_gen[',' ~ exercices[i]] + net }) %}
+
+                        {# pour sous total, total general , formule , total et formule #}
+                        {% if parent1.calcul == 1 or parent1.calcul == 2 or parent1.calcul == 3 or parent1.calcul == 5 %}
+                            {# sous total #}
+                            {% if parent1.calcul == 1 %}
+                                {% set brut = total_brut[',' ~ exercices[i]] %}
+                                {% set amort = total_amort[',' ~ exercices[i]] %}
+                                {% set net = total_net[',' ~ exercices[i]] %}
+
+                                {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                            {% endif %}
+
+                            {# total general #}
+                            {% if parent1.calcul == 2 %}
+                                {% set brut = total_brut_gen[',' ~ exercices[i]] %}
+                                {% set amort = total_amort_gen[',' ~ exercices[i]] %}
+                                {% set net = total_net_gen[',' ~ exercices[i]] %}
+                            {% endif %}
+
+                            {# formule #}
+                            {% if parent1.calcul == 3 %}
+
+                            {% endif %}
+
+                            {# total et formule #}
+                            {% if parent1.calcul == 5 %}
+
+                            {% endif %}
+                        {% endif %}
+
+                        {% if i == 0 %}
+                            <td class="text-right">{{ (brut != 0) ? brut|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                            <td class="text-right">{{ (amort != 0) ? amort|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                        {% endif %}
+                        <td class="text-right">{{ (net != 0) ? net|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                    {% endfor %}
+                </tr>
+                {% for parent2 in parent1.childs %}
+                    {% set class_libelle = (parent2.calcul == 1 or parent2.calcul == 2 or parent2.calcul == 5) ? 'total' : '' %}
+                    <tr>
+                        <td><span class="js_padding-top-1 niveau-3 {{ class_libelle }}"><i class="fa fa-circle-o"></i>&nbsp;{{ parent2.libelle }}</span></td>
+                        {% for i in (0..exercices|length - 1) %}
+                            {% set brut = parent2.brut[exercices[i]] %}
+                            {% set amort = parent2.amort[exercices[i]] %}
+                            {% set net = brut - amort %}
+
+                            {# + sous total #}
+                            {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : (total_brut[',' ~ exercices[i]] + brut) }) %}
+                            {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : (total_amort[',' ~ exercices[i]] + amort) }) %}
+                            {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : (total_net[',' ~ exercices[i]] + net) }) %}
+
+                            {# + total general #}
+                            {% set total_brut_gen = total_brut_gen|merge({ ( ',' ~ exercices[i] ) : total_brut_gen[',' ~ exercices[i]] + brut }) %}
+                            {% set total_amort_gen = total_amort_gen|merge({ ( ',' ~ exercices[i] ) : total_amort_gen[',' ~ exercices[i]] + amort }) %}
+                            {% set total_net_gen = total_net_gen|merge({ ( ',' ~ exercices[i] ) : total_net_gen[',' ~ exercices[i]] + net }) %}
+
+                            {# pour sous total, total general , formule , total et formule #}
+                            {% if parent2.calcul == 1 or parent2.calcul == 2 or parent2.calcul == 3 or parent2.calcul == 5 %}
+                                {# sous total #}
+                                {% if parent2.calcul == 1 %}
+                                    {% set brut = total_brut[',' ~ exercices[i]] %}
+                                    {% set amort = total_amort[',' ~ exercices[i]] %}
+                                    {% set net = total_net[',' ~ exercices[i]] %}
+
+                                    {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                    {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                    {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                {% endif %}
+
+                                {# total general #}
+                                {% if parent2.calcul == 2 %}
+                                    {% set brut = total_brut_gen[',' ~ exercices[i]] %}
+                                    {% set amort = total_amort_gen[',' ~ exercices[i]] %}
+                                    {% set net = total_net_gen[',' ~ exercices[i]] %}
+                                {% endif %}
+
+                                {# formule #}
+                                {% if parent2.calcul == 3 %}
+
+                                {% endif %}
+
+                                {# total et formule #}
+                                {% if parent2.calcul == 5 %}
+
+                                {% endif %}
+                            {% endif %}
+
+                            {% if i == 0 %}
+                                <td class="text-right">{{ (brut != 0) ? brut|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                <td class="text-right">{{ (amort != 0) ? amort|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                            {% endif %}
+                            <td class="text-right">{{ (net != 0) ? net|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% for parent3 in parent2.childs %}
+                        {% set class_libelle = (parent3.calcul == 1 or parent3.calcul == 2 or parent3.calcul == 5) ? 'total' : '' %}
+                        <tr>
+                            <td><span class="js_padding-top-0 niveau-4 {{ class_libelle }}"><i class="fa fa-caret-right"></i>&nbsp;{{ parent3.libelle }}</span></td>
+                            {% for i in (0..exercices|length - 1) %}
+                                {% set brut = parent3.brut[exercices[i]] %}
+                                {% set amort = parent3.amort[exercices[i]] %}
+                                {% set net = brut - amort %}
+
+                                {# + sous total #}
+                                {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : (total_brut[',' ~ exercices[i]] + brut) }) %}
+                                {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : (total_amort[',' ~ exercices[i]] + amort) }) %}
+                                {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : (total_net[',' ~ exercices[i]] + net) }) %}
+
+                                {# + total general #}
+                                {% set total_brut_gen = total_brut_gen|merge({ ( ',' ~ exercices[i] ) : total_brut_gen[',' ~ exercices[i]] + brut }) %}
+                                {% set total_amort_gen = total_amort_gen|merge({ ( ',' ~ exercices[i] ) : total_amort_gen[',' ~ exercices[i]] + amort }) %}
+                                {% set total_net_gen = total_net_gen|merge({ ( ',' ~ exercices[i] ) : total_net_gen[',' ~ exercices[i]] + net }) %}
+
+                                {# pour sous total, total general , formule , total et formule #}
+                                {% if parent3.calcul == 1 or parent3.calcul == 2 or parent3.calcul == 3 or parent3.calcul == 5 %}
+                                    {# sous total #}
+                                    {% if parent3.calcul == 1 %}
+                                        {% set brut = total_brut[',' ~ exercices[i]] %}
+                                        {% set amort = total_amort[',' ~ exercices[i]] %}
+                                        {% set net = total_net[',' ~ exercices[i]] %}
+
+                                        {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                        {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                        {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                    {% endif %}
+
+                                    {# total general #}
+                                    {% if parent3.calcul == 2 %}
+                                        {% set brut = total_brut_gen[',' ~ exercices[i]] %}
+                                        {% set amort = total_amort_gen[',' ~ exercices[i]] %}
+                                        {% set net = total_net_gen[',' ~ exercices[i]] %}
+                                    {% endif %}
+
+                                    {# formule #}
+                                    {% if parent3.calcul == 3 %}
+
+                                    {% endif %}
+
+                                    {# total et formule #}
+                                    {% if parent3.calcul == 5 %}
+
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if i == 0 %}
+                                    <td class="text-right">{{ (brut != 0) ? brut|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                    <td class="text-right">{{ (amort != 0) ? amort|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                {% endif %}
+                                <td class="text-right">{{ (net != 0) ? net|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% for parent4 in parent3.childs %}
+                            {% set class_libelle = (parent4.calcul == 1 or parent4.calcul == 2 or parent4.calcul == 5) ? 'total' : '' %}
+                            <tr>
+                                <td><span class="niveau-5 {{ class_libelle }}"><i class="fa fa-caret-right"></i>&nbsp;{{ parent4.libelle }}</span></td>
+                                {% for i in (0..exercices|length - 1) %}
+                                    {% set brut = parent4.brut[exercices[i]] %}
+                                    {% set amort = parent4.amort[exercices[i]] %}
+                                    {% set net = brut - amort %}
+
+                                    {# + sous total #}
+                                    {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : (total_brut[',' ~ exercices[i]] + brut) }) %}
+                                    {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : (total_amort[',' ~ exercices[i]] + amort) }) %}
+                                    {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : (total_net[',' ~ exercices[i]] + net) }) %}
+
+                                    {# + total general #}
+                                    {% set total_brut_gen = total_brut_gen|merge({ ( ',' ~ exercices[i] ) : total_brut_gen[',' ~ exercices[i]] + brut }) %}
+                                    {% set total_amort_gen = total_amort_gen|merge({ ( ',' ~ exercices[i] ) : total_amort_gen[',' ~ exercices[i]] + amort }) %}
+                                    {% set total_net_gen = total_net_gen|merge({ ( ',' ~ exercices[i] ) : total_net_gen[',' ~ exercices[i]] + net }) %}
+
+                                    {# pour sous total, total general , formule , total et formule #}
+                                    {% if parent4.calcul == 1 or parent4.calcul == 2 or parent4.calcul == 3 or parent4.calcul == 5 %}
+                                        {# sous total #}
+                                        {% if parent4.calcul == 1 %}
+                                            {% set brut = total_brut[',' ~ exercices[i]] %}
+                                            {% set amort = total_amort[',' ~ exercices[i]] %}
+                                            {% set net = total_net[',' ~ exercices[i]] %}
+
+                                            {% set total_brut = total_brut|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                            {% set total_amort = total_amort|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                            {% set total_net = total_net|merge({ ( ',' ~ exercices[i] ) : 0 }) %}
+                                        {% endif %}
+
+                                        {# total general #}
+                                        {% if parent4.calcul == 2 %}
+                                            {% set brut = total_brut_gen[',' ~ exercices[i]] %}
+                                            {% set amort = total_amort_gen[',' ~ exercices[i]] %}
+                                            {% set net = total_net_gen[',' ~ exercices[i]] %}
+                                        {% endif %}
+
+                                        {# formule #}
+                                        {% if parent4.calcul == 3 %}
+
+                                        {% endif %}
+
+                                        {# total et formule #}
+                                        {% if parent4.calcul == 5 %}
+
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if i == 0 %}
+                                        <td class="text-right">{{ (brut != 0) ? brut|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                        <td class="text-right">{{ (amort != 0) ? amort|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                    {% endif %}
+                                    <td class="text-right">{{ (net != 0) ? net|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{#{{ dump(etats) }}#}

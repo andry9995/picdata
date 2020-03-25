@@ -1,0 +1,98 @@
+{{ include('BanqueBundle:ReleveBanque:releve-line.html.twig', { 'releve': releve }) }}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-horizontal">
+                    {% if cles|length > 0 %}
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Cl&eacute;s&nbsp;trouv&eacute;es&nbsp;</label>
+                            <div class="col-lg-10">
+                                <div class="btn-group" id="id_cle_container">
+                                    {% for key, cle in cles %}
+                                        <span class="btn {{ (key == 0) ? 'btn-primary' : 'btn-white' }} btn-sm cl_btn_cle" data-id="{{ cle.id|boost }}">{{ cle.cle }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-lg-1 control-label" for="id_key">Cl&eacute;</label>
+                            <div class="col-lg-11">
+                                <input type="text" id="id_key" placeholder="Clé" class="form-control" value="{{ key }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-1 control-label" for="id_banque_type">Type</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" id="id_banque_type">
+                                {% for banqueType in banqueTypes %}
+                                    <option data-value="{{ banqueType.id }}" value="{{ banqueType.id|boost }}" {{ (cleDossier and cleDossier.banqueType and cleDossier.banqueType.id == banqueType.id) ? 'selected' : '' }}>{{ banqueType.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="checkbox checkbox-inline checkbox-warning">
+                                <input id="jd_id_pas_piece" type="checkbox" {{ (cleDossier and cleDossier.pasPiece == 1) ? 'checked' : '' }}>
+                                <label for="jd_id_pas_piece">Pas&nbsp;de&nbsp;Pièce</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="radio radio-inline">
+                    <input type="radio" id="js_id_engagement" value="0" {{ (typeCompta == 0) ? 'checked' : '' }} name="radio-type-compta">
+                    <label for="js_id_engagement">Engagement</label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="js_id_tresorerie" value="1" {{ (typeCompta == 1) ? 'checked' : '' }} name="radio-type-compta">
+                    <label for="js_id_tresorerie">Tr&eacute;sorerie</label>
+                </div>
+            </div>
+            <div class="col-lg-3 text-right">
+                <div class="btn-group">
+                    <span data-toggle="dropdown" class="btn btn-default btn-xs dropdown-toggle"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                    <ul class="dropdown-menu">
+                        <li class="cl_add_compte" data-type="2"><a href="#">Bilan</a></li>
+                        <li class="cl_add_compte" data-type="1"><a href="#">TVA</a></li>
+                        <li class="cl_add_compte" data-type="0"><a href="#">R&eacute;sultat</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="tabs-left" id="id_cle_dossier_exts_container">
+            {{ include('BanqueBundle:CleNew:cle-dossier-exts.html.twig') }}
+        </div>
+    </div>
+</div>
+
+<div id="test_cle_new"></div>
+
+<input id="id_hidden_cle_dossier" type="hidden" value="{{ (cleDossier ? cleDossier.id : 0)|boost }}">
+
+<div class="row">
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        {% if cle %}
+            <span class="btn btn-sm btn-white js_pas_cle"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;Pas&nbsp;de&nbsp;Clé</span>
+        {% endif %}
+        <span class="btn btn-white btn-sm btn-primary" id="id_save_cle_dossier_new"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>
+

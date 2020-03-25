@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-lg-5" id="js_conteneur_site">
+
+    </div>
+    <div class="col-lg-7" id="js_conteneur_dossier">
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-5">
+        {{ render(controller('AppBundle:Commun:exercices' , { 'tous': 0 })) }}
+    </div>
+    <div class="col-lg-7 text-center">
+        <span class="btn btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary" id="js_move"><i class="fa fa-scissors" aria-hidden="true"></i>&nbsp;D&eacute;placer</span>
+    </div>
+</div>

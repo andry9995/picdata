@@ -1,0 +1,4 @@
+services:
+#    code_analytique.example:
+#        class: CodeAnalytiqueBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

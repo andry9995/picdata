@@ -1,0 +1,30 @@
+{#clients#}
+{% if attr_id == '' %}
+    {% set attr_id = 'client' %}
+{% endif %}
+{% set disable = '' %}
+{% set selected = '' %}
+{% if clients|length <= 1 %}
+    {% set disable = 'disabled' %}
+    {% set selected = 'selected' %}
+{% endif %}
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-lg-{{- label_col -}}">
+            <span>Client</span>
+            <span class="label label-warning">{{ clients|length }}</span>
+        </label>
+        <div class="col-lg-{{- select_col -}}">
+            <select data-ref="{{ attr_data }}" class="client form-control" id="{{ attr_id }}" {{ disable }} >
+                {% if clients|length > 1 and tous == 1 %}
+                    <option value="{{ 0|boost }}">Tous</option>
+                {% endif %}
+                {% set index_client = 0 %}
+                {% for client in clients %}
+                    <option value="{{ client.id|boost }}" {{ (index_client == 0) ? 'selected' : '' }}>{{ (client.nom != '') ? client.nom : ' ' }}</option>
+                    {% set index_client = index_client + 1 %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>

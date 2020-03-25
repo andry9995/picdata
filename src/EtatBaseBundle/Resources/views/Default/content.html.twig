@@ -1,0 +1,28 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>
+            <span id="js_eb_titre"></span>
+        </h5>
+        <span class="js_chart_footer"></span>
+        <div class="ibox-tools">
+            {#<span id="js_eb_avec_solde" class="pointer">
+                <span class="btn btn-xs btn-default btn-outline"><i class="fa"></i><span class="js_eb_mise_forme">&nbsp;&nbsp;&nbsp;&nbsp;</span></span>
+                <span><small>Avec&nbsp;Lignes&nbsp;<span id="js_eb_avec_solde_text">Sold&eacute;es</span></small></span>
+            </span>#}
+            <span id="js_eb_parametre_agee" class="btn btn-default btn-outline btn-xs hidden"><i class="fa fa-cog"></i>&nbsp;Param&egrave;trage&nbsp;P&eacute;riode</span>
+            <span id="js_eb_export" class="dropdown-toggle btn btn-outline btn-xs btn-default" data-toggle="dropdown" href="#"><i class="fa fa-download"></i>&nbsp;Exporter</span>
+            <ul class="dropdown-menu dropdown-user">
+                <li><a href="#" class="js_export" data-en="xls"><i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;EXCEL</a></li>
+                <li><a href="#" class="js_export" data-en="pdf"><i class="fa fa-file-pdf-o"></i>&nbsp;&nbsp;PDF</a></li>
+            </ul>
+            <span class="btn btn-xs btn-default btn-outline fullscreen-link">
+                <i class="fa fa-expand"></i>
+            </span>
+            <span class="btn btn-xs btn-default btn-outline collapse-link">
+                <i class="fa fa-chevron-up"></i>
+            </span>
+        </div>
+    </div>
+    <div class="ibox-content jqGrid_wrapper" id="eb_etat_conteneur"></div>
+    {#<div class="ibox-footer"></div>#}
+</div>

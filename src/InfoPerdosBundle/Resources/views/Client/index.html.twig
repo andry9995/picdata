@@ -1,0 +1,114 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Clients{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/validate/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/client/client.js')}}?v=1.5"></script>
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/themes/fa/theme.js') }}"></script>
+    <script src="{{ asset('js/plugins/confirm/jquery-confirm.min.js') }}"></script>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/client.css') }}?v=1.3">
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/confirm/jquery-confirm.min.css') }}">
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row" style="background-color: #FFFFFF;">
+        <div class="col-sm-4">
+            {#<h4 class="bg-info padding-6">Listes des Clients</h4>#}
+
+            <br/>
+
+
+            <div class="row"></div>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-lg-6" id="">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label" for="filtre-cl-actif">
+                                <span>Statut</span>
+                            </label>
+                            <div class="col-lg-8" style="position:relative;">
+                                <select class="form-control" id="filtre-cl-actif">
+                                    <option value="">Tous</option>
+                                    <option value="1">Actif</option>
+                                    <option value="0">Inactif</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-lg-12" style="position:relative;">
+                                <input type="text" name="" class="form-control" placeholder="Nom ..." id="cl-search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox scroller">
+                <div class="ibox-content">
+                    {{ include('InfoPerdosBundle:Client:client-list.html.twig') }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+
+            <br/>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <button class="btn btn-xs btn-info" type="submit" id="btn-ajouter-client"><i class="fa fa-plus"></i>&nbsp;&nbsp;Nouveau client</button>
+                </div>
+
+                <div class="col-lg-6"></div>
+
+                <div class="col-lg-3">
+                    <button class="btn btn-xs btn-info" type="submit" id="btn-valider-client" style="float: right;"><i class="fa fa-save"></i>&nbsp;&nbsp;Valider</button>
+                </div>
+            </div>
+
+            <br/>
+
+
+            {{ include('InfoPerdosBundle:Client:client-edit.html.twig') }}
+
+
+            {#<div class="row">#}
+                {#<div class="col-lg-9"></div>#}
+                {#<div class="col-lg-3">#}
+                    {#<div class="row">#}
+                        {#<div class="col-lg-12">#}
+                                {#<button class="btn btn-xs btn-info btn-block" type="submit" id="btn-valider-client"><i class="fa fa-save"></i>&nbsp;&nbsp;Valider</button>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                {#</div>#}
+            {#</div>#}
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        {{ include('InfoPerdosBundle:Client:site.html.twig') }}
+    </div>
+
+
+{% endblock %}

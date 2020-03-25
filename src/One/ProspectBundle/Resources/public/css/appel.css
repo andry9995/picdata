@@ -1,0 +1,109 @@
+/* 
+    Created by Netbeans
+    Created on : 18 juil. 2017, 19:48:37
+    Author : Mamy Rakotonirina
+*/
+
+/*Affichage bloc*/
+.appel-bloc-view .bloc {
+    background: #F9F9F9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.appel-bloc-view .bloc .bloc-content {
+    display: block;
+    padding: 10px;
+}
+.appel-bloc-view .bloc .bloc-content .bloc-title {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+.appel-bloc-view .bloc .bloc-content .bloc-prospect {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.appel-bloc-view .bloc .bloc-content .bloc-opportunite {
+    display: block;
+    margin-bottom: 10px;
+}
+.appel-bloc-view .bloc .bloc-content .bloc-status.finished {
+    background: #E7F4E7;
+    color: #5DB85D;
+    padding: 5px;
+}
+.appel-bloc-view .bloc .bloc-content .bloc-status.waiting {
+    background: #FDF3E5;
+    color: #F1B45D;
+    padding: 5px;
+}
+.appel-bloc-view .bloc .btn-default {
+    background: none;
+    border: none;
+    color: #1BB394;
+}
+.appel-bloc-view .bloc .bloc-footer {
+    background: #FFFFFF;
+    border-top: 1px solid #E7EAEC;
+    display: block;
+    margin-top: 10px;
+    min-height: 50px;
+    padding-top: 10px;
+}
+.appel-bloc-view .bloc .bloc-footer .dropdown {
+    min-height: 25px;
+}
+
+.detail-appel-bloc-view {
+    margin-top: 25px;
+}
+.detail-appel-bloc-view .bloc {
+    background: #F9F9F9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.detail-appel-bloc-view .bloc .bloc-content {
+    display: block;
+    padding: 10px;
+}
+.detail-appel-bloc-view .bloc .bloc-content .bloc-title {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+.detail-appel-bloc-view .bloc .bloc-content .bloc-prospect {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.detail-appel-bloc-view .bloc .bloc-content .bloc-opportunite {
+    display: block;
+    margin-bottom: 10px;
+}
+.detail-appel-bloc-view .bloc .bloc-content .bloc-status.finished {
+    background: #E7F4E7;
+    color: #5DB85D;
+    padding: 5px;
+}
+.detail-appel-bloc-view .bloc .bloc-content .bloc-status.waiting {
+    background: #FDF3E5;
+    color: #F1B45D;
+    padding: 5px;
+}
+.detail-appel-bloc-view .bloc .btn-default {
+    background: none;
+    border: none;
+    color: #1BB394;
+}
+.detail-appel-bloc-view .bloc .bloc-footer {
+    background: #FFFFFF;
+    border-top: 1px solid #E7EAEC;
+    display: block;
+    margin-top: 10px;
+    min-height: 50px;
+    padding-top: 10px;
+}
+.detail-appel-bloc-view .bloc .bloc-footer .dropdown {
+    min-height: 25px;
+}
+
+.detail-appel-list-view .table {
+    margin-top: 5px;
+}

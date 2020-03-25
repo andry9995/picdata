@@ -1,0 +1,78 @@
+<div class="row data-image" data-id="{{ img.id|boost }}">
+
+    <div class="col-sm-7 details-image" style="height: {{ height }}px;">
+
+        <div class="row" style="padding-left: 15px;">
+            {% set sender = '' %}
+            {% if img.lot.utilisateur is not null %}
+                {% if img.lot.utilisateur.prenom is not null and img.lot.utilisateur.prenom != '' %}
+                    {% set sender = img.lot.utilisateur.prenom %}
+                {% endif %}
+                {% if(img.lot.utilisateur.nom is not null and img.lot.utilisateur.nom != '') %}
+                        {% if sender != '' %}
+                            {% set sender = sender ~ ' ' ~ img.lot.utilisateur.nom %}
+                        {% else %}
+                            {% set sender = img.lot.utilisateur.nom %}
+                        {% endif %}
+                {% endif %}
+
+
+            {% endif %}
+            <h4>
+                Numero image: <span class="">{{ img.nom }}.{{ img.extImage }} </span>,
+                date scan: <span class="">{{ (img.lot is null) ? '' : img.lot.dateScan|date('d/m/Y') }}</span>
+                {% if isAdmin == true %}
+                    {% if sender  != '' %}
+                        , envoyé par: {{ sender }}
+                    {% endif %}
+                {% endif %}
+            </h4>
+        </div>
+        {{ embed|raw }}
+
+    </div>
+
+
+    <div class="col-sm-5 scroller details-data"  style="height: {{ height }}px;">
+
+        {% set codeCategorie = (categorie is null) ? '': categorie.code %}
+        {#Client Fournisseur#}
+        {% if codeCategorie == 'CODE_CLIENT' or codeCategorie == 'CODE_FRNS' %}
+            {{ include('ConsultationPieceBundle:Default:detailsPieceClientFournisseur.html.twig') }}
+        {% else %}
+            {#Fiscal Social#}
+            {% if codeCategorie == 'CODE_SOC' or codeCategorie == 'CODE_FISC' %}
+                {{ include('ConsultationPieceBundle:Default:detailsPieceFiscalSocial.html.twig') }}
+            {% else %}
+                {#Note de Frais#}
+                {% if codeCategorie == 'CODE_NDF' %}
+                    {{ include('ConsultationPieceBundle:Default:detailsPieceNoteFrais.html.twig') }}
+                {% else %}
+                    {#Documents Juridiques#}
+                    {% if codeCategorie == 'CODE_COURRIER' or
+                        codeCategorie == 'CODE_ETATS_COMPTABLE' or
+                        codeCategorie == 'CODE_GESTION' or
+                        codeCategorie == 'CODE_JURIDIQUE' or
+                        codeCategorie == 'CODE_IMAGE' or
+                        codeCategorie == 'CODE_INSTANCE1' or
+                        codeCategorie == 'CODE_ANPC'
+                    %}
+                        {{ include('ConsultationPieceBundle:Default:detailsPieceCEGJ.html.twig') }}
+                    {% else %}
+                        {#Banque#}
+                        {% if codeCategorie =='CODE_BANQUE' %}
+                            {{ include('ConsultationPieceBundle:Default:detailsPieceBanque.html.twig') }}
+                        {% else %}
+                            {{ include('ConsultationPieceBundle:Default:detailsPieceEncours.html.twig') }}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="row hidden">
+        <input type="hidden" class="image_id" value="{{ (img is null) ? '':img.id|boost }}">
+    </div>
+
+</div>

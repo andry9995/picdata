@@ -1,0 +1,84 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% set titre = '' %}
+{% if isPieceManquante %}
+    {% set titre = 'Piéces Manquants' %}
+{% else %}
+    {% set titre = 'Notification PM' %}
+{% endif %}
+{% block titre %} {{ titre }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/image/css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/banque/css/pm.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/banque/css/notification.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/instruction.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/compte_detail.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/imputation.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/upload-piece.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/nature_tiers.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/rm.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/exception.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/export.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/send_mail.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/facture_no_paye.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/imputation/imputation.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/banquePm/index.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/utils/Draggable.min.js"></script> 
+    <script src="{{ asset('bundles/dossier/js/rappel-pm.js') }}"></script> 
+    <script src="{{ asset('bundles/banque/js/banquePm/new_facture.js') }}"></script> 
+{% endblock %}
+
+{% block wrapper_content %}
+    {% if isPieceManquante %}
+        {{ include('BanqueBundle:BanquePm:filtre.html.twig') }}
+    {% else %}
+        {{ include('BanqueBundle:BanquePm:filtre-notif.html.twig') }}
+    {% endif %}
+
+    <div class="tabs-container" id="id_tabs">
+        <ul class="nav nav-tabs">
+            {% for key,tab in tabs %}
+                <li class="cl_tab_li {{ (key == 0) ? 'active' : '' }} {{ (key == 1 or key == 5 or key == 6) ? 'hidden' : '' }}"><a data-toggle="tab" href="#pm_tab_{{ key }}" aria-expanded="{{ (key == 0) ? 'true' : 'false' }}">{{ tab|raw }}&nbsp;<span class="badge badge-primary cl_nb hidden">0</span></a></li>
+            {% endfor %}
+        </ul>
+
+        <div class="tab-content">
+            {% for key,tab in tabs %}
+                <div id="pm_tab_{{ key }}" class="tab-pane {{ (key == 0) ? 'active' : '' }}" data-type="{{ key }}">
+                    <div class="panel-body"></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {#
+        0 : bilan pcc
+        1 : tiers
+        2 : charge
+        3 : tva
+    #}
+    <div id="id_options_hidden" class="hidden">
+        <div class="cl_option_8"></div>
+        <div class="cl_option_0"></div>
+        <div class="cl_option_1"></div>
+        <div class="cl_option_2"></div>
+        <div class="cl_option_3"></div>
+    </div>
+
+    <form id="id_export" method="POST"></form>
+
+    <div class="isPieceManquante hidden" data-value="{{ (isPieceManquante) ? 1 : 0 }}"></div>
+{% endblock %}

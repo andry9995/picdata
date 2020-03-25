@@ -1,0 +1,142 @@
+<!-- Modal -->
+<div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">
+          <button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-angle-left"></i></button> 
+          <span style="color: #1ab394;font-weight: bold;">
+            Revenir à tous les messages
+          </span>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox ibox-shadow">
+              <div class="ibox-title">
+                <div class="row">
+                    <div class="col-lg-10">
+                      <div class="row">
+                        <div class="col-lg-3">
+                          {{ ticket.status_element |raw }} 
+                          <b>Ticket #{{ ticket.id }}</b>
+                        </div>
+                        <div class="col-lg-8">
+                          <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-lg-2 col-md-2 col-xs-2">
+                              {% if ticket.requester.default == true %}
+                                <img class='img-circle user-avatar' src="{{ asset(ticket.requester.avatar_url) }}" />
+                              {% else %}
+                                <img class='img-circle user-avatar' src="{{ ticket.requester.avatar_url }}" />
+                              {% endif %}
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-xs-10">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <b>Créer par {{ ticket.requester.name }} </b>  <span class="messaging-date badge"> <i class="fa fa-calendar"></i> {{ ticket.created_at |date("d/m/Y H:i") }} </span>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-12 requester-mail" style="color:#909090;">
+                                  <i class="fa fa-envelope"></i> &nbsp; {{ ticket.requester.email }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      {{ ticket.button |raw }}
+                    </div>
+                </div>
+              </div>
+              <div class="ibox-content">
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h4>{{ ticket.subject }}</h4>
+                    <pre>
+                      {{ ticket.description }}
+                    </pre>
+                  </div>
+                </div>
+
+                {% if comments |length > 0 %}
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="conversation-blog">
+                        {% for comment in comments %}
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                  <div class="panel-heading">
+
+                                    {% if comment.author.default == true %}
+                                      <img class='img-circle user-avatar' src="{{ asset(comment.author.avatar_url) }}" />
+                                    {% else %}
+                                      <img class='img-circle user-avatar' src="{{ comment.author.avatar_url }}" />
+                                    {% endif %}
+                      
+                                    <b>{{ comment.author.name }}</b> <span style="color:#909090;">{{ comment.author.email }}</span> <span class="messaging-date badge badge-conversation"> <i class="fa fa-calendar"></i> {{ comment.created_at |date("d/m/Y H:i") }} </span>
+                                  </div>
+                                  <div class="panel-body">
+                                    {{ comment.html_body |raw }}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        {% endfor %}
+
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h3>Répondre</h3>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <form class="form-horizontal">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <div class="col-lg-12">
+                              <textarea id="comment" name="comment" class="form-control" style="min-height: 150px;"></textarea>
+                              <input type="hidden" name="comment-status" id="comment-status" value="open">
+                            </div>
+                        </div>
+                    </form>
+                  </div>              
+                </div>
+
+                <div class="row">
+                   <div class="col-lg-4">
+                    <div class="btn-group">
+                        <a data-id="{{ ticket.id }}" class="send-comment btn btn-default" style="background-color: rgb(47, 57, 65) !important;border-left-color: transparent;">
+                            Envoyer comme <strong class="with-status">Ouvert</strong>
+                        </a>
+                        <div class="btn-group">
+                          <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" style="background-color: rgb(47, 57, 65) !important"><span class="caret"></span></button>
+                          <ul class="dropdown-menu">
+                              <li><a href="#" data-value="open" class="with-status-list">Ouvert</a></li>
+                              <li><a href="#" data-value="solved" class="with-status-list">Résolu</a></li>
+                              <li><a href="#" data-value="new" class="with-status-list">Nouveau</a></li>
+                          </ul>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {# <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> #}
+    </div>
+

@@ -1,0 +1,65 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Note de frais{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/plugins/chosen/chosen.jquery.js') }}"></script>
+    <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
+    <script src="{{  asset('js/plugins/footable/footable.all.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmAAqw2psFrvDH3wWBVbFfMeT6IgfObwk&libraries=places" async defer></script>
+
+    <script src="{{ asset('bundles/notefrais/js/communTpe.js') }}"></script>
+    <script src="{{ asset('bundles/notefrais/js/index.js') }}?v=2.0.0"></script>
+    <script src="{{ asset('bundles/notefrais/js/depense.js') }}?v=2.0.0"></script>
+    <script src="{{ asset('bundles/notefrais/js/note.js') }}?v=2.0.0"></script>
+    <script src="{{ asset('bundles/notefrais/js/image.js') }}?v=2.0.0"></script>
+
+    <script src="{{ asset('bundles/notefrais/js/Administration/affaire.js') }}?v=2.0.0"></script>
+    <script src="{{ asset('bundles/notefrais/js/Administration/categorie.js') }}?v=2.0.0"></script>
+    <script src="{{ asset('bundles/notefrais/js/Administration/contact.js') }}?v=2.0.0"></script>
+    <script src="{{ asset('bundles/notefrais/js/Administration/fraiskm.js') }}?v=2.0.0"></script>
+    <script src="{{ asset('bundles/notefrais/js/Administration/utilisateur.js') }}?v=2.0.0"></script>
+    <script src="{{ asset('bundles/notefrais/js/Administration/vehicule.js') }}?v=2.0.0"></script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/chosen/chosen.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/switchery/switchery.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/footable/footable.core.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/notefrais/css/noteFrais.css') }}?v=2.0.0">
+{% endblock %}
+
+{% block wrapper_content %}
+
+    {{ include('NoteFraisBundle:Default:filtre.html.twig') }}
+
+   {{ include('NoteFraisBundle:Default:navigation.html.twig') }}
+
+
+    <div class="col-lg-12">
+        <div class="row ndf-contenu"></div>
+    </div>
+
+
+    <div class="row">
+        {{ include('NoteFraisBundle:Depense:depenseModal.html.twig') }}
+    </div>
+
+    <div class="row">
+        {{ include('NoteFraisBundle:Note:noteModal.html.twig') }}
+    </div>
+
+    <div class="row">
+        {{ include('NoteFraisBundle:Depense:depensePJModal.html.twig') }}
+    </div>
+
+
+{% endblock %}

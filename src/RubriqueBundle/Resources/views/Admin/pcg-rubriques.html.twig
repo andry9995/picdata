@@ -1,0 +1,20 @@
+<table class="table table-bordered" id="js_table_parametrage">
+    <thead>
+        <tr>
+            <th>Compte</th>
+            <th>Intitule</th>
+            <th>Rubrique</th>
+            <th>Super&nbsp;Rubrique</th>
+            <th>Hyper&nbsp;Rubrique</th>
+        </tr>
+    </thead>
+    {% for pcg in pcgs %}
+        <tr data-id="{{ pcg.pcg.id|boost }}">
+            <td class="js_pcg_digit">{{ pcg.pcg.compte }}</td>
+            <td>{{ pcg.pcg.intitule }}</td>
+            {{ include('RubriqueBundle:Admin:pcg-rubriques-td.html.twig', { 'rubriques':pcg.rubriques,'type':0 }) }}
+            {{ include('RubriqueBundle:Admin:pcg-rubriques-td.html.twig', { 'rubriques':pcg.superRubriques,'type':1 }) }}
+            {{ include('RubriqueBundle:Admin:pcg-rubriques-td.html.twig', { 'rubriques':pcg.hyperRubriques,'type':2 }) }}
+        </tr>
+    {% endfor %}
+</table>

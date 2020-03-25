@@ -1,0 +1,698 @@
+<div class="ibox-content">
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-lg-12">
+
+                <input type="hidden" class="js_cp_exercice" value="{{ img.exercice }}">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5>Informations générales</h5>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <input type="hidden" class="js_cp_image_id" value="{{ img.id }}">
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Raison sociale</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_raison_sociale"
+                                               value="{{ (saisie is null) ? '' : (saisie.rs) }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Exercice</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="" value="{{ (img is null)? '' : (img.exercice) }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Catégorie</label>
+                                    <div class="col-md-7">
+
+                                        {% set categorieId = (categorie is null) ? -1 : categorie.id %}
+                                        <select class="form-control categorie" name="categorie" {{ (isSuperAdmin) ? '' : 'disabled' }}>
+                                            <option value="-1"></option>
+                                            {% for cat in categories %}
+                                                <option value="{{ cat.id }}" {{ (cat.id == categorieId) ? 'selected' }}>{{ cat.libelleNew|upper }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Sous Catégorie</label>
+                                    <div class="col-md-7">
+
+                                        {% set souscategorieId = (souscategorie is null) ? -1 : souscategorie.id %}
+                                        <select class="form-control souscategorie" name="souscategorie" {{ (isSuperAdmin) ? '' : 'disabled' }}>
+                                            <option value="-1"></option>
+                                            {% for sCatJ in souscategories %}
+                                                <option value="{{ sCatJ.id }}" {{ (sCatJ.id == souscategorieId) ? 'selected' }}>{{ sCatJ.libelleNew|upper }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if isSuperAdmin == true %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Sous Sous Cat</label>
+                                    <div class="col-md-7">
+                                       {% set soussouscategorieId = (soussouscategorie is null) ? -1 : soussouscategorie.id %}
+                                        <select class="form-control soussouscategorie" name="soussouscategorie" {{ (isAdmin) ? '' : 'disabled' }}>
+                                            <option value="-1"></option>
+                                            {% for ssCat in soussouscategories %}
+                                                <option value="{{ ssCat.id }}" {{ (ssCat.id == soussouscategorieId) ? 'selected' }}>{{ ssCat.libelleNew|upper }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">SIREN</label>
+                                    <div class="col-md-7">
+                                        {% set siren = "" %}
+                                        {% if saisie is not null %}
+                                            {% if saisie.siret is not null %}
+                                                {% set siren = saisie.siret|slice(0,3)~" "~saisie.siret|slice(3) %}
+                                                {% set siren = siren|slice(0,7)~" "~siren|slice(7) %}
+                                                {% set siren = siren|slice(0,11)~" "~siren|slice(11) %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                        <input type="text" class="form-control" id="js_siren"
+                                               value="{{ siren }}">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Num Intracom</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_num_intracom"
+                                               value="{{ (saisie is null)? '' : saisie.tauxIntracomm }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Type</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_type_piece"
+                                               value="{{ (saisie is null)? '' : (saisie.typePiece is null) ? '' : saisie.typePiece.libelle }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Date Facture</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_date_piece"
+                                               value="{{ (saisie is null)? '' : (saisie.dateFacture is null) ? '' : saisie.dateFacture|date('d/m/Y') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Num Facture</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_num_piece"
+                                               value="{{ (saisie is null)? '' : saisie.numFacture }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Avancement</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_avancement" value="{{ etape }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">APE</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_ape" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Initulé APE</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_ape" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {#<div class="row" style="margin-top: 5px;">#}
+                        <div class="row">
+
+                            {% if saisie is not null %}
+                                {% if saisie.typeAchatVente is not null %}
+
+                                     {#typeAchatVente = 2 (SERVICES) => PERIODE DEBUT & FIN SINON DATE LIVRAISON#}
+                                    {% if saisie.typeAchatVente.id == 2 %}
+
+                                        {% set dateDebut = '' %}
+                                        {% set dateFin = '' %}
+                                        {% set dateLivraison = '' %}
+
+                                        {% if saisie.periodeD1 is not null %}
+                                            {% set dateDebut =  saisie.periodeD1|date('d/m/Y') %}
+                                        {% else %}
+                                            {% if tvaSaisie is not null %}
+                                                {% if tvaSaisie|length > 0 %}
+                                                    {% if tvaSaisie|first[0].periodeDeb is not null %}
+                                                        {% set dateDebut = tvaSaisie[0]|first.periodeDeb|date('d/m/Y') %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                        {% if saisie.periodeF1 is not null %}
+                                            {% set dateFin =  saisie.periodeF1|date('d/m/Y') %}
+                                        {% else %}
+                                            {% if tvaSaisie is not null %}
+                                                {% if tvaSaisie|length > 0 %}
+                                                    {% if tvaSaisie[0]|first.periodeFin is not null %}
+                                                        {% set dateFin = tvaSaisie[0]|first.periodeFin|date('d/m/Y') %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                        {% if tvaSaisie is not null %}
+                                            {% if tvaSaisie|length > 0 %}
+                                                {% if tvaSaisie[0]|first.dateLivraison is not null %}
+                                                    {% set dateLivraison = tvaSaisie[0]|first.dateLivraison|date('d/m/Y') %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="col-md-5 control-label">Période du</label>
+                                                <div class="col-md-7">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control js_cp_periode_du" name="cp_periode_du"
+                                                               value="{{ dateDebut }}">
+                                                        <span class="input-group-addon"></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="col-md-5 control-label">Au</label>
+                                                <div class="col-md-7">
+                                                    <div class="input-group date">
+
+                                                        <input type="text" class="form-control js_cp_periode_au" name="cp_periode_au"
+                                                               value="{{ dateFin }}">
+                                                        <span class="input-group-addon"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    {% else %}
+
+                                        {% set dateLivraison =  '' %}
+                                        {% if tvaSaisie is not null %}
+                                            {% if tvaSaisie|length > 0 %}
+                                                {% if tvaSaisie[0]|first.dateLivraison is not null %}
+                                                    {% set dateLivraison = tvaSaisie[0]|first.dateLivraison|date('d/m/Y') %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="col-md-5 control-label">Date livraison</label>
+                                                <div class="col-md-7">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control js_cp_date_livraison" name="cp_date_livraison"
+                                                               value="{{ dateLivraison }}">
+                                                        <span class="input-group-addon"></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+
+                                    {% set dateLivraison =  '' %}
+                                    {% if tvaSaisie is not null %}
+                                        {% if tvaSaisie|length > 0 %}
+                                            {% if tvaSaisie[0]|first.dateLivraison is not null %}
+                                                {% set dateLivraison = tvaSaisie[0]|first.dateLivraison|date('d/m/Y') %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-md-5 control-label">Date livraison</label>
+                                            <div class="col-md-7">
+                                                <input type="text" class="form-control" id="js_date_livraison"
+                                                       value="{{ dateLivraison }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+                        {% if isSuperAdmin %}
+                        <div class="col-lg-offset-6 col-lg-6">
+                            <div class="col-md-offset-5 col-md-7" style="padding-right: 0;">
+                                <button class="btn btn-sm btn-primary btn-block btn-modifier-client-fournisseur">Valider</button>
+                            </div>
+
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5>Paiements Prévus</h5>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                               <div class="panel panel-default">
+                                     <div class="panel-heading">
+                                         <h5>Règles de paiements</h5>
+                                     </div>
+
+                                     <div class="panel-body">
+
+                                         {% set typeDate = 0 %}
+                                         {% set nbreJour = 45 %}
+                                         {% set dateLe = -1 %}
+
+                                         {% if reglePaiementTiers is not null %}
+                                             {% set typeDate = (reglePaiementTiers.typeDate is not null) ? reglePaiementTiers.typeDate : 0 %}
+                                             {% set nbreJour = (reglePaiementTiers.nbreJour is not null) ? reglePaiementTiers.nbreJour : 45 %}
+                                             {% set dateLe = (reglePaiementTiers.dateLe is not null) ? reglePaiementTiers.dateLe : -1 %}
+                                         {% else %}
+                                             {% if reglePaiementDossier is not null %}
+                                                 {% set typeDate = (reglePaiementDossier.typeDate is not null) ? reglePaiementDossier.typeDate : 0 %}
+                                                 {% set nbreJour = (reglePaiementDossier.nbreJour is not null) ? reglePaiementDossier.nbreJour : 45 %}
+                                                 {% set dateLe = (reglePaiementDossier.dateLe is not null) ? reglePaiementDossier.dateLe : -1 %}
+                                             {% endif %}
+                                         {% endif %}
+
+
+                                         <div class="row">
+                                             <input type="hidden" class="js_image_id" value="{{ img.id|boost }}">
+                                             <input type="hidden" class="js_tiers_id" value="{{ (tiers is not null) ? tiers.id|boost : -1 }}">
+
+                                             <div class="col-lg-6">
+
+                                                 <div class="form-group">
+                                                     <label class="col-md-5 control-label">Date</label>
+                                                     <div class="col-md-7">
+                                                         <select class="form-control js_regle_paiement_date" name="regle_paiement_date"
+                                                                 data-field="TypeDate" data-id="1">
+
+                                                             <option value=""{{ (typeDate == -1) ? 'selected' : '' }}></option>
+                                                             <option value="0" {{ (typeDate == 0) ? 'selected' : '' }}>Date Facture</option>
+                                                             <option value="1" {{ (typeDate == 1) ? 'selected' : ''  }}>Date Livraison</option>
+                                                         </select>
+                                                     </div>
+                                                 </div>
+
+                                             </div>
+
+                                             <div class="col-lg-6">
+
+                                                 <div class="form-group">
+                                                     <label class="col-md-5 control-label">Nbre de Jours</label>
+                                                     <div class="col-md-7">
+                                                         <input type="text" class="form-control js_regle_paiement_nbre_jour"
+                                                                name="regle_paiement_nbre_jour" id=""  data-field="NbreJour" data-id="1"
+                                                                value="{{ nbreJour }}">
+                                                     </div>
+                                                 </div>
+                                             </div>
+
+                                         </div>
+
+                                         <div class="row">
+
+                                             <div class="col-lg-6">
+                                                 <div class="form-group">
+                                                     <label class="col-md-5 control-label">Date le</label>
+                                                     <div class="col-md-7">
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                                <div class="checkbox checkbox-success checkbox-inline">
+                                                                    <input type="checkbox" class="checkbox-primary js_regle_paiement_date_le_active" {{ (dateLe != -1)? 'checked' : '' }}>
+                                                                    <label></label>
+                                                                </div>
+                                                            </div>
+                                                             <div class="col-lg-9">
+                                                                 <select class="form-control info_regle_paiement js_regle_paiement_date_le" name="regle_paiement_date_le"  data-field="DateLe" data-id="1" {{ (dateLe == -1)?'disabled':'' }}>
+                                                                     <option value="" {{ (dateLe == -1) ? 'selected' : '' }}></option>
+                                                                     {% for i in 5..30 %}
+                                                                         {% if i is divisible by(5) %}
+                                                                             <option value="{{ i }}" {{ (dateLe == i) ? 'selected' : '' }}>{{ i }}</option>
+                                                                         {% endif %}
+                                                                     {% endfor %}
+                                                                 </select>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
+                                             </div>
+
+                                             <div class="col-lg-6">
+                                                 {% if isAdmin %}
+                                                 <div class="col-md-offset-5 col-md-7" style="padding-right: 0;">
+                                                     <button class="btn btn-sm btn-primary btn-block btn-modifier-regle-paiement">Valider</button>
+                                                 </div>
+                                                 {% endif %}
+                                             </div>
+
+                                         </div>
+
+                                     </div>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            {% if dateEcheance is defined %}
+                                {% set date_echeance = dateEcheance|date('d/m/Y') %}
+                            {% else %}
+                                {% set date_echeance = '' %}
+                            {% endif %}
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5>Echéance</h5>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label">Echéance</label>
+                                                    <div class="col-md-7">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control js_cp_date_echeance" name="cp_date_echeance"
+                                                                   value="{{ date_echeance }}">
+                                                            <span class="input-group-addon"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {% if isAdmin %}
+                                                <div class="col-lg-6">
+                                                    <div class="col-md-offset-5 col-md-7 btn-cp" style="padding-right: 0;">
+                                                        <button type="button" class="btn btn-block btn-sm btn-primary btn-cp-echeance-save">
+                                                            Valider
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-lg-12">
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h5>Paiements</h5>
+                                    </div>
+                                    <div class="panel-body">
+
+
+                                        {% set labModeReglement = (categorie.code == 'CODE_CLIENT') ? 'Type encaissement' :  (categorie.code == 'CODE_FRNS') ? 'Type paiement' : '' %}
+                                        {% set labDateReglement = (categorie.code == 'CODE_CLIENT') ? 'Date encaissement' : (categorie.code == 'CODE_FRNS') ? 'Date paiement' : '' %}
+                                        {% set labNumReglement = (categorie.code == 'CODE_CLIENT') ? 'Num encaissement' : (categorie.code == 'CODE_FRNS') ? 'Num paiement' : '' %}
+                                        {% set modeReglement = (saisie is null) ? '' : (saisie.modeReglement is not null) ? saisie.modeReglement.libelle : '' %}
+                                        {% set dateReglement = (saisie is null) ? '' : (saisie.dateReglement is not null) ? saisie.dateReglement|date('d/m/Y') : '' %}
+                                        {% set numReglement =  (saisie is null) ? '' : (saisie.numPaiement is not null) ? saisie.numPaiement : ''%}
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label">{{ labModeReglement }}</label>
+                                                    <div class="col-md-7">
+
+
+                                                        <select class="form-control js_cp_mode_reglement">
+
+                                                            <option value="-1"></option>
+                                                            {% set modeReglementId = (modeReglementSaisie is null) ? '-1' : modeReglementSaisie.id %}
+
+                                                            {% for modeReglement in modeReglements %}
+                                                                <option value="{{ modeReglement.id|boost }}"
+                                                                        {{ (modeReglement.id == modeReglementId) ? 'selected' : ''}}>
+                                                                    {{ modeReglement.libelle }}
+                                                                </option>
+
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label">{{ labDateReglement }}</label>
+                                                    <div class="col-md-7 date">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control js_cp_date_reglement" name="cp_date_reglement"
+                                                                   value="{{ dateReglement }}">
+                                                            <span class="input-group-addon"></span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-5 control-label">{{ labNumReglement }}</label>
+                                                    <div class="col-md-7">
+                                                        <input type="text" class="form-control js_cp_num_reglement" value="{{ numReglement }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {% if isAdmin %}
+                                                <div class="col-lg-6">
+                                                    <div class="col-md-offset-5 col-md-7 btn-cp" style="padding-right: 0;">
+                                                        <button type="button" class="btn btn-block btn-sm btn-primary btn-cp-save">
+                                                            Valider
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5>Paiements Réalisés</h5>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Avoir montant</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" value="{{ montantAvoir|number_format(2, '.', ' ') }}">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+
+                                    {% set avoirSaisies = '' %}
+                                    {% for avoir in avoirs %}
+                                        {% if avoirSaisies == '' %}
+                                            {% set avoirSaisies = avoir.image.nom %}
+                                        {% else %}
+                                            {% set avoirSaisies = ", " ~ avoir.image.nom %}
+                                        {% endif %}
+                                    {% endfor %}
+
+
+                                    <label class="col-md-5 control-label">Avoir</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" value="{{ avoirSaisies }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Type paiement</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    {% set datePaiement = '' %}
+
+                                    {% if releves|length > 0 %}
+                                        {% set releve = releves|first %}
+                                        {% set datePaiement = releve.dateReleve|date('d/m/Y') %}
+
+                                    {% else %}
+                                        {% if avoirs|length > 0 %}
+                                            {% set avoir = avoirs|first %}
+                                            {% set datePaiement = (avoir.dateReglement is not null) ? avoir.dateReglement|date('d/m/Y') : '' %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <label class="col-md-5 control-label">Date paiement</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" value="{{ datePaiement }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            {% set releveBanque = '' %}
+                            {% for releve in releves %}
+                                {% if releveBanque == '' %}
+                                    {% set releveBanque = releve.libelle %}
+                                {% else %}
+                                    {% set releveBanque = ", " ~ releve.libelle %}
+                                {% endif %}
+                            {% endfor %}
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Num Paiement</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" value="{{ releveBanque }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Reste à payer</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" value="{{ resteAPayer|number_format('2', '.', ' ') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            {% set releveImage = '' %}
+                            {% for releve in releves %}
+                                {% set releveImage = (releve is not null) ? releve.image.nom : '' %}
+                            {% endfor %}
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Relevé banque</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" value="{{ releveImage }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row ecriture">
+        {% if utilisateur.accesUtilisateur.type < 6 %}
+            {% if typeEcriture <= 0 %}
+                {{ include('ConsultationPieceBundle:Default:ecriture.html.twig') }}
+            {% else %}
+                {{ include('ConsultationPieceBundle:Default:ecritureCompta.html.twig') }}
+            {% endif %}
+
+        {% endif %}
+    </div>
+</div>
+

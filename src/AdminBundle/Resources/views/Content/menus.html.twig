@@ -1,0 +1,98 @@
+<ol class="dd-list">
+    {% for menu in menus %}
+        <li class="dd-item">
+            <div class="dd-handle">
+                <span class="label label-info"><i class="fa {{ menu.icon }}"></i></span>
+                <span>{{ menu.libelle }}</span>
+                <span class="pull-right">
+                    <input type="checkbox" class="js_status_menu" {{ (menu.active) ? 'checked' : '' }}
+                           data-id="{{ menu.idMenuUtilisateur }}" data-id-menu="{{ menu.id }}"/>
+                </span>
+            </div>
+            {% if menu.child|length > 0 %}
+                <ol class="dd-list">
+                    {% for menu_child in menu.child %}
+                        <li class="dd-item">
+                            <div class="dd-handle">
+                                <span class="label label-warning"><i class="fa {{ menu_child.icon }}"></i></span>
+                                <span>{{ menu_child.libelle }}</span>
+                                <span class="pull-right">
+                                    <input type="checkbox" class="js_status_menu" {{ (menu_child.active) ? 'checked' : '' }}
+                                           data-id="{{ menu_child.idMenuUtilisateur }}" data-id-menu="{{ menu_child.id }}"/>
+                                </span>
+                            </div>
+                            {% if menu_child.child|length > 0 %}
+                                <ol class="dd-list">
+                                    {% for menu_child2 in menu_child.chlid %}
+                                        <li class="dd-item">
+                                            <div class="dd-handle">
+                                                <span class="label label-succes"><i class="fa {{ menu_child2.icon }}"></i></span>
+                                                <span>{{ menu_child2.libelle }}</span>
+                                                <span class="pull-right">
+                                                    <input type="checkbox" class="js_status_menu" {{ (menu_child2.active) ? 'checked' : '' }}
+                                                           data-id="{{ menu_child2.idMenuUtilisateur }}" data-id-menu="{{ menu_child2.id }}"/>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ol>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+        </li>
+    {% endfor %}
+    
+    {#<li class="dd-item" data-id="1">
+        <div class="dd-handle">
+            <span class="label label-info"><i class="fa fa-users"></i></span> Cras ornare tristique.
+        </div>
+        <ol class="dd-list">
+            <li class="dd-item" data-id="2">
+                <div class="dd-handle">
+                    <span class="pull-right"><input type="checkbox"/></span>
+                    <span class="label label-info"><i class="fa fa-cog"></i></span> Vivamus vestibulum nulla nec ante.
+                </div>
+            </li>
+            <li class="dd-item" data-id="3">
+                <div class="dd-handle">
+                    <span class="pull-right"> 11:00 pm </span>
+                    <span class="label label-info"><i class="fa fa-bolt"></i></span> Nunc dignissim risus id metus.
+                </div>
+            </li>
+            <li class="dd-item" data-id="4">
+                <div class="dd-handle">
+                    <span class="pull-right"> 11:00 pm </span>
+                    <span class="label label-info"><i class="fa fa-laptop"></i></span> Vestibulum commodo
+                </div>
+            </li>
+        </ol>
+    </li>
+
+    <li class="dd-item" data-id="5">
+        <div class="dd-handle">
+            <span class="label label-warning"><i class="fa fa-users"></i></span> Integer vitae libero.
+        </div>
+        <ol class="dd-list">
+            <li class="dd-item" data-id="6">
+                <div class="dd-handle">
+                    <span class="pull-right"> 15:00 pm </span>
+                    <span class="label label-warning"><i class="fa fa-users"></i></span> Nam convallis pellentesque nisl.
+                </div>
+            </li>
+            <li class="dd-item" data-id="7">
+                <div class="dd-handle">
+                    <span class="pull-right"> 16:00 pm </span>
+                    <span class="label label-warning"><i class="fa fa-bomb"></i></span> Vivamus molestie gravida turpis
+                </div>
+            </li>
+            <li class="dd-item" data-id="8">
+                <div class="dd-handle">
+                    <span class="pull-right"> 21:00 pm </span>
+                    <span class="label label-warning"><i class="fa fa-child"></i></span> Ut aliquam sollicitudin leo.
+                </div>
+            </li>
+        </ol>
+    </li>#}
+</ol>

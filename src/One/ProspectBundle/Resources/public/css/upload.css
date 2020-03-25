@@ -1,0 +1,67 @@
+/* 
+    Created by Netbeans
+    Created on : 13 juil. 2017, 19:15:16
+    Author : Mamy Rakotonirina
+*/
+
+#dropzone {
+    background: url('../img/dropzone-bg.png') no-repeat center top;
+    border: 1px dashed #CCCCCC;
+    height: 150px;
+    width: 100%;
+}
+#dropzone .droptext {
+    margin: 100px 0 0 0;
+    text-align: center;
+}
+#dropzone span {
+    color: #1CB394;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+#dropzone span:hover {
+    text-decoration: underline;
+}
+#dropzone-uploaded > div {
+    padding: 5px;
+}
+#dropzone-uploaded .uploaded-content {
+    border: 1px solid #DDE1E4;
+    box-shadow: 0 0 2px #929ea8;
+    height: 200px;
+    position: relative;
+}
+#dropzone-uploaded span {
+    background-color: #fcfcfc;
+    border: 1px solid rgba(146,158,168,0.3);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(146,158,168,0.3);
+    cursor: pointer;
+    font-size: 15px;
+    height: 25px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 25px;
+}
+#dropzone-uploaded .content-image {
+    height: 140px;
+    margin: 10px 10px 0 10px;
+    overflow: hidden;
+    text-align: center;
+}
+#dropzone-uploaded .content-image img {
+    /*width: 100%;*/
+}
+#dropzone-uploaded .content-footer {
+    background: #F3F3F4;
+    border: 1px solid #E7EAEC;
+    height: 50px;
+    text-align: center;
+}
+#dropzone-uploaded .content-footer p {
+    font-weight: bold;
+    margin: 5px;
+}

@@ -1,0 +1,154 @@
+one_achat_homepage:
+    path:     /achat
+    defaults: { _controller: OneAchatBundle:Achat:index }
+
+one_contact_fournisseur_new:
+    path:       /contact-fournisseur/new
+    defaults:   { _controller: OneAchatBundle:ContactFournisseur:new }
+    options:
+        expose: true
+
+one_contact_fournisseur_edit:
+    path:       /contact-fournisseur/edit
+    defaults:   { _controller: OneAchatBundle:ContactFournisseur:edit }
+    options:
+        expose: true
+
+one_fournisseur_delete:
+    path:       /fournisseur/delete/{id}
+    defaults:   { _controller: OneAchatBundle:Fournisseur:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+one_fournisseur_duplicate:
+    path:       /fournisseur/duplicate
+    defaults:   { _controller: OneAchatBundle:Fournisseur:duplicate }
+    methods: [GET,POST]
+    options:
+        expose: true
+
+one_fournisseur_edit:
+    path:       /fournisseur/edit/{id}
+    defaults:   { _controller: OneAchatBundle:Fournisseur:edit }
+    methods: [GET]
+    options:
+        expose: true
+
+one_fournisseur_list:
+    path:       /fournisseur/list
+    defaults:   { _controller: OneAchatBundle:Fournisseur:list }
+    options:
+        expose: true
+
+one_fournisseur_mlist:
+    path:       /fournisseur/mlist
+    defaults:   { _controller: OneAchatBundle:Fournisseur:listinmodal }
+    options:
+        expose: true
+
+one_fournisseur_new:
+    path:       /fournisseur/new
+    defaults:   { _controller: OneAchatBundle:Fournisseur:new }
+    options:
+        expose: true
+
+one_fournisseur_save:
+    path:       /fournisseur/save
+    defaults:   { _controller: OneAchatBundle:Fournisseur:save }
+    options:
+        expose: true
+
+one_fournisseur_show:
+    path:       /fournisseur/show/{id}/{one}
+    defaults:   { _controller: OneAchatBundle:Fournisseur:show }
+    methods: [GET]
+    options:
+        expose: true
+
+one_fournisseur_list_contacts:
+    path:       /fournisseur/contacts
+    defaults:   { _controller: OneAchatBundle:Fournisseur:listcontact }
+    methods: [GET]
+    options:
+        expose: true
+
+one_achat_commande_list:
+    path:       /achat-commande/list
+    defaults:   { _controller: OneAchatBundle:Commande:list }
+    options:
+        expose: true
+
+one_achat_commande_edit:
+    path:       /achat-commande/edit/{id}
+    defaults:   { _controller: OneAchatBundle:Commande:edit, id: -1 }
+    methods: [GET]
+    options:
+        expose: true
+
+one_achat_commande_save:
+    path:       /achat-commande/save
+    defaults:   { _controller: OneAchatBundle:Commande:save }
+    options:
+        expose: true
+
+
+one_achat_commande_delete:
+    path:       /achat-commande/delete/{id}
+    defaults:   { _controller: OneAchatBundle:Achat:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+
+one_achat_facture_list:
+    path:       /achat-facture/list
+    defaults:   { _controller: OneAchatBundle:Achat:list }
+    options:
+        expose: true
+
+one_achat_facture_edit:
+    path:       /achat-facture/edit/{id}/{one}
+    defaults:   { _controller: OneAchatBundle:Achat:edit, id: -1, one: true  }
+    methods: [GET]
+    options:
+        expose: true
+
+one_achat_facture_save:
+    path:       /achat-facture/save
+    defaults:   { _controller: OneAchatBundle:Achat:save }
+    options:
+        expose: true
+
+one_achat_facture_delete:
+    path:       /achat-facture/delete/{id}
+    defaults:   { _controller: OneAchatBundle:Achat:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+one_achat_address:
+    path:       /achat/address
+    defaults:   { _controller: OneAchatBundle:Achat:address }
+    methods: [GET]
+    options:
+        expose: true
+
+one_article_achat_list:
+    path:       /article-achat/list
+    defaults:   { _controller: OneAchatBundle:Atricle:listforachat }
+    options:
+        expose: true
+
+one_article_achat_add:
+    path:       /article-achat/add
+    defaults:   { _controller: OneAchatBundle:Atricle:addinachat }
+    options:
+        expose: true
+
+
+one_depense_achat_add:
+    path:       /depense-achat/add
+    defaults:   { _controller: OneAchatBundle:Depense:addinachat }
+    options:
+        expose: true

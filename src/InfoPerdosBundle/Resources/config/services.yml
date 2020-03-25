@@ -1,0 +1,4 @@
+services:
+#    info_perdos.example:
+#        class: InfoPerdosBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

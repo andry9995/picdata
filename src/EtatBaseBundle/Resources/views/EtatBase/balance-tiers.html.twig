@@ -1,0 +1,15 @@
+<div class="js_container_params">
+    <div class="radio radio-info radio-inline">
+        <input class="js_option" type="radio" id="radio-b-{{ type }}-0" checked name="radio-b-{{ type }}" value="0">
+        <label for="radio-b-{{ type }}-0">Normale</label>
+    </div>
+    <div class="radio radio-info radio-inline">
+        <input class="js_option" type="radio" id="radio-b-{{ type }}-1" name="radio-b-{{ type }}" value="1">
+        <label for="radio-b-{{ type }}-1">Ag&eacute;e</label>
+        <span class="btn btn-white btn-white btn-xs js_show_param_anciennete hidden"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Anciennet&eacute;</span>
+    </div>
+    <input type="hidden" class="js_cl_date_anciennete" value="">
+    {% set anciannetes = [30,60,90] %}
+    <input type="hidden" class="js_cl_anciennetes" value="{{ anciannetes|json_encode }}">
+    <div class="js_cl_container_etat" style="margin-top: 2px!important;"></div>
+</div>

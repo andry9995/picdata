@@ -1,0 +1,163 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}
+    Pilotage - Général
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+
+	<link rel="stylesheet" href="{{ asset('css/plugins/highslide/highslide.css') }}">
+
+	<style type="text/css">
+		tr#total-row > td, tr#total-row-stocks > td {
+            border-bottom: 2px solid #1cb394 !important;
+            background-color: #ccf9f03b !important;
+            color: #494a4a !important;
+        }
+
+        tr#total-n-n1-row > td, tr#total-row-stocks > td {
+            border-top: 2px solid #1cb394 !important;
+            background-color: #ccf9f03b !important;
+            color: #494a4a !important;
+        }
+
+        tr#total-n-n1-row > td.js-dossier,tr#total-row > td.js-dossier, tr#total-row-stocks > td.js-client-dossier {
+            border-left: 2px solid #1cb394 !important;
+        }
+
+        #chart-graphes {
+          min-width: 310px;
+          max-width: 1200px;
+          height: 400px;
+          margin: 0 auto;
+        }
+
+        .ui-jqgrid .ui-jqgrid-labels th.ui-th-column {
+		    background-color: #e6e5e5 !important;
+		    background-image: none !important;
+		    font-weight: bold;
+		    color: #676a6c;
+		    padding: 8px;
+		}
+
+		.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+		    background: #fff;
+		    border: none;
+		    border-bottom: 1px solid #cccccc;
+		    font-weight: bold;
+		    color: #676a6c; 
+
+		}
+
+		.ui-jqgrid tr.ui-row-ltr td {
+		    border: none !important;
+		    border-bottom: 1px solid #cccccc !important;
+		    padding: 8px;
+		}
+
+		.label-purple{
+			background-color: #9171e3;
+			color: #fff;
+		}
+
+		.span-purple{
+			color: #9171e3;
+			font-style: italic;
+		}
+
+	</style>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- highcharts -->
+    <script src="{{ asset('js/plugins/highcharts/highcharts.js') }}"></script>
+    <script src="{{ asset('js/plugins/highcharts/data.js') }}"></script>
+    <script src="{{ asset('js/plugins/highcharts/series-label.js') }}"></script>
+    <script src="{{ asset('js/plugins/highcharts/exporting.js') }}"></script>
+    <script src="{{ asset('js/plugins/highcharts/export-data.js') }}"></script>
+    <!-- highcharts -->
+    <script src="{{ asset('js/plugins/highslide/highslide-full.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/highslide/highslide.config.js') }}"></script>
+        
+    <script src="{{ asset('bundles/general/js/general.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/details.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/regression.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/graphes.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/repartitions.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+
+	<div class="row">
+		<div class="hidden">
+            <form id="form-export" method="POST">
+                <input type="hidden" id="exp-datas" name="exp-datas">
+                <input type="hidden" id="exp-dossier" name="exp-dossier">
+                <input type="hidden" id="exp-typedate" name="exp-typedate">
+                <input type="hidden" id="exp-exercice" name="exp-exercice">
+                <input type="hidden" id="exp-client" name="exp-client">
+            </form>
+        </div>
+		<div class="col-lg-12">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs">
+					<li class="active" id="graphes-nav">
+						<a href="#graphes" data-toggle="tab" >
+							<i class="fa fa-line-chart" aria-hidden="true"></i>
+							Graphes
+						</a>
+					</li>
+					<li id="repartitions-nav">
+						<a href="#repartitions" data-toggle="tab" >
+							<i class="fa fa-pie-chart" aria-hidden="true"></i>
+							Répartitions
+						</a>
+					</li>
+					<li  id="details-nav">
+						<a href="#details" data-toggle="tab">
+							<i class="fa fa-table" aria-hidden="true"></i>
+							Details
+						</a>
+					</li>
+				</ul>
+
+				<div class="tab-content">
+					
+					<div id="graphes" class="tab-pane active">
+						<div class="panel-body">
+							<div class="row">
+								{% include('GeneralBundle:General:filtre-graphes.html.twig') %}
+							</div>
+							<div class="row">
+								<div id="chart-graphes"></div>
+							</div>
+						</div>
+					</div>
+					<div id="repartitions" class="tab-pane">
+						<div class="panel-body">
+							<div class="row">
+								{% include('GeneralBundle:General:filtre-repartitions.html.twig') %}
+							</div>
+							<div class="row">
+                                <div id="pie-repartitions" style="min-width: 800px; height: 600px; max-width: 1200px; margin: 0 auto"></div>
+							</div> 
+						</div>
+					</div>
+					<div id="details" class="tab-pane ">
+						<div class="panel-body">
+							<div class="row">
+                            	{{ include('GeneralBundle:General:filtre-details.html.twig')}}
+							</div>
+							<div class="row">
+								<table id="grid-details"></table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% set index = 0 %}
+{% for group in groups %}
+    <div class="panel panel-{{ (dossier is not null and dossier.indicateurGroup == group) ? 'primary' : 'default' }} js_group_panel" data-id="{{ group.id|boost }}" data-index="{{ index }}">
+        <div class="panel-heading js_height_pn_group" style="padding: 1px !important;">
+            <h5 class="panel-title">
+                <span class="row" style="margin: 0!important;">
+                    <span class="col-lg-4">
+                        <a data-toggle="collapse" data-parent="#id_groups_contener" href="#js_group_collapse_{{ index }}" class="js_group_collapse">
+                            <span class="btn btn-xs js_group_libelle">
+                                <strong class="js_group_libelle_string">{{ group.libelle }}</strong>
+                                {% if client is not null or dossier is not null %}
+                                    {% if group.client is not null %}
+                                        {% set text = 'spécifique pour le CLIENT ' ~ group.client.nom %}
+                                    {% elseif group.dossier is not null %}
+                                        {% set text = 'spécifique pour le DOSSIER ' ~ group.dossier.nom %}
+                                    {% else %}
+                                        {% set text = 'général' %}
+                                    {% endif %}
+                                    <small>&nbsp;({{ text }})</small>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </span>
+                    <span class="col-lg-8 js_group_control hidden text-right">
+                        <span class="btn btn-white btn-xs js_tooltip js_pack_show_edit js_add" data-tooltip="Ajouter item"><i class="fa fa-plus" aria-hidden="true"></i></span>
+
+                        {% if (client is not null and group.client == client) or (dossier is not null and group.dossier == dossier) or (client is null and dossier is null) %}
+                            <span class="btn btn-white btn-xs js_tooltip js_group_show_edit" data-tooltip="Modifier"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                            <span class="btn btn-white btn-xs js_tooltip js_group_delete" data-tooltip="Supprimer"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                        {% endif %}
+
+                        {% if dossier is not null and group.dossier is null  %}
+                            <span class="btn btn-xs js_tooltip js_show_indicateur js_btn_classement {{ (group.enabled) ? 'btn-primary' : 'btn-default' }}" data-type="0" title="Afficher ce groupe">Affecter&nbsp;&agrave;&nbsp;{{ dossier.nom }}</span>
+                        {% endif %}
+                    </span>
+                </span>
+            </h5>
+        </div>
+        <div id="js_group_collapse_{{ index }}" class="panel-collapse collapse"> {#{{ (index == 0) ? 'in' : '' }}#}
+            <div class="panel-body js_pack_content scroller" id="id_panels_conteneur_{{ index }}" style="padding: 5px!important;">
+                {{ include('IndicateurBundle:IndicateurAdmin:pack.html.twig',{ 'packs':group.packs, 'index_group':index, 'dossier':dossier, 'dStyles':dStyles }) }}
+            </div>
+        </div>
+    </div>
+    {% set index = index + 1 %}
+{% endfor %}

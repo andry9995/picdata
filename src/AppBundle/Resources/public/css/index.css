@@ -1,0 +1,59 @@
+#features {
+    margin-top: 50px;
+}
+#features .presentation {
+    height: 250px;
+    transition: all 0.8s ease;
+}
+#features .presentation h2 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: bold;
+    color: #8d8d8d;
+    margin-bottom: 25px;
+    transition: all 0.8s ease;
+}
+
+#features .presentation h2.icon {
+    font-size: 36px;
+}
+
+#features .presentation h2.icon .fa {
+    background-color: #eff0f4;
+    padding: 15px;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    line-height: 45px;
+    border-radius: 50%;
+    transition: all 0.8s ease;
+}
+
+#features .presentation:hover {
+    background-color: #efefef;
+    border-radius: 5px;
+}
+
+#features .presentation:hover h2,  #features .presentation:hover p {
+    color: #737373;
+}
+
+#features .presentation:hover h2.icon .fa {
+    background-color: #737373;
+    color: #fff;
+}
+
+#features .presentation p {
+    font-size: 1.1em;
+    color: #aeaeae;
+}
+
+@media screen and (max-width: 768px){
+    #features .presentation {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        min-height: 250px;
+        height: auto;
+    }
+}
+

@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Image</th>
+                <th>Libell&eacute;</th>
+                <th>Montant</th>
+                <th>Cat.</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for res in results %}
+                <tr>
+                    <td>{{ res.date|date('d/m/Y') }}</td>
+                    <td class="js_show_image_ pointer text-primary">{{ res.image.nom }}</td>
+                    <td class="hidden js_id_image">{{ res.image.id|boost }}</td>
+                    <td>{{ res.libelle }}</td>
+                    <td class="text-right {{ (res.montant < 0) ? 'text-danger' : '' }}">{{ res.montant|number_format(2, ',', '&nbsp;')|raw }}</td>
+                    <td>{{ res.categorie }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Fermer</span>
+    </div>
+</div>

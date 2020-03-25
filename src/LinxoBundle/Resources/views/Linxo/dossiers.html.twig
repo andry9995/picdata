@@ -1,0 +1,7 @@
+{% if dossiers|length > 1 %}
+    <option value="{{ 0|boost }}"></option>
+{% endif %}
+
+{% for dossier in dossiers %}
+    <option value="{{ dossier.id|boost }}">{{ dossier.nom }}</option>
+{% endfor %}

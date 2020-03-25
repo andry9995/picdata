@@ -1,0 +1,34 @@
+<form class="form-horizontal" id="js_form_prest_juridique">
+
+    <div class="row">
+
+        <div class="col-sm-4">
+
+        <div class="form-group">
+            <label class="col-lg-7 control-label">Rapport de gestion</label>
+            <div class="col-lg-5">
+                <select class="form-control prest_juridique" id="js_rapport_gestion" data-field="RapportGestion">
+                    {% set rappGestion = (prestationJuridique is null) ? -1 : (prestationJuridique.rapportGestion is null) ? -1 : prestationJuridique.rapportGestion %}
+                    <option></option>
+                    <option value="1" {{ (rappGestion == 1) ? 'selected' : '' }}>Oui</option>
+                    <option value="0" {{ (rappGestion == 0) ? 'selected' : '' }}>Non</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-7 control-label">Assemblée générale ordinaire</label>
+            <div class="col-lg-5">
+                <select class="form-control prest_juridique" id="js_assemblee_ordinaire" data-field="AssOrdAnnuelle">
+                    {% set assembleeOrdinaire = (prestationJuridique is null) ? -1 : (prestationJuridique.assOrdAnnuelle is null) ? -1 : prestationJuridique.assOrdAnnuelle %}
+                    <option></option>
+                    <option value="1" {{ (assembleeOrdinaire == 1) ? 'selected' : '' }}>Oui</option>
+                    <option value="0" {{ (assembleeOrdinaire == 0) ? 'selected' : '' }}>Non</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+</form>

@@ -1,0 +1,17 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Exercice</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tva in images %}
+            {% set image = tva.image %}
+            <tr>
+                <td>{{ image.nom }}</td>
+                <td>{{ image.exercice }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

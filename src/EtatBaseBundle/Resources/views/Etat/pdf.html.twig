@@ -1,0 +1,288 @@
+<style>
+    .table-donnee {
+        border-collapse: collapse;
+        border: 1px solid #CCCCCC;
+    }
+    .table-donnee td,th{
+        padding: 2px;
+    }
+    .table-donnee thead, .table-donnee tr{
+        padding: 0px;
+    }
+    .table-donnee th{
+        background-color: #CCCCCC;
+        text-align: center;
+    }
+    .table-donnee td{
+        word-wrap: break-word;
+    }
+    .credit{
+        color: #880000;
+    }
+    .gray{
+        background-color: #f5f5f5;
+    }
+    .gras{
+        font-weight: bold;
+    }
+    .gauche{
+        text-align: left;
+    }
+    .centrer{
+        text-align: center;
+    }
+    .droite{
+        text-align: right;
+    }
+</style>
+
+<div style="width:100%;">
+    <table width="100%">
+        <tr>
+            <th colspan="2" align="center">{{ titre }}</th>
+        </tr>
+        <tr>
+            <th width="15%">Client: </th>
+            <th width="85%">{{ dossier.site.client.nom }}</th>
+        </tr>
+        <tr>
+            <th>Site: </th>
+            <th>{{ dossier.site.nom }}</th>
+        </tr>
+        <tr>
+            <th>Dossier: </th>
+            <th>{{ dossier.nom }}</th>
+        </tr>
+        <tr>
+            <th>Edit&eacute; le: </th>
+            <th>{{ 'now'|date('d-m-Y') }}</th>
+        </tr>
+    </table>
+</div>
+
+<div style="width:100%;">
+    {#balance#}
+    {% if etat < 3 %}
+        {% set width_montant = 10 %}
+        {% if exercices|length == 1 %}
+            {% set width_libelle = 100 - (width_montant * 5) %}
+        {% else %}
+            {% set width_libelle = 100 - (width_montant * exercices|length * 2) - width_montant %}
+        {% endif %}
+        <table border="1" class="table-donnee" style="width:100%;">
+            <thead>
+                <tr>
+                    <th colspan="2"></th>
+                    {% if exercices|length == 1 %}
+                        <th colspan="4">{{ exercices[0] }}</th>
+                    {% else %}
+                        {% for exercice in exercices %}
+                            <th colspan="2">{{ exercice }}</th>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th style="width:{{ width_montant }}%;">Compte</th>
+                    <th style="width:{{ width_libelle }}%;">Intitul&eacute;</th>
+                    {% if exercices|length == 1 %}
+                        <th style="width:{{ width_montant }}%;">D&eacute;bit</th>
+                        <th style="width:{{ width_montant }}%;" class="credit">Cr&eacute;dit</th>
+                    {% endif %}
+                    {% for exercice in exercices %}
+                        <th style="width:{{ width_montant }}%;">Solde&nbsp;D&eacute;bit</th>
+                        <th style="width:{{ width_montant }}%;" class="credit">Solde&nbsp;Cr&eacute;dit</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for tr in array_tr %}
+                    <tr class="{{ (tr[2] == '') ? 'gray gras' : '' }}">
+                        {% for i in 2..(tr|length - 1) %}
+                            <td class="{{ (i != 2 and i != 3 and not (i is divisibleby(2))) ? 'credit' : ''  }}" align="{{ (i > 3) ? 'right' : '' }}">{{ tr[i]|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {# balance agee #}
+    {% if etat > 2 and etat < 5 %}
+        {% set index_ibox = 0 %}
+        {% for ibox in array_tr %}
+            {% set index_ibox = index_ibox + 1 %}
+            {% set fc = (etat == 3) ? 'Fournisseur' : 'Client' %}
+            {% set dc = (ibox.d == 1) ? 'D&eacute;bit' : 'Cr&eacute;dit' %}
+            {% set width_montant = 8 %}
+            {% set width_libelle = 98 - ((periode_agee|length + 2) * width_montant)  %}
+            <table class="table-donnee" border="1" style="width:100%;">
+                {% if index_ibox != array_tr|length %}
+                    <thead>
+                        <tr>
+                            <th style="width: {{ width_montant }}%">Compte</th>
+                            <th style="width: {{ width_libelle }}%">{{ fc }}&nbsp;{{ dc|raw }}eur</th>
+                            {% for i in 0..(periode_agee|length - 1) %}
+                                {% if periode_agee|length == 1 %}
+                                    {% set entete = '' %}
+                                {% elseif i == 0 %}
+                                    {% set entete = 'Plus de ' ~ periode_agee[i] %}
+                                {% elseif i == (periode_agee|length - 1) %}
+                                    {% set entete = 'Moins de ' ~ periode_agee[i - 1] %}
+                                {% else %}
+                                    {% set entete = 'De ' ~ periode_agee[i] ~ ' &agrave; ' ~ periode_agee[i - 1] %}
+                                {% endif %}
+                                <th style="width: {{ width_montant }}%">{{ entete|raw }}</th>
+                            {% endfor %}
+                            <th style="width: {{ width_montant }}%">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tr in ibox.t %}
+                            <tr>
+                                {% for i in 0..(tr|length - 1) %}
+                                    <td align="{{ (i > 1) ? 'right' : '' }}">{{ tr[i] }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+                {% for tr in ibox.f %}
+                    <tr class="gras">
+                        {% set total_libelle = (index_ibox == array_tr|length) ? 'TOTAL GENERAL' : fc ~ 's' ~ ' ' ~ dc ~ 'eurs' %}
+                        <th style="width: {{ width_montant }}%"></th>
+                        <th style="width: {{ width_libelle }}%">{{ total_libelle|raw }}</th>
+                        {% for td in tr %}
+                            <th style="width: {{ width_montant }}%" class="droite">{{ td|raw }}</th>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <div style="height: 10px;"></div>
+        {% endfor %}
+    {% endif %}
+
+    {# journaux #}
+    {% if etat == 5 %}
+        <table class="table-donnee" border="1" style="width: 100%">
+            <thead>
+                <tr>
+                    <th style="width: 10%">Date</th>
+                    <th style="width: 8%">Journal</th>
+                    <th style="width: 10%">Compte</th>
+                    <th style="width: 10%">Pi&egrave;ce</th>
+                    <th style="width: 42%">Libell&eacute; op&eacute;ration</th>
+                    <th style="width: 10%">D&eacute;bit</th>
+                    <th style="width: 10%">Cr&eacute;dit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tr in array_tr %}
+                    <tr class="{{ (tr[0] == '') ? 'gras gray' : '' }}">
+                        {% for i in 2..(tr|length - 1) %}
+                            {% set val = tr[i] %}
+                            {% if i == 6 and tr[i]|length > 50 %}
+                                {% set spliter = tr[i]|split(' ') %}
+                                {% set long = spliter[0]|length %}
+                                {% set val = '' %}
+                                {% set part = val %}
+                                {% for split in spliter %}
+                                    {% if (part ~ split)|length < 50 %}
+                                        {% set val = val ~ ' ' ~ split %}
+                                        {% set part = val %}
+                                    {% else %}
+                                        {% set val = val ~ '<br>'|raw ~ split %}
+                                        {% set part = split %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <td align="{{ (i > 6) ? 'right' : 0 }}">{{ val|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {# journal centralisateur #}
+    {% if etat == 6 %}
+        <table class="table-donnee" border="1" style="width: 100%">
+            <thead>
+                <tr>
+                    <th style="width: 15%">Date</th>
+                    <th style="width: 7%">Journal</th>
+                    <th style="width: 48%">Libell&eacute; journal</th>
+                    <th style="width: 15%">Total D&eacute;bit</th>
+                    <th style="width: 15%">Total Cr&eacute;dit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tr in array_tr %}
+                    <tr class="{{ (tr[0] == '') ? 'gras gray' : '' }}">
+                        {% for i in 0..(tr|length - 1) %}
+                            <td align="{{ (i > 2) ? 'right' : '' }}">{{ tr[i]|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {# grand livre #}
+    {% if etat > 6 and etat < 10 %}
+        {% for ibox in array_tr %}
+            {% set compte = ibox.c %}
+            <table class="table-donnee" border="1" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th colspan="9" class="gauche">{{ compte }}&nbsp;:&nbsp;{{ ibox.i }}</th>
+                    </tr>
+                    <tr>
+                        <th style="width:8%;">Date</th>
+                        <th style="width:8%;">Journal</th>
+                        <th style="width:12%;">Pi&egrave;ce</th>
+                        <th style="width:30%;">Libell&eacute;</th>
+                        <th style="width:8%;">D&eacute;bit</th>
+                        <th style="width:8%;">Cr&eacute;dit</th>
+                        <th style="width:5%;">L</th>
+                        <th style="width:8%;">Solde D&eacute;bit</th>
+                        <th style="width:8%;">Solde Cr&eacute;dit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for tr in ibox.t %}
+                    <tr>
+                        {% for i in 0..(tr|length - 1) %}
+                            {% set val = tr[i] %}
+                            {% if i == 3 and val|length > 40 %}
+                                {% set spliter = val|split(' ') %}
+                                {% set long = spliter[0]|length %}
+                                {% set val = '' %}
+                                {% set part = val %}
+                                {% for split in spliter %}
+                                    {% if (part ~ split)|length < 40 %}
+                                        {% set val = val ~ ' ' ~ split %}
+                                        {% set part = val %}
+                                    {% else %}
+                                        {% set val = val ~ '<br>' ~ split %}
+                                        {% set part = split %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <td>{{ val|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+                {% for tr in ibox.f %}
+                    <tr>
+                        <th colspan="4">Totaux&nbsp;du&nbsp;compte&nbsp;{{ compte }}</th>
+                        {% for td in tr %}
+                            <th>{{ td }}</th>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <div style="height: 10px;"></div>
+        {% endfor %}
+    {% endif %}
+</div>

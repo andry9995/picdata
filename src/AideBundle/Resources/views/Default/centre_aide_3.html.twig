@@ -1,0 +1,200 @@
+{% extends 'AideBundle:Default:index.html.twig' %}
+
+
+{% block javascripts %}
+
+   {{ parent() }}
+
+    <script src="{{ asset('js/plugins/summernote/summernote.js') }}"></script>
+    <script src="{{ asset('js/plugins/summernote/summernote-fr-FR.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/summernote/summernote.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/plugins/summernote/summernote-bs4.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+{% endblock %}
+
+
+{% block navigation %}
+
+    <div class="col-md-6">
+    {% if aide3 is defined %}
+
+        <ol class="breadcrumb">
+            {% if type == 0%}
+                <li>
+                    <a href="{{ path('centre_aide') }}">Centre d'aide PicData</a>
+                </li>
+                <li>
+                    <a href="{{ path('centre_aide_2', {'json': aide3.aide2.aide1.id }) }}">{{ aide3.aide2.aide1.titre }}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{{ path('guide_utilisation') }}">Guides d'utilisation</a>
+                </li>
+                <li>
+                    <a href="{{ path('centre_aide_2', {'json': aide3.aide2.aide1.id, 'type':type }) }}">{{ aide3.aide2.aide1.titre }}</a>
+                </li>
+            {% endif %}
+
+
+            <li>
+                {{ aide3.titre }}
+            </li>
+        </ol>
+
+    {% endif %}
+    </div>
+
+    {% if isAdmin %}
+        <div class="col-md-3">
+            <select class="form-control m-b" name="tpe" id="js_type_texte">
+                <option value="0">Experts Comptables</option>
+                <option value="1">Client final</option>
+            </select>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block contenu_aide %}
+
+
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="col-sm-9">
+                    <div class="ibox ibox-shadow">
+
+                        {#{% if isAdmin %}#}
+
+                            <div class="ibox-title">
+
+
+                                <div class="ibox-tools">
+
+
+                                    {% if isAdmin %}
+                                        {% if type == 0 %}
+                                            <a id="js_edit_menu_aide_3" data-id="{{ (aide3 is null) ? '' : aide3.id }}">Menu associé&nbsp;<i class="fa fa-bars"></i></a>&nbsp;&nbsp;
+                                            <a id="js_edit_aide_3_associe" datatype="{{ type }}" data-id="{{ (aide3 is null) ? '' : aide3.id }}">Aides associées&nbsp;<i class="fa fa-clipboard"></i></a>&nbsp;&nbsp;
+                                        {% endif %}
+                                        <a id="js_edit_mot_cle_aide_3" data-id="{{ (aide3 is null) ? '' : aide3.id }}">Mots clés&nbsp;<i class="fa fa-key"></i></a>&nbsp;&nbsp;
+                                        <a id="js_edit_texte_aide_3" data-id="{{ (aide3 is null) ? '' : aide3.id }}">Modifier Texte&nbsp;<i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                        <a id="js_save_texte_aide_3">Enregistrer&nbsp;<i class="fa fa-save"></i></a>
+                                    {% endif %}
+
+
+                                    {% if aidePrecedent is not null %}
+                                        <a data-id="{{ aidePrecedent.id }}" href="{{ path('centre_aide_3', {'json': aidePrecedent.id, 'type': type}) }}">
+                                            <i class="fa fa-caret-left"></i>&nbsp;Précédent&nbsp;&nbsp;</a>
+                                    {% endif %}
+
+                                    {% if aideSuivant is not null %}
+                                        <a data-id="{{ aideSuivant.id }}" href="{{ path('centre_aide_3', {'json': aideSuivant.id, 'type': type}) }}">
+                                            &nbsp;Suivant&nbsp;<i class="fa fa-caret-right"></i></a>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+
+                         {#{% endif %}#}
+
+                        <div class="ibox-content no-padding ">
+
+                            <div class="scroller">
+
+                                <div class="js_aide_3_contenu note-editor wrapper p-md ">
+                                    {{ (aide3Contenu is null) ? '' : aide3Contenu.contenu|raw }}
+                                </div>
+
+                                {#<div class="js_aide_3_btn pull-right">#}
+
+                                    {#{% if aidePrecedent is not null %}#}
+                                        {#<a class="href3" data-id="{{ aidePrecedent.id }}" href="{{ path('centre_aide_3', {'json': aidePrecedent.id}) }}">#}
+                                            {#<i class="fa fa-caret-left"></i>&nbsp;Précédent&nbsp;&nbsp;</a>#}
+                                    {#{% endif %}#}
+
+                                    {#{% if aideSuivant is not null %}#}
+                                        {#<a class="href3" data-id="{{ aideSuivant.id }}" href="{{ path('centre_aide_3', {'json': aideSuivant.id}) }}">#}
+                                            {#&nbsp;Suivant&nbsp;<i class="fa fa-caret-right"></i></a>#}
+                                    {#{% endif %}#}
+
+
+                                {#</div>#}
+
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="ibox ibox-shadow">
+                    <div class="ibox-title">
+                    <h1>Articles associés</h1>
+                    </div>
+
+                    <div class="ibox-content">
+                        <ul class="list-unstyled file-list">
+                        {% for aideAssocie in aideAssocies %}
+                           <li>
+                            <a class="href3" data-id="{{ aideAssocie.aide3Associe.id }}" href="{{ path('centre_aide_3', {'json': aideAssocie.aide3Associe.id}) }}">{{ aideAssocie.aide3Associe.titre }}</a>
+                           </li>
+                        {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="ibox ibox-shadow">
+                    <div class="ibox-title">
+                        <h1>Articles consultés récemment</h1>
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <ul class="list-unstyled file-list">
+                        {% for aideRecent in aideRecents %}
+                            <li>
+                            <a class="href3" data-id="{{ aideRecent.aide3.id }}" href="{{ path('centre_aide_3', {'json': aideRecent.aide3.id}) }}">{{ aideRecent.aide3.titre }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="col-md-3"></div>
+
+    </div>
+
+
+    <div class="row">
+        {{ include('AideBundle:Default:centre_aide_3_menu_modal.html.twig') }}
+    </div>
+
+    <div class="row">
+        {{ include('AideBundle:Default:centre_aide_3_mot_cles_modal.html.twig') }}
+    </div>
+
+    <div class="row">
+        {{ include('AideBundle:Default:centre_aide_3_aide_associe_modal.html.twig') }}
+    </div>
+
+
+{% endblock %}

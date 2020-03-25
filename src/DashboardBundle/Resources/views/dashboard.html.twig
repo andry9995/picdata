@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block titre %}TABLEAU DE BORD - PICDATA{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% if clientTheme.getCssTheme() is not null %}
+        <link id="css-theme" rel="stylesheet" href="{{ asset('css/themes/' ~ clientTheme.getCssTheme()) }}?1.1"/>
+    {% else %}
+        <link id="css-theme" rel="stylesheet" href="{{ asset('css/themes/scriptura.css') }}?1.1"/>
+    {% endif %}
+    <link rel="stylesheet" href="{{ asset('css/communs.css') }}"/>
+{% endblock %}
+
+{% block menu_left %}{{ render(controller('MenuBundle:Menu:menuLeft')) }}{% endblock %}
+{% block menu_top %}{{ render(controller('MenuBundle:Menu:menuTop')) }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/dropzone/dropzone.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }} "></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('bundles/dashboard/js/index.js') }} "></script>
+{% endblock %}

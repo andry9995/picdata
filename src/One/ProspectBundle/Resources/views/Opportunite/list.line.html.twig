@@ -1,0 +1,64 @@
+{% if opportunites|length >= 0 or period != 'all' %}
+    <div class="list-view hidden">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="select-bar hidden">
+                    <span class="pull-left elements-selected"></span>
+                    <a class="pull-left unckecked-all" onclick="uncheckAll('opportunite');">tout désélectionner</a>
+                    <button class="btn btn-danger pull-right delete-selected" onclick="deleteSelectedOpportunite();">Supprimer</button>
+                    <a class="pull-right cancel-select" onclick="uncheckAll('opportunite');">Annuler</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkall" onchange="toggleAll('opportunite');" /></th>
+                        <th>Date</th>
+                        <th>Opportunité</th>
+                        <th>Client/Prospect</th>
+                        <th>Prochaine action</th>
+                        <th>Etape</th>
+                        <th>Revenu espéré</th>
+                        <th>Probabilité</th>
+                        <th class="action"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for opportunite in opportunites %}
+                        <tr>
+                            <td><input type="checkbox" class="element" value="{{ opportunite.id }}" onchange="toggleThis('opportunite');" /></td>
+                            <td>{{ opportunite.cloture|date('d/m/Y') }}</td>
+                            <td><a onclick="loadShowOpportunite({{ opportunite.id }});">{{ opportunite.nom }}</a></td>
+                            <td><a onclick="setSort('');updateView('bloc');loadShowProspect({{ opportunite.tiers.id }});">{{ opportunite.tiers.intitule }}</a></td>
+                            {#<td>{% if actions[opportunite.id] is defined %}{{ actions[opportunite.id][0].sujet }}{% endif %}</td>#}
+                            <td>
+                                {% if actions[opportunite.id] is defined %}
+                                    {{ actions[opportunite.id].sujet }}
+                                {% endif %}
+                            </td>
+                            <td>{{ opportunite.oneStatusOpp.nom }}</td>
+                            <td>{{ opportunite.montant|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                            <td>{% if opportunite.oneProbabilite %}{{ opportunite.oneProbabilite.pourcentage~'%' }}{% endif %}</td>
+                            <td>
+                                <div class="dropdown">
+                            <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                            </span>
+                                    <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                        <li class="remove-action">
+                                            <a onclick="deleteOpportunite({{ opportunite.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}

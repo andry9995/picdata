@@ -1,0 +1,55 @@
+drt_ecriture:
+    path:     /
+    defaults: { _controller: DrtBundle:Ecriture:ecritures }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_ecriture_change_isntruction:
+    path:     /instruction/change
+    defaults: { _controller: DrtBundle:Ecriture:instructionChange }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_ecriture_lettrer:
+    path:     /lettrer
+    defaults: { _controller: DrtBundle:Ecriture:lettrer }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_ecriture_lettrer_image:
+    path:     /lettre/image
+    defaults: { _controller: DrtBundle:Ecriture:lettrerImage }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_ecriture_image_uploader:
+    path:     /image_uploader
+    defaults: { _controller: DrtBundle:Ecriture:imageUploader }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_ecriture_updated:
+    path:     /updated
+    defaults: { _controller: DrtBundle:Ecriture:ecriture }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_ecriture_generate_xls:
+    path:     /export
+    defaults: { _controller: DrtBundle:Ecriture:generateXls }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_ecriture_controle:
+    path:     /controle
+    defaults: { _controller: DrtBundle:Ecriture:controle }
+    methods:  [POST]
+    options:
+        expose: true

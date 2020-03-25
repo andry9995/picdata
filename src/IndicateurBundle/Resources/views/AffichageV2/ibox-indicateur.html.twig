@@ -1,0 +1,137 @@
+{% set class_btn_group = 'btn-group btn-group-xs' %}
+{% set class_btn = 'btn btn-xs btn-white' %}
+
+<div class="ibox ibox-shadow js_indicateur_item" data-id_ncr="{{ indicateur.id }}" data-id="{{ indicateur.id|boost }}" data-number="{{ indicateur.id }}" data-type_operation="{{ indicateur.typeOperation }}">
+    <div class="ibox-title">
+        <h5 class="js_cl_libelle_indicateur">{{ indicateur.libelle }}</h5>
+        <div class="ibox-tools">
+            {# periode #}
+            <span class="{{ class_btn }} js_periode" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ datepicker }}">
+                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                <span>&nbsp;P&eacute;riode</span>
+                <input type="hidden" class="js_hidden_periode_binary" value="{{ indicateur.periodeBinary }}">
+            </span>
+
+            {# analyse #}
+            <div class="{{ class_btn_group }} js_ul_analyse">
+                <button data-toggle="dropdown" class="{{ class_btn }} dropdown-toggle">
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                    <span>&nbsp;Analyse</span>
+                </button>
+                <ul class="dropdown-menu js_ul_analyse">
+                    {% set analyse_spliter = indicateur.analyseBinary|split('') %}
+
+                    {% set check = 0 %}
+
+                    {% if analyse_spliter[1] == '1' %}
+                        <li class="js_analyse active" data-type="0"><a href="#">Evolution</a></li>
+                        {% set check = 1 %}
+                    {% endif %}
+                    {% if analyse_spliter[2] == '1' and indicateur.typeOperation != 1 %}
+                        <li class="js_analyse {{ (check == 0) ? 'active' : '' }}" data-type="1"><a href="#">Comparaison</a></li>
+                        {% set check = 1 %}
+                    {% endif %}
+                    {% if analyse_spliter[3] == '1' %}
+                        <li class="js_analyse {{ (check == 0) ? 'active' : '' }}" data-type="2"><a href="#">Cumule</a></li>
+                        {% set check = 1 %}
+                    {% endif %}
+                </ul>
+            </div>
+
+            {# graphe #}
+            <div class="{{ class_btn_group }} js_ul_graphe">
+                {% set graphes_each = (indicateur.graphes|length != 0) ? indicateur.graphes : graphes %}
+                <span data-toggle="dropdown" class="{{ class_btn }} dropdown-toggle">
+                    <i class="fa {{ graphes_each[0].icon }} js_graphe_icon" aria-hidden="true"></i>
+                    <span>&nbsp;Graphe</span>
+                </span>
+                <ul class="dropdown-menu">
+                    {% set index_graphe = 0 %}
+                    {% for graphe in graphes_each %}
+                        <li class="js_graphe {{ (index_graphe == 0) ? 'active' : '' }}" data-fa="{{ graphe.icon }}" data-code="{{ graphe.code }}">
+                            <a href="#"><i class="fa {{ graphe.icon }}" aria-hidden="true"></i>&nbsp;{{ graphe.libelle }}</a>
+                        </li>
+                        {% set index_graphe = index_graphe + 1 %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {# anciennete #}
+            {% if indicateur is not null and indicateur.typeOperation == 3 %}
+                {% set html_default = include('IndicateurBundle:AffichageV2:date-anciennete.html.twig',{'date_anciennete':date_anciennete}) %}
+                <span class="{{ class_btn }} js_anciennete" {#data-anciennetes="30;60;90"#} data-date_anciennete="{{ date_anciennete|date("d-m-Y") }}"
+                        data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ html_default }}">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;
+                    <span>Anciennete</span>
+                </span>
+                <input type="hidden" class="js_default_html_anciennete" value="{{ html_default }}">
+                <div class="js_anciennete_hidden hidden">
+                    {{ html_default|raw }}
+                </div>
+
+                <input class="hidden js_date_anciennete_hidden" value="">
+            {% endif %}
+
+            {# theme #}
+            <div class="{{ class_btn_group }}">
+                {% set theme = indicateur.theme %}
+                <button data-toggle="dropdown" class="{{ class_btn }} dropdown-toggle">
+                    <i class="fa fa-modx" aria-hidden="true"></i>
+                    <span>&nbsp;Th&egrave;me</span>
+                </button>
+                <ul class="dropdown-menu js_ul_theme">
+                    <li class="js_theme {{ (theme == 0) ? 'active' : '' }}" data-type="0"><a href="#">Default</a></li>
+                    <li class="js_theme {{ (theme == 1) ? 'active' : '' }}" data-type="1"><a href="#">Dark&nbsp;unica</a></li>
+                    <li class="js_theme {{ (theme == 2) ? 'active' : '' }}" data-type="2"><a href="#">Sand&nbsp;signika</a></li>
+                    {#<li class="js_theme {{ (theme == 3) ? 'active' : '' }}" data-type="3"><a href="#">Grid&nbsp;light</a></li>#}
+                    <li class="js_theme {{ (theme == 4) ? 'active' : '' }}" data-type="4"><a href="#">Simple</a></li>
+                    {#<li class="js_theme {{ (theme == 5) ? 'active' : '' }}" data-type="5"><a href="#">Dotabuff</a></li>
+                    <li class="js_theme {{ (theme == 6) ? 'active' : '' }}" data-type="6"><a href="#">Fivethirtyeight</a></li>#}
+                    <li class="js_theme {{ (theme == 7) ? 'active' : '' }}" data-type="7"><a href="#">Economist</a></li>
+                    <li class="js_theme {{ (theme == 8) ? 'active' : '' }}" data-type="8"><a href="#">Firefox</a></li>
+                    {#<li class="js_theme {{ (theme == 9) ? 'active' : '' }}" data-type="9"><a href="#">Tufte</a></li>#}
+                </ul>
+            </div>
+
+            {# comments #}
+            {#<span class="{{ class_btn }}">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+            </span>#}
+
+            {# collapse #}
+            {#<span class="{{ class_btn }} collapse-link">
+                <i class="fa fa-chevron-up"></i>
+            </span>#}
+
+            <span class="cl_container_status_ind">
+
+            </span>
+
+            {# download #}
+            <div class="{{ class_btn_group }} cl_btn_download_table">
+                <span class="{{ class_btn }} dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </span>
+                <ul class="dropdown-menu">
+                    <li class="cl_btn_download_table_item" data-extension="pdf"><a href="#">Pdf</a></li>
+                    <li class="cl_btn_download_table_item" data-extension="xls"><a href="#">Excel</a></li>
+                </ul>
+            </div>
+
+            {# full-screen #}
+            <span class="{{ class_btn }} fullscreen-link js_full_screen">
+                <i class="fa fa-expand"></i>
+            </span>
+        </div>
+    </div>
+    <div class="ibox-content js_chart_conteneur ibox-content-small-padding scroller" id="conteneur_{{ indicateur.id }}">
+        {% if indicateur.isTable == 1 %}
+            <table id="js_table_indicateur_{{ indicateur.id }}"></table>
+        {% endif %}
+    </div>
+    <div class="ibox-footer js_chart_footer"></div>
+    <div class="hidden js_date_picker_hidden">
+        {{ datepicker|raw }}
+    </div>
+    <div class="hidden js_last_show_hidden">{{ indicateur.lastShow }}</div>
+</div>

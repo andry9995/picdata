@@ -1,0 +1,103 @@
+<div class="form-horizontal">
+
+    <div class="col-lg-4">
+        <div class="form-group">
+            <input type="text" placeholder="Titre de la dépense" class="form-control " id="js_filtre_titre" >
+        </div>
+
+        <div class="form-group">
+            <select class="form-control" id="js_filtre_remboursable">
+                <option value="2">Remboursable/Non remboursable</option>
+                <option value="0">Non remboursable</option>
+                <option value="1">Remboursable</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <select class="form-control" id="js_filtre_facturable">
+                <option value="2">Facturable/Non facturable</option>
+                <option value="0">Non facturable</option>
+                <option value="1">Facturable</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Du</label>
+            <div class="col-lg-9" >
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" class="form-control" id="js_filtre_date_du" value=" ">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Au</label>
+            <div class="col-lg-9" >
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" class="form-control" id="js_filtre_date_au" value=" ">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="form-group">
+            <select class="form-control" id="js_filtre_categorie">
+                <option value="-1">Catégories</option>
+
+                {% for categorie in categories %}
+                    <optgroup label="{{ categorie.libelle }}">
+                        {% for scd in sousCategoriesDossier %}
+                            {% if scd.ndfSouscategorie.ndfCategorie == categorie %}
+                                <option value="{{ scd.id|boost }}">{{ scd.libelle }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </optgroup>
+                {% endfor %}
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <select class="form-control" id="js_filtre_affaire">
+                <option value="-1">Affaires</option>
+                {% for affaire in affaires %}
+                    <option value="{{ affaire.id|boost }}">{{ affaire.libelle }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <select class="form-control" id="js_filtre_note">
+                <option value="-1">Notes</option>
+                {% for note in notes %}
+                    <option value="{{ note.id|boost }}">{{ note.libelle }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="ibox-content">
+
+    <div class="pull-right">
+        {#<button class="btn btn-sm" id="js_annuler_depense"><strong>Annuler</strong></button>#}
+        <button class="btn btn-sm btn-primary" id="js_filtrer_depense"><strong>Filtrer</strong></button>
+
+    </div>
+
+</div>

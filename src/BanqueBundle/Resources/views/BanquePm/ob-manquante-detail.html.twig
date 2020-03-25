@@ -1,0 +1,32 @@
+{% if margin is not defined %}
+    {% set margin = 15 %}
+{% endif %}
+
+{% if releve|length > 0 %}
+	<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important; margin-top: 5px!important;">
+	    <div class="col-lg-12">
+	        <table class="table" style="margin-bottom: 1px!important;" id="js_releve_selected">
+	            <thead>
+	            <tr>
+	                <th>Image</th>
+	                <th>Date&nbsp;Op&deg;</th>
+	                <th>Libelle&nbsp;Banque</th>
+	                <th>Mouvement</th>
+	                {#<th></th>#}
+	            </tr>
+	            </thead>
+	            <tbody>
+	            {% for r in releve %}
+		            <tr>
+		                <td class="js_show_image_ pointer text-primary">{{ r.imageNom }}</td>
+		                <td class="hidden js_id_image">{{ r.imageId|boost }}</td>
+		                <td class="js_cl_date_operation">{{ r.dateReleve|date('d/m/Y') }}</td>
+		                <td class="js_cl_etendre_recherche">{{ r.libelle }}</td>
+		                <td align="right" id="js_id_m" data-m="{{ r.credit - r.debit }}">{{ (r.credit - r.debit)|number_format(2, ',', '&nbsp;')|raw }}</td>
+		            </tr>
+	            {% endfor %}
+	            </tbody>
+	        </table>
+	    </div>
+	</div>
+{% endif %}

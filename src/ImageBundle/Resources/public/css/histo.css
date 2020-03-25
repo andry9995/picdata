@@ -1,0 +1,12 @@
+/*.file
+{
+    box-shadow: 1px 1px 10px #CCCCCC;
+}*/
+.file:hover
+{
+    box-shadow: 1px 1px 10px #000000;
+}
+.file-checked
+{
+    box-shadow: 1px 1px 10px #18a689!important;
+}

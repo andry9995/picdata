@@ -1,0 +1,30 @@
+{% set defaut = 'non-actif' %}
+{% set actif = 'btn-primary' %}
+{% set suspendu = 'btn-warning' %}
+{% set radie = 'btn-danger' %}
+
+<table class="table table-hover" id="js_table_activation">
+    <tbody>
+        {% for dossier in dossiers %}
+            {% set status = dossier.status %}
+            <tr>
+                <td width="85%">{{ dossier.nom }}</td>
+                <td>
+                    <span class="js_activation btn btn-circle {{ (status == 1) ? actif : defaut }}" data-status="1">
+                        <i class="fa fa-check"></i>
+                    </span>
+                </td>
+                <td>
+                    <span class="js_activation btn btn-circle {{ (status == 2) ? suspendu : defaut }}" data-status="2">
+                        <i class="fa fa-pause"></i>
+                    </span>    
+                </td>
+                <td>
+                    <span class="js_activation btn btn-circle {{ (status == 3) ? radie : defaut }}" data-status="3">
+                        <i class="fa fa-trash-o"></i>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

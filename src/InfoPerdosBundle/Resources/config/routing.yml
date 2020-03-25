@@ -1,0 +1,1239 @@
+info_perdos_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: InfoPerdosBundle:Default:index }
+
+########################COMPTE PCC TIERS###########################
+info_perdos_compte:
+    path: /info_perdos/compte
+    defaults: { _controller: InfoPerdosBundle:Compte:index }
+info_perdos_pccs:
+    path: /infos_perdos/pccs
+    defaults: { _controller: InfoPerdosBundle:Compte:pccs }
+    options:
+        expose: true
+    methods: [POST]
+info_perdos_set_collectif:
+    path: /info_perdos/set/collectif
+    defaults: { _controller: InfoPerdosBundle:Compte:setTier }
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_principale:
+    path: /info_perdos/principale
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:index }
+
+########################TABLES INFO PERDOS###########################
+
+info_perdos_achat:
+    path: /info_perdos/achat/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:achat, json: 1}
+    options:
+        expose: true
+
+
+info_perdos_banque:
+    path: /info_perdos/banque/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:banque, json: 1}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+info_perdos_compte_banque:
+    path: /info_perdos/compte-banque/{dossierId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:compteBanque, dossierId: -1}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+info_perdos_banqueRecap:
+    path: /info_perdos/banque-recap/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:banqueRecap, json: 1}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+
+info_perdos_banqueCompte:
+    path: /info_perdos/banque-compte/{dossierId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:banqueCompte, dossierId: 0}
+    options:
+        expose: true
+
+
+info_perdos_banqueCompte_edit:
+    path: /info_perdos/banque-compte-edit/{dossierId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:banqueCompteEdit, dossierId: 0}
+    options:
+        expose: true
+
+info_perdos_banqueCompte_remove:
+    path: /info_perdos/banque-compte-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:banqueCompteRemove}
+    options:
+        expose: true
+
+info_perdos_carburant:
+    path:    /info_perdos/carburant/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:carburant, json: 1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+info_perdos_contratPrevoyance:
+    path: /info_perdos/contrat-prevoyance
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:contratPrevoyance }
+    options:
+        expose: true
+
+info_perdos_contratPrevoyance_edit:
+    path: /info_perdos/contrat-prevoyance-edit
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:contratPrevoyanceEdit}
+    options:
+        expose: true
+
+info_perdos_contratPrevoyance_remove:
+    path: /info_perdos/contrat-prevoyance-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:contratPrevoyanceRemove}
+    options:
+        expose: true
+
+info_perdos_dossier_deboost:
+    path: /info_perdos/dossier-deboost
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:deboost}
+    options:
+        expose: true
+
+
+
+info_perdos_cloture:
+    path: /info_perdos/date-cloture/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:dateCloture, json: 1}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+
+
+info_perdos_formeAct:
+    path: /info_perdos/forme-activite/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:formeAct, json: 1}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+info_perdos_formeJuridique:
+    path: /info_perdos/forme-juridique/{json}/{jqGrid}/{withSiren}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:formeJuridique, json: 1, jqGrid: 1,withSiren: 1}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+info_perdos_mandataire_complementaire:
+    path: /info_perdos/mandataire-complementaire
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:mandataireComplementaire}
+    options:
+        expose: true
+
+info_perdos_mandataire_mandataire:
+    path: /info_perdos/mandataire-mandataire/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:mandataireMandataire, json: 1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+info_perdos_mandataire_statut:
+    path: /info_perdos/mandataire-statut
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:mandataireStatut}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+info_perdos_modeVente:
+    path: /info_perdos/mode-vente/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:modeVente, json: 1}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+info_perdos_natureActivite:
+    path: /info_perdos/nature-activite/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:natureActivite, json: 1 }
+    options:
+        expose: true
+
+info_perdos_noteFrais:
+    path: /info_perdos/note-frais
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:noteFrais}
+    options:
+        expose: true
+
+info_perdos_noteFrais_edit:
+    path: /info_perdos/note-frais-edit
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:noteFraisEdit}
+    options:
+        expose: true
+
+info_perdos_noteFrais_remove:
+    path: /info_perdos/note-frais-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:noteFraisRemove}
+    options:
+        expose: true
+
+info_perdos_periodicite:
+    path: /info_perdos/periodicite/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:periodicite, json: 1}
+    options:
+        expose: true
+
+
+
+
+info_perdos_type_prestation:
+    path: /info_perdos/prestation/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:typePrestation, json: 1}
+    options:
+        expose: true
+
+
+info_perdos_professionLiberaleCategorie:
+    path:    /info_perdos/profession-liberale-cat/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:professionLiberaleCategorie, json: 1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+info_perdos_professionLiberale:
+    path: /info_perdos/profession-liberale/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:professionLiberale, json: 1}
+    options:
+        expose: true
+
+info_perdos_professionLiberale_edit:
+    path: /info_perdos/profession-liberale-edit
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:professionLiberaleEdit}
+    options:
+        expose: true
+
+info_perdos_professionLiberale_remove:
+    path: /info_perdos/profession-liberale-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:professionLiberaleRemove}
+    options:
+        expose: true
+
+info_perdos_regimeImposition:
+    path: /info_perdos/regime-imposition/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:regimeImposition, json: 1}
+    options:
+        expose: true
+
+info_perdos_regimeImposition_edit:
+    path:     /info_perdos/regime-imposition-edit
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:regimeImpositionEdit }
+    options:
+         expose: true
+
+info_perdos_regimeImposition_remove:
+    path:     /info_perdos/regime-imposition-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:regimeImpositionRemove }
+    options:
+         expose: true
+
+info_perdos_regimeFiscal:
+    path: /info_perdos/regime-fiscal/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:regimeFiscal, json: 1 }
+    options:
+        expose: true
+
+info_perdos_regimeFiscal_edit:
+    path:     /info_perdos/regime-fiscal-edit
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:regimeFiscalEdit }
+    options:
+         expose: true
+
+info_perdos_regimeFiscal_remove:
+    path:     /info_perdos/regime-fiscal-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:regimeFiscalRemove }
+    options:
+         expose: true
+
+info_perdos_regimeSuivi:
+    path: /info_perdos/regime-suivi
+    defaults: {_controller: InfoPerdosBundle:PrincipaleTable:regimeSuivi}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+info_perdos_regimeSuivi_edit:
+    path: /info_perdos/regime-suivi-edit
+    defaults: {_controller: InfoPerdosBundle:PrincipaleTable:regimeSuiviEdit}
+    options:
+        expose: true
+
+info_perdos_regimeSuivi_remove:
+    path: /info_perdos/regime-suivi-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:regimeSuiviRemove}
+    options:
+        expose: true
+
+info_perdos_regimeTva:
+    path: /info_perdos/regime-tva/{json}
+    defaults: {_controller: InfoPerdosBundle:PrincipaleTable:regimeTva, json: 1}
+    options:
+        expose: true
+
+info_perdos_regimeTva_edit:
+    path: /info_perdos/regime-tva-edit
+    defaults: {_controller: InfoPerdosBundle:PrincipaleTable:regimeTvaEdit}
+    options:
+        expose: true
+
+info_perdos_regimeTva_remove:
+    path: /info_perdos/regime-tva-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:regimeTvaRemove}
+    options:
+        expose: true
+
+info_perdos_responsable:
+    path: info_perdos/responsable/{typeResponsable}/{dossierId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:responsable, dossierId: 0 }
+    options:
+        expose: true
+    methods: [GET]
+
+info_perdos_responsable_edit:
+    path: info_perdos/responsable-edit/{typeResponsable}/{dossierId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:responsableEdit, dossierId: 0 }
+    options:
+        expose: true
+
+info_perdos_responsable_remove:
+    path: info_perdos/responsable-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:responsableRemove}
+    options:
+        expose: true
+
+info_perdos_responsable_titre:
+    path: info_perdos/responsable-titre/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:responsableTitre, json:1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+
+info_perdos_responsable_type:
+    path: info_perdos/responsable-type}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:responsableType}
+    options:
+        expose: true
+    methods: [GET]
+
+
+info_perdos_saisie_od:
+    path: /info_perdos/saisie-od/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:saisieOdPaye, json: 1}
+    options:
+        expose: true
+
+
+info_perdos_tvaDate:
+    path: /info_perdos/tva-date/{json}
+    defaults: {_controller: InfoPerdosBundle:PrincipaleTable:tvaDate, json: 1}
+    options:
+        expose: true
+
+info_perdos_tvaMode:
+    path: /info_perdos/tva-mode/{json}
+    defaults: {_controller: InfoPerdosBundle:PrincipaleTable:tvaMode, json: 1}
+    options:
+        expose: true
+
+info_perdos_tvaFaitGenerateur:
+    path: /info_perdos/tva-fait-generateur/{json}
+    defaults: {_controller: InfoPerdosBundle:PrincipaleTable:tvaFaitGenerateur, json: 1}
+    options:
+        expose: true
+
+
+info_perdos_typeActivite:
+    path: /info_perdos/type-activite
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:typeActivite}
+    options:
+        expose: true
+
+info_perdos_typeActivite_edit:
+    path: /info_perdos/type-activite-edit
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:typeActiviteEdit}
+    options:
+        expose: true
+
+info_perdos_typeActivite_remove:
+    path: /info_perdos/type-activite-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:typeActiviteRemove}
+    options:
+        expose: true
+
+info_perdos_type_vehicule:
+    path:    /info_perdos/type-vehicule/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:typeVehicule, json: 1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+info_perdos_ndf_type_vehicule:
+    path:    /info_perdos/ndf-type-vehicule/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:ndfTypeVehicule, json: 1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+info_perdos_typeVente:
+    path: /info_perdos/type-vente
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:typeVente}
+    options:
+        expose: true
+
+info_perdos_typeVente_edit:
+    path: /info_perdos/type-vente-edit
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:typeVenteEdit}
+    options:
+        expose: true
+
+info_perdos_typeVente_remove:
+    path: /info_perdos/type-vente-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:typeVenteRemove}
+    options:
+        expose: true
+
+info_perdos_vehicule:
+    path: /info_perdos/vehicule/{dossierId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:vehicule, dossierId: 0}
+    options:
+        expose: true
+    methods: [GET]
+
+info_perdos_vehicule_edit:
+    path: /info_perdos/vehicule-edit/{dossierId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:vehiculeEdit, dossierId: 0}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_vehicule_remove:
+    path: /info_perdos/vehicule-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:vehiculeRemove}
+    options:
+        expose: true
+
+info_perdos_vehicule_combo_envoi:
+    path: /info_perdos/vehicule-carte-envoi
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:vehiculeCarteGrise}
+    options:
+        expose: true
+
+info_perdos_vehicule_marque:
+    path:    /info_perdos/vehicule-marque/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:vehiculeMarque, json: 1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+info_perdos_vehicule_proprietaire:
+    path:    /info_perdos/vehicule-proprietaire/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:vehiculeProprietaire, json: 1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+info_perdos_vehicule_nb_cv:
+    path: /info_perdos/vehicule-cv
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:vehiculeNombreCv}
+    options:
+        expose: true
+
+
+info_perdos_vente:
+    path: /info_perdos/vente/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:vente, json: 1}
+    options:
+        expose: true
+
+
+info_perdos_profession_tree:
+    path: /info_perdos/profession-liberale-tree
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:professionLiberale}
+    options:
+        expose: true
+
+info_perdos_profession_show_tree:
+    path: /info_perdos/profession-liberale-show-tree
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:professtionLiberaleShowTree}
+    options:
+        expose: true
+
+info_perdos_caracteristique:
+    path: /info_perdos/info-caracteristique/{json}
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:index, json: 0}
+    options:
+        expose: true
+
+info_perdos_code_ape:
+    path: /info_perdos/code-ape-tree/{json}
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:codeApe, json: 1}
+    options:
+        expose: true
+
+info_perdos_code_ape_show_tree:
+    path: /info_perdos/code-ape-show-tree
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:codeApeShowTree}
+    options:
+        expose: true
+
+info_perdos_edit:
+    path: /info_perdos/edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdos}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_distance:
+    path: /info_perdos/distance/{nomDossier}/{site}/{idDossier}
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:distance, idDossier: 0}
+    options:
+        expose: true
+
+info_perdos_verifier_siren:
+    path: /info_perdos/verifier-siren
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:verifierSiren}
+    options:
+        expose: true
+
+info_perdos_verifier_code_ape:
+    path: /info_perdos/verifier-ape
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:verifierCodeApe}
+    options:
+        expose: true
+
+
+info_perdos_identification_edit:
+    path: /info_perdos/identification-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosIdentification}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_information_dossier_edit_v2:
+    path: /info_perdos/identification-edit-v2
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosInformationDossierV2}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_information_dossier_siren_edit_v2:
+    path: /info_perdos/identification-siren-edit-v2
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosInformationDossierSiren}
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+info_perdos_caracteristique_edit:
+    path: /info_perdos/caracteristique-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosCaracteristique}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_regle_paiement_edit:
+    path: /info_perdos/relge-paiement-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosReglePaiement}
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_regle_paiement_client_edit:
+    path: /info_perdos/relge-paiement-client-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosReglePaiementClient}
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_regle_paiement_tiers_edit:
+    path: /info_perdos/relge-paiement-tiers-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosReglePaiementTiers}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_regle_paiement_edit_v2:
+    path: /info_perdos/relge-paiement-edit-v2
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosReglePaiementV2}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_tva_taux_edit:
+    path: /info_perdos/tva-taux-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosTvaTaux}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_docComptableFisc_edit:
+    path: /info_perdos/doc-comptable-fisc-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosDocComptableFisc}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_docJuridique_edit:
+    path: /info_perdos/doc-juridique-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosDocJuridique}
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+info_perdos_convention_edit:
+    path: /info_perdos/convention-comptable-edit
+    defaults: { _controller: InfoPerdosBundle:MethodeComptable:editInfoPerdosConvention}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_connvetion_comptable:
+    path: /info_perdos/convention-comptable/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:conventionComptable, json: 1}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+
+info_perdos_methode_comptable_edit:
+    path: /info_perdos/methode-comptable-edit
+    defaults: { _controller: InfoPerdosBundle:MethodeComptable:editMethodeComptable}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_methode_comptable_edit_v2:
+    path: /info_perdos/methode-comptable-edit-v2
+    defaults: { _controller: InfoPerdosBundle:MethodeComptable:editMethodeComptableV2}
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+info_perdos_methode_suivi_cheque:
+    path: /info_perdos/methode-suivi-cheque/{json}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:methodeSuiviCheque, json: 0}
+    options:
+        expose: true
+
+
+info_perdos_ouiNon:
+    path: /info_perdos/oui-non/{json}/{indifferent}/{sinecessaire}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:ouiNon, json: 0, indifferent: 0, sinecessaire: 0}
+    options:
+        expose: true
+
+
+info_perdos_periodicite_edit:
+    path: /info_perdos/periodicite-comptable-edit
+    defaults: { _controller: InfoPerdosBundle:MethodeComptable:editPeriodicite}
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_prestation_edit:
+    path: /info_perdos/prestation-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editInfoPerdosPrestation}
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+info_perdos_prest_fiscal_edit:
+    path: /info_perdos/prestation-fiscal-edit
+    defaults: { _controller: InfoPerdosBundle:PrestationComptable:editInfoPerdosPrestFiscal}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_prest_fiscal_edit_v2:
+    path: /info_perdos/prestation-fiscal-edit-v2
+    defaults: { _controller: InfoPerdosBundle:PrestationComptable:editInfoPerdosPrestFiscalV2}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_prest_gestion_edit:
+    path: /info_perdos/prestation-gestion-edit
+    defaults: { _controller: InfoPerdosBundle:PrestationComptable:editInfoPerdosPrestGestion}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_prest_gestion_edit_v2:
+    path: /info_perdos/prestation-gestion-edit-v2
+    defaults: { _controller: InfoPerdosBundle:PrestationComptable:editInfoPerdosPrestGestionV2}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_prest_juridique_edit:
+    path: /info_perdos/prestation-juridique-edit
+    defaults: { _controller: InfoPerdosBundle:PrestationComptable:editInfoPerdosPrestJuridique}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_prest_juridique_edit_v2:
+    path: /info_perdos/prestation-juridique-edit-v2
+    defaults: { _controller: InfoPerdosBundle:PrestationComptable:editInfoPerdosPrestJuridiqueV2}
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+
+
+info_perdos_aga_cga_edit:
+    path: /info_perdos/prestation-aga-cga-edit
+    defaults: { _controller: InfoPerdosBundle:AgaCga:editInfoPerdosAgaCga}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_aga_cga_siren_edit:
+    path: /info_perdos/aga-cga-siren-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editAgaCgaSiren}
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+
+info_perdos_verifier_instruction_dossier:
+    path: /info_perdos/verifier-instruction
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:verifierInstructionDossier}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_instruction_dossier:
+    path: /info_perdos/instruction-tous-dossiers/{json}
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:index, json: 0}
+    options:
+        expose: true
+
+
+info_perdos_instr_instruction_saisie:
+    path: /info_perdos/instr/instruction-saisie
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:editInstrInstructionSaisie}
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_instr_methode_comptable:
+    path: /info_perdos/instr/methode-comptable
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:editInstrMethodeComptable}
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+info_perdos_instr_methode_comptable_v2:
+    path: /info_perdos/instr/methode-comptable-v2
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:editInstrMethodeComptableV2}
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+info_perdos_instr_show_instruction:
+    path: /info_perdos/instruction/petite-depense/{json}
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:showInstruction}
+    options:
+        expose: true
+
+info_perdos_instr_show_instruction_texte:
+    path: /info_perdos/instruction/texte/{json}
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:showInstructionTexte}
+    options:
+        expose: true
+
+
+info_perdos_instr_show_instruction_decline:
+    path: /info_perdos/instruction/decline/{json}
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:showInstructionDecline }
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_instr_show_editeur:
+    path: /info_perdos/instruction/editeur/{json}
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:editeur, json: 0}
+    options:
+        expose: true
+
+info_perdos_instr_show_autre_logiciel:
+    path: /info_perdos/instruction/autre-logiciel
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:showAutreLogiciel }
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_instr_instruction_texte:
+    path: /info_perdos/instr/instruction-texte
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:editInstrInstructionTexte }
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_instr_instruction:
+    path: /info_perdos/instr/instruction-edit
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:editInstruction }
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_piece_jointe:
+    path: /info_perdos/piece-jointe
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:listePieceJointe }
+    methods: [GET]
+    options:
+        expose: true
+
+info_perdos_piece_jointe_upload:
+    path: /info_perdos/piece-jointe/{clientId}/{dossierId}
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:uploadPieceJointe }
+    methods: [POST]
+    options:
+        expose: true
+
+info_perdos_piece_jointe_delete:
+    path: /info_perdos/piece-jointe
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:deletePieceJointe }
+    methods: [DELETE]
+    options:
+        expose: true
+
+
+info_perdos_piece_a_envoyer:
+    path:   /info_perdos/piece-a-envoyer/{selecteur}
+    defaults:   { _controller: InfoPerdosBundle:InfoCaracteristique:pieceAEnvoyer }
+    options:
+        expose: true
+
+
+info_perdos_firmapi:
+    path: /info_perdos/firmapi/{formeJuridique}/{activite}/{dateDebutActivite}
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:firmApi, formeJuridique: -1, activite: -1, dateDebutActivite: -1}
+    options:
+        expose: true
+
+infogreffe:
+    path: /info_perdos/infogreffe/{siren}
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:infogreffeData }
+    options:
+        expose: true
+    methods: [GET]
+
+opendatasoft:
+    path: /info_perdos/opendatasoft/{siren}
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:openDatasoft }
+    options:
+        expose: true
+    methods: [GET]
+
+
+
+insee:
+    path: /info_perdos/insee/{siren}
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:inseeV2}
+    options:
+        expose: true
+    methods: [GET]
+
+info_perdos_infogreffe:
+    path: /info_perdos/infogreffe
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:infoGreffe }
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_tvatauxdossier:
+    path: /info_perdos/tvatauxdossier
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:tvaTauxDossier }
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_withRappBanque:
+    path: /info_perdos/withRappBanque
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:withRappBanque }
+    options:
+        expose: true
+    methods: [POST]
+
+
+info_perdos_withReglePaiement:
+    path: /info_perdos/withReglePaiement
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:withReglePaiment}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_withResponsable:
+    path: /info_perdos/withResponsable
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:withResponsable }
+    options:
+        expose: true
+    methods: [POST]
+
+
+#info_perdos_recap:
+#    path: /info_perdos/recap
+#    defaults: { _controller: InfoPerdosBundle:RecapInfo:index }
+#    options:
+#        expose: true
+
+
+
+
+info_perdos_instr_notif_decline:
+    path: /info_perdos/notif-instruction-decline
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:notificationInstructionDossier}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_remarque_dossier_edit:
+    path: /info_perdos/remarque-dossier-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:editRemarqueDossier}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_remarque_client_edit:
+    path: /info_perdos/remarque_client-edit
+    defaults: { _controller: InfoPerdosBundle:InstructionDossier:editRemarqueClient}
+    options:
+        expose: true
+    methods: [POST]
+
+info_perdos_recap:
+    path: /info_perdos/recapitulation/{siteId}/{clientId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:recap, siteId: 0, clientId: 0}
+    options:
+        expose: true
+
+info_perdos_recap_export:
+    path: /info_perdos/export/recapitulation/
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:exportExcel}
+    options:
+        expose: true
+
+
+
+info_perdos_scriptura:
+    path: /info_perdos/scriptura/{annee}/{mois}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:scriptura, annee: -1, mois: -1}
+    options:
+        expose: true
+
+######################### ACTIVATION DOSSIER ################################
+# Activation dossier Index
+info_perdos_activation_dossier:
+    path: /info_perdos/activation-dossier
+    defaults: { _controller: InfoPerdosBundle:ActivationDossier:index }
+    methods: [GET]
+
+#Suspendre dossier Liste
+info_perdos_activation_dossier_edit:
+    path: /info_perdos/activation-dossier/{dossier}
+    defaults: { _controller: InfoPerdosBundle:ActivationDossier:edit }
+    methods: [POST]
+    requirements:
+        dossier: \d+
+    options:
+        expose: true
+
+
+##############################SITES##############################
+#info_perdos_site_principale:
+#    path: /info_perdos/site-principale
+#    defaults: { _controller: InfoPerdosBundle:Site:index }
+#    methods: [GET]
+#
+#
+#info_perdos_site:
+#    path: /info_perdos/site/{clientId}
+#    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:site, clientId: 0}
+#    options:
+#        expose: true
+#
+#info_perdos_site_edit:
+#    path: /info_perdos/site-edit/{clientId}
+#    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:siteEdit, clientId: 0}
+#    options:
+#        expose: true
+
+
+##############################################################################
+
+
+info_perdos_site:
+    path: /info_perdos/site/{clientId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:site, clientId: 0}
+    options:
+        expose: true
+
+info_perdos_site_edit:
+    path: /info_perdos/site-edit/{clientId}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:siteEdit, clientId: 0}
+    options:
+        expose: true
+
+
+##############################################################################
+
+info_perdos_manager:
+    path: /info_perdos/manager/{clientId}/{typeresponsable}/{typecsd}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:manager, clientId: 0}
+    options:
+        expose: true
+
+info_perdos_manager_edit:
+    path: /info_perdos/manager-edit/{clientId}/{typeresponsable}/{typecsd}
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:managerEdit, clientId: 0 }
+    options:
+        expose: true
+
+info_perdos_manager_remove:
+    path: info_perdos/manager-remove
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:responsableRemove}
+    options:
+        expose: true
+
+
+
+################################################################################
+
+
+info_perdos_banque_code:
+    path: /info_perdos/banque-code
+    defaults: { _controller: InfoPerdosBundle:PrincipaleTable:banqueCode}
+    options:
+        expose: true
+    requirements:
+        json: 0|1
+
+##############################CLIENTS##############################
+client_show_edit:
+    path: client/show-edit/{clientId}
+    defaults: { _controller: InfoPerdosBundle:Client:ShowEditClient, clientId: 0}
+    methods: [GET]
+    options:
+        expose: true
+
+info_perdos_client_principale:
+    path: /info_perdos/client-principale/{json}
+    defaults: { _controller: InfoPerdosBundle:Client:index, json: 0 }
+    options:
+      expose: true
+
+info_perdos_client_edit:
+    path: /info_perdos/client-edit
+    defaults: { _controller: InfoPerdosBundle:Client:clientEdit }
+    options:
+        expose: true
+
+#Client Status Homepage
+info_perdos_client_status:
+    path: /info_perdos/client-statut
+    defaults: { _controller: InfoPerdosBundle:StatutClient:clientStatut }
+    methods: [GET]
+    options:
+        expose: true
+
+#Client Status Liste (JqGrid)
+info_perdos_client_status_liste:
+    path: /info_perdos/client-statut-liste
+    defaults: { _controller: InfoPerdosBundle:StatutClient:clientStatusListe }
+    methods: [GET]
+    options:
+        expose: true
+
+#Client Status Edit
+info_perdos_client_status_edit:
+    path: /info_perdos/client-statut/{client}
+    defaults: { _controller: InfoPerdosBundle:StatutClient:clientStatusEdit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        client: \d+
+
+#Client SMTP
+infoperdos_smtp:
+    path: /info_perdos/smtp
+    defaults: { _controller: InfoPerdosBundle:Client:smtp }
+    methods: [GET]
+
+info_perdos_site_list:
+    path: /info_perdos/site-list
+    defaults: { _controller: InfoPerdosBundle:Client:listeSite }
+    options:
+        expose: true
+
+
+info_perdos_recap_edit:
+    path: /info_perdos/recap-grid-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:recapGridEdit}
+    options:
+        expose: true
+
+
+info_perdos_check_dossier:
+    path: /info_perdos/dossier-check/{json}
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:checkDossier, json: 0 }
+    options:
+        expose: true
+
+info_perdos_check_modif_dossier:
+    path: /info_perdos/dossier-check-modif
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:checkModiDossier }
+    options:
+        expose: true
+
+
+info_perdos_instruction_dossier_edit:
+    path: /info_perdos/instruction-edit
+    defaults: { _controller: InfoPerdosBundle:InfoCaracteristique:instructionSaisieEdit }
+    options:
+        expose: true
+
+# Lettre de mission
+info_perdos_ldm:
+    path: /info_perdos/ldm
+    defaults: { _controller: InfoPerdosBundle:LettreDeMission:index }
+    methods: [GET]
+
+info_perdos_ldm_dossier:
+    path: /info_perdos/ldm-dossier
+    defaults: { _controller: InfoPerdosBundle:LettreDeMission:dossier }
+    methods: [POST]
+    options:
+        expose: true
+
+info_perdos_ldm_liste:
+    path: /info_perdos/ldm-liste
+    defaults: { _controller: InfoPerdosBundle:LettreDeMission:liste }
+    methods: [POST]
+    options:
+        expose: true
+
+info_perdos_ldm_add:
+    path: /info_perdos/ldm-add
+    defaults: { _controller: InfoPerdosBundle:LettreDeMission:add }
+    methods: [POST]
+    options:
+        expose: true
+
+info_perdos_ldm_fichier_delete:
+    path: /info_perdos/ldm-fichier-delete
+    defaults: { _controller: InfoPerdosBundle:LettreDeMission:ldmFichierDelete }
+    methods: [DELETE]
+    options:
+        expose: true
+
+info_perdos_ldm_delete:
+    path: /info_perdos/ldm-delete
+    defaults: { _controller: InfoPerdosBundle:LettreDeMission:ldmDelete }
+    methods: [DELETE]
+    options:
+        expose: true
+
+info_perdos_ldm_detail:
+    path: /info_perdos/ldm-detail/{ldm}
+    defaults: { _controller: InfoPerdosBundle:LettreDeMission:detail  }
+    methods: [GET]
+    options:
+        expose: true
+
+
+info_perdos_libelle:
+    path: /info_perdos/libelle
+    defaults: { _controller: InfoPerdosBundle:Default:libelleEcriture }
+    methods: [GET]
+
+info_perdos_libelle_save:
+    path: /info_perdos/libelle
+    defaults: { _controller: InfoPerdosBundle:Default:libelleEcritureSave }
+    methods: [POST]
+    options:
+        expose: true
+
+#info_perdos_test:
+#    path: /info_perdos/test
+#    defaults: { _controller: InfoPerdosBundle:Test:test }
+#    methods: [GET]
+
+info_perdos_upload_contrat:
+    path: /info_perdos/upload/contrat/{filename}
+    defaults: { _controller: InfoPerdosBundle:Client:uploadContrat }
+    options:
+        expose: true
+    methods: [POST]
+
+# info_perdos_delete_contart:
+#     path: /info_perdos/delete/contrat
+#     defaults: { _controller: InfoPerdosBundle:Client:deleteContrat }
+#     methods: [DELETE]
+#     options:
+#         expose: true

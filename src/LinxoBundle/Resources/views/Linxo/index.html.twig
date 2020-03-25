@@ -1,0 +1,22 @@
+{% extends 'DashboardBundle::dashboard.html.twig' %}
+
+{% block titre %}LINXO{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/linxo/js/index.js') }}"></script>
+    <script src="{{ asset('bundles/linxo/js/linxo.js') }}"></script>
+    <script src="{{ asset('bundles/linxo/js/code.js') }}"></script>
+    <script src="{{ asset('bundles/linxo/js/linxo_dossier.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    {{ include('LinxoBundle:Linxo:filtre.html.twig') }}
+
+    <div id="id_accounts_container"></div>
+{% endblock %}

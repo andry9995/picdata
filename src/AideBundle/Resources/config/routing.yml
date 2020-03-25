@@ -1,0 +1,213 @@
+aide_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AideBundle:Default:index }
+
+aide_miniature:
+    path: /aide/miniature/{json}
+    defaults: { _controller: AideBundle:Aide:miniature, json: 0}
+    methods: [POST]
+    options:
+      expose: true
+
+aide_search:
+    path: /aide/search
+    defaults: { _controller: AideBundle:Aide:centreAideSearch}
+    methods: [POST]
+    options:
+      expose: true
+
+
+aide_min_envoi_mail:
+    path: /aide/envoi-mail
+    defaults: { _controller: AideBundle:Aide:sendMail}
+    methods: [POST]
+    options:
+      expose: true
+
+aide_min_affichage:
+    path: /aide/affichage/{json}
+    defaults: { _controller: AideBundle:Aide:affichageMin, json: 0}
+    options:
+        expose: true
+
+centre_aide:
+    path: /aide/centre-aide/{type}
+    defaults: { _controller: AideBundle:Aide:centreAide, type: 'aide'}
+    options:
+        expose: true
+
+centre_aide_1_edit:
+    path: /aide/centre-aide-1-edit/{json}
+    defaults: { _controller: AideBundle:Aide:centreAide1Edit, json: 0}
+    methods: [POST]
+    options:
+        expose: true
+
+
+centre_aide_1_delete:
+    path: /aide/centre-aide-1-delete
+    defaults: { _controller: AideBundle:Aide:centreAide1Delete}
+    methods: [POST]
+    options:
+        expose: true
+
+
+centre_aide_2:
+    path: /aide/centre-aide-2/{type}/{json}
+    defaults: { _controller: AideBundle:Aide:centreAide2, type: 0}
+    methods: [GET]
+
+centre_aide_2_contenu:
+    path: /aide/centre-aide-2-contenu}
+    defaults: { _controller: AideBundle:Aide:centreAide2Contenu}
+    methods: [POST]
+    options:
+        expose: true
+
+centre_aide_2_edit:
+    path: /aide/centre-aide-2-edit/{json}
+    defaults: { _controller: AideBundle:Aide:centreAide2Edit, json: 0}
+    methods: [POST]
+    options:
+        expose: true
+
+
+centre_aide_2_delete:
+    path: /aide/centre-aide-2-delete
+    defaults: { _controller: AideBundle:Aide:centreAide2Delete}
+    methods: [POST]
+    options:
+        expose: true
+
+centre_aide_3:
+    path: /aide/centre-aide-3/{type}/{json}
+    defaults: { _controller: AideBundle:Aide:centreAide3, type: 0}
+    methods: [GET]
+    options:
+        expose: true
+
+centre_aide_3_associe:
+    path: /aide/centre-aide-3-associe/{json}
+    defaults: { _controller: AideBundle:Aide:centreAide3Associe}
+    methods: [GET]
+    options:
+        expose: true
+
+centre_aide_3_associe_edit:
+    path: /aide/centre-aide-3-associe-edit/{json}
+    defaults: { _controller: AideBundle:Aide:centreAide3AssocieEdit }
+    options:
+        expose: true
+
+
+centre_aide_3_edit:
+    path: /aide/centre-aide-3-edit
+    defaults: { _controller: AideBundle:Aide:centreAide3TextEdit}
+    methods: [POST]
+    options:
+      expose: true
+
+centre_aide_3_titre_edit:
+    path: /aide/centre-aide-3-titre-edit
+    defaults: { _controller: AideBundle:Aide:centreAide3TitreEdit}
+    methods: [POST]
+    options:
+      expose: true
+
+aide_3:
+    path: /aide/aide-3/{json}
+    defaults: { _controller: AideBundle:Aide:aide3, json: 0}
+    options:
+        expose: true
+
+aide_3_edit:
+    path: /aide/aide-3-edit/{aide_2_id}
+    defaults: { _controller: AideBundle:Aide:aide3Edit, aide_2_id: 0}
+    options:
+        expose: true
+
+aide_3_delete:
+    path: /aide/aide-3-delete
+    defaults: { _controller: AideBundle:Aide:aide3Delete}
+    options:
+        expose: true
+
+
+aide_3_menu_initialize:
+    path: /aide/aide-3-initialize
+    defaults: { _controller: AideBundle:Aide:menuEdit}
+    methods: 'POST'
+    options:
+        expose: true
+
+aide_3_menu_tree:
+    path: /aide/aide-3-tree-menu/{aide_3_id}
+    defaults: { _controller: AideBundle:Aide:menu, aide_3_id: 0}
+    options:
+        expose: true
+
+aide_3_menu_edit:
+    path: /aide/aide-3-save-menu
+    defaults: { _controller: AideBundle:Aide:menuEdit}
+    options:
+        expose: true
+
+aide_3_mot_cle_edit:
+    path: /aide/aide-3-save-mot-cle
+    defaults: { _controller: AideBundle:Aide:motCleEdit}
+    options:
+        expose: true
+
+
+aide_3_menu_form:
+    path: /aide/aide-3-menu-form
+    defaults: { _controller: AideBundle:Aide:menuForm }
+    options:
+        expose: true
+
+
+aide_3_mot_cle_form:
+    path: /aide/aide-3-mot-cle-form
+    defaults: { _controller: AideBundle:Aide:motCleForm }
+    options:
+        expose: true
+
+
+aide_3_check:
+    path: /aide/aide3-check
+    defaults: { _controller: AideBundle:Aide:centreAide3Check}
+    options:
+        expose: true
+
+aide_upload_image:
+    path: /aide/upload-image
+    defaults: { _controller: AideBundle:Aide:upload}
+    options:
+        expose: true
+
+aide_test:
+    path: /aide/test
+    defaults: { _controller: AideBundle:Aide:testMenu}
+    options:
+        expose: true
+
+aide_recent:
+    path: /aide/recent
+    defaults: { _controller: AideBundle:Aide:aideRecent}
+    options:
+        expose: true
+
+
+centre_aide_chat:
+    path: /aide/assitance-chat
+    defaults: { _controller: AideBundle:Aide:jivoChat}
+    methods: [GET]
+    options:
+        expose: true
+
+
+guide_utilisation:
+    path: /aide/centre-aide/guide
+    defaults: { _controller: AideBundle:Aide:centreAide}
+    options:
+        expose: true

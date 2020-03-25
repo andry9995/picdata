@@ -1,0 +1,50 @@
+{% extends 'user-email.html.twig' %}
+
+{% block title %}
+    Création de votre compte
+{% endblock %}
+{% block salutation %}
+    Cher Client,
+{% endblock %}
+
+{% block message %}
+    <p>
+        Nous venons de vous ouvrir un accès à notre 'Plateforme BHN.' <br>
+        Vous pourrez y déposer vos pièces, les consulter, suivre leurs envois, etc...
+    </p>
+    <p>
+        Allez sur le site <a style="color: #1ab394; text-decoration: none;" href="https://www.bhn-expertise.com">https://www.bhn-expertise.com</a>,<br>
+        puis ouvrez le menu 'Accès client' et cliquez sur 'Plateforme BHN'.
+        <img src="{{ absolute_url(asset('img/email/menu_bhn.png')) }}" alt="menu" style="margin-top: 35px; margin-bottom: 30px;">
+    </p>
+    <p>
+        Vous accéderez à la page de connexion et vous pourrez entrer votre email <br>
+        et le mot de passe suivant:<span style="color:#8a1f11;background-color:#b5ffe3;"><strong>{{ raw_password }}</strong></span><br>
+        Nous vous recommandons de Copier/Coller le mot de passe. <br>
+        Attention ce mot de passe doit être changé à votre première connexion.
+    </p>
+    <p>Il est fortement recommandé de ne pas utiliser Internet Explorer comme navigateur.<br>
+        Chrome ou Firefox sont les mieux adaptés.
+    </p>
+    <p>Si vous avez besoin d'aide envoyer un mail à <a style="color:#1ab394;text-decoration:none;" href="mailto:{{ reply_to }}">{{ reply_to }}</a>.</p>
+
+{% endblock %}
+{% block connexion %}
+    <td>
+        <table style="text-align:center;width:100%;">
+            <tr style="text-align:center;">
+                <td style="width:33%;"></td>
+                <td align="center" style="width:33%;background-color: #1ab394;border-color: #4c5764;border: 2px solid #45b7af;padding: 10px;text-align: center;">
+                    <a style="display: block;color: #ffffff;font-size: 12px;text-decoration: none;text-transform: uppercase;font-family:Arial,Helvetica,sans-serif;"
+                       href="https://comptaetgestion.fr">
+                        CONNEXION
+                    </a>
+                </td>
+                <td style="width:33%;"></td>
+            </tr>
+        </table>
+        <div style="height:25px;"></div>
+    </td>
+{% endblock %}
+{% block contentend %}
+{% endblock %}

@@ -1,0 +1,40 @@
+<div class="row white-bg" style="padding-bottom: 5px!important;">
+    <div class="col-lg-9" id="id_stat_container">
+        {#var a_categoriser = 0,
+        piece_manquante = 0,
+        affecter_avec_piece = 0,
+        piece_a_affecter = 0,
+        cle_a_valider = 0,
+        affecter_cle = 0;#}
+
+        <span class="simple_tag" id="id_total_ligne">Lignes&nbsp;<span class="badge badge-primary">0</span></span>
+        <span class="simple_tag cl_stat pointer" data-type="9" id="id_desiquilibre"><i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>&nbsp;<span class="badge badge-danger">0</span></span>
+        <span class="simple_tag cl_stat pointer" data-type="2">Lettr&eacute;es&nbsp;<span class="badge badge-info">0</span></span>
+        <span class="simple_tag cl_stat pointer" data-type="5">Imput&eacute;es&nbsp;par&nbsp;cl&eacute;&nbsp;<span class="badge badge-info">0</span></span>
+        <span class="simple_tag cl_stat pointer" data-type="3">Pi&egrave;ces&nbsp;&agrave;&nbsp;lettrer&nbsp;<span class="badge badge-info">0</span></span>
+        <span class="simple_tag cl_stat pointer" data-type="4">Cl&eacute;s&nbsp;&agrave;&nbsp;valider&nbsp;<span class="badge badge-info">0</span></span>
+        <span class="simple_tag cl_stat pointer" data-type="0">Ni&nbsp;pi&egrave;ce,ni&nbsp;cl&eacute;&nbsp;<span class="badge badge-info">0</span></span>
+        <span class="simple_tag cl_stat pointer hidden" data-type="1">Reste&nbsp;&agrave;&nbsp;justifier&nbsp;<span class="badge badge-info">0</span></span>
+        <span class="simple_tag" id="id_total_rapprocher">Rappro.&nbsp;<span class="badge badge-primary">0</span></span>
+        <span class="simple_tag pointer" id="id_show_param_rel_compl">Infos&nbsp;Compl.</span>
+        {% if us %}
+            <span class="simple_tag pointer" id="id_show_param_import">Source</span>
+        {% endif %}
+        <div class="simple_tag hidden pointer">
+            <div class="checkbox checkbox-success checkbox-inline">
+                <input type="checkbox" id="id_detailler_obs">
+                <label for="id_detailler_obs">OBs&nbsp;d&eacute;taill&eacute;es</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2" id="js_id_control"></div>
+    <div class="col-lg-1 text-right">
+        <div class="btn-group simple_tag white-bg" id="id_methode_dossier_container">
+            <span class="pointer dropdown-toggle" data-toggle="dropdown"><span class="libelle">Engagement</span><span class="badge badge-info"></span></span>
+            <ul class="dropdown-menu">
+                <li data-type="0" class="cl_methode_dossier"><a href="#">Engagement</a></li>
+                <li data-type="1" class="cl_methode_dossier"><a href="#">Tr&eacute;sorerie</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

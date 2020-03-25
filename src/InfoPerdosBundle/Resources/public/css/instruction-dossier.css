@@ -1,0 +1,37 @@
+.modal-body>div {
+    display:inline-block;
+    height:100%;
+    width:100%;
+    white-space:normal;
+    vertical-align:top;
+}
+
+input[type=checkbox]
+{
+    cursor: pointer; cursor: hand;
+}
+
+/*.form-horizontal .form-group {*/
+    /*margin-right: -50px;*/
+    /*margin-left: -15px;*/
+/*}*/
+
+textarea[name="txt-decline"]{
+    height: 200px;
+}
+
+.jq-div{
+    height: 300px;
+}
+
+
+.qitem {
+    border: 1px black solid;
+}
+
+
+#qselected, #qlist {
+    width: 300px;
+    height:200px;
+    border: 1px black solid;
+}

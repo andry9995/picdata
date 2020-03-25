@@ -1,0 +1,3 @@
+one_utilisateurs:
+    path:     /one/utilisateurs
+    defaults: { _controller: OneUtilisateurBundle:Default:index }

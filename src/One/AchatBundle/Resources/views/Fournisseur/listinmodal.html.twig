@@ -1,0 +1,41 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-new-fournisseur-title">Choisir un Fournisseur</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nom</th>
+                        <th>Note</th>
+                        <th>Ville</th>
+                        <th>Code Postal</th>
+                        <th>Pays</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for fournisseur in fournisseurs %}
+                        <tr>
+                            <td><input type="checkbox" class="account" value="{{ fournisseur.id~';'~fournisseur.numeroFournisseur ~';'~fournisseur.nomVisible }}"></td>
+                            <td>{{ fournisseur.nomVisible }}</td>
+                            <td>{{ fournisseur.note}}</td>
+                            <td>{{ fournisseur.ville }}</td>
+                            <td>{{ fournisseur.codePostal }}</td>
+                            <td>{{ (fournisseur.pays is null) ? '' : fournisseur.pays.nom }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" onclick="selectAccount();">Sélectionner</button>
+    </div>
+</div>

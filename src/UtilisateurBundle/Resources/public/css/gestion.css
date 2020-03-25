@@ -1,0 +1,41 @@
+.chosen-container-multi .chosen-choices li.search-choice {
+    display: block !important;
+}
+
+.list-group-item .user-role {
+    color: #1ab394;
+}
+
+.list-group-item.active .user-role {
+    color: #fff;
+}
+
+div.nestable-menu .dd-item > button {
+    font-family: FontAwesome;
+    height: 34px;
+    width: 33px;
+    color: #c1c1c1;
+}
+div.nestable-menu .dd-item > button:before {
+    content: "\f067";
+}
+div.nestable-menu .dd-item > button[data-action="collapse"]:before {
+    content: "\f068";
+}
+
+div.nestable-menu .dd-handle {
+    color: inherit;
+    border: 1px dashed #e7eaec;
+    background: #f3f3f4;
+    padding: 10px;
+}
+div.nestable-menu .dd-handle:hover {
+    /*background: #bbb;*/
+}
+div.nestable-menu span.label {
+    margin-right: 10px;
+}
+
+.badge.role {
+    width: 85px;
+}

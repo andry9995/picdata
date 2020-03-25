@@ -1,0 +1,89 @@
+{#{% extends 'NoteFraisBundle:Default:index.html.twig' %}#}
+
+{#{% block wrapper_content %}#}
+
+    {#{{ include('NoteFraisBundle:Default:navigation.html.twig') }}#}
+
+    {#<br/>#}
+
+    <div class="tabs-container">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#tab-note">Notes</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-affaire">Affaires</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-note">
+
+                <div class="panel-body">
+                    <div class="col-lg-12">
+
+                        <div class="row">
+                            {{ include('NoteFraisBundle:Note:noteAction.html.twig') }}
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row note-table-contenu">
+                                {{ include('NoteFraisBundle:Note:noteTable.html.twig') }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            {{ include('NoteFraisBundle:Note:noteModal.html.twig') }}
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane" id="tab-affaire" >
+                <div class="panel-body">
+                    <div class="col-lg-12">
+
+                        <div class="row">
+                            {{ include('NoteFraisBundle:Administration/Affaire:affaireAction.html.twig') }}
+                        </div>
+
+                        <div class="ibox-content">
+                            <div class="row affaire-table">
+                                {{ include('NoteFraisBundle:Administration/Affaire:affaireTable.html.twig') }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            {{ include('NoteFraisBundle:Administration/Affaire:affaireModal.html.twig') }}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {#<div class="row" id="tab-note">#}
+
+        {#<div class="col-lg-12">#}
+
+            {#<div class="row">#}
+                {#{{ include('NoteFraisBundle:Note:noteAction.html.twig') }}#}
+            {#</div>#}
+            {#<div class="ibox-content">#}
+                {#<div class="row note-table-contenu">#}
+                    {#{{ include('NoteFraisBundle:Note:noteTable.html.twig') }}#}
+                {#</div>#}
+            {#</div>#}
+
+            {#<div class="row">#}
+                {#{{ include('NoteFraisBundle:Note:noteModal.html.twig') }}#}
+            {#</div>#}
+
+        {#</div>#}
+
+
+    {#</div>#}
+
+    {#{{ include('NoteFraisBundle:Default:modal.html.twig') }}#}
+
+{#{% endblock %}#}

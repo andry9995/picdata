@@ -1,0 +1,24 @@
+<form class="form-horizontal" id="js_form_meth_convention_comptable">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Convention comptable</label>
+                <div class="col-lg-6">
+                    <select class="form-control meth_convention_comptable"  name="convention_comptable" id="js_convention_compbtale"
+                    data-field="ConventionComptable">
+
+                        <option></option>
+                        {% set conventionComptableDossier = (methodeComptable is null) ? -1 : (methodeComptable.conventionComptable.id is not defined) ? -1 : methodeComptable.conventionComptable.id %}
+
+                        {% for conventionComptable in conventionCompables %}
+                            <option value="{{ conventionComptable.id }}" {{ (conventionComptableDossier == conventionComptable.id) ? 'selected' : '' }}>
+                                {{ (conventionComptable.libelle !='') ? (conventionComptable.libelle) : '' }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

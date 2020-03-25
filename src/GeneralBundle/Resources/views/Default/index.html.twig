@@ -1,0 +1,59 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}
+    Pilotage - Tableaux de bord
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/general/css/custom-jqgrid.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/general/css/dashboard.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/general/js/dashboard.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/common-dash.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/travaux-a-realiser.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/mois-en-cours.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/mois-prochain.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/comptes-bancaires.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/bancaires-manquantes.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/bancaires-en-cours.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/pieces-manquantes.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/travaux-en-cours.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/realisees-depassees.js') }}"></script>
+    <script src="{{ asset('bundles/general/js/anciennete.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+
+	{% set hidden = '' %}
+	{% if not is_granted('ROLE_DOSSIER_SCAN') %}
+	    {% set hidden = 'hidden' %}
+	{% endif %}
+
+	<div class="row">
+        {{ include('GeneralBundle:Default:filtre.html.twig')}}
+	</div>
+    <span class="dash-type hidden" data-type="{{ type }}"></span>
+    {% if type %}
+        <div class="row">
+            <div class="col-lg-12">
+                {{ include('GeneralBundle:Grid:travaux-a-realiser.html.twig')}}
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+        	<div class="col-lg-4">
+              	{{ include('GeneralBundle:Grid:comptes-bancaires.html.twig')}}
+        	</div>
+        	<div class="col-lg-4">
+              	{{ include('GeneralBundle:Grid:bancaires-manquantes.html.twig')}}
+        	</div>
+        	<div class="col-lg-4">
+              	{{ include('GeneralBundle:Grid:bancaires-en-cours.html.twig')}}
+        	</div>
+        </div>
+    {% endif %}
+{% endblock %}

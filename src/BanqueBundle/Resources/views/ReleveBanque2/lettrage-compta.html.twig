@@ -1,0 +1,48 @@
+<div class="row bande white-bg" data-index="{{ index }}" data-id="{{ bscaId }}">
+    <div class="col-lg-12">
+        <table class="table" style="margin-bottom: 1px!important;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Image</th>
+                    <th>Libell&eacute;</th>
+                    <th>Bilan</th>
+                    <th>Tva</th>
+                    <th>Résultat</th>
+                    <th>Mouvement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-id="{{ bsca.id|boost }}">
+                    <td class="">{{ bsca.date ? bsca.date|date('d/m/Y') }}</td>
+                    <td class="">{{ bsca.image.nom }}</td>
+                    <td class="">{{ bsca.libelle }}</td>
+
+                    {% if bsca.bilan %}
+                        <td class="cl_compte_a_chercher pointer" data-type="{{ bsca.bilan.t }}" data-id="{{ bsca.bilan.id|boost }}">{{ bsca.bilan.c }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+
+                    {% if bsca.tva %}
+                        <td class="cl_compte_a_chercher pointer" data-type="{{ bsca.tva.t }}" data-id="{{ bsca.tva.id|boost }}">{{ bsca.tva.c }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+
+                    {% if bsca.resultat %}
+                        <td class="cl_compte_a_chercher pointer" data-type="{{ bsca.resultat.t }}" data-id="{{ bsca.resultat.id|boost }}">{{ bsca.resultat.c }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+
+                    <td align="right" class="">{{ bsca.montant|number_format(2, ',', '&nbsp;')|raw }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-12 cl_container_table">
+
+    </div>
+</div>

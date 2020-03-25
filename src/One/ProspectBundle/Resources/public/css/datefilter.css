@@ -1,0 +1,33 @@
+/* 
+    Created by Netbeans
+    Created on : 28 juil. 2017, 11:15:13
+    Author : Mamy Rakotonirina
+*/
+
+.sort-date .dropdown-menu {
+    min-width: 250px;
+}
+.sort-date .date-field {
+    background: #F3F3F4;
+    border-bottom: 1px solid #E5E5E5;
+    padding: 10px;
+}
+.sort-date .date-field .startdate {
+    float: left;
+    margin-right: 10px;
+    padding: 6px;
+    width: 90px;
+}
+.sort-date .date-field .enddate {
+    float: left;
+    margin-right: 10px;
+    padding: 6px;
+    width: 90px;
+}
+.sort-date .date-field span {
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    color: #1BB394;
+    cursor: pointer;
+    padding: 8px;
+}

@@ -1,0 +1,5 @@
+<select id="js_rubrique" class="form-control">
+    {% for rubrique in rubriques %}
+        <option value="{{ rubrique.id|boost }}">{{ rubrique.libelle }}</option>
+    {% endfor %}
+</select>

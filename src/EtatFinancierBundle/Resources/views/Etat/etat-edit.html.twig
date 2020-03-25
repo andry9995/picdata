@@ -1,0 +1,41 @@
+<div method="get" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Libelle</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" value="{{ etat.libelle }}" id="js_etat_libelle">
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Calcule</label>
+        <div class="col-sm-10" id="js_etat_status">
+            <div class="i-checks"><label><input type="radio" class="js_etat_calcule" name="status" value="4" {{ (etat.calcul == 4) ? 'checked' : '' }}>&nbsp;&nbsp;Aucun</label></div>
+            <div class="i-checks"><label><input type="radio" class="js_etat_calcule" name="status" value="1" {{ (etat.calcul == 1) ? 'checked' : '' }}>&nbsp;&nbsp;Sous&nbsp;Total</label></div>
+            <div class="i-checks"><label><input type="radio" class="js_etat_calcule" name="status" value="2" {{ (etat.calcul == 2) ? 'checked' : '' }}>&nbsp;&nbsp;Total&nbsp;général</label></div>
+            <div class="i-checks"><label><input type="radio" class="js_etat_calcule" name="status" value="3" {{ (etat.calcul == 3) ? 'checked' : '' }}>&nbsp;&nbsp;Formule</label></div>
+            <div class="i-checks"><label><input type="radio" class="js_etat_calcule" name="status" value="5" {{ (etat.calcul == 5) ? 'checked' : '' }}>&nbsp;&nbsp;Total et Formule</label></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Parent</label>
+        <div class="col-sm-10">
+            <select id="js_etat_parent" class="form-control">
+                <option value="0">Aucun</option>
+                {% for etat_ami in etats_amis %}
+                    <option value="{{ etat_ami.id }}">{{ etat_ami.libelle }}</option>
+                    {% for etat_ami_child in etat_ami.childs %}
+                        <option value="{{ etat_ami_child.id }}">&nbsp;-{{ etat_ami_child.libelle }}</option>
+                        {% for etat_ami_child_2 in etat_ami_child.childs %}
+                            <option value="{{ etat_ami_child_2.id }}">&nbsp;&nbsp;.{{ etat_ami_child_2.libelle }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group text-right">
+        <button class="btn btn-primary" id="js_enregistrer_etat"><strong><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Enregistrer</strong></button>
+    </div>
+    <input type="hidden" id="js_etat_id" value="{{ etat.id }}">
+    <input type="hidden" id="js_etat_parent_id" value="{{ (etat.etat != null) ? etat.etat.id : 0 }}">
+</div>

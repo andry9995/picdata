@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-lg-4">
+        <span class="label label-default">Plan&nbsp;Comptable&nbsp;G&eacute;neral</span>
+        <div class="scroller" style="height: 230px" id="js_id_tree_pcg_{{ index }}"></div>
+    </div>
+
+    <div class="col-lg-4">
+        <span class="label label-default">Plan&nbsp;Comptable&nbsp;du&nbsp;dossier&nbsp;{{ dossier.nom }}</span>
+        <span class="pointer js_add_pcc" data-toggle="popover" data-placement="left" data-content="{{ addCompte }}" data-original-title="" title="">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+        </span>
+        <input class="form-control input-sm search-input-new" placeholder="chercher">
+        <div class="scroller" style="height: 200px" id="js_id_tree_pcc_container_{{ index }}"></div>
+    </div>
+
+    <div class="col-lg-4" style="height: 240px">
+        <div class="form-horizontal">
+            {# 0: numfact; 1:montant; 2:date facture; 3: tiers; 4:reste #}
+            <div class="form-group">
+                <label class="col-lg-4 control-label">Recherche</label>
+                <div class="col-lg-8">
+                    <select class="form-control cl_cde_option cl_cde_recherche">
+                        <option value="4">reste</option>
+                        <option value="0">num&nbsp;facture</option>
+                        <option value="1">montant</option>
+                        <option value="2">Date facture</option>
+                        <option value="3">Tiers</option>
+                    </select>
+                </div>
+            </div>
+
+            {# 0: ; 1:numerique ; 2:alphanumerique ; 3: date  #}
+            <div class="form-group hidden">
+                <label class="col-lg-4 control-label">Format</label>
+                <div class="col-lg-8">
+                    <select class="form-control cl_cde_option cl_cde_format">
+                        <option value="0"></option>
+                        <option value="1">num&eacute;rique</option>
+                        <option value="2">alphanum&eacute;rique</option>
+                        <option value="3">date</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0!important;">
+                <div class="col-sm-12">
+                    <div class="input-group m-b">
+                        <span class="input-group-addon">Pos&deg;</span>
+                        <input type="text" placeholder="0" class="form-control cl_cde_option cl_cde_pos_debut">
+                        <span class="input-group-addon">Long</span>
+                        <input type="text" placeholder="0" class="form-control cl_cde_option cl_cde_pos_length">
+                        <span class="input-group-addon qtip_new" title="Pos: à partir de n-digit<br><br>Long: Longueur du texte"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0!important;">
+                <div class="col-sm-12">
+                    <div class="input-group m-b">
+                        <span class="input-group-addon">Pr&eacute;c</span>
+                        <input type="text" placeholder="LT" class="form-control cl_cde_option cl_cde_car_prec">
+                        <span class="input-group-addon">Fin.</span>
+                        <input type="text" placeholder=";" class="form-control cl_cde_option cl_cde_car_fin">
+                        <span class="input-group-addon qtip_new" title="Préc: Caractères précédent<br><br>Fin: Caractères de fin"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<form class="form-horizontal" id="js_form_edit_indicateur">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Nom</label>
+        <div class="col-lg-10 text-center">
+            <input type="text" placeholder="Nom" class="form-control js_indicateur_libelle" value="{{ (indicateur is null) ? '' : indicateur.libelle }}">
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-lg-2 control-label">Affichage</label>
+        <div class="col-lg-10 text-center">
+            <div class="btn-group btn-group-sm">
+                {% for type_graphe in type_graphes %}
+                    <span class="btn btn-white js_type_graphe_item {{ (type_graphe.code == 'TAB') ? 'js_is_table' : '' }} {{ (type_graphe.estCocher) ? 'active' : '' }}" data-id_relation="{{ type_graphe.idIndictateurTypeGraphe|boost }}" data-id="{{ type_graphe.id|boost }}">
+                        <i class="fa {{ type_graphe.icon }}"></i>&nbsp;
+                        <span>{{ type_graphe.Code }}</span>
+                    </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:15px !important">
+        <div class="col-lg-12 text-right">
+            <span class="btn btn-primary btn-sm js_btn_save_indicateur"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+            <span class="btn btn-white btn-sm js_btn_cancel"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,44 @@
+<div class="col-sm-2">
+    {{ render(controller('AppBundle:Commun:clients',{'conteneur':0, 'label_col':3, 'select_col':9 })) }}
+</div>
+<div class="col-sm-2" id="js_conteneur_site">
+
+</div>
+<div class="col-sm-3" id="js_conteneur_dossier">
+
+</div>
+<div class="col-sm-1" id="js_conteneur_periode">
+    <span class="btn btn-white">
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        <span>&nbsp;&nbsp;Période</span>
+        <input type="hidden" class="js_hidden_periode_binary">
+    </span>
+</div>
+<div class="col-sm-2" id="id_compte_container">
+    <div class="form-horizontal">
+        <div class="input-daterange input-group" style="width: 100%!important;">
+            <label class="input-group-addon" for="id_compte_de">de</label>
+            <select id="id_compte_de" class="form-control cl_compte"></select>
+            <label class="input-group-addon" for="id_compte_a">&agrave;</label>
+            <select id="id_compte_a" class="form-control cl_compte"></select>
+        </div>
+    </div>
+</div>
+<div class="col-sm-1">
+    <div class="checkbox-inline">
+        <input type="checkbox" id="id_simple">
+        <label for="id_simple">Simplifi&eacute;</label>
+    </div>
+</div>
+<div class="col-sm-1">
+    <div class="btn-group btn-group-sm">
+        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"><i class="fa fa-download" aria-hidden="true"></i></button>
+        <ul class="dropdown-menu">
+            <li class="js_export" data-format="0"><a href="#">Excel</a></li>
+            {#<li class="js_export" data-format="1"><a href="#">PDF</a></li>#}
+        </ul>
+    </div>
+</div>
+<div class="hidden js_date_picker_hidden">
+
+</div>

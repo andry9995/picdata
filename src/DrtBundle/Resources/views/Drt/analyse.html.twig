@@ -1,0 +1,27 @@
+<div class="tabs-container" id="id_tabs_container" data-echange_item="{{ echangeItem.id|boost }}">
+    <ul class="nav nav-tabs">
+        {% set index = 0 %}
+        {% for key, page in pages %}
+            <li class="{{ (index == 0) ? 'active' : '' }}"><a data-toggle="tab" href="#tab-{{ index }}">{{ key }}</a></li>
+            {% set index = index + 1 %}
+        {% endfor %}
+    </ul>
+    <div class="tab-content">
+        {% set index = 0 %}
+        {% for key, page in pages %}
+            <div id="tab-{{ index }}" class="tab-pane {{ (index == 0) ? 'active' : '' }}">
+                <div class="panel-body cl_body_excel" data-styles="{{ stylesPages[key] }}" data-merges="{{ mergesPages[key] }}" data-name="{{ key }}" style="margin: 0; overflow-x: auto" data-index="{{ index }}" data-max_col="{{ page.maxCol }}" data-datas="{{ page.datas }}">
+                    <div class="cl_excel"></div>
+                </div>
+            </div>
+            {% set index = index + 1 %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row" style="margin-top: 5px!important;">
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-sm btn-white" id="id_show_reponses" data-echange_item="{{ echangeItem.id|boost }}"><i class="fa fa-archive" aria-hidden="true"></i>&nbsp;Voir&nbsp;r&eacute;ponses</span>
+        <span class="btn btn-sm btn-white" id="id_save_as_excel"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Generer&nbsp;XLS</span>
+    </div>
+</div>

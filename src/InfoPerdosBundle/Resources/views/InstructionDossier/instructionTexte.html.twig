@@ -1,0 +1,10 @@
+<div class="ibox scroller">
+    <div class="ibox-content note-editor">
+
+        {{ (instructionTexte is null) ? '' : instructionTexte.contenu|raw }}
+
+        {{ include('InfoPerdosBundle:InstructionDossier:footer.html.twig') }}
+
+    </div>
+</div>
+

@@ -1,0 +1,150 @@
+<div class="ibox-content">
+
+    {% set montantEuro = 0 %}
+
+    {% for tvaG in tvaSaisie %}
+        {% set tva = tvaG[0] %}
+        {% set montantEuro = montantEuro + tvaG.ttc  %}
+    {% endfor %}
+
+
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-lg-12">
+
+                <input type="hidden" class="js_cp_exercice" value="{{ img.exercice }}">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5>NDF/Justificatifs</h5>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <input type="hidden" class="js_cp_image_id" value="{{ img.id }}">
+
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Pays</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Raison sociale</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_raison_sociale"
+                                               value="{{ (saisie is null) ? '' : (saisie.rs) }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Nature</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_nature" value="
+                                            {{ (saisie.sousnature is null) ? '' : saisie.sousnature.nature.libelle }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Date</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_date"
+                                               value="{{ (saisie is null) ? '' : (saisie.dateFacture is null) ? '' : saisie.dateFacture|date('d/m/Y') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Code Postal</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_code_postal"
+                                               value="{{ (saisie is null) ? '' : (saisie.codePostal) }}">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Mention</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_mention"
+                                               value="{{ (saisie is null) ? '' : (saisie.mentionManuscrite is null) ? ''
+                                               : saisie.mentionManuscrite.libelle }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Nb Couverts</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_nbcouvert"
+                                               value="{{ (saisie is null) ? '' : saisie.nbreCouvert }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Devise</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_devise"
+                                               value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Montant devise</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_montant_devise"
+                                               value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="col-md-5 control-label">Montant Euro</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control" id="js_montant_euro" value="{{ montantEuro|number_format(2, '.', ' ') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    {#<div class="row ecriture">#}
+    {% if utilisateur.accesUtilisateur.type < 6 %}
+        {% if typeEcriture <= 0 %}
+            {{ include('ConsultationPieceBundle:Default:ecriture.html.twig') }}
+        {% else %}
+            {{ include('ConsultationPieceBundle:Default:ecritureCompta.html.twig') }}
+        {% endif %}
+    {% endif %}
+    {#</div>#}
+</div>

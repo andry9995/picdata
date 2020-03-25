@@ -1,0 +1,12 @@
+CREATE DEFINER=`dbboost`@`%` TRIGGER `dbboost`.`ecriture_BEFORE_INSERT` BEFORE INSERT ON `ecriture` FOR EACH ROW
+BEGIN
+	declare count_image int(11);
+    
+    select count(id)  
+    into count_image 
+    from dbboost.image
+    where id = NEW.image_id;
+    
+    if (count_image = 0) then set NEW.image_id = null;
+    end if;
+END

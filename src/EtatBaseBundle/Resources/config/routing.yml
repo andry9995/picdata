@@ -1,0 +1,130 @@
+etat_base_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: EtatBaseBundle:Default:index }
+etat_base:
+    path: /etat_base
+    defaults: { _controller: EtatBaseBundle:Default:index }
+    methods: [GET]
+etat_base_item:
+    path: /etat_base/{etat}
+    defaults: { _controller: EtatBaseBundle:Etat:index , etat: 0 }
+    options:
+        expose: true
+    requirements:
+        etat: \d*
+    methods:  [POST]
+etat_base_journal:
+    path: /etat_base/journal
+    defaults: { _controller: EtatBaseBundle:Etat:journaux }
+    options:
+        expose: true
+    methods: [POST]
+etat_base_export:
+    path: /etat_base/export/{extention}
+    defaults: { _controller: EtatBaseBundle:Etat:export , extention: pdf }
+    options:
+        expose: true
+    methods: [POST]
+etat_base_param_agee:
+    path: /etat_base/param_agee
+    defaults: { _controller: EtatBaseBundle:Etat:showParametreAgee }
+    options:
+        expose: true
+    methods: [POST]
+etat_base_date_maj_ecriture:
+    path: /etat_base/date_maj_ecr
+    defaults: { _controller: EtatBaseBundle:Etat:dateMajEcriture }
+    options:
+        expose: true
+    methods: [POST]
+
+################################ETAT DE BASE##########################################
+etat_base_balance:
+    path: /balance/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 0 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+etat_base_balance_client:
+    path: /balance_client/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 2 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+etat_base_balance_agee_client:
+    path: /balance_agee_client/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 4 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+etat_base_balance_fournisseur:
+    path: /balance_fournisseur/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 1 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+etat_base_balance_agee_fournisseur:
+    path: /balance_agee_fournisseur/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 3 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+etat_base_grand_livre:
+    path: /grand_livre/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 7 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+etat_base_grand_livre_client:
+    path: /grand_livre_client/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 9 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+etat_base_grand_livre_fournisseur:
+    path: /grand_livre_fournisseur/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 8 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+etat_base_journal_centralisateur:
+    path: /journal_centralisateur/{etat}
+    defaults: { _controller: EtatBaseBundle:Default:index , etat : 6 }
+    methods: [GET]
+    requirements:
+        etat: \d*
+
+################################ETAT DE BASE V2##########################################
+etat_b:
+    path: /eb
+    defaults: { _controller: EtatBaseBundle:EtatBase:index }
+etat_b_etat:
+    path: /eb/etat
+    defaults: { _controller: EtatBaseBundle:EtatBase:etatBase }
+    methods:  [POST]
+    options:
+        expose: true
+etat_b_journaux:
+    path: /eb/journaux
+    defaults: { _controller: EtatBaseBundle:EtatBase:journaux }
+    methods:  [POST]
+    options:
+        expose: true
+etat_b_export:
+    path: /eb/export
+    defaults: { _controller: EtatBaseBundle:EtatBase:export }
+    methods:  [POST]
+    options:
+        expose: true
+etat_pcc_tiers:
+    path: /eb/pcc_tiers
+    defaults: { _controller: EtatBaseBundle:EtatBase:pccTiers }
+    methods:  [POST]
+    options:
+        expose: true
+
+############## historique upload ################
+etat_b_historique_upload:
+    path: eb/maj/compta
+    defaults: { _controller: EtatBaseBundle:HistoriqueUpload:index }
+

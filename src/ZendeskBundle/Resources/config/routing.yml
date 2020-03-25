@@ -1,0 +1,92 @@
+zendesk_homepage:
+    path:     /default
+    defaults: { _controller: ZendeskBundle:Default:index }
+
+zendesk:
+    path:     /zendesk
+    defaults: { _controller: ZendeskBundle:Zendesk:index }
+
+tickets_list:
+    path:     /zendesk-list/{status}/{priority}
+    defaults: { _controller: ZendeskBundle:Zendesk:ticketsList}
+    methods: [GET]
+    options:
+        expose: true
+
+ticket_show:
+    path:     /ticket-show/{id}
+    defaults: { _controller: ZendeskBundle:Zendesk:ticketShow}
+    methods: [GET]
+    options:
+        expose: true
+
+ticket_send_update:
+    path: /ticket/update
+    defaults: { _controller: ZendeskBundle:Zendesk:ticketSendUpdate}
+    methods: [POST]
+    options:
+      expose: true
+      
+messaging:
+    path:     /messaging
+    defaults: { _controller: ZendeskBundle:Messaging:index }
+
+messaging_list:
+    path:     /messaging-list/{client}/{status}
+    defaults: { _controller: ZendeskBundle:Messaging:messagingList}
+    methods: [GET]
+    options:
+        expose: true
+
+messaging_conversation:
+    path:     /messaging-conversation/{id}
+    defaults: { _controller: ZendeskBundle:Messaging:messagingConversation}
+    methods: [GET]
+    options:
+        expose: true
+
+zendesk_config:
+    path:     /zendesk-config
+    defaults: { _controller: ZendeskBundle:Configuration:index }
+
+zendesk_save_config_mail:
+    path: /zendesk-config/save
+    defaults: { _controller: ZendeskBundle:Configuration:saveConfigMail}
+    methods: [POST]
+    options:
+      expose: true
+
+zendesk_all_recipient:
+    path:     /zendesk-all-recipient
+    defaults: { _controller: ZendeskBundle:Configuration:getAllRecipientAddresses}
+    methods: [GET]
+    options:
+        expose: true
+
+zendesk_get_mail:
+    path:     /zendesk-get-mail/{client_id}
+    defaults: { _controller: ZendeskBundle:Configuration:getMail}
+    methods: [GET]
+    options:
+        expose: true
+
+messaging_change_status:
+    path: /messaging-change-status
+    defaults: { _controller: ZendeskBundle:Messaging:changeStatus}
+    methods: [POST]
+    options:
+      expose: true
+
+messaging_search:
+    path: /messaging-search
+    defaults: { _controller: ZendeskBundle:Messaging:search}
+    methods: [POST]
+    options:
+      expose: true
+
+messaging_comment:
+    path: /messaging-comment
+    defaults: { _controller: ZendeskBundle:Messaging:sendComment}
+    methods: [POST]
+    options:
+      expose: true

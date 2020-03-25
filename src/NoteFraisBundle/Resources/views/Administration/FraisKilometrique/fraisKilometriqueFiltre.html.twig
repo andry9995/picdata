@@ -1,0 +1,36 @@
+<div class="col-lg-2">
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-lg-5 control-label">
+                <span>Exercice</span>
+            </label>
+            <div class="col-lg-7">
+                <select class="form-control" id="js_exercice">
+                    <option></option>
+                    {{ render(controller('NoteFraisBundle:Administration:exercice')) }}
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="col-lg-4">
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-lg-5 control-label">
+                <span>Type Vehicules</span>
+            </label>
+            <div class="col-lg-7">
+                <select class="form-control" id="js_type_vehicule">
+                    <option></option>
+                    {% for typeVehicule in typeVehicules %}
+                        <option value="{{ typeVehicule.id }}">{{ typeVehicule.libelle }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </form>
+</div>

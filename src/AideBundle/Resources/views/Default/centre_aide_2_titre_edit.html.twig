@@ -1,0 +1,10 @@
+<form class="centre_aide_2">
+    <div class="form-group">
+        <label>Titre</label>
+        <input type="text" placeholder="Titre" class="form-control js_titre_aide_2" value="{{ (aide2 is null)? '' : aide2.titre }}">
+    </div>
+
+    <div>
+        <div class="btn btn-sm btn-success pull-right m-t-n-xs js_save_aide_2" data-id-2="{{ (aide2 is null) ? '' : aide2.id }}"><strong>Enregistrer</strong></div>
+    </div>
+</form>

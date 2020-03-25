@@ -1,0 +1,31 @@
+{% set index = 0 %}
+{% for pack in packs %}
+    <div class="panel panel-default">
+        <div class="panel-heading" style="padding: 1px !important;" data-id="{{ pack.id|boost }}">
+            <h5 class="panel-title">
+                <span class="row" style="margin: 0!important;">
+                    <span class="col-lg-4">
+                        <a data-toggle="collapse" data-parent="#js_div_accordion_pack" href="#js_pack_collapse_{{ index }}">
+                            <span class="btn btn-xs js_pack_libelle text-primary">
+                                <strong class="js_pack_libelle_string">{{ pack.libelle }}</strong>
+                                <small class="{{ (dossier is null) ? 'hidden' : '' }}">&nbsp;({{ (pack.dossier is null) ? 'géneral' : 'spécifique pour le dossier' }})</small>
+                            </span>
+                        </a>
+                    </span>
+                    <span class="col-lg-8">
+                        <span class="btn btn-white btn-xs js_tooltip js_edit_pack {{ (not (dossier is null or (dossier is not null and pack.dossier == dossier))) ? 'hidden' : '' }}" data-tooltip="Modifier"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                        <span class="btn btn-white btn-xs js_tooltip js_pack_item_show_edit js_add" data-tooltip="Ajouter item"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+                        <span class="btn btn-white btn-xs js_tooltip js_pack_delete {{ (not (dossier is null or (dossier is not null and pack.dossier == dossier))) ? 'hidden' : '' }}" data-tooltip="Supprimer"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                        <span class="btn btn-xs js_tooltip js_pack_show js_pack {{ (pack.enabled) ? 'btn-primary' : 'btn-default' }} {{ (dossier is null or (dossier is not null and pack.dossier == dossier)) ? 'hidden' : '' }}" data-tooltip="Afficher">Afficher</span>
+                    </span>
+                </span>
+            </h5>
+        </div>
+        <div id="js_pack_collapse_{{ index }}" class="panel-collapse collapse {{ (index == 0) ? 'in' : '' }}">
+            <div class="panel-body">
+                {{ include('IndicateurBundle:AdminPack:pack-items.html.twig',{'pack':pack , 'dossier':dossier}) }}
+            </div>
+        </div>
+    </div>
+    {% set index = index + 1 %}
+{% endfor %}

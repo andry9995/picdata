@@ -1,0 +1,78 @@
+<div id="test">
+
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group col-sm-7">
+                <label class="col-lg-3 control-label" for="id_frequence">P&eacute;riode</label>
+                <div class="col-lg-9">
+                    <select class="form-control" id="id_frequence">
+                        {% set periode = importParametre ? importParametre.periode : -1 %}
+
+                        {#0=ponctuel,1=annuel,2=semestriel,3=quadrimestriel,4=trimestriel,6=bimensuel,12=mensuel#}
+                        <option value="{{ -1 }}" {{ (periode == -1) ? 'selected' : '' }}></option>
+                        <option value="{{ 1 }}" {{ (periode == 1) ? 'selected' : '' }}>Annuel</option>
+                        <option value="{{ 2 }}" {{ (periode == 2) ? 'selected' : '' }}>Semestriel</option>
+                        <option value="{{ 3 }}" {{ (periode == 3) ? 'selected' : '' }}>Quadrimestriel</option>
+                        <option value="{{ 4 }}" {{ (periode == 4) ? 'selected' : '' }}>Trimestriel</option>
+                        <option value="{{ 6 }}" {{ (periode == 6) ? 'selected' : '' }}>Bimensuel</option>
+                        <option value="{{ 12 }}" {{ (periode == 12) ? 'selected' : '' }}>Mensuel</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-5">
+                <label class="col-lg-3 control-label" for="id_jour">Jour</label>
+                <div class="col-lg-9">
+                    <input type="text" id="id_jour" class="form-control" value="{{ importParametre ? importParametre.jour : '' }}">
+                </div>
+            </div>
+            <div class="form-group col-sm-7">
+                <label class="col-lg-3 control-label" for="id_a_partir_de">&agrave;&nbsp;Partir</label>
+                <div class="col-lg-9">
+                    {% set aPartirDe = importParametre ? importParametre.calculerAPartir : 0 %}
+
+                    {#0:debut exercice; 1:demarrage;2:1er janvier;3:date_calcul#}
+                    <select class="form-control" id="id_a_partir_de">
+                        <option value="{{ 0 }}" {{ (aPartirDe == 0) ? 'selected' : '' }}>Début&nbsp;exercice</option>
+                        <option value="{{ 2 }}" {{ (aPartirDe == 2) ? 'selected' : '' }}>1er&nbsp;janvier</option>
+                        <option value="{{ 3 }}" {{ (aPartirDe == 3) ? 'selected' : '' }}>Date</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-5">
+                <label class="col-lg-3 control-label" for="id_date_calcul">Date</label>
+                <div class="col-lg-9">
+                    <input type="text" class="form-control" id="id_date_calcul">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Ponctuel
+        <span class="btn btn-xs btn-white pull-right" id="id_add_ponctuel"><i class="fa fa-plus" aria-hidden="true"></i></span>
+    </div>
+    <div class="panel-body" style="height: 200px; overflow-y: auto;">
+        <div class="row" id="id_ponctuel">
+            {% for ponctuel in ponctuels %}
+                <div class="col-lg-4 cl_pontuel" style="margin-bottom: 2px" data-id="{{ ponctuel.id|boost }}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="{{ ponctuel.date|date('d/m/Y') }}">
+                        <span class="input-group-addon cl_delete_ponctuel"><i class="fa fa-trash-o"></i></span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-sm btn-primary cl_save_param"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>

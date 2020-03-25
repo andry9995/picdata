@@ -1,0 +1,83 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="back glyphicon glyphicon-menu-left" onclick="loadListClient();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Dupliquer Client</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        <span>Une fois que vous aurez sélectionné le Client à dupliquer et validé cette fiche vous aurez accès à votre Client dupliqué dans l'onglet Clients.</span>
+        <br><br>
+        <form class="form-horizontal" id="selected-form">
+            <input type="hidden" id="selected-account-id" name="selected-account-id" />
+            <input type="hidden" id="selected-account-code" name="selected-account-code" />
+            <input type="hidden" id="selected-account-name" name="selected-account-name" />
+            <div class="form-group">
+                <label for="mode" class="col-md-4 control-label">Comment voulez-vous que les Codes soient générés ?*</label>
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <select class="form-control" id="mode" name="mode" onchange="toggleCodeField(this);">
+                        <option value="1">Automatiquement</option>
+                        <option value="0">Manuellement</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group code-field hidden">
+                <label for="code" class="col-md-4 control-label">Code Client</label>
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="code" name="code" />
+                </div>
+            </div>
+        </form>
+        <br><br>
+        <button type="button" class="btn btn-default choose-account" onclick="loadListClientModal();">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Chosir un Client</button>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="selected-account">
+            <table class="table">
+                <thead>
+                    <th>Code</th>
+                    <th>Nom</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-default duplicate-account" onclick="duplicateAccount();">
+    <span class="glyphicon glyphicon-random" aria-hidden="true"></span> Dupliquer</button>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="duplicated-account hidden">
+            <form class="form-horizontal" id="duplicated-form">
+            <table class="table">
+                <thead>
+                    <th>Code</th>
+                    <th>Nom</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+            </form>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn btn-default hidden delete-duplicated" onclick="deleteDuplicatedAccount();">
+    <span class="glyphicon glyphicon-random" aria-hidden="true"></span> Annuler le Client sélectionné</button>
+<input type="hidden" id="dp-to-remove" name="dp-to-remove" />
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default" onclick="loadListClient();">Annuler</button>
+            <button type="button" class="btn btn-primary" onclick="validateDuplication();">Valider</button>
+        </div>
+    </div>
+</div>

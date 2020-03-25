@@ -1,0 +1,209 @@
+.form-group
+{
+    margin-bottom: 5px;
+}
+
+.ibox
+{
+    border-left: 3px solid #e7eaec;
+    border-right: 3px solid #e7eaec;
+    border-bottom: 3px solid #e7eaec;
+    margin-left: 20px;
+}
+
+.row
+{
+    margin-left: 0;
+}
+
+.ibox-content
+{
+    padding: 20px 20px 20px 20px;
+}
+
+textarea
+{
+    width: 100%;
+    height: 50px;
+    font-size: 11px;
+}
+
+#modal-animated
+{
+    width: 800px;
+}
+
+.tree:hover
+{
+    background-color: #18a689;
+    border-color: #18a689;
+}
+.btn-valider
+{
+    display:inline-block;
+    float:right;
+}
+
+.control-label-lines
+{
+    padding-top: 0;
+    margin-bottom: 0;
+    text-align: right;
+}
+
+.ibox-tools
+{
+    margin-bottom: 5px;
+}
+
+div.kv-fileinput-caption > div > i
+{
+    padding-left: 8px;
+    font-size: 1.7em
+}
+
+
+div.ibox-title > h5{
+    margin-top: 3px;
+}
+
+div.ibox-title  button{
+    margin-left: 10px;
+    padding: 0 10px 0 10px;
+    border: 1px ;
+}
+
+/*div.ibox-title > div{*/
+    /*float: right;*/
+/*}*/
+
+section{
+    background-color: #FFFFFF;
+    padding: 0 0 0 0;
+}
+
+.row{
+    margin-right: 0;
+}
+
+.disabled {
+    pointer-events:none;
+    cursor: not-allowed;
+}
+
+/*Prestation*/
+.prestation > label{
+    margin: 7px 0 0 10px;
+}
+
+.prestation{
+    padding: 7px 0 0 0;
+}
+
+/*Bouton developper tout*/
+/*.developper {*/
+    /*margin-top: 9px;*/
+/*}*/
+
+.btn-tout-valider{
+    margin-top: 5px;
+}
+
+
+.chosen-container
+{
+    width: 100% !important;
+}
+
+.identification-info{
+    position: relative;
+     margin-left: auto;
+     margin-right: auto;
+     text-align: center;
+}
+
+/*#tab-recap table {*/
+   /*table-layout: fixed;*/
+   /*width: 2730px;*/
+   /*border: 1px solid;*/
+/*}*/
+
+/*#tab-recap th{*/
+    /*height: 30px;*/
+    /*text-align: center;*/
+/*}*/
+
+
+/*#tab-recap .recap{*/
+    /*padding: 6px 5px 6px 5px;*/
+/*}*/
+
+
+.td-head-progress{
+    padding: 5px 8px 5px 8px;
+}
+
+#tab-progression td{
+    cursor: pointer; cursor: hand;
+}
+
+#js_contenu_tabs select:focus {
+    background-color: #f5f5f5;
+    /*color: #ffffdd;*/
+}
+
+#js_contenu_tabs input:focus{
+    background-color: #f5f5f5;
+    /*color: #ffffdd;*/
+}
+
+.editable{
+    color: #000000;
+}
+
+#tab-info-generales .ibox .ibox-title .col-sm-1 a{
+    float: right;
+}
+
+tr.jqgrow:nth-child(odd) {
+    background: #f6f6f6
+}
+
+
+.ui-jqgrid .ui-jqgrid-htable th div
+{
+    height: auto;
+    overflow: hidden;
+    padding-right: 4px;
+    padding-top: 2px;
+    position: relative;
+    vertical-align: text-top;
+    white-space: normal !important;
+}
+
+
+.tutoriel{
+    color: #1dc5a3;
+    text-shadow: 1px 1px 1px #ccc;
+}
+
+.tutoriel:hover{
+    color: #1ab394;
+    text-shadow: 3px 3px 3px #ccc;
+}
+
+.libelle-box input,  .libelle-box select{
+    height:30px !important;
+}
+
+.libelle-box select{
+    padding: 0 12px 0 12px !important;
+}
+
+.libelle-box .ibox-content{
+    padding: 10px !important;
+}
+
+.libelle-box{
+    margin: 0 0 5px 0 !important;
+}

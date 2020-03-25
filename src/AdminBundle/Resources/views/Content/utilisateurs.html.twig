@@ -1,0 +1,54 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-sm-6">{{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0})) }}</div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><small>Liste&nbsp;</small>utilisateurs</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content no-padding">
+                    <table id="table_utilisateurs"></table>
+                </div>
+                <div class="ibox-footer">
+                    <span class="pull-right">Double&nbsp;cliquer&nbsp;pour&nbsp;modifi&eacute;</span>
+                    Cliquer&nbsp;pour&nbsp;voir&nbsp;les&nbsp;menus&nbsp;actifs
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><small>Liste&nbsp;</small>menus</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="dd" id="ul_menus"></div>
+                </div>
+                <div class="ibox-footer">
+                    <span class="pull-right">Double&nbsp;clique&nbsp;pour&nbsp;modifi&eacute;</span>
+                    This is simple footer example
+                </div>
+            </div>            
+        </div>    
+    </div>
+{% endblock %}

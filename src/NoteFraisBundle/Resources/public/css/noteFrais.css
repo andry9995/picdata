@@ -1,0 +1,40 @@
+#map{
+    height: 100%;
+}
+.widget, .panel{
+    cursor: pointer;
+}
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 10000;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
+/*.modal{*/
+    /*z-index: 20;*/
+/*}*/
+/*.modal-backdrop{*/
+    /*z-index: 10;*/
+/*}*/
+
+.view-bloc:hover, .view-table:hover{
+    color: #676a6c;
+}
+/*@media screen{*/
+    /*#js_depense_edit .modal-dialog{*/
+        /*!*width: 100%;*!*/
+    /*}*/
+/*}*/
+
+
+.table-periode>tbody>tr>td:hover, .table-periode .active, .table-periode-annee>thead>tr>th:hover, .table-periode-annee .active{
+    background-color: #1c84c6 !important;
+    color: #FFFFFF !important;
+}
+
+.total{
+    margin-top: 5px;
+    margin-right: 5px;
+}

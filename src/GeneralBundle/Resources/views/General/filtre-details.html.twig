@@ -1,0 +1,241 @@
+<div class="row">
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col-lg-12">
+                {{ render(controller('AppBundle:Commun:clients', { 'tous' : 1, 'attr_id': 'client-details', 'label_col': 2, 'select_col': 10})) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="dossier-details" class="control-label col-lg-2">
+                            <span>Dossier</span>
+                            <span class="label label-warning">0</span>
+                        </label>
+                        <div class="col-lg-10">
+                            <select id="dossier-details" data-placeholder="Séléctionner un dossier" class="form-control select-dossier-details">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+
+                        <label for="site-details" class="control-label col-lg-2" style="text-align:left">
+                            <span>Site</span>
+                            <span class="label label-warning">0</span>
+                        </label>
+                        <div class="col-lg-4">
+                            <select data-ref="" class="site form-control"
+                                    id="site-details"></select>
+                        </div>
+                            
+
+                        {{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'attr_id' : 'exercice-details' , 'label_col':2, 'select_col':4, 'nbr': 8 , 'in_form' : false } )) }}
+
+                       {#  <label for="periode-details" class="control-label col-lg-2" style="text-align:left">
+                            <span>Période</span>
+                        </label>
+
+                        <div class="col-lg-4">
+                            <select class="form-control" id="periode-details">
+                                <option value=""></option>
+                                <option value="1">Aujourd'hui</option>
+                                <option value="2">Semaine</option>
+                                <option value="3">Deux semaines</option>
+                                <option value="4">Mois</option>
+                                <option value="5" selected="">Exercice</option>
+                                <option value="6">Fourchette</option>
+                            </select>
+                        </div> #}
+
+                        <div class="modal" id="modal-fourchette-details" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content animated fadeInRight">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                        </button>
+                                        <h4 class="modal-title">Fourchette</h4>
+                                    </div>
+                                    <div class="modal-body" style="padding-bottom: 40px; padding-left: 100px;">
+                                        <div  class="col-md-10">
+                                            <form class="form-horizontal">
+                                                <div class="input-group row date col-md-12">
+                                                    <div class="col-sm-20">
+                                                        <input type="text" class="input form-control" name="debut" id="debut-date-details">
+                                                    </div>
+                                                    <span class="input-group-addon">Au</span>
+                                                    <input type="text" class="input form-control" name="fin" id="fin-date-detail">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" id="annuler-fourchette-details">Annuler</button>
+                                        <button type="button" id="valider-fourchette-details" class="btn btn-sm btn-primary btn-outline">
+                                            Valider
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6" style="padding-top: 8px;">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="dossier-graphes" class="control-label col-lg-4" style="text-align: left;">
+                            <span>Date</span>
+                        </label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="typedate-details">
+                                <option value=""></option>
+                                <option value="1" selected="">Date envoi</option>
+                                <option value="2">Date pièce</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6" style="padding-top: 8px;">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="dossier-graphes" class="control-label col-lg-4" style="text-align: left;">
+                            <span>Présentation</span>
+                        </label>
+                        <div class="col-lg-8">
+                           <select class="form-control" id="analyse-details">
+                            <option value=""></option>
+                            <option selected="selected" value="1">Par mois</option>
+                            <option value="2">En cumul</option>
+                        </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="periode-details" class="control-label col-lg-3" style="text-align:left">
+                            <span>Période</span>
+                        </label>
+                        <div class="col-lg-9">
+                            <select class="form-control" id="periode-details">
+                                <option value=""></option>
+                                <option value="1">Aujourd'hui</option>
+                                <option value="2">Semaine</option>
+                                <option value="3">Deux semaines</option>
+                                <option value="4">Mois</option>
+                                <option value="5" selected="">Exercice</option>
+                                <option value="6">Fourchette</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" style="padding-top: 7px; padding-bottom: 10px;">
+                <button id="btn-selection-dossier" class="btn btn-sm btn-default btn-outline btn-block" >Selection dossiers</button>
+
+                <div class="modal" id="modal-selection-dossier" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content animated fadeInRight">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title">Selection dossiers</h4>
+                        </div>
+                        <div class="modal-body" style="padding-bottom: 40px; padding-left: 55px;">
+                            <div  class="col-md-12">
+                                <form class="form-horizontal">
+                                    <div class="input-group row date col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select class="form-control" id="operateur-sd">
+                                                    <option value="0">Opérateur</option>
+                                                    <option value="1">Egal</option>
+                                                    <option value="2">Supérieur</option>
+                                                    <option value="3">Inférieur</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="number" placeholder="Valeur" id="value-sd"
+                                                       class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" id="filtre-sd">
+                                                    <option value="0"></option>
+                                                    <option value="1">Images</option>
+                                                    <option value="2">% N - 1</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" id="btn-annuler-nb"><i class="fa fa-times-circle"></i> Annuler</button>
+                            <button type="button" id="btn-valider-nb" class="btn btn-sm btn-primary btn-outline">
+                                <i class="fa fa-arrow-circle-o-right"></i> Valider
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2">
+        <div class="row">
+            <div class="col-lg-12">
+                    <button id="btn-go-details" class="btn btn-primary" style="width: 80%;">
+                        <i class="fa fa-arrow-circle-o-right"></i> Go
+                    </button>
+            </div>
+        </div>
+        <div id="dossiers-filter" class="row" style="margin-top: 16px;margin-bottom: 10px;" >
+            <div class="col-lg-10" style="padding-top: 7px;">
+
+                <div class="row">
+                    <span class="simple_tag cl_stat" style="width:100%">
+                        Nb dossiers
+                        <span class="badge badge-info" id="count-dossiers-filter" >0</span>
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="simple_tag cl_stat" style="width:100%">
+                        Nb dossiers N - 1
+                        <span class="badge badge-info" id="count-dossiers-filter-n-1" >0</span>
+                    </span>
+                </div>
+
+            </div> 
+        </div>
+    </div>
+
+</div>

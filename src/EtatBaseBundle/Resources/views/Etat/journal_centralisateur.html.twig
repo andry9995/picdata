@@ -1,0 +1,57 @@
+{% set total_debit = 0 %}
+{% set total_credit = 0 %}
+
+{% set total_debit_gen = 0 %}
+{% set total_credit_gen = 0 %}
+<table {#class="table table-hover"#} id="js_eb_table_to_grid">
+    <thead>
+        <tr>
+            <th id="js_eb_date">Date</th>
+            <th id="js_eb_journal">Journal</th>
+            <th id="js_eb_libelle">Libell&eacute;&nbsp;Journal</th>
+            <th id="js_eb_debit">Total&nbsp;D&eacute;bit</th>
+            <th id="js_eb_credit">Total&nbsp;Cr&eacute;dit</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for i in 0..(journaux.comptes|length - 1) %}
+        {% set journal = journaux.comptes[i] %}
+        {% set debit = journal['db'] %}
+        {% set credit = journal['cr'] %}
+
+        {% set total_debit = total_debit + debit %}
+        {% set total_credit = total_credit + credit %}
+        <tr>
+            <td>{{ journal['jnl'].dateEcr|date('d/m/Y') }}</td>
+            <td>{{ journal['jnl'].journalDossier.codeStr }}</td>
+            <td>{{ journal['jnl'].journalDossier.libelle }}</td>
+            <td>{{ (debit != 0) ? debit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+            <td>{{ (credit != 0) ? credit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+        </tr>
+
+        {% if (i == (journaux.comptes|length - 1) or
+            journal['jnl'].dateEcr|date('m/Y') != journaux.comptes[i + 1]['jnl'].dateEcr|date('m/Y')) and journal['jnl'].journalDossier.journal.id != 1 %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td><strong>TOTAL&nbsp;{{ journal['jnl'].dateEcr|date('m/Y') }}</strong></td>
+                <td><strong>{{ (total_debit != 0) ? total_debit|number_format(2, ',', ' ') : '' }}</strong></td>
+                <td><strong>{{ (total_credit != 0) ? total_credit|number_format(2, ',', ' ') : '' }}</strong></td>
+            </tr>
+
+            {% set total_debit_gen = total_debit_gen + total_debit %}
+            {% set total_credit_gen = total_credit_gen + total_credit %}
+
+            {% set total_debit = 0 %}
+            {% set total_credit = 0 %}
+        {% endif %}
+    {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL&nbsp;GENERAL</strong></td>
+            <td><strong>{{ (total_debit_gen != 0) ? total_debit_gen|number_format(2, ',', ' ') : '' }}</strong></td>
+            <td><strong>{{ (total_credit_gen != 0) ? total_credit_gen|number_format(2, ',', ' ') : '' }}</strong></td>
+        </tr>
+    </tbody>
+</table>

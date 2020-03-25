@@ -1,0 +1,26 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Sites{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/infoperdos/js/site/site.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-lg-3">
+            {{ render(controller('AppBundle:Commun:clients', {'tous': 0})) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="js_site_liste" class="js-jqgrid-table"></table>
+            <div id="js_site_pager"></div>
+        </div>
+    </div>
+{% endblock %}

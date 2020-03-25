@@ -1,0 +1,226 @@
+{% set devise = '<span><i class="fa fa-eur"></i></span>' %}
+
+{% for detail in detailDepenses %}
+
+    {% set depense = detail['depense'] %}
+    {% set montant = detail['montant'] %}
+    {% set montantTva = detail['montantTva'] %}
+
+    {% set ttc = 0 %}
+    {% set trouveDevise = false %}
+    {% if depense is not null %}
+
+        {% if depense.devise is not null %}
+            {% if depense.devise.id != 1 %}
+                {% set ttc = montant %}
+                {% set trouveDevise = true %}
+            {% endif %}
+
+        {% endif %}
+    {% endif %}
+
+    {% if not trouveDevise %}
+        {% set ttc = (depense is null)? '' : depense.ttc %}
+    {% endif %}
+
+    {% set rf = '' %}
+    {% set rf = (depense.remboursable == 1) ? '<span class="label label-success">R</span> &nbsp; &nbsp;' : '' %}
+    {% set rf = (depense.facturable == 1) ? rf ~ '<span class="label label-success">F</span> &nbsp; &nbsp;' : rf %}
+
+    {% set pj = '' %}
+    {% set dataPj = -1 %}
+    {% set dataImage = -1 %}
+
+    {% if (depense.pj == 1 and depense.image is not null) %}
+        {% set pj = '<span class="label label-primary action-depense-pj-show pointer">&nbsp;PJ&nbsp;</span>' %}
+        {% set dataImage = depense.image.id|boost %}
+        {% set dataPj = 2 %}
+    {% else %}
+        {% if depense.pj == 1 and depense.image is null %}
+            {% set pj = '<span class="label label-warning action-depense-pj pointer">&nbsp;PJ&nbsp;</span>' %}
+            {% set dataPj = 1 %}
+        {% endif %}
+
+        {% if depense.pj == 0 %}
+            {% set pj = '<span class="label label-danger">&nbsp;PJ&nbsp;</span>' %}
+            {% set dataPj = 0 %}
+        {% endif %}
+
+    {% endif %}
+
+    {% set action =
+    '<div class="input-group m-b">
+        <div class="input-group-btn">
+            <button data-toggle="dropdown" class="btn btn-xs btn-white dropdown-toggle btn-depense-action pull-right" type="button"><i class="fa fa-tasks"></i></button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#" class="action-depense-editer">Editer</a></li>
+                <li><a href="#" class="action-depense-dupliquer">Dupliquer</a></li>
+                <li><a href="#" class="action-depense-note">Assigner à une note</a></li>
+                <li><a href="#" class="action-depense-supprimer">Supprimer</a></li>
+            </ul>
+        </div>
+    </div>'
+    %}
+
+
+    {% if dataPj == 1 %}
+        {% set action =
+        '<div class="input-group m-b">
+            <div class="input-group-btn">
+                <button data-toggle="dropdown" class="btn btn-xs btn-white dropdown-toggle btn-depense-action pull-right" type="button"><i class="fa fa-tasks"></i></button>
+                <ul class="dropdown-menu pull-right">
+                <li><a href="#" class="action-depense-editer">Editer</a></li>
+                    <li><a href="#" class="action-depense-dupliquer">Dupliquer</a></li>
+                    <li><a href="#" class="action-depense-note">Assigner à une note</a></li>
+                    <li><a href="#" class="action-depense-supprimer">Supprimer</a></li>
+                    <li><a href="#" class="action-depense-pj">Envoyer pièce jointe</a></li>
+                </ul>
+            </div>
+        </div>'
+        %}
+
+    {% else %}
+        {% if dataPj == 2 %}
+
+            {% set action =
+            '<div class="input-group m-b">
+                <div class="input-group-btn">
+                    <button data-toggle="dropdown" class="btn btn-xs btn-white dropdown-toggle btn-depense-action pull-right" type="button"><i class="fa fa-tasks"></i></button>
+                    <ul class="dropdown-menu pull-right">
+                    <li><a href="#" class="action-depense-editer">Editer</a></li>
+                        <li><a href="#" class="action-depense-dupliquer">Dupliquer</a></li>
+                        <li><a href="#" class="action-depense-note">Assigner à une note</a></li>
+                        <li><a href="#" class="action-depense-supprimer">Supprimer</a></li>
+                        <li><a href="#" class="action-depense-pj-show">Afficher pièce jointe</a></li>
+                    </ul>
+                </div>
+            </div>'
+            %}
+
+        {% endif %}
+
+    {% endif %}
+
+
+    <div class="col-md-4">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title" data-id="{{ depense.id|boost }}" data-type="0" data-pj="{{ dataPj }}" data-image="{{ dataImage }}">
+                <h5>{{ depense.titre }}</h5>
+                <span class="pull-right">{{ rf|raw }} {{ pj|raw }}</span>
+            </div>
+            <div class="ibox-content">
+
+                <ul class="list-group clear-list m-t">
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ (depense.ndfCategorieDossier is null) ? '' : depense.ndfCategorieDossier.libelle }}</span>
+                        <span class="label label-success">Catégorie</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ (depense.ndfAffaire is null) ? '' : depense.ndfAffaire.libelle }}</span>
+                        <span class="label label-success">Affaire</span>
+                    </li>
+
+                    <li class="list-group-item  depense-note-bloc" data-id="{{ (depense.ndfNote is null) ? '-1' : depense.ndfNote.id|boost }}">
+                        <span class="pull-right">{{ (depense.ndfNote is null) ? '' : depense.ndfNote.libelle }}</span>
+                        <span class="label label-success">Note</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ (depense.date is null) ? '' : depense.date|date('d/m/Y', 'Europe/Paris') }}</span>
+                        <span class="label label-success">Date</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ montantTva }}&nbsp;&nbsp;{{ devise|raw }}</span>
+                        <span class="label label-success">TVA</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ ttc|number_format(2, '.', ',') }}&nbsp;&nbsp;{{ devise|raw }}</span>
+                        <span class="label label-success">TTC</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="ibox-footer">
+
+                <div class="row depense-action" data-image="{{ (depense.image is null) ? '' : depense.image.id|boost }}">
+                        {{ action|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}
+
+
+{% for fk in depenseFKs %}
+
+    {% set rf = '' %}
+    {% set rf = (fk.facturable == 1) ? rf ~ '<span class="label label-success">F</span> &nbsp; &nbsp;' : rf %}
+
+    {% set action =
+    '<div class="input-group m-b">
+        <div class="input-group-btn">
+            <button data-toggle="dropdown" class="btn btn-xs btn-white dropdown-toggle btn-depense-action pull-right" type="button"><i class="fa fa-tasks"></i></button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#" class="action-depense-editer">Editer</a></li>
+                <li><a href="#" class="action-depense-dupliquer">Dupliquer</a></li>
+                <li><a href="#" class="action-depense-note">Assigner à une note</a></li>
+                <li><a href="#" class="action-depense-supprimer">Supprimer</a></li>
+            </ul>
+        </div>
+    </div>'
+    %}
+
+
+    <div class="col-md-4">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title" data-id="{{ fk.id|boost }}" data-type="1">
+                <h5>{{ fk.titre }}</h5>
+                <span class="pull-right"></span>
+            </div>
+            <div class="ibox-content">
+
+                <ul class="list-group clear-list m-t">
+                    <li class="list-group-item">
+                        <span class="pull-right">Frais kilométriques</span>
+                        <span class="label label-success">Catégorie</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ (fk.ndfAffaire is null) ? '' : fk.ndfAffaire.libelle }}</span>
+                        <span class="label label-success">Affaire</span>
+                    </li>
+
+                    <li class="list-group-item depense-note-bloc" data-id="{{ (fk.ndfNote is null) ? '-1' : fk.ndfNote.id|boost }}">
+                        <span class="pull-right">{{ (fk.ndfNote is null) ? '' : fk.ndfNote.libelle }}</span>
+                        <span class="label label-success">Note</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ (fk.periodeDeb is null) ? '' : fk.periodeDeb|date('d/m/Y', 'Europe/Paris') }}</span>
+                        <span class="label label-success">Date</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right"></span>
+                        <span class="label label-success">TVA</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ fk.ttc|number_format(2, '.', ',') }}&nbsp;&nbsp;{{ devise|raw }}</span>
+                        <span class="label label-success">TTC</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="ibox-footer">
+
+                <div class="row">
+                    {{ action|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}

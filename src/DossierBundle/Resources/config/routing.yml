@@ -1,0 +1,293 @@
+dossier_homepage:
+    path:     /dossiers
+    defaults: { _controller: DossierBundle:Default:index }
+dossier_dossiers:
+    path:   /dossiers/liste/{site}
+    defaults: { _controller: DossierBundle:Default:dossier , site: 0 }
+    options:
+        expose: true
+    requirements:
+        site: \d*
+
+dossier_administration:
+    path:   /dossiers/administration
+    defaults: { _controller: DossierBundle:Administration:index }
+
+dossier_admin_smtp:
+    path:   /dossiers/admin/smtp
+    defaults: { _controller: DossierBundle:Administration:smtp }
+
+dossier_admin_liste:
+    path:   /dossiers/admin/liste
+    defaults: { _controller: DossierBundle:Administration:listeEtParametrageMail }
+
+dossier_admin_log:
+    path:   /dossiers/admin/log
+    defaults: { _controller: DossierBundle:Administration:log }
+
+dossier_admin_get_list_rappel_pm:
+    path:   /dossiers/liste/rappel-pm
+    defaults: { _controller: DossierBundle:Administration:listeRappelPm }
+    options:
+        expose: true
+    methods: [POST]
+
+dossier_admin_get_list_by_dossier:
+    path: /dossiers/mail/config/{id}
+    defaults: { _controller: DossierBundle:Administration:configMailPm }
+    methods:  [GET]
+    options:
+        expose: true
+
+dossier_admin_change_statut_mail:
+    path: /dossiers/mail/statut/{id}/{value}
+    defaults: { _controller: DossierBundle:Administration:statutMailPm }
+    methods:  [GET]
+    options:
+        expose: true
+
+dossier_admin_get_view_add_user:
+    path: /dossiers/mail/view
+    defaults: { _controller: DossierBundle:Administration:addNewUserMail }
+    methods:  [GET]
+    options:
+        expose: true 
+
+dossier_admin_add_new_mail_pm:
+    path:   /dossiers/mail/add/new-user
+    defaults: { _controller: DossierBundle:Administration:addNewMailPm }
+    options:
+        expose: true
+    methods: [POST]
+
+dossier_admin_remove_user_mail_pm:
+    path: /dossiers/mail/remove/{id}
+    defaults: { _controller: DossierBundle:Administration:removeUserMail }
+    methods:  [GET]
+    options:
+        expose: true 
+
+dossier_admin_config_general:
+    path: /dossiers/config/general/{client}/{site}
+    defaults: { _controller: DossierBundle:Administration:configGeneral }
+    methods:  [GET]
+    options:
+        expose: true 
+
+dossier_admin_renvoi_mail_creation:
+    path: /dossiers/config/renvoi-creation
+    defaults: { _controller: DossierBundle:Administration:resendMailCreation }
+    methods:  [POST]
+    options:
+        expose: true 
+
+dossier_admin_get_config_notif:
+    path: /dossiers/config/notif/{id}
+    defaults: { _controller: DossierBundle:Administration:getConfigNotif }
+    methods:  [GET]
+    options:
+        expose: true 
+
+dossier_admin_set_config_notif:
+    path: /dossiers/config/notif
+    defaults: { _controller: DossierBundle:Administration:setConfigNotif }
+    methods:  [POST]
+    options:
+        expose: true 
+
+dossier_admin_rappel_pm_destinataire_edit:
+    path: /dossiers/config/rappel-pm/destinataire/{notification}
+    defaults: { _controller: DossierBundle:Administration:updateDestinatairePm }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        notification: \d+
+
+dossier_admin_autres_pm_destinataire_edit:
+    path: /dossiers/config/autres-pm/destinataire/{notification}
+    defaults: { _controller: DossierBundle:Administration:updateDestinataireAutresPm }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        notification: \d+
+
+dossier_admin_rappel_pm_param_liste:
+    path: /dossiers/config/rappel-pm/param/{client}/{site}
+    defaults: { _controller: DossierBundle:Administration:listParametre }
+    methods: [GET]
+    options:
+        expose: true
+
+dossier_admin_rappel_pm_default_content:
+    path: /dossiers/config/rappel-pm/email/default-content
+    defaults: { _controller: DossierBundle:Administration:emailDefaultContent }
+    methods: [GET]
+    options:
+        expose: true
+
+dossier_admin_autres_pm_default_content:
+    path: /dossiers/config/rappel-pm/email/default-content-autres-pm
+    defaults: { _controller: DossierBundle:Administration:emailDefaultContentAutresPm }
+    methods: [GET]
+    options:
+        expose: true
+
+dossier_admin_rappel_pm_email_content_edit:
+    path: /rappel-image/email/content/{tous}
+    defaults: { _controller: DossierBundle:Administration:editEmailContenu, tous: 0 }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        tous: 0|1
+
+dossier_admin_autres_pm_email_content_edit:
+    path: /rappel-image/email/content-autres-pm/{tous}
+    defaults: { _controller: DossierBundle:Administration:editEmailContenuAutresPm, tous: 0 }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        tous: 0|1
+
+dossier_admin_rappel_pm_param_edited:
+    path: /dossiers/config/param-envoi-auto
+    defaults: { _controller: DossierBundle:Administration:getConfigEnvoiAuto }
+    methods:  [POST]
+    options:
+        expose: true  
+
+dossier_admin_save_action_pm:
+    path: /dossiers/config/save
+    defaults: { _controller: DossierBundle:Administration:setConfigEnvoiAuto }
+    methods:  [POST]
+    options:
+        expose: true 
+
+dossier_admin_config:
+    path: /dossiers/config
+    defaults: { _controller: DossierBundle:Administration:item }
+    methods:  [POST]
+    options:
+        expose: true 
+
+dossier_admin_config_cabinet:
+    path: /dossiers/config/cabinet/{client}/{site}
+    defaults: { _controller: DossierBundle:Administration:configCabinet }
+    methods:  [GET]
+    options:
+        expose: true 
+
+dossier_admin_config_dossier:
+    path: /dossiers/config/dossier/{client}/{site}
+    defaults: { _controller: DossierBundle:Administration:configDossier }
+    methods:  [GET]
+    options:
+        expose: true 
+
+dossier_config_manuelAuto:
+    path: /dossiers/config/manuel-auto/{json}
+    defaults: { _controller: DossierBundle:Administration:manuelAuto, json: 0}
+    options:
+        expose: true
+
+dossier_admin_config_dossier_edit:
+    path: /dossiers/config/dossiers-grid-edit
+    defaults: { _controller: DossierBundle:Administration:configDossierGridEdit}
+    options:
+        expose: true
+
+dossier_config_cli_stat_edit:
+    path: /dossiers/config/cli-stat/{json}/{client}
+    defaults: { _controller: DossierBundle:Administration:clientStatList, json: 0, client: null}
+    options:
+        expose: true
+
+dossier_config_cli_site_edit:
+    path: /dossiers/config/cli-site/{client}
+    defaults: { _controller: DossierBundle:Administration:clientSiteList}
+    options:
+        expose: true
+
+dossier_config_cli_role_edit:
+    path: /dossiers/config/cli-role
+    defaults: { _controller: DossierBundle:Administration:clientRoleList}
+    options:
+        expose: true
+
+config_dossier_get_list_caract:
+    path: /dossiers/config/get-list-caract
+    defaults: { _controller: DossierBundle:Administration:getListCaractDossier }
+    methods:  [POST]
+    options:
+        expose: true 
+
+dossier_config_rappel_image_param_edit_all:
+    path: /dossiers/config/param-edit-all/rappel-image
+    defaults: { _controller: DossierBundle:Administration:updateParametreAll }
+    methods: [POST]
+    options:
+        expose: true
+
+dossier_config_param_edit_all_envoi_mail:
+    path: /dossiers/config/param-edit-all/envoi-mail
+    defaults: { _controller: DossierBundle:Administration:updateParametreAllEnvoiMail }
+    methods: [POST]
+    options:
+        expose: true
+
+dossier_notification_scriptura:
+    path:   /dossiers/param/notif-scriptura
+    defaults: { _controller: DossierBundle:NotifScriptura:index }
+
+dossier_notification_scriptura_getdata:
+    path: /dossiers/param/notif-scriptural/datas
+    defaults: { _controller: DossierBundle:NotifScriptura:getData }
+    methods: [POST]
+    options:
+        expose: true
+
+dossier_notification_scriptura_select:
+    path: /dossiers/param/notif-scriptural/statut
+    defaults: { _controller: DossierBundle:NotifScriptura:changeStatut }
+    methods: [POST]
+    options:
+        expose: true
+
+dossier_notification_scriptura_edit_all_envoi_mail:
+    path: /dossiers/param/notif-scriptural/edit-all
+    defaults: { _controller: DossierBundle:NotifScriptura:updateAllEnvoiMail }
+    methods: [POST]
+    options:
+        expose: true
+
+dossier_notification_scriptura_get_user:
+    path: /dossiers/param/notif-scriptural/get-user/{dossier}
+    defaults: { _controller: DossierBundle:NotifScriptura:getUser }
+    methods:  [GET]
+    options:
+        expose: true 
+
+dossier_notification_scriptura_user:
+    path: /dossiers/param/notif-scriptural/user
+    defaults: { _controller: DossierBundle:NotifScriptura:mailUser }
+    methods: [POST]
+    options:
+        expose: true
+
+dossier_perso_form:
+    path: /dossiers/param/notif-pm/perso
+    defaults: { _controller: DossierBundle:Administration:getHtmlPersoJourFixe }
+    methods: [POST]
+    options:
+        expose: true
+
+dossier_admin_autres_pm_param_liste:
+    path: /dossiers/config/autres-pm/param/{client}/{site}
+    defaults: { _controller: DossierBundle:Administration:listParametreAutresPm }
+    methods: [GET]
+    options:
+        expose: true
+

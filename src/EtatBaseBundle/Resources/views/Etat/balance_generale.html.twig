@@ -1,0 +1,145 @@
+{% set exercices = balance.exercices %}
+{% set comptes = balance.comptes %}
+{% set debits = balance.debits %}
+{% set credits = balance.credits %}
+{% set soldes_debit = balance.soldes_debit %}
+{% set soldes_credit = balance.soldes_credit %}
+{% set exercice_max = exercices[exercices|length - 1] %}
+{% set comptes_str = balance.comptes_str %}
+
+{% set total_debit = 0 %}
+{% set total_credit = 0 %}
+{% set total_solde_debit = {} %}
+{% set total_solde_credit = {} %}
+
+{% set total_debit_gen = 0 %}
+{% set total_credit_gen = 0 %}
+{% set total_solde_debit_gen = {} %}
+{% set total_solde_credit_gen = {} %}
+
+{% for exercice in exercices %}
+    {% set total_solde_debit = total_solde_debit|merge({ ( ',' ~ exercice ) : 0 }) %}
+    {% set total_solde_credit = total_solde_credit|merge({ ( ',' ~ exercice ) : 0 }) %}
+
+    {% set total_solde_debit_gen = total_solde_debit_gen|merge({ ( ',' ~ exercice ) : 0 }) %}
+    {% set total_solde_credit_gen = total_solde_credit_gen|merge({ ( ',' ~ exercice ) : 0 }) %}
+{% endfor %}
+
+<table class="table table-hover" id="js_eb_table_to_grid">
+    <thead>
+        <tr>
+            <th id="js_eb_est_tiers"></th>
+            <th id="js_eb_id_compte"></th>
+            <th id="js_eb_compte" class="text-success">Compte</th>
+            <th id="js_eb_intitule">Intitule</th>
+            {% if (exercices|length) == 1 and not colSolde %}
+                <th id="js_eb_debit">D&eacute;bit</th>
+                <th class="" id="js_eb_credit">Cr&eacute;dit</th>
+            {% endif %}
+
+            {% for exercice in exercices %}
+                {% if colSolde %}
+                    <th id="js_eb_solde_{{ exercice }}">Solde</th>
+                {% else %}
+                    <th id="js_eb_solde_debit_{{ exercice }}">Solde&nbsp;D&eacute;bit</th>
+                    <th id="js_eb_solde_credit_{{ exercice }}">Solde&nbsp;Cr&eacute;dit</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    {% if comptes_str|length != 0 %}
+        {% for i in 0..(comptes_str|length - 1) %}
+            {% set cpt = comptes_str[i] %}
+            {% set compte = comptes[cpt] %}
+            <tr>
+                <td>{{ (tier) ? 1 : 0 }}</td>
+                <td>{{ compte.id|boost }}</td>
+                <td>{{ cpt }}</td>
+                <td>{{ compte.intitule }}</td>
+
+                {% if (exercices|length) == 1 and not colSolde %}
+                    {% set debit = (debits[cpt][exercice_max] is defined) ? debits[cpt][exercice_max] : 0 %}
+                    {% set credit = (credits[cpt][exercice_max] is defined) ? credits[cpt][exercice_max] : 0 %}
+                    <td>{{ (debit != 0) ? debit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                    <td>{{ (credit != 0) ? credit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+
+                    {% set total_debit = total_debit + debit %}
+                    {% set total_credit = total_credit + credit %}
+                {% endif %}
+
+                {% for exercice in exercices %}
+                    {% set solde_debit = (soldes_debit[cpt][exercice] is defined) ? soldes_debit[cpt][exercice] : 0 %}
+                    {% set solde_credit = (soldes_credit[cpt][exercice] is defined) ? soldes_credit[cpt][exercice] : 0 %}
+
+                    {% if colSolde %}
+                        {% set solde = solde_debit - solde_credit %}
+                        <td>{{ (solde != 0) ? solde|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                    {% else %}
+                        <td>{{ (solde_debit != 0) ? solde_debit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                        <td>{{ (solde_credit != 0) ? solde_credit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                    {% endif %}
+
+                    {% set total_solde_debit = total_solde_debit|merge({ (',' ~ exercice) : (total_solde_debit[',' ~ exercice] + solde_debit) }) %}
+                    {% set total_solde_credit = total_solde_credit|merge({ (',' ~ exercice) : (total_solde_credit[',' ~ exercice] + solde_credit) }) %}
+                {% endfor %}
+            </tr>
+            {% if i == (comptes_str|length - 1) or cpt|slice(0,1) != comptes_str[i+1]|slice(0,1) %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><strong>TOTAL {{ cpt|slice(0,1) }}</strong></td>
+                    {% if (exercices|length) == 1 and not colSolde %}
+                        <td><strong>{{ (total_debit != 0) ? total_debit|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                        <td><strong>{{ (total_credit != 0) ? total_credit|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+
+                        {% set total_debit_gen = total_debit_gen + total_debit %}
+                        {% set total_credit_gen = total_credit_gen + total_credit %}
+
+                        {% set total_debit = 0 %}
+                        {% set total_credit = 0 %}
+                    {% endif %}
+
+                    {% for exercice in exercices %}
+                        {% if colSolde %}
+                            {% set totalSolde = total_solde_debit[',' ~ exercice] - total_solde_credit[',' ~ exercice] %}
+                            <td><strong>{{ (totalSolde != 0) ? totalSolde|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                        {% else %}
+                            <td><strong>{{ (total_solde_debit[',' ~ exercice] != 0) ? total_solde_debit[',' ~ exercice]|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                            <td><strong>{{ (total_solde_credit[',' ~ exercice] != 0) ? total_solde_credit[',' ~ exercice]|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                        {% endif %}
+
+                        {% set total_solde_debit_gen = total_solde_debit_gen|merge({ (',' ~ exercice) : (total_solde_debit_gen[',' ~ exercice] + total_solde_debit[',' ~ exercice]) }) %}
+                        {% set total_solde_credit_gen = total_solde_credit_gen|merge({ (',' ~ exercice) : (total_solde_credit_gen[',' ~ exercice] + total_solde_credit[',' ~ exercice]) }) %}
+
+                        {% set total_solde_debit = total_solde_debit|merge({ (',' ~ exercice) : 0 }) %}
+                        {% set total_solde_credit = total_solde_credit|merge({ (',' ~ exercice) : 0 }) %}
+                    {% endfor %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL&nbsp;GENERAL</strong></td>
+            {% if (exercices|length) == 1 and not colSolde %}
+                <td><strong>{{ (total_debit_gen != 0) ? total_debit_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                <td><strong>{{ (total_credit_gen != 0) ? total_credit_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+            {% endif %}
+
+            {% for exercice in exercices %}
+                {% if colSolde %}
+                    {% set soldeGen = total_solde_debit_gen[',' ~ exercice] - total_solde_credit_gen[',' ~ exercice] %}
+                    <td><strong>{{ (soldeGen != 0) ? soldeGen|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                {% else %}
+                    <td><strong>{{ (total_solde_debit_gen[',' ~ exercice] != 0) ? total_solde_debit_gen[',' ~ exercice]|number_format(2, ',', '&nbsp;')|raw : '' }}</strong></td>
+                    <td><strong>{{ (total_solde_credit_gen[',' ~ exercice] != 0) ? total_solde_credit_gen[',' ~ exercice]|number_format(2, ',', '&nbsp;')|raw : ''  }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        </tbody>
+    {% endif %}
+</table>

@@ -1,0 +1,26 @@
+REMISE CB 207 000#0004934;MT. BRUT. 256 00 EUR REF. 5206794001;(FRAIS E. 2 96 DONT HT E. 2 47;TVA TAUX 20 00 E. 0 49)	
+11:23 - Léon:
+tsi mvoka ny ecriture tokon atao am'io
+11:25 - Léon:
+ts meti parametre-na clé fa zvt afa mints no avokany
+11:25 - Sitraka:
+f aon n avoakany?
+11:25 - Léon:
+BF BRASSERIE le dossier
+11:25 - Léon:
+tokon zw ny ecriture am'io exemple ambony io
+11:27 - Léon:
+512000 : D: 260.96
+511001 : C:    	263.50
+627000 : D: 2.47
+445660 : D: 0.49
+
+Ny avokany nefa 
+
+512000 : D : 260.96
+445660 : C : 52.19
+511001 : C 208.77
+11:28 - Sitraka:
+ndraso jerena nray zan ar ee
+11:28 - Léon:
+siora

@@ -1,0 +1,95 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/facturation/css/facturation.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/themes/fa/theme.js') }}"></script>
+    <script src="{{ asset('bundles/facturation/js/facturation-functions.js') }}"></script>
+    <script src="{{ asset('bundles/facturation/js/contrat.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="col-lg-12">
+        <div class="tabs-container jqgrid-tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#contrat">Contrat signé</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="contrat" class="tab-pane active">
+                    <div class="panel-body">
+                        {#<div class="row hidden">#}
+                            {#<div class="col-sm-3">#}
+                                {#{{ render(controller('AppBundle:Commun:clients',{'conteneur': 0, 'tous': 1})) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        <table id="js_contrat" class="js-jqgrid-table"></table>
+                        <div id="pager_contrat"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contrat-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Contrat signé</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" enctype="multipart/form-data" id="contrat-form">
+                        <input type="hidden" id="contrat-id">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="client-add">
+                                Client
+                            </label>
+                            <div class="col-md-9">
+                                {{ render(controller('FacturationBundle:Contrat:client', {'attr_id': 'client-add', 'attr_class': 'form-control'})) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="date-signature">
+                                Date Signature
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control text-center" id="date-signature" name="date-signature">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="pdf-contrat">
+                                PDF Contrat
+                            </label>
+                            <div class="col-md-9">
+                                <input type="file" class="form-control" name="pdf_contrat[]" multiple id="pdf-contrat">
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-md-offset-3">
+                            <ul id="contrat-file-list" class="list-group">
+                                <li class="list-group-item">Contrat1.pdf <i class="fa fa-file-pdf-o file-pdf pull-right"></i></li>
+                            </ul>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="allow-tarif-edit">
+                                Autoriser modif. tarif
+                            </label>
+                            <div class="col-md-9" style="line-height: 35px;">
+                                <input type="checkbox" class="i-checks" id="allow-tarif-edit" name="allow-tarif-edit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-contrat">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

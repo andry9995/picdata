@@ -1,0 +1,245 @@
+one_prospect_homepage:
+    path:       /prospect
+    defaults:   { _controller: OneProspectBundle:Prospect:index }
+   
+one_prospect_list:
+    path:       /prospect/list
+    defaults:   { _controller: OneProspectBundle:Prospect:list }
+    options:
+        expose: true
+        
+one_prospect_mlist:
+    path:       /prospect/mlist
+    defaults:   { _controller: OneProspectBundle:Prospect:listinmodal }
+    options:
+        expose: true
+    
+one_prospect_new:
+    path:       /prospect/new
+    defaults:   { _controller: OneProspectBundle:Prospect:new }
+    options:
+        expose: true
+    
+one_prospect_edit:
+    path:       /prospect/edit/{id}
+    defaults:   { _controller: OneProspectBundle:Prospect:edit }
+    methods: [GET]
+    options:
+        expose: true
+   
+one_prospect_show:
+    path:       /prospect/show/{id}
+    defaults:   { _controller: OneProspectBundle:Prospect:show }
+    methods: [GET]
+    options:
+        expose: true
+    
+one_prospect_save:
+    path:       /prospect/save
+    defaults:   { _controller: OneProspectBundle:Prospect:save }
+    options:
+        expose: true
+        
+one_prospect_delete:
+    path:       /prospect/delete/{id}
+    defaults:   { _controller: OneProspectBundle:Prospect:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+
+one_prospect_archive:
+    path:       /prospect/archive/{id}
+    defaults:   { _controller: OneProspectBundle:Prospect:archive }
+    methods: [GET]
+    options:
+        expose: true
+
+        
+one_prospect_duplicate:
+    path:       /prospect/duplicate/{dossierId}
+    defaults:   { _controller: OneProspectBundle:Prospect:duplicate, dossierId: -1 }
+    methods: [GET,POST]
+    options:
+        expose: true
+    
+one_contact_client_new:
+    path:       /contact/new
+    defaults:   { _controller: OneProspectBundle:ContactClient:new }
+    options:
+        expose: true
+
+one_contact_client_edit:
+    path:       /contact/edit
+    defaults:   { _controller: OneProspectBundle:ContactClient:edit }
+    options:
+        expose: true
+
+one_opportunite_list:
+    path:       /opportunite/list
+    defaults:   { _controller: OneProspectBundle:Opportunite:list }
+    options:
+        expose: true
+        
+one_opportunite_new:
+    path:       /opportunite/new
+    defaults:   { _controller: OneProspectBundle:Opportunite:new }
+    methods: [GET]
+    options:
+        expose: true
+
+one_opportunite_edit:
+    path:       /opportunite/edit/{id}
+    defaults:   { _controller: OneProspectBundle:Opportunite:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_opportunite_save:
+    path:       /opportunite/save
+    defaults:   { _controller: OneProspectBundle:Opportunite:save }
+    options:
+        expose: true
+        
+one_opportunite_delete:
+    path:       /opportunite/delete/{id}
+    defaults:   { _controller: OneProspectBundle:Opportunite:delete }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_opportunite_list_contacts:
+    path:       /opportunite/contacts
+    defaults:   { _controller: OneProspectBundle:Opportunite:listcontact }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_opportutnite_show:
+    path:       /opportunite/show/{id}
+    defaults:   { _controller: OneProspectBundle:Opportunite:show }
+    methods: [GET]
+    options:
+        expose: true
+
+
+one_opportunite_step_list:
+    path:       /opportunite/step/list
+    defaults:   { _controller: OneProspectBundle:OpportuniteStep:list }
+    options:
+        expose: true
+
+one_opportunite_step_new:
+    path:       /opportunite/step/new
+    defaults:   { _controller: OneProspectBundle:OpportuniteStep:new }
+    methods: [GET]
+    options:
+        expose: true
+
+one_opportunite_step_edit:
+    path:       /opportunite/step/edit/{id}
+    defaults:   { _controller: OneProspectBundle:OpportuniteStep:edit }
+    methods: [GET]
+    options:
+        expose: true
+
+one_opportunite_step_save:
+    path:       /opportunite/step/save
+    defaults:   { _controller: OneProspectBundle:OpportuniteStep:save }
+    options:
+        expose: true
+
+one_opportunite_step_delete:
+    path:       /opportunite/step/delete/{id}
+    defaults:   { _controller: OneProspectBundle:OpportuniteStep:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+one_opportunite_step_update:
+    path:       /opportunite/step/update
+    defaults:   { _controller: OneProspectBundle:OpportuniteStep:update }
+    methods: [GET]
+    options:
+        expose: true
+
+
+one_opportunite_step_order:
+    path:       /opportunite/step/order
+    defaults:   { _controller: OneProspectBundle:OpportuniteStep:order }
+    methods: [GET]
+    options:
+        expose: true
+
+
+one_tache_list:
+    path:       /tache/list
+    defaults:   { _controller: OneProspectBundle:Tache:list }
+    options:
+        expose: true
+
+one_tache_new:
+    path:       /tache/new
+    defaults:   { _controller: OneProspectBundle:Tache:new }
+    methods: [GET]
+    options:
+        expose: true
+
+one_tache_edit:
+    path:       /tache/edit/{id}
+    defaults:   { _controller: OneProspectBundle:Tache:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_tache_save:
+    path:       /tache/save
+    defaults:   { _controller: OneProspectBundle:Tache:save }
+    options:
+        expose: true
+        
+one_tache_delete:
+    path:       /tache/delete/{id}
+    defaults:   { _controller: OneProspectBundle:Tache:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+one_file_upload:
+    path:       /file/upload
+    defaults:   { _controller: OneProspectBundle:File:upload }
+    options:
+        expose: true
+        
+one_appel_list:
+    path:       /appel/list
+    defaults:   { _controller: OneProspectBundle:AppelTelephonique:list }
+    options:
+        expose: true
+
+one_appel_new:
+    path:       /appel/new
+    defaults:   { _controller: OneProspectBundle:AppelTelephonique:new }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_appel_edit:
+    path:       /appel/edit/{id}
+    defaults:   { _controller: OneProspectBundle:AppelTelephonique:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_appel_save:
+    path:       /appel/save
+    defaults:   { _controller: OneProspectBundle:AppelTelephonique:save }
+    options:
+        expose: true
+        
+one_appel_delete:
+    path:       /appel/delete/{id}
+    defaults:   { _controller: OneProspectBundle:AppelTelephonique:delete }
+    methods: [GET]
+    options:
+        expose: true

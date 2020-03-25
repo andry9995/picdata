@@ -1,0 +1,104 @@
+
+
+{#{% extends 'AdminBundle:Default:index.html.twig' %}#}
+
+{#{% block titre %}InfoPerdos{% endblock %}#}
+
+{#{% block javascripts %}#}
+    {#{{ parent() }}#}
+    {#<script src="{{ asset('bundles/app/js/commun.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/summernote/summernote.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/summernote/summernote-fr-FR.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/validate/jquery.validate.min.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker-fr.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>#}
+    {#<script src="{{ asset('js/plugins/fileinput/themes/fa/theme.js') }}"></script>#}
+    {#<script src="{{ asset('bundles/infoperdos/js/infoCaracteristique/libelleEcriture.js') }}"></script>#}
+{#{% endblock %}#}
+
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+
+    {#<link rel="stylesheet" href="{{ asset('css/plugins/summernote/summernote.css') }}" >#}
+    {#<link rel="stylesheet" href="{{ asset('css/plugins/summernote/summernote-bs4.css') }}">#}
+    {#<link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">#}
+    {#<link rel="stylesheet" href="{{ asset('css/plugins/sweetalert/sweetalert.css') }}" >#}
+    {#<link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">#}
+    {#<link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/infoperdos.css') }}?v=2.0.0">#}
+    {#<link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/instruction-dossier.css') }}?v=1.9.5">#}
+
+{#{% endblock %}#}
+
+{#{% block wrapper_content %}#}
+
+    {#<div class="row">#}
+        {#<span class="btn btn-primary" id="save-libelle">Enregistrer</span>#}
+    {#</div>#}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Choisir parmis les elements suivants et faites un glisser/déposer vers Libellé Ecriture Achat
+        </div>
+        <div class="panel-body">
+            <div id="libelle-modele-achat" class="row connectedSortable" style="height: 150px;">
+                {% for libelleModeleAchat in libelleModeleAchats %}
+                    <div class="col-sm-2">
+                        <div class="ibox libelle-box">
+                            <div class="ibox-content">
+                                <div class="form-group" data-id="{{ libelleModeleAchat.libelleItem.id }}">
+                                    <label>{{ libelleModeleAchat.libelleItem.intitule }}</label>
+                                    <input type="number" placeholder="nbre caractere" class="form-control"
+                                           value="{{ (libelleModeleAchat.libelleItem.nbCaractere is null) ? '' : libelleModeleAchat.libelleItem.nbCaractere }}"
+                                            {{ (libelleModeleAchat.libelleItem.id == 5 or libelleModeleAchat.libelleItem.id == 7) ? 'disabled' : '' }}
+                                    >
+                                    <select class="form-control">
+                                        <option value="0" selected>Début</option>
+                                        <option value="1">Fin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+           Libellé Ecriture Achat
+        </div>
+        <div class="panel-body">
+            <div id="libelle-achat" class="row connectedSortable libelle" style="height: 150px;">
+                {% for libelleAchat in libelleAchats %}
+                    <div class="col-sm-2">
+                        <div class="ibox libelle-box">
+                            <div class="ibox-content">
+                                <div class="form-group" data-id="{{ libelleAchat.libelleItem.id }}">
+                                    <label>{{ libelleAchat.libelleItem.intitule }}</label>
+                                    <input type="number" placeholder="nbre caractere" class="form-control"
+                                           value="{{(libelleAchat.nbCaractere is not null) ? libelleAchat.nbCaractere :
+                                           (libelleAchat.libelleItem.nbCaractere is not null) ? libelleAchat.libelleItem.nbCaractere : '' }}"
+                                            {{ (libelleAchat.libelleItem.id == 5 or libelleAchat.libelleItem.id == 7) ? 'disabled' : '' }}
+                                    >
+                                    <select class="form-control">
+                                        {% set position  = (libelleAchat.position is null) ? -1 : libelleAchat.position  %}
+                                        <option value="0" {{ (position == 0) ? 'selected' : '' }}>Début</option>
+                                        <option value="1" {{ (position == 1) ? 'selected' : '' }}>Fin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+         </div>
+    </div>
+
+
+
+
+{#{% endblock %}#}

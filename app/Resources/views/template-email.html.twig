@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}
+        <style>
+            html { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
+            @media only screen and (max-device-width: 680px), only screen and (max-width: 680px) {
+                *[class="table_width_100"] {
+                    width: 96% !important;
+                }
+                *[class="border-right_mob"] {
+                    border-right: 1px solid #dddddd;
+                }
+                *[class="mob_100"] {
+                    width: 100% !important;
+                }
+                *[class="mob_center"] {
+                    text-align: center !important;
+                }
+                *[class="mob_center_bl"] {
+                    float: none !important;
+                    display: block !important;
+                    margin: 0px auto;
+                }
+                .iage_footer a {
+                    text-decoration: none;
+                    color: #929ca8;
+                }
+                img.mob_display_none {
+                    width: 0px !important;
+                    height: 0px !important;
+                    display: none !important;
+                }
+                img.mob_width_50 {
+                    width: 40% !important;
+                    height: auto !important;
+                }
+            }
+            .table_width_100 {
+                width: 680px;
+            }
+        </style>
+    {% endblock %}
+    <title>{% block title %}Email{% endblock %}</title>
+</head>
+<body style="font-family:Arial,Helvetica,sans-serif;padding:0;margin:0;">
+<div id="mailsub" class="notification" align="center">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="min-width:320px;">
+        <tr>
+            <td align="center" bgcolor="#eff3f8">
+                <!--[if gte mso 10]>
+                <table width="680" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                <![endif]-->
+                <table border="0" cellspacing="0" cellpadding="0" class="table_width_100" width="100%"
+                       style="max-width: 680px; min-width: 300px;">
+                    <tr>
+                        <td>
+                            <!-- padding -->
+                            <div style="height: 80px; line-height: 80px; font-size: 10px;"></div>
+                        </td>
+                    </tr>
+                    <!--header -->
+                    <tr>
+                        <td align="center" bgcolor="#ffffff">
+                            <!-- padding -->
+                            {#<div style="height: 30px; line-height: 30px; font-size: 10px;"> </div>#}
+                            <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="left">
+                                        {% if clientTheme.getLogoForEmail(client.id) != '' %}
+                                            <img src="{{ absolute_url(asset(clientTheme.getLogoForEmail(client.id))) }}" alt="logo" width="180" height="130">
+                                        {% endif %}
+                                    </td>
+                                    <td align="right">
+
+                                        <div class="mob_center_bl"
+                                             style="float: right; display: inline-block; width: 88px;">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- padding -->
+                            {#<div style="height: 50px; line-height: 50px; font-size: 10px;">#}
+                            {#</div>#}
+                        </td>
+                    </tr>
+                    <!--header END-->
+                    <!--content 1 -->
+                    <tr>
+                        <td align="center" bgcolor="#fbfcfd">
+                            <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center">
+                                        <!-- padding -->
+                                        <div style="height: 60px; line-height: 60px; font-size: 10px;"> </div>
+                                        <div style="line-height: 44px;">
+                                            <font face="Arial, Helvetica, sans-serif" size="5" color="#57697e"
+                                                  style="font-size: 34px;">
+													<span style="font-family: Arial, Helvetica, sans-serif; font-size: 34px; color: #57697e;">
+														{% block salutation %}Bonjour Utilisateur{% endblock %}
+													</span></font>
+                                        </div>
+                                        <!-- padding -->
+                                        <div style="height: 40px; line-height: 40px; font-size: 10px;"> </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="line-height: 24px;">
+                                            <font face="Arial, Helvetica, sans-serif" size="4" color="#57697e"
+                                                  style="font-size: 15px;">
+													<span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #57697e;">
+														{% block message %}
+                                                            <p>Votre nouveau compte a été créé avec succès.
+                                                            Vous pouvez vous connecter à votre espace
+                                                                client en cliquant le bouton suivant.</p>
+                                                            <p>A noter que vous devez definir votre propre mot de passe lors de la première connexion.</p>
+                                                        {% endblock %}
+													</span></font>
+                                        </div>
+                                        <!-- padding -->
+                                        <div style="height: 40px; line-height: 40px; font-size: 10px;"> </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    {% block connexion %}
+                                        <td>
+                                            <table style="text-align:center;width:100%;">
+                                                <tr style="text-align:center;">
+                                                    <td style="width:33%;"></td>
+                                                    <td align="center" style="width:33%;background-color: #1ab394;border-color: #4c5764;border: 2px solid #45b7af;padding: 10px;text-align: center;">
+                                                        <a style="display: block;color: #ffffff;font-size: 12px;text-decoration: none;text-transform: uppercase;font-family:Arial,Helvetica,sans-serif;"
+                                                           href="{{ url('login') }}">
+                                                            CONNEXION
+                                                        </a>
+                                                    </td>
+                                                    <td style="width:33%;"></td>
+                                                </tr>
+                                            </table>
+                                            <div style="height:25px;"></div>
+                                        </td>
+                                    {% endblock %}
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <!--content 1 END-->
+                    <!--links -->
+                    {% block contentend %}
+                        <tr>
+                            <td align="center" bgcolor="#ffffff"
+                                style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #eff2f4;">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td align="center">
+                                            <!-- padding -->
+                                            <div style="height: 32px; line-height: 32px; font-size: 10px;"> </div>
+                                            <table width="80%" align="center" cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td align="center" valign="middle"
+                                                        style="font-size: 12px; line-height: 22px;">
+                                                        <font face="Tahoma, Arial, Helvetica, sans-serif" size="2"
+                                                              color="#282f37" style="font-size: 12px;">
+                                                                <span style="font-family: Arial, Helvetica, sans-serif; font-style: italic; font-size: 16px; color: #5b9bd1;">
+                                                                    {% block signature %}
+                                                                        {% if support_email is not defined %}
+                                                                            {% set support_email = '#' %}
+                                                                        {% endif %}
+                                                                    <a style="text-decoration:none;color:#57697e;" href="{{ support_email }}">L'équipe Support</a>
+                                                                    {% endblock %}
+                                                                </span></font>
+                                                        <br>
+                                                        <img src="{{ absolute_url(asset('img/landing/miniature1.png')) }}" alt="" width="120" height="80">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><!-- padding -->
+                                            <div style="height: 32px; line-height: 32px; font-size: 10px;"> </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    {% endblock %}
+                    <!--links END-->
+                    <!--footer -->
+                    <tr>
+                        <td class="iage_footer" align="center" bgcolor="#ffffff">
+                            <!-- padding -->
+                            <div style="height: 80px; line-height: 80px; font-size: 10px;"> </div>
+
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center">
+                                        <font face="Arial, Helvetica, sans-serif" size="3" color="#96a5b5"
+                                              style="font-size: 13px;">
+												<span style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #96a5b5;">
+													&copy; {{ 'now'|date('Y') }}. Tous droits reservés.
+												</span></font>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- padding -->
+                            <div style="height: 30px; line-height: 30px; font-size: 10px;"> </div>
+                        </td>
+                    </tr>
+                    <!--footer END-->
+                    <tr>
+                        <td>
+                            <!-- padding -->
+                            <div style="height: 80px; line-height: 80px; font-size: 10px;"> </div>
+                        </td>
+                    </tr>
+                </table>
+                <!--[if gte mso 10]>
+                </td></tr>
+                </table>
+                <![endif]-->
+
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>
+</body>
+</html>

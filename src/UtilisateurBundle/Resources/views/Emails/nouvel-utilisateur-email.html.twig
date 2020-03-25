@@ -1,0 +1,26 @@
+{% extends 'user-email.html.twig' %}
+
+{% block title %}
+    Création de votre compte
+{% endblock %}
+{% block salutation %}
+    Bonjour {{ utilisateur.prenom | lower | title }} {{ utilisateur.nom | upper }}
+{% endblock %}
+
+{% block message %}
+    <p>Votre nouveau compte vient d'être créé.<br>
+    Le site utilisé est <a style="color:#1ab394;text-decoration:none;" href="{{ url('login') }}">{{ url('login') }}</a>.</p>
+    <p>Pour vous connecter, cliquez <a style="color:#1ab394;text-decoration:none;" href="{{ url('login') }}"><strong>ici</strong></a>,
+        puis entrer votre login (votre adresse email)<br>
+        et votre mot de passe: <span
+                style="color:#8a1f11;background-color:#b5ffe3;"><strong>{{ raw_password }}</strong></span>
+    <br>
+    Attention ce mot de passe doit être changé à votre première connexion.
+    </p>
+    <p>Il est fortement recommandé de ne pas utiliser Internet Explorer comme navigateur.<br>
+        (Il n'est plus maintenu par Microsoft)<br>
+    Chrome est le meilleur navigateur.</p>
+    <p style="font-size:12px;">Si vous avez besoin d'aide, cliquer <a style="color:#1ab394;text-decoration:none;" href="{{ url('user_connexion_aide', {'token': token}) }}">ici</a>
+        pour tchatter en direct avec notre équipe support
+        ou envoyer un email à <a style="color:#1ab394;text-decoration:none;" href="mailto:{{ reply_to }}">{{ reply_to }}</a>.</p>
+{% endblock %}

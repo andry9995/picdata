@@ -1,0 +1,122 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListFacture();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Facture Client {{ (imputation is not null) ? imputation.numFacture : ''}}</h2>
+    </div>
+</div>
+<div class="row first-page">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="facture-form" enctype="multipart/form-data">
+           <div class="form-group">
+                <label for="client-prospect" class="col-md-2 col-sm-3 col-xs-12 control-label">Client*</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <select class="form-control" id="client-prospect" name="client-prospect" placeholder="" >
+                            <option value="{{ (tiers is not null) ? tiers.id : -1 }}" selected="selected">{{ (tiers is not null) ? tiers.intitule : '' }}</option>
+                    </select>
+                </div>
+                <label for="date-facture" class="col-md-2 col-sm-3 col-xs-12 control-label">Date</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <div class="input-group date">
+                        <input type="text" class="form-control datepicker" id="date-facture" name="date-facture" value="{{ imputation.dateFacture|date("d/m/Y") }}">
+                        <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact-client" class="col-md-2 col-sm-3 col-xs-12 control-label">Contact</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <select class="form-control" id="contact-client" name="contact-client" placeholder="">
+                    </select>
+                </div>
+                <label for="reglement" class="col-md-2 col-sm-3 col-xs-12 control-label">Règlement</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <select class="form-control" id="reglement" name="reglement" placeholder="">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="adresse-facturation" class="col-md-2 col-sm-3 col-xs-12 control-label">Adresse Facturation</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <textarea class="form-control" id="adresse-facturation" name="adresse-facturation" readonly></textarea>
+                </div>
+                <label class="col-md-2 col-sm-3 col-xs-12 control-label"></label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <div class="radio radio-inline">
+                        <input type="radio" id="status-a-payer" value="0" name="status">
+                        <label for="client-type-entreprise">A payer</label>
+                    </div>
+                    <div class="radio radio-inline">
+                        <input type="radio" id="status-payee" value="1" name="status">
+                        <label for="client-type-particulier">Payée</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <div class="items">
+                <br />
+                <table class="table table-hover article-list">
+                    <thead>
+                    <tr>
+                        <th style="width: 50%;">Intitule</th>
+                        <th style="width: 25%;">Montant HT</th>
+                        <th style="width: 25%;">TVA%</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if tvaImputations|length > 0 %}
+                        {% for article in tvaImputations %}
+                            <tr id="{{ article.id~'-'~'now'|date('U') }}" class="{{ article.id }}" onclick="selectToRemove(this);">
+                                <td style="vertical-align:middle;">
+                                    {{ article.libelle}}
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <input type="text" class="form-control price number" value="{{ article.montantHt }}" />
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <select class="form-control tva">
+                                       <option>{{ (article.tvaTaux is not null) ? article.tvaTaux.taux : 0 }} % </option>
+                                    </select>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+
+            </div>
+            <div id="articles-deleted"></div>
+            <br />
+            <br />
+            <div class="form-group">
+                <label for="note" class="col-md-2 col-sm-3 col-xs-12 control-label">Note imprimée</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <textarea class="form-control" id="note" name="note"></textarea>
+                </div>
+                <label for="montant-ht" class="col-md-2 col-sm-3 col-xs-12 control-label">Total HT</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-ht" name="montant-ht" value="{{ totalHt }}" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="montant-tva" class="col-md-2 col-sm-3 col-xs-12 control-label">TVA</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-tva" name="montant-tva" value="{{ totalTva }}" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="montant-ttc" class="col-md-2 col-sm-3 col-xs-12 control-label">Total TTC</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-ttc" name="montant-ttc" value="{{ totalTtc }}" readonly>
+                </div>
+            </div>
+            <hr />
+        </form>
+    </div>
+</div>

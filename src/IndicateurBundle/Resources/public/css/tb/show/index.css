@@ -1,0 +1,16 @@
+th.ui-th-column div
+{
+    white-space:normal !important;
+    height:auto !important;
+    padding:2px;
+}
+
+.bordered-left
+{
+    border-left: 2px solid #cccccc!important;
+}
+
+.bordered-right
+{
+    border-right: 2px solid #cccccc!important;
+}

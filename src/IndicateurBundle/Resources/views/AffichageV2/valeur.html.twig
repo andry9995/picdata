@@ -1,0 +1,52 @@
+<div class="text-center"><h3>{{ res.titre }}</h3></div>
+
+{% for data in res.datas %}
+    {% set index = 0 %}
+    {% for montant in data.data %}
+        {% if res.analyse == 0 %}
+            {% set key = res.categories[index] %}
+        {% elseif res.analyse == 1 %}
+            {% set key = data.name ~ '-' ~ res.categories[index] %}
+        {% else %}
+            {% set key = '' %}
+        {% endif %}
+        <div class="widget navy-bg pointer js_cl_valeur_box" style="padding: 3px!important;">
+            <div class="row">
+                <div class="col-xs-3">
+                    <h3 class="font-bold js_cl_valeur_key">{{ key }}</h3>
+                </div>
+                <div class="col-xs-9 text-center">
+                    <span style="font-size: 45px" class="font-bold">{{  montant|number_format(res.arrondirA, ',', '&nbsp;')|raw }}&nbsp;<span style="font-size: 15px" >{{ res.unite }}</span></span>
+                </div>
+            </div>
+        </div>
+        {% set index = index + 1 %}
+    {% endfor %}
+{% endfor %}
+
+{#{% for key in valeurs|keys %}
+    <div class="widget navy-bg">
+        <div class="row">
+            <div class="col-xs-3">
+                <h3 class="font-bold">{{ key }}</h3>
+            </div>
+            <div class="col-xs-9 text-center">
+                <span style="font-size: 45px" class="font-bold">{{  valeurs[key]|number_format(arrondirA, ',', '&nbsp;')|raw }}&nbsp;<span style="font-size: 15px" >{{ unite }}</span></span>
+            </div>
+        </div>
+    </div>
+{% endfor %}#}
+
+{#<div class="text-center"><h3>{{ description }}</h3></div>
+{% for key in valeurs|keys %}
+    <div class="widget navy-bg">
+        <div class="row">
+            <div class="col-xs-3">
+                <h3 class="font-bold">{{ key }}</h3>
+            </div>
+            <div class="col-xs-9 text-center">
+                <span style="font-size: 45px" class="font-bold">{{  valeurs[key]|number_format(arrondirA, ',', '&nbsp;')|raw }}&nbsp;<span style="font-size: 15px" >{{ unite }}</span></span>
+            </div>
+        </div>
+    </div>
+{% endfor %}#}

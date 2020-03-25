@@ -1,0 +1,20 @@
+<tr>
+    <td>
+        <div class="input-group date">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            <input type="text" name="ecr-date" id="" value="">
+        </div>
+    </td>
+    <td>
+        <select name="pcc">
+            <option></option>
+            {% for pcc in pccs %}
+                <option value="{{ pcc.id }}">{{ pcc.compte }} - {{ pcc.intitule }}</option>
+            {% endfor %}
+        </select>
+    </td>
+    <td><input type="text"></td>
+    <td><input type="text"></td>
+    <td><input type="text"></td>
+    <td><span><i class="fa fa-trash"></i></span></td>
+</tr>

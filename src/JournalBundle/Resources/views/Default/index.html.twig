@@ -1,0 +1,70 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% block titre %}Journal{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/datePickerPopOverV2.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/journal/js/journal.js') }}"></script>
+    <script src="{{ asset('bundles/journal/js/periode.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/datePickerPopOverV2.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/journal/css/journal.css') }}">
+{% endblock %}
+
+{% block wrapper_content %}
+    {{ include('JournalBundle:Default:filtre.html.twig') }}
+
+    <div class="row">
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-centralisateur">Centralisateur</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-journaux">Journaux</a></li>
+            </ul>
+            <div class="tab-content">
+
+                <div id="tab-centralisateur" class="tab-pane active">
+                    <div class="panel">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <table id="centralisateur-list">
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-journaux" class="tab-pane">
+                    <div class="panel-body">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <table id="journal-list"></table>
+                            </div>
+                        </div>
+                        <form id="export" method="post"></form>
+                        <div class="modal" id="picdoc-modal" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="col-md-offset-11 col-md-1">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table id="journal-picdoc-list"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

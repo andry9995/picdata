@@ -1,0 +1,19 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-4 control-label">
+            <span>Utilisateur</span>
+            <span class="label label-warning">{{ (utilisateurs is not defined) ? '' : utilisateurs|length }}</span>
+        </label>
+        <div class="col-lg-8">
+            <select class="form-control" id="js_utilisateur">
+                <option></option>
+                {% if utilisateurs is iterable %}
+                    {% for utilisateur in utilisateurs %}
+                        <option value="{{ utilisateur.id}}">{{ utilisateur.nom}}</option>
+                    {% endfor %}
+                {% endif %}
+
+            </select>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,15 @@
+{% for i in 0..6 %}
+    {% if i in comptes|keys %}
+        {% set compte = comptes[i] %}
+    {% else %}
+        {% set compte = null %}
+    {% endif %}
+
+    {# 0: bilan pcc, 1: tiers,  2: resultat, 3: tva #}
+    <tr data-type="1">
+        <td>{{ include('BanqueBundle:Imputation:td-item.html.twig', {comptes:bilans, cpt:((compte and (compte.tc == 0 or compte.tc == 1)) ? compte : null), type_compte: 0}) }}</td>
+        <td>{{ include('BanqueBundle:Imputation:td-item.html.twig', {comptes:tvas, cpt:((compte and compte.tc == 3) ? compte : null), type_compte: 3}) }}</td>
+        <td>{{ include('BanqueBundle:Imputation:td-item.html.twig', {comptes:resultats, cpt:((compte and compte.tc == 2) ? compte : null), type_compte: 2}) }}</td>
+        <td><input type="text" class="form-control input-in-jqgrid input-sm cl_montant_imputation text-right" value="{{ compte ? compte.m : '' }}"></td>
+    </tr>
+{% endfor %}

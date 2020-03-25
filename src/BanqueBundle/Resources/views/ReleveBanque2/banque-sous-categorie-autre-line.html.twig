@@ -1,0 +1,28 @@
+{% if margin is not defined %}
+    {% set margin = 15 %}
+{% endif %}
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12">
+        <table class="table" style="margin-bottom: 1px!important;" id="js_releve_selected" data-id="{{ banqueSousCategorieAutre.id|boost }}">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Date</th>
+                    <th>Libelle</th>
+                    <th>Mouvement</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set date = banqueSousCategorieAutre.date ? banqueSousCategorieAutre.date : banqueSousCategorieAutre.dateFacture %}
+                <tr>
+                    <td class="js_show_image_ pointer text-primary">{{ banqueSousCategorieAutre.image.nom }}</td>
+                    <td class="hidden js_id_image">{{ banqueSousCategorieAutre.image.id|boost }}</td>
+                    <td class="js_cl_date_operation">{{  date ? date|date('d/m/Y') : '' }}</td>
+                    <td class="js_cl_etendre_recherche_____desactiver">{{ (banqueSousCategorieAutre.libelle|trim != '') ? banqueSousCategorieAutre.libelle : banqueSousCategorieAutre.nomTiers }}</td>
+                    <td align="right" id="js_id_m" data-m="{{ banqueSousCategorieAutre.montant }}">{{ (banqueSousCategorieAutre.montant * (negatif ? -1 : 1))|number_format(2, ',', '&nbsp;')|raw }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

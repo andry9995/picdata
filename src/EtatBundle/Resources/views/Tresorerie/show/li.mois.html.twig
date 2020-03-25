@@ -1,0 +1,3 @@
+{% for key, moi in mois %}
+    <li data-mois="{{ key }}" class="cl_treso_mois {{ (key == moisEncours) ? 'active' : '' }}"><a href="#">{{ moi }}</a></li>
+{% endfor %}

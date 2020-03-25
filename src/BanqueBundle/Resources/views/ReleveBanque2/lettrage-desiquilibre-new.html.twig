@@ -1,0 +1,5 @@
+<table class="table">
+    {% for result in results %}
+        {{ include('BanqueBundle:ReleveBanque2:lettrage-desiquilibre-tr.html.twig', { result: result, action: 1 }) }}
+    {% endfor %}
+</table>

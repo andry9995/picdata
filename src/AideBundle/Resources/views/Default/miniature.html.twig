@@ -1,0 +1,47 @@
+    <div class="heading" draggable="true">
+        {% block titre %}
+
+            <div class="row aide-min-header js_open_miniature">
+                <div style="float: left;"><i class="fa fa-question">&nbsp;&nbsp;&nbsp;</i>Aide</div>
+                {#<div style="float: right;"><i class="fa fa-close js_open_miniature">&nbsp;&nbsp;</i></div>#}
+            </div>
+
+            <br/>
+
+            <div class="form-chat">
+                <div class="input-group input-group-sm">
+                    <input type="text" placeholder="Rechercher une aide..." class="form-control" id="js_aide_search">
+                    <span class="input-group-btn">
+                        <button
+                                class="btn btn-success" type="button" id="btn-aide-search"><i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        {% endblock %}
+
+    </div>
+
+    <div class="content">
+
+        {% block contenu %}
+
+            <h4>Meilleures suggestions</h4>
+            <ul>
+                {% for suggestion in suggestions %}
+
+                    <li> <a class="aide" data-id="{{ suggestion.id }}">{{ suggestion.titre }}</a> </li>
+
+                {% endfor %}
+            </ul>
+
+        {% endblock %}
+
+
+    </div>
+
+    <div class="form-chat">
+        {% block boutton %}
+            {#<button class="btn btn-success" type="button" id="js_laisser_message"><i class="fa fa-mail">&nbsp;&nbsp;</i>Laissez-nous un message</button>#}
+        {% endblock %}
+    </div>

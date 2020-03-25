@@ -1,0 +1,16 @@
+<tr class="form-group" data-id="{{ cle.id|boost }}">
+    <td><input type="text" class="form-control input-sm cl_edit_cle" data-action="0" value="{{ cle.cle }}"></td>
+    <td>
+        <div class="checkbox checkbox-success checkbox-inline">
+            <input type="checkbox" class="cl_sens cl_is_debit" data-action="0" id="{{ cle.id ~ 'debit' }}" {{ (cle.sens == 0 or cle.sens == 1) ? 'checked' : '' }}>
+            <label for="{{ cle.id ~ 'debit' }}">D</label>
+        </div>
+    </td>
+    <td>
+        <div class="checkbox checkbox-danger checkbox-inline">
+            <input type="checkbox" class="cl_sens cl_is_credit" data-action="0" id="{{ cle.id ~ 'credit' }}" {{ (cle.sens == 0 or cle.sens == 2) ? 'checked' : '' }}>
+            <label for="{{ cle.id ~ 'credit' }}">C</label>
+        </div>
+    </td>
+    <td><span class="btn btn-white btn-xs cl_delete_cle" data-action="1"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
+</tr>

@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-lg-6">
+        <label class="font-normal">Date de Calcul de l'anciennet&eacute;</label>
+        <div class="form-group" id="js_date_anciennete_choise" data-date-format="dd/mm/yyyy">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="text" class="form-control" value="{{ date_anciennete|date('d/m/Y') }}">
+            </div>
+        </div>
+    </div>
+</div>
+{#<div class="hr-line-dashed"></div>#}
+<div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-lg-10">
+                <input type="text" placeholder="Nouvelle p&eacute;riode" id="js_eb_periode_nouveau" class="form-control input-sm">
+            </div>
+            <div class="col-lg-2"><span class="btn btn-outline btn-default btn-sm" id="js_eb_ajout_periode_agee"><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</span></div>
+        </div>
+    </div>
+</div>
+<table class="table table-condensed table-stripped table-hover">
+    <tbody>
+        {% for periode in periode_agee %}
+            <tr>
+                <td class="js_eb_periode_agee">{{ periode }}</td>
+                <td class="pointer"><i class="fa fa-trash js_eb_delete_periode_agee"></i></td>
+            </tr>
+        {% endfor %}
+        <tr id="js_eb_last_line_agee"></tr>
+    </tbody>
+</table>
+<div class="text-right">
+    <span class="btn btn-outline btn-warning" id="js_eb_defaut_periode"><i class="fa fa-undo"></i>&nbsp;Valeur&nbsp;par&nbsp;D&eacute;faut</span>
+    <span class="btn btn-outline btn-primary" id="js_eb_valider_periode"><i class="fa fa-check"></i>&nbsp;Valider</span>
+</div>

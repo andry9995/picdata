@@ -1,0 +1,250 @@
+<div class="table-responsive table-list">
+    <table class="footable table table-striped table-hover toggle-arrow-tiny table-depense" data-page-size="10">
+        <thead>
+            <tr>
+                {#<th>#}
+                    {#<div class="checkbox checkbox-success checkbox-inline">#}
+                        {#<input type="checkbox" class="checkbox-primary">#}
+                        {#<label></label>#}
+                    {#</div>#}
+                {#</th>#}
+                <th>Titre</th>
+                <th>Catégorie</th>
+                <th>Affaire</th>
+                <th>Note</th>
+                <th>Date</th>
+                <th>TVA</th>
+                <th>TTC</th>
+                <th>Controle</th>
+                <th>Action</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% set devise = '<span><i class="fa fa-eur"></i></span>' %}
+
+        {% set totalTtc = 0 %}
+        {% set totalTva = 0 %}
+        {% set totalRemboursable = 0 %}
+        {% set totalFacturable = 0 %}
+
+        {% for detail in detailDepenses %}
+
+            {% set addRemboursable = false %}
+            {% set addFacturable = false %}
+
+
+            {% set depense = detail['depense'] %}
+            {% set montant = detail['montant'] %}
+            {% set montantTva = detail['montantTva'] %}
+
+            {% set ttc = 0 %}
+            {% set trouveDevise = false %}
+            {% if depense is not null %}
+
+                {% if depense.devise is not null %}
+                    {% if depense.devise.id != 1 %}
+                        {% set ttc = montant %}
+                        {% set trouveDevise = true %}
+                    {% endif %}
+
+                {% endif %}
+            {% endif %}
+
+            {% if not trouveDevise %}
+                {% set ttc = (depense is null)? '' : depense.ttc %}
+            {% endif %}
+
+            {% set rf = '' %}
+
+            {% if depense.remboursable == 1 %}
+                {% set rf = '<span class="label label-success">R</span> &nbsp; &nbsp;' %}
+                {% set addRemboursable = true %}
+            {% endif %}
+
+            {% if depense.facturable == 1 %}
+                {% set rf = (depense.facturable == 1) ? rf ~ '<span class="label label-success">F</span> &nbsp; &nbsp;' %}
+                {% set addFacturable = true %}
+            {% endif %}
+
+            {% set pj = '' %}
+            {% set dataPj = -1 %}
+
+            {% if (depense.pj == 1 and depense.image is not null) %}
+                {% set pj = '<span class="label label-primary action-depense-pj-show pointer">&nbsp;PJ&nbsp;</span>' %}
+                {% set dataPj = 2 %}
+            {% else %}
+                {% if depense.pj == 1 and depense.image is null %}
+                     {% set pj = '<span class="label label-warning action-depense-pj pointer">&nbsp;PJ&nbsp;</span>' %}
+                    {% set dataPj = 1 %}
+                {% endif %}
+
+                {% if depense.pj == 0 %}
+                    {% set pj = '<span class="label label-danger">&nbsp;PJ&nbsp;</span>' %}
+                    {% set dataPj = 0 %}
+                {% endif %}
+
+            {% endif %}
+
+            {% set action =
+            '<div class="input-group m-b">
+                <div class="input-group-btn">
+                    <button data-toggle="dropdown" class="btn btn-xs dropdown-toggle btn-depense-action" type="button"><i class="fa fa-tasks"></i></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="action-depense-editer">Editer</a></li>
+                        <li><a href="#" class="action-depense-dupliquer">Dupliquer</a></li>
+                        <li><a href="#" class="action-depense-note">Assigner à une note</a></li>
+                        <li><a href="#" class="action-depense-supprimer">Supprimer</a></li>
+                    </ul>
+                </div>
+            </div>'
+            %}
+
+
+            {% if dataPj == 1 %}
+                {% set action =
+                '<div class="input-group m-b">
+                    <div class="input-group-btn">
+                        <button data-toggle="dropdown" class="btn btn-xs dropdown-toggle btn-depense-action" type="button"><i class="fa fa-tasks"></i></button>
+                        <ul class="dropdown-menu">
+                        <li><a href="#" class="action-depense-editer">Editer</a></li>
+                            <li><a href="#" class="action-depense-dupliquer">Dupliquer</a></li>
+                            <li><a href="#" class="action-depense-note">Assigner à une note</a></li>
+                            <li><a href="#" class="action-depense-supprimer">Supprimer</a></li>
+                            <li><a href="#" class="action-depense-pj">Envoyer pièce jointe</a></li>
+                        </ul>
+                    </div>
+                </div>'
+                %}
+
+
+                {% else %}
+
+                {% if dataPj == 2 %}
+
+                    {% set action =
+                    '<div class="input-group m-b">
+                        <div class="input-group-btn">
+                            <button data-toggle="dropdown" class="btn btn-xs dropdown-toggle btn-depense-action" type="button"><i class="fa fa-tasks"></i></button>
+                            <ul class="dropdown-menu">
+                            <li><a href="#" class="action-depense-editer">Editer</a></li>
+                                <li><a href="#" class="action-depense-dupliquer">Dupliquer</a></li>
+                                <li><a href="#" class="action-depense-note">Assigner à une note</a></li>
+                                <li><a href="#" class="action-depense-supprimer">Supprimer</a></li>
+                                <li><a href="#" class="action-depense-pj-show">Afficher pièce jointe</a></li>
+                            </ul>
+                        </div>
+                    </div>'
+                    %}
+
+                {% endif %}
+
+
+            {% endif %}
+
+
+            <tr data-id="{{ depense.id|boost }}" data-type="0" data-pj="{{ dataPj }}">
+
+                {#<td class="depense-check">#}
+                    {#<div class="checkbox checkbox-success checkbox-inline">#}
+                        {#<input type="checkbox" class="checkbox-success">#}
+                        {#<label></label>#}
+                    {#</div>#}
+                {#</td>#}
+                <td class="depense-titre">{{ depense.titre }}</td>
+                <td class="depense-categorie">{{ (depense.ndfSousCategorieDossier is null) ? '' : depense.ndfSousCategorieDossier.libelle }}</td>
+                <td class="depense-affaire">{{ (depense.ndfAffaire is null) ? '' : depense.ndfAffaire.libelle }}</td>
+                <td class="depense-note" data-id="{{ (depense.ndfNote is null) ? '0' : depense.ndfNote.id|boost }}">{{ (depense.ndfNote is null) ? '' : depense.ndfNote.libelle }}</td>
+                <td class="depense-date">{{ (depense.date is null) ? '' : depense.date|date('d/m/Y', 'Europe/Paris') }}</td>
+                <td class="depense-tva">{{ montantTva|number_format(2, '.', ',') }}&nbsp;&nbsp;{{ devise|raw }}</td>
+                <td class="depense-ttc">{{ ttc|number_format(2, '.', ',') }}&nbsp;&nbsp;{{ devise|raw }}</td>
+                <td class="depense-controle">{{ rf|raw }} {{ pj|raw }} </td>
+                <td class="depense-action" data-image="{{ (depense.image is null) ? '' : depense.image.id|boost }}">{{ action|raw }}</td>
+                <td></td>
+            </tr>
+
+
+            {% set totalTtc = totalTtc +ttc %}
+            {% set totalTva = totalTva + montantTva %}
+            {% if addRemboursable %}
+                {% set totalRemboursable = totalRemboursable + ttc %}
+            {% endif %}
+            {% if addFacturable %}
+                {% set totalFacturable = totalFacturable + ttc %}
+            {% endif %}
+
+
+
+        {% endfor %}
+
+        {% for fk in depenseFKs %}
+
+            {% set rf = '' %}
+            {% set rf = (fk.facturable == 1) ? rf ~ '<span class="label label-success">F</span> &nbsp; &nbsp;' : rf %}
+
+            {% set action =
+            '<div class="input-group m-b">
+                <div class="input-group-btn">
+                    <button data-toggle="dropdown" class="btn btn-xs dropdown-toggle btn-depense-action" type="button"><i class="fa fa-tasks"></i></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="action-depense-editer">Editer</a></li>
+                        <li><a href="#" class="action-depense-dupliquer">Dupliquer</a></li>
+                        <li><a href="#" class="action-depense-note">Assigner à une note</a></li>
+                        <li><a href="#" class="action-depense-supprimer">Supprimer</a></li>
+                    </ul>
+                </div>
+            </div>'
+            %}
+
+
+            <tr data-id="{{ fk.id|boost }}" data-type="1">
+
+                {#<td class="depense-check">#}
+                    {#<div class="checkbox checkbox-success checkbox-inline">#}
+                        {#<input type="checkbox" class="checkbox-success">#}
+                        {#<label></label>#}
+                    {#</div>#}
+                {#</td>#}
+
+                <td class="depense-titre">{{ fk.titre }}</td>
+                <td class="depense-categorie">Frais kilométriques</td>
+                <td class="depense-affaire">{{ (fk.ndfAffaire is null) ? '' : fk.ndfAffaire.libelle }}</td>
+                <td class="depense-note" data-id="{{ (fk.ndfNote is null) ? '-1' : fk.ndfNote.id|boost }}">{{ (fk.ndfNote is null) ? '' : fk.ndfNote.libelle }}</td>
+                <td class="depense-date">{{ (fk.periodeDeb is null) ? '' : fk.periodeDeb|date('d/m/Y', 'Europe/Paris') }}</td>
+                <td class="depense-tva"></td>
+                <td class="depense-ttc">{{ fk.ttc|number_format(2, '.', ',') }}&nbsp;&nbsp;{{ devise|raw }}</td>
+                <td class="depense-controle">{{ rf|raw }}</td>
+                <td class="depense-action">{{ action|raw }}</td>
+                <td></td>
+            </tr>
+
+            {% set totalTtc = totalTtc + fk.ttc %}
+
+        {% endfor %}
+
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="12">
+                    <ul class="pagination pull-right"></ul>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+    <div hidden>
+        <div class="depense-total-ttc">Total TTC: {{ totalTtc|number_format(2, '.', ',') }} {{ devise|raw }}</div>
+        <div class="depense-total-tva">Total TVA: {{ totalTva|number_format(2, '.', ',') }} {{ devise|raw }}</div>
+        <div class="depense-total-remboursable">Total Remboursable: {{ totalRemboursable|number_format(2, '.', ',') }} {{ devise|raw }}</div>
+        <div class="depense-total-facturable">Total Facturable: {{ totalFacturable|number_format(2, '.', ',') }} {{ devise|raw }}</div>
+    </div>
+</div>
+
+
+<div class="table-bloc hidden">
+    {{ include('NoteFraisBundle:Depense:depenseTableBloc.html.twig') }}
+</div>

@@ -1,0 +1,180 @@
+<div class="row">
+	<div class="col-lg-3">
+		<div class="row">
+			<div class="col-lg-12">
+				{{ render(controller('AppBundle:Commun:clients', { 'tous' : 1, 'attr_id': 'client-graphes', 'label_col': 2, 'select_col': 10})) }}
+			</div>
+		</div>
+		<div class="row">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="dossier-graphes" class="control-label col-lg-2">
+                            <span>Dossier</span>
+                        	<span class="label label-warning">0</span>
+                        </label>
+                        <div class="col-lg-10">
+                            <select id="dossier-graphes" data-placeholder="Séléctionner un dossier" class="form-control select-dossier-graphes">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
+	<div class="col-lg-5">
+		<div class="row">
+			<div class="col-lg-12">
+				<form class="form-horizontal">
+					<div class="form-group">
+
+                        <label for="site-graphes" class="control-label col-lg-2" style="text-align:left">
+                            <span>Site</span>
+                            <span class="label label-warning">0</span>
+                        </label>
+                        <div class="col-lg-4">
+                            <select data-ref="" class="site form-control"
+                                    id="site-graphes"></select>
+                        </div>
+                
+            
+
+                        {{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'attr_id' : 'exercice-graphes' , 'label_col':2, 'select_col':4, 'nbr': 8 , 'in_form' : false } )) }}
+
+                        {# <label for="dossier-graphes" class="control-label col-lg-2" style="text-align:left">
+                            <span>Période</span>
+                        </label>
+
+						<div class="col-lg-4">
+                            <select class="form-control" id="periode-graphes">
+	                            <option value=""></option>
+	                            <option value="1">Aujourd'hui</option>
+	                            <option value="2">Semaine</option>
+	                            <option value="3">Deux semaines</option>
+	                            <option value="4">Mois</option>
+	                            <option value="5" selected="">Exercice</option>
+	                            <option value="6">Fourchette</option>
+	                        </select>
+                        </div> #}
+
+                        <div class="modal" id="modal-fourchette-graphes" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content animated fadeInRight">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                        </button>
+                                        <h4 class="modal-title">Fourchette</h4>
+                                    </div>
+                                    <div class="modal-body" style="padding-bottom: 40px; padding-left: 100px;">
+                                        <div  class="col-md-10">
+                                            <form class="form-horizontal">
+                                                <div class="input-group row date col-md-12">
+                                                    <div class="col-sm-20">
+                                                        <input type="text" class="input form-control" name="debut" id="debut-date-graphes">
+                                                    </div>
+                                                    <span class="input-group-addon">Au</span>
+                                                    <input type="text" class="input form-control" name="fin" id="fin-date-detail">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" id="annuler-fourchette-graphes">Annuler</button>
+                                        <button type="button" id="valider-fourchette-graphes" class="btn btn-sm btn-primary btn-outline">
+                                            Valider
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+            <div class="col-lg-6" style="margin-top:8px">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="dossier-graphes" class="control-label col-lg-4" style="text-align: left;">
+                            <span>Date</span>
+                        </label>
+                        <div class="col-md-8">
+                            <select class="form-control" id="typedate-graphes">
+                                <option value=""></option>
+                                <option value="1" selected="">Date envoi</option>
+                                <option value="2">Date pièce</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6" style="margin-top:8px">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        {# <label for="analyse-graphes" class="control-label col-lg-3">
+                            <span>Analyse</span>
+                        </label> #}
+                         <label for="dossier-graphes" class="control-label col-lg-4" style="text-align: left;">
+                            <span>Présentation</span>
+                        </label>
+                        <div class="col-lg-8">
+                           <select class="form-control" id="analyse-graphes">
+                            <option value=""></option>
+                            <option selected="selected" value="1">Par mois</option>
+                            <option value="2">En cumul</option>
+                        </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+
+	<div class="col-lg-2">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="periode-graphes" class="control-label col-lg-3">
+                            <span>Période</span>
+                        </label>
+                        <div class="col-lg-9">
+                           <select class="form-control" id="periode-graphes">
+                                <option value=""></option>
+                                <option value="1">Aujourd'hui</option>
+                                <option value="2">Semaine</option>
+                                <option value="3">Deux semaines</option>
+                                <option value="4">Mois</option>
+                                <option value="5" selected="">Exercice</option>
+                                <option value="6">Fourchette</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="col-lg-2">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="btn-group" style="width: 150px;">
+                    <button id="btn-go-graphes" class="btn btn-primary" style="width: 70%;">
+                        <i class="fa fa-arrow-circle-o-right"></i> Go
+                    </button>
+
+                    <div class="btn-group" style="width:30%">
+                        {{ include('GeneralBundle:General:export-highcharts.html.twig', {name: 'graphes'})}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

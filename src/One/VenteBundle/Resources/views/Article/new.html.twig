@@ -1,0 +1,144 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListArticle();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Nouveau Produit ou Service</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="article-form">
+            <div class="form-group">
+                <input type="hidden" id="id-dossier"  name="id-dossier">
+                <label for="nom" class="col-md-4 control-label">Nom*</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="nom">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="unite-article" class="col-md-4 control-label">Unité</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="unite-article" name="unite-article" placeholder="">
+                        {% for unit in units %}
+                            <option value="{{ unit.id }}">{{ unit.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="prix-vente" class="col-md-4 control-label">Prix de vente HT</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="number" class="form-control" id="prix-vente" name="prix-vente" placeholder="prix de vente">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="prix-achat" class="col-md-4 control-label">Prix d'achat HT</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="number" class="form-control" id="prix-achat" name="prix-achat" placeholder="prix d'achat">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="code" class="col-md-4 control-label">Code</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="code" name="code" placeholder="code">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-md-4 control-label">Description</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <textarea class="form-control" id="description" name="description" placeholder="description"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tva-article" class="col-md-4 control-label">TVA</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="tva-article" name="tva-article" placeholder="">
+                        {% for taxe in taxes %}
+                            <option value="{{ taxe.id }}">{{ taxe.taux }}%</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="famille-article" class="col-md-4 control-label">Famille</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="famille-article" name="famille-article" placeholder="">
+                        {% for family in families %}
+                            <option value="{{ family.id }}">{{ family.nom }}</option>
+                        {% endfor %}
+                        <option onclick="loadNewFamilleArticleModal(1);">Créer une nouvelle</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Avancé</span>
+            <div class="advanced-group hidden">
+
+                <div class="form-group">
+                    <label for="compte-vente" class="col-md-4 control-label">Compte de Vente</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <select class="form-control" id="compte-vente" name="compte-vente">
+                            {% for pcc in pccVentes %}
+                                <option value="{{ pcc.id }}">{{ pcc.compte }} - {{ pcc.intitule }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="taxe-vente" class="col-md-4 control-label">Taxe sur les Ventes</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <select class="form-control" id="taxe-vente" name="taxe-vente">
+                            {% for tvaTaux in tvaTauxs %}
+                                <option value="{{ tvaTaux.id }}">{{ tvaTaux.taux }} % </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <label for="compte-achat" class="col-md-4 control-label">Compte d'achat</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <select class="form-control" id="compte-achat" name="compte-achat">
+                            {% for pcc in pccAchats %}
+                                <option value="{{ pcc.id }}">{{ pcc.compte }} - {{ pcc.intitule }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="taxe-achat" class="col-md-4 control-label">Taxe sur les Achats</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <select class="form-control" id="taxe-achat" name="taxe-achat">
+                            {% for tvaTaux in tvaTauxs %}
+                                <option value="{{ tvaTaux.id }}">{{ tvaTaux.taux }} % </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+
+        </form>
+    </div>
+</div>
+                    
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default" onclick="loadListArticle();">Annuler</button>
+            <button type="button" class="btn btn-primary" onclick="saveArticle();">Enregistrer</button>
+        </div>
+    </div>
+</div>

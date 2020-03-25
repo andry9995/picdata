@@ -1,0 +1,71 @@
+{#{{ dump(accounts) }}#}
+
+<div class="form-horizontal" id="id_linxo" data-id="{{ linxo.id|boost }}">
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="id_site">Site</label>
+        <div class="col-lg-10">
+            <select class="form-control" id="id_site">
+                {% if sites|length > 1 %}
+                    <option value="{{ 0|boost }}"></option>
+                {% endif %}
+
+                {% for site in sites %}
+                    <option value="{{ site.id|boost|boost }}" {{ (site == linxo.site) ? 'selected' : '' }}>{{ site.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label" for="id_dossier">Dossier</label>
+        <div class="col-lg-10">
+            <select class="form-control" id="id_dossier"></select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table" id="id_table_linxo_dossiers">
+            <thead>
+                <tr>
+                    <th>Compte&nbsp;Linxo</th>
+                    <th>N&deg;&nbsp;Compte</th>
+                    <th>Date&nbsp;Calage</th>
+                    <th>Montant&nbsp;Calage</th>
+                    <th>P&eacute;riode</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for account in accounts %}
+                <tr data-id="{{ account.id|boost }}">
+                    <td>{{ account.account_number }}</td>
+                    <td>
+                        <select class="input-in-jqgrid cl_banque_compte"></select>
+                    </td>
+                    <td><input type="text" class="input-in-jqgrid cl_date" value="{{ (account.dateFin is null) ? '' : account.dateFin|date('d/m/Y') }}"></td>
+                    <td><input type="text" class="input-in-jqgrid cl_solde" value="{{ (account.soldeFin is null) ? '' : account.soldeFin }}"></td>
+                    <td>
+                        <select class="input-in-jqgrid cl_periode">
+                            {# 0: new; 1:jour; 2:semaine; 3:mois; 4:desactiver #}
+                            <option value="0" {{ (account.periode == 0) ? 'selected' : '' }}>Nouveau</option>
+                            <option value="1" {{ (account.periode == 1) ? 'selected' : '' }}>Journali&egrave;re</option>
+                            <option value="2" {{ (account.periode == 2) ? 'selected' : '' }}>Semaine</option>
+                            <option value="3" {{ (account.periode == 3) ? 'selected' : '' }}>Mensuelle</option>
+                            <option value="4" {{ (account.periode == 4) ? 'selected' : '' }}>D&eacute;sactiver</option>
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="id_test_compte_banque"></div>
+
+<div class="row">
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm js_save_linxo_dossier"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>

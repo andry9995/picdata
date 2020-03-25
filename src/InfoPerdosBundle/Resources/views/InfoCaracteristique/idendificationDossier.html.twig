@@ -1,0 +1,247 @@
+    <form class="form-horizontal" id ="js_form_info_identification_dossier">
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Nom&nbsp;dossier</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Nom dossier" class="form-control recap info_identification_dossier"
+                           name="nom_dossier" id="js_nom_dossier"  data-field="Nom"  value="{{ (dossier is null) ? '' : dossier.nom }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                {% set siren = (dossier is null) ? '' : (dossier.sirenSte is null) ? '' : (dossier.sirenSte == '' ? '' : dossier.sirenSte) %}
+
+                {# formater-na ny siren #}
+                {% set res = '' %}
+                {% if siren|length >= 9 %}
+
+                    {% set res = siren|slice(0,3) ~ ' ' %}
+                    {% set res = res ~ siren|slice(3,3) ~ ' ' %}
+                    {% set res = res ~ siren|slice(6,3) ~ ' ' %}
+
+                    {# raha siret#}
+                    {% if siren|length >= 14 %}
+
+                        {% set lastSlice = siren|length - 9 %}
+                        {% set res = res ~ siren|slice(9, lastSlice) %}
+
+                    {% endif %}
+
+                {% endif %}
+
+
+
+                <label class="col-lg-6 control-label" data-toggle="tooltip" data-placement="bottom" title="Le numero SIREN est obligatoire pour créer le dossier. Pour certaines entités(exemple: Commité d'entreprise), il n'y a pas de SIREN">SIREN</label>
+                <div class="col-lg-6">
+
+                    <input type="text" placeholder="SIREN/SIRET" class="form-control info_identification_dossier"
+                           name="siren_siret" id="js_siren_siret"  data-field="SirenSte" value="{{ res }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Raison sociale</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Raison sociale" class="form-control api info_identification_dossier"
+                           name="raison_social" id="js_raison_social" data-field="RsSte"  value="{{ (dossier is null) ? '' : dossier.rsSte }}" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Enseigne</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Enseigne" class="form-control info_identification_dossier"
+                           name="ensiegne" id="js_enseigne" data-field="Enseigne"  value="{{ (dossier is null) ? '' : (dossier.enseigne is null) ? '' : dossier.enseigne  }}" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Forme</label>
+                <div class="col-lg-6">
+                    <select class="form-control recap api info_identification_dossier"  name="forme_juridique"
+                            id="js_forme_juridique" data-field="FormeJuridique">
+                        {% set formeJuridiqueDossier = (dossier is null) ? 0 : (dossier.formeJuridique.id is not defined) ? 0 : dossier.formeJuridique.id %}
+                        <option></option>
+                        {% for formeJuridique in formeJuridiques %}
+                            <option value="{{ formeJuridique.id }}" {{ (formeJuridique.id == formeJuridiqueDossier)? 'selected' :'' }} data-code="{{ (formeJuridique.code is null) ? '' : formeJuridique.code }}">
+                                {{ (formeJuridique.libelle != '') ? formeJuridique.libelle : '' }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Tranche effectif</label>
+                <div class="col-lg-6">
+                    {#<input type="text" placeholder="X à Y salariés" class="form-control info_identification_dossier"#}
+                           {#name="tranche_effectif" id="js_tranche_effectif" data-field="TrancheEffectif"  value="{{ (dossier is null) ? '' : (dossier.trancheEffectif is null) ? '' : dossier.trancheEffectif }}" >#}
+
+                    <select class="form-control info_identification_dossier" name="tranche_effectif"
+                            id="js_tranche_effectif" data-field="TrancheEffectif">
+                        {% set trancheEffectifDossier = (dossier is null) ? -1 : (dossier.trancheEffectif is null) ? -1 : dossier.trancheEffectif.id %}
+                        <option></option>
+                        {% for trancheEffectif in trancheEffectifs %}
+                            <option value="{{ trancheEffectif.id }}" {{ (trancheEffectif.id == trancheEffectifDossier) ? 'selected' : '' }}>
+                                {{ (trancheEffectif.libelle) }}
+                            </option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label recap">Code APE</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Code APE" class="form-control tree ape api info_identification_dossier"
+                           name="code_ape" id="js_code_ape" data-field="ActiviteComCat3" data-id="{{ (dossier is null) ? '' : (dossier.activiteComCat3.id is not defined)? '' : (dossier.activiteComCat3.id)}}"
+                           value="{{ (dossier is null)? '' : (dossier.activiteComCat3.codeApe is not defined)?'' : dossier.activiteComCat3.codeApe}}"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Activités</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Initulé APE" class="form-control tree ape api" name="intitule_code_ape"
+                           id="js_intitule_code_ape"
+                           value="{{ (dossier is null)? '' : (dossier.activiteComCat3.libelle is not defined)?'' : (dossier.activiteComCat3.libelle == '') ? 'N/A' : dossier.activiteComCat3.libelle}}"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Num et rue</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Num et rue" class="form-control info_identification_dossier"
+                           name="num_rue" id="js_num_rue" data-field="NumRue"  value="{{ (dossier is null) ? '' : (dossier.numRue is null) ? '' : dossier.numRue }}" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Code postal</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Code postal" class="form-control info_identification_dossier"
+                           name="code_postal" id="js_code_postal" data-field="CodePostal"  value="{{ (dossier is null) ? '' : (dossier.codePostal is null) ? '' : dossier.codePostal }}" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Ville</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Ville" class="form-control info_identification_dossier"
+                           name="ville" id="js_ville" data-field="Ville"  value="{{ (dossier is null) ? '' : (dossier.ville is null) ? '' : dossier.ville}}" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Pays</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Pays" class="form-control info_identification_dossier"
+                           name="pays" id="js_pays" data-field="Pays"  value="{{ (dossier is null) ? '' : (dossier.pays is null) ? '' : dossier.pays }}" >
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Date de début d'activité</label>
+                <div class="col-lg-6" >
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" class="form-control recap api info_identification_dossier" name="date_debut_activite"
+                               id="js_date_debut_activite" data-field="DebutActivite" value={{ (dossier is null) ? '' : (dossier.debutActivite is null) ? '' : dossier.debutActivite|date('d/m/Y')  }}>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Date première clôture</label>
+                <div class="col-lg-6" >
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" class="form-control recap info_identification_dossier" name="date_cloture"
+                               id="js_date_cloture" data-field="DateCloture" value={{ (dossier is null) ? '' : (dossier.dateCloture is null) ? '' : dossier.dateCloture|date('d/m/Y')  }}>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Date clôture</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_identification_dossier"  name="cloture" id="js_mois_cloture" data-field="Cloture">
+                        {% set cloture = (dossier is null)? -1 : (dossier.cloture) %}
+                        <option {{ (cloture == -1)?'selected': '' }}></option>
+                        <option value="1" {{ (cloture == 1) ? 'selected' : '' }}>Janvier</option>
+                        <option value="2" {{ (cloture == 2) ? 'selected' : '' }}>Février</option>
+                        <option value="3" {{ (cloture == 3) ? 'selected' : '' }}>Mars</option>
+                        <option value="4" {{ (cloture == 4) ? 'selected' : '' }}>Avril</option>
+                        <option value="5" {{ (cloture == 5) ? 'selected' : '' }}>Mai</option>
+                        <option value="6" {{ (cloture == 6) ? 'selected' : '' }}>Juin</option>
+                        <option value="7" {{ (cloture == 7) ? 'selected' : '' }}>Juillet</option>
+                        <option value="8" {{ (cloture == 8) ? 'selected' : '' }}>Août</option>
+                        <option value="9" {{ (cloture == 9) ? 'selected' : '' }}>Septembre</option>
+                        <option value="10" {{ (cloture == 10) ? 'selected' : '' }}>Octobre</option>
+                        <option value="11" {{ (cloture == 11) ? 'selected' : '' }}>Novembre</option>
+                        <option value="12" {{ (cloture == 12) ? 'selected' : '' }}>Décembre</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Type Mandataire</label>
+                <div class="col-lg-6">
+                    <select class="form-control recap info_identification_dossier"  name="type_mandataire" id="js_type_mandataire"
+                            data-field="Mandataire">
+                        {% set mandataireDossier = (responsableCsd is null) ? 0 : (responsableCsd.mandataire.id is not defined) ? 0 : responsableCsd.mandataire.id %}
+                        <option></option>
+                        {% for mandataire in mandataires %}
+                            <option value="{{ mandataire.id }}" {{ (mandataireDossier == mandataire.id) ? 'selected' : '' }}
+                                    data-code="{{ (mandataire.code is null)? '' : mandataire.code }}">{{ mandataire.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Nom; Prénom dirigeant</label>
+                <div class="col-lg-6">
+
+                    {% set nomPrenom = '' %}
+                    {% set nom = (responsableCsd is null) ? '' : (responsableCsd.nom is null) ? '' : responsableCsd.nom   %}
+                    {% set prenom = (responsableCsd is null) ? '' : (responsableCsd.prenom is null) ? '' : responsableCsd.prenom   %}
+                    {% if nom != '' %}
+                        {% set nomPrenom = nom ~ ' ; ' ~ prenom %}
+                    {% endif %}
+
+                    {##}
+                    {#{% set nomPrenom = (responsableCsd is null)? '' : responsableCsd.nom ~ ' ; ' ~ responsableCsd.prenom %}#}
+                    <input type="text" placeholder="Nom;Prénom" class="form-control info_identification_dossier" name="nom_mandataire"
+                           id="js_nom_mandataire" data-field="NomPrenom" value="{{ nomPrenom }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Id Dossier</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Id Dossier" class="form-control info_identification_dossier"
+                           name="cegid" id="js_cegid" data-field="Cegid"  value="{{ (dossier is null) ? '' : (dossier.cegid is null) ? '' : dossier.cegid  }}" >
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>

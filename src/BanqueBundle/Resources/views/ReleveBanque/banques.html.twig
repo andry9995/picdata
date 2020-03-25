@@ -1,0 +1,19 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="js_banque">
+            <span>Bq</span>
+            <span class="label label-warning">{{ banques|length }}</span>
+        </label>
+        <div class="col-lg-10">
+            <select class="form-control" id="js_banque">
+                {% if banques|length != 1 %}
+                    <option value="{{ 0|boost }}">Tous</option>
+                {% endif %}
+
+                {% for banque in banques %}
+                    <option value="{{ banque.id|boost }}">{{ banque.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>

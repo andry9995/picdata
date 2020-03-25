@@ -1,0 +1,50 @@
+journal_homepage:
+    path:     /
+    defaults: { _controller: JournalBundle:Default:index }
+
+journal_dossier:
+    path: /journal-dossier
+    defaults: { _controller: JournalBundle:Default:journalDossier }
+    options:
+        expose: true
+    methods: [GET]
+
+journal_details:
+    path: /details
+    defaults: { _controller: JournalBundle:Default:journalDetails }
+    options:
+        expose: true
+    methods: [POST]
+
+journal_export:
+    path: /export
+    defaults: { _controller: JournalBundle:Default:journalExport }
+    options:
+        expose: true
+    methods: [POST]
+
+journal_historique:
+    path: /historique-upload
+    defaults: { _controller: JournalBundle:Default:historiqueUpload }
+    options:
+        expose: true
+    methods: [GET]
+
+journal_ecriture:
+    path: /add-ecriture
+    defaults: { _controller: JournalBundle:Default:addEcriture }
+    options:
+        expose: true
+    methods: [POST]
+
+journal_centralisateur:
+    path: /centralisateur
+    defaults: { _controller: JournalBundle:Default:centralisateur}
+    options:
+        expose: true
+
+journal_image:
+    path: /image-id
+    defaults: { _controller: JournalBundle:Default:imageId }
+    options:
+        expose: true

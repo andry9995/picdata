@@ -1,0 +1,13 @@
+<table class="table table-hover table-condensed" data-id_pack="{{ pack.id|boost }}">
+    {% for packItem in pack.indPackItems %}
+        <tr data-id="{{ packItem.id|boost }}">
+            <td class="pointer" width="40%">{{ packItem.indIndicateurItem.libelle }}</td>
+            <td width="10%"><small class="gray-text {{ (dossier is null) ? 'hidden' : '' }}">&nbsp;{{ (packItem.dossier is null) ? 'géneral' : 'spécifique pour le dossier' }}</small></td>
+            <td width="10%">
+                <span class="btn btn-xs js_tooltip js_pack_show {{ (packItem.enabled) ? 'btn-primary' : 'btn-default' }} {{ (dossier is null or (dossier is not null and packItem.dossier == dossier)) ? 'hidden' : '' }} " data-tooltip="Afficher">Afficher</span>
+                <span class="btn btn-white btn-xs js_tooltip js_remove_pack_item {{ (not (dossier is null or (dossier is not null and packItem.dossier == dossier))) ? 'hidden' : '' }}" data-tooltip="Supprimer"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+            </td>
+            <td width="50%"></td>
+        </tr>
+    {% endfor %}
+</table>

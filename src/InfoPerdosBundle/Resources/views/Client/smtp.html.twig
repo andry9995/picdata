@@ -1,0 +1,113 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Paramètre SMTP{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/tableauimage/js/smtp.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/tableauimage/css/tableau.css') }}?v=1.0">
+{% endblock %}
+
+{% block wrapper_content %}
+    <div id="notification">
+        <div id="smtp" class="tab-pane">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-md-offset-3">
+                    {{ render(controller('AppBundle:Commun:clients', {'conteneur': '0', 'tous': '0', 'attr_id': 'client-smtp', 'label_col': 4, 'select_col': 8})) }}
+                    {{ form_start(smtp_form, {"attr": {"id": "form-smtp", "class": "form-horizontal"}}) }}
+                    <div class="form-group">
+                        {{ form_label(smtp_form.smtp, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                        <div class="col-md-8">
+                            {{ form_widget(smtp_form.smtp, {"attr": {"class": "form-control"}}) }}
+                        </div>
+                        {{ form_errors(smtp_form.smtp) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(smtp_form.port, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                        <div class="col-md-3">
+                            {{ form_widget(smtp_form.port, {"attr": {"class": "form-control", "style": "width:70px;"}}) }}
+                        </div>
+                        {{ form_errors(smtp_form.port) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(smtp_form.login, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                        <div class="col-md-8">
+                            {{ form_widget(smtp_form.login, {"attr": {"class": "form-control"}}) }}
+                        </div>
+                        {{ form_errors(smtp_form.login) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(smtp_form.password.first, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                        <div class="col-md-8">
+                            {{ form_widget(smtp_form.password.first, {"attr": {"class": "form-control"}}) }}
+                        </div>
+                        {{ form_errors(smtp_form.password.first) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(smtp_form.password.second, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                        <div class="col-md-8">
+                            {{ form_widget(smtp_form.password.second, {"attr": {"class": "form-control"}}) }}
+                        </div>
+                        {{ form_errors(smtp_form.password.second) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(smtp_form.certificate, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                        <div class="col-md-3">
+                            {{ form_widget(smtp_form.certificate, {"attr": {"class": "form-control"}}) }}
+                        </div>
+                        {{ form_errors(smtp_form.certificate) }}
+                    </div>
+                    <div class="form-group text-right">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-8">
+                            <button id="btn-save-smtp" class="btn btn-primary btn-block">Enregistrer</button>
+                        </div>
+                    </div>
+                    {{ form_end(smtp_form) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-md-offset-3">
+                    <div id="rappel-help-info" class="smtp-help well">
+                        <div>
+                            <blockquote>
+                                <small>Les informations ci-dessus sont à demander à votre informaticien ou à
+                                    votre hebergeur.
+                                </small>
+                            </blockquote>
+                        </div>
+                        <div class="smtp-help-item">
+                            <span class="label label-default">SMTP</span>
+                            <small>L'adresse de votre serveur mail qui sera utilisé pour envoyé votre email;
+                                généralement de la forme <strong>smtp.domaine.xxx</strong>.
+                            </small>
+                        </div>
+                        <div class="smtp-help-item">
+                            <span class="label label-default">Port</span>
+                            <small>C'est le port de sortie du serveur de vos emails. <strong>Exemple: 587,
+                                    465</strong></small>
+                        </div>
+                        <div class="smtp-help-item">
+                            <span class="label label-default">Login</span>
+                            <small>C'est le nom d'utilisateur pour connecter au serveur (<strong>Une adresse
+                                    email</strong>).
+                            </small>
+                        </div>
+                        <div class="smtp-help-item">
+                            <span class="label label-default">Mot de passe</span>
+                            <small>C'est le mot de passe associé au nom d'utilisateur.</small>
+                        </div>
+                        <div class="smtp-help-item">
+                            <span class="label label-default">Certificat</span>
+                            <small>C'est la méthode de chiffrement utilisée par le serveur.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

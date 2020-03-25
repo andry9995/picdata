@@ -1,0 +1,35 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}
+    Pilotage - Evolution Dossiers
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    <script src="{{ asset('bundles/general/js/evolution.js') }}"></script>
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="row">
+				{% include('GeneralBundle:EvolutionDossier:filtre-evolution.html.twig') %}
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="ibox ibox-shadow">
+		    <div class="ibox-content">
+		    	<table id="grid-evolution"></table>
+		    </div>
+		</div>
+		
+	</div>
+{% endblock %}

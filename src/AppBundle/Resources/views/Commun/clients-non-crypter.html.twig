@@ -1,0 +1,23 @@
+{#clients#}
+{% if attr_id == '' %}
+    {% set attr_id = 'client' %}
+{% endif %}
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-lg-{{- label_col -}}">
+            <span>Client</span>
+            <span class="label label-warning">{{ clients|length }}</span>
+        </label>
+        <div class="col-lg-{{- select_col -}}">
+            <select data-ref="{{ attr_data }}" class="client form-control" id="{{ attr_id }}">
+                {% if clients|length > 1 and tous == 1 %}
+                    <option value="0">Tous</option>
+                {% endif %}
+                {% for client in clients %}
+                    <option value="{{ client.id }}">{{ (client.nom != '') ? client.nom : ' ' }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

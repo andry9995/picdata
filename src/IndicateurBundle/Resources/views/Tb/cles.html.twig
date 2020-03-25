@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="input-group form-group m-b">
+            <span class="input-group-addon">Nouvelle&nbsp;clé</span>
+            <input type="text" id="id_cle" placeholder="Clé" class="form-control">
+            <span class="input-group-addon btn btn-white cl_add" id="id_add_cle"><i class="fa fa-plus" aria-hidden="true"></i></span>
+        </div>
+    </div>
+    <div class="col-sm-12" style="overflow: auto!important;">
+        <table id="id_table_cles" class="table">
+            <tbody>
+                <tr class="first-tr hidden"><td></td><td></td></tr>
+                {% for cle in cles %}
+                    {{ include('IndicateurBundle:Tb:cle-new-tr.html.twig', { 'cle' : cle }) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

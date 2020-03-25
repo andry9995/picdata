@@ -1,0 +1,45 @@
+{% set lrm = "" %}
+{% set releveManquant =  null %}
+{% set moisManquantList = null %}
+
+{% if rm|length > 0 %}
+    {% set releveManquant = rm|first %}
+    {% set moisManquantList = releveManquant.mois %}
+
+    {% for moisManquant in moisManquantList %}
+        {% if lrm == ""%}
+            {% set lrm = moisManquant|trim|slice(5,2) %}
+
+        {% else %}
+            {% set lrm = lrm ~ ", " ~ moisManquant|trim|slice(5,2) %}
+        {% endif %}
+
+    {% endfor %}
+
+{% endif %}
+
+{#<div class="form-horizontal">
+    <div class="form-group col-md-5">
+        <label class="col-lg-4 control-label">Rb&nbsp;Manquante:</label>
+        <div class="col-lg-8">
+            <p class="form-control-static {{ (lrm == "") ? "": "text-danger" }}">{{ (lrm == "") ? "Aucune relevé manquante" : lrm }}</p>
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label class="col-lg-5 control-label">Diff&eacute;rence&nbsp;calcul:</label>
+        <div class="col-lg-7">
+            <p class="form-control-static {{ (diff == 0) ? "" : "text-danger" }}">{{ diff|number_format(2, '.', ' ') }}</p>
+        </div>
+    </div>
+</div>#}
+
+<div class="row" style="margin-bottom: 2px!important;">
+    <div class="col-sm-12">
+        <span class="label label-default">Relev&eacute;s&nbsp;manquant:&nbsp;<span class="text-success">{{ (lrm == "") ? "Aucun relevé manquant" : lrm }}</span></span>
+        <span class="label label-default">Solde&nbsp;initial:&nbsp;<span class="text-success">{{ soldeDebut|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+        <span class="label label-default">Solde&nbsp;Final:&nbsp;<span class="text-success">{{ soldeFin|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+        <span class="label label-default">Mouvement:&nbsp;<span class="text-success">{{ mouvement|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+        <span class="label label-default">Solde&nbsp;Final&nbsp;Calcul&eacute;:&nbsp;<span class="text-success">{{ (soldeDebut - mouvement)|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+        <span class="label label-default">Diff&eacute;rence:&nbsp;<span class="text-success">{{ (soldeFin - soldeDebut + mouvement)|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+    </div>
+</div>

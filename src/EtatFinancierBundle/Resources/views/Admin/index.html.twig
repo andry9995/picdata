@@ -1,0 +1,49 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% set route = path((parametrage) ? 'etat_financier_filtre_parametrage' : 'etat_financier_filtre' ) %}
+
+{% block wrapper_content %}
+    {% if parametrage %}
+        <div class="row">
+            <div class="col-sm-5 col-sm-offset-1">
+                <div class="widget text-center">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h2><i class="fa fa-cogs fa-5x"></i></h2>
+                            <h4>PARAMETRAGE</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <a href="{{ route ~ '/' ~ 4 }}">
+                    {{ include('EtatFinancierBundle:Default:widget.html.twig',{'bg': 'yellow-bg' , 'bilan':'Visualisation globale' , 'message':'Message' , 'icon':'fa-files-o'}) }}
+                </a>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-1">
+            <a href="{{ route ~ '/' ~ 0 }}">
+                {{ include('EtatFinancierBundle:Default:widget.html.twig',{'bg': 'navy-bg' , 'bilan':'Bilan Actif' , 'message':'Message' , 'icon':'fa-font'}) }}
+            </a>
+        </div>
+        <div class="col-sm-5">
+            <a href="{{ route ~ '/' ~ 1 }}">
+                {{ include('EtatFinancierBundle:Default:widget.html.twig',{'bg': 'lazur-bg' , 'bilan':'Bilan Passif' , 'message':'Message' , 'icon':'fa-file-powerpoint-o'}) }}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-1">
+            <a href="{{ route ~ '/' ~ 2 }}">
+                {{ include('EtatFinancierBundle:Default:widget.html.twig',{'bg': 'lazur-bg' , 'bilan':'Produits et charges' , 'message':'Message' , 'icon':'fa-file-o'}) }}
+            </a>
+        </div>
+        <div class="col-sm-5">
+            <a href="{{ route ~ '/' ~ 3 }}">
+                {{ include('EtatFinancierBundle:Default:widget.html.twig',{'bg': 'navy-bg' , 'bilan':'Tableau OEC' , 'message':'Message' , 'icon':'fa-table'}) }}
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% set index = 0 %}
+{% for ch in rubrique.formule|split('') %}
+    {% if ch == '#' %}
+        {% set r = rubriquesFilles[index] %}
+        <span class="operateur operande label" style="margin-bottom: 5px!important;" data-id="{{ r.id }}">{{ r.libelle }}</span>
+        {% set index = index + 1 %}
+    {% else %}
+        <span class="operateur">{{ ch }}</span>
+    {% endif %}
+{% endfor %}

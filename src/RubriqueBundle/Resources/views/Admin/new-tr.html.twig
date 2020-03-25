@@ -1,0 +1,22 @@
+{% set class_remove = 'fa-times' %}
+
+<tr data-id="{{ rubrique.id|boost }}">
+    <td><input class="form-control font_awesome js_libelle js_libelle_edit input-in-jqgrid" value="{{ rubrique.libelle }}"></td>
+    <td>
+        <select class="form-control js_libelle_edit js_solde">
+            <option value="3" {{ (rubrique.solde == 3) ? 'selected' : '' }}>D&eacute;bit</option>
+            <option value="4" {{ (rubrique.solde == 4) ? 'selected' : '' }}>Cr&eacute;dit</option>
+            <option value="1" {{ (rubrique.solde == 1) ? 'selected' : '' }}>Solde&nbsp;D&eacute;bit</option>
+            <option value="2" {{ (rubrique.solde == 2) ? 'selected' : '' }}>Solde&nbsp;Cr&eacute;dit</option>
+            <option value="0" {{ (rubrique.solde == 0) ? 'selected' : '' }}>Solde</option>
+        </select>
+    </td>
+    <td>
+        <select class="form-control input-in-jqgrid js_libelle_edit js_type_compte">
+            <option value="0" {{ (rubrique.typeCompte == 0) ? 'selected' : '' }}></option>
+            <option value="1" {{ (rubrique.typeCompte == 1) ? 'selected' : '' }}>Auxilliaire</option>
+            <option value="2" {{ (rubrique.typeCompte == 2) ? 'selected' : '' }}>F.non&nbsp;pay&eacute;e</option>
+        </select>
+    </td>
+    <td class="text-center"><span class="btn btn-danger js_edit btn-xs"><i class="fa {{ class_remove }}" aria-hidden="true"></i></span></td>
+</tr>

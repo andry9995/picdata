@@ -1,0 +1,639 @@
+#one_update_tiers:
+#    path:     /insert-tiers
+#    defaults: { _controller: OneProspectBundle:Tiers:updateTables }
+#    methods: [GET]
+
+one_vente_homepage:
+    path:     /vente
+    defaults: { _controller: OneVenteBundle:Vente:index }
+    
+one_client_list:
+    path:       /client/list
+    defaults:   { _controller: OneVenteBundle:Client:list }
+    options:
+        expose: true
+        
+one_client_mlist:
+    path:       /client/mlist
+    defaults:   { _controller: OneVenteBundle:Client:listinmodal }
+    options:
+        expose: true
+        
+one_client_new:
+    path:       /client/new
+    defaults:   { _controller: OneVenteBundle:Client:new }
+    options:
+        expose: true
+        
+one_client_edit:
+    path:       /client/edit/{id}
+    defaults:   { _controller: OneVenteBundle:Client:edit }
+    methods: [GET]
+    options:
+        expose: true
+
+one_client_show:
+    path:       /client/show/{id}
+    defaults:   { _controller: OneVenteBundle:Client:show }
+    methods: [GET]
+    options:
+        expose: true
+
+one_client_save:
+    path:       /client/save
+    defaults:   { _controller: OneVenteBundle:Client:save }
+    options:
+        expose: true
+        
+one_client_delete:
+    path:       /client/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Client:delete }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_client_duplicate:
+    path:       /client/duplicate
+    defaults:   { _controller: OneVenteBundle:Client:duplicate }
+    methods: [GET,POST]
+    options:
+        expose: true
+        
+one_client_balance:
+    path:       /client/balance/{id}
+    defaults:   { _controller: OneVenteBundle:Client:balance }
+    options:
+        expose: true
+        
+one_prospect_to_client:
+    path:       /prospect/toclient
+    defaults:   { _controller: OneVenteBundle:Client:prospecttoclient }
+    methods: [GET,POST]
+    options:
+        expose: true
+  
+one_devis_list:
+    path:       /devis/list
+    defaults:   { _controller: OneVenteBundle:Devis:list }
+    options:
+        expose: true
+        
+one_devis_new:
+    path:       /devis/new
+    defaults:   { _controller: OneVenteBundle:Devis:new }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_devis_edit:
+    path:       /devis/edit/{id}
+    defaults:   { _controller: OneVenteBundle:Devis:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_devis_show:
+    path:       /devis/show/{id}
+    defaults:   { _controller: OneVenteBundle:Devis:show }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_devis_invoice:
+    path:       /devis/invoice/{id}
+    defaults:   { _controller: OneVenteBundle:Devis:invoice }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_devis_commande:
+    path:       /devis/commande/{id}
+    defaults:   { _controller: OneVenteBundle:Devis:commande }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_devis_save:
+    path:       /devis/save
+    defaults:   { _controller: OneVenteBundle:Devis:save }
+    options:
+        expose: true
+        
+one_devis_delete:
+    path:       /devis/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Devis:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+one_devis_address:
+    path:       /devis/address
+    defaults:   { _controller: OneVenteBundle:Devis:address }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_vente_address:
+    path:       /vente/address
+    defaults:   { _controller: OneVenteBundle:Vente:address }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_facture_list:
+    path:       /facture/list
+    defaults:   { _controller: OneVenteBundle:Vente:list }
+    options:
+        expose: true
+        
+one_facture_new:
+    path:       /facture/new
+    defaults:   { _controller: OneVenteBundle:Vente:new }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_facture_edit:
+    path:       /facture/edit/{id}/{one}
+    defaults:   { _controller: OneVenteBundle:Vente:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_facture_save:
+    path:       /facture/save
+    defaults:   { _controller: OneVenteBundle:Vente:save }
+    options:
+        expose: true
+
+one_facture_show:
+    path:       /facture/show/{id}
+    defaults:   { _controller: OneVenteBundle:Vente:show }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_facture_delete:
+    path:       /facture/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Vente:delete }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_facture_unpaid_list:
+    path:       /facture/unpaid
+    defaults:   { _controller: OneVenteBundle:Vente:unpaid }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_facture_paiement_new:
+    path:       /facture/paiement/new
+    defaults:   { _controller: OneVenteBundle:Vente:fpnew }
+    options:
+        expose: true
+        
+one_facture_encpaiement_new:
+    path:       /facture/encpaiement/new
+    defaults:   { _controller: OneVenteBundle:Vente:fpencnew }
+    options:
+        expose: true
+        
+one_facture_avopaiement_new:
+    path:       /facture/avopaiement/new
+    defaults:   { _controller: OneVenteBundle:Vente:fpavonew }
+    options:
+        expose: true
+        
+one_commande_list:
+    path:       /commande/list
+    defaults:   { _controller: OneVenteBundle:Commande:list }
+    options:
+        expose: true
+        
+one_commande_new:
+    path:       /commande/new
+    defaults:   { _controller: OneVenteBundle:Commande:new }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_commande_edit:
+    path:       /commande/edit/{id}
+    defaults:   { _controller: OneVenteBundle:Commande:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_commande_show:
+    path:       /commande/show/{id}
+    defaults:   { _controller: OneVenteBundle:Commande:show }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_commande_show_shipped:
+    path:       /commande/show/shipped/{id}
+    defaults:   { _controller: OneVenteBundle:Commande:showshipped }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_commande_save:
+    path:       /commande/save
+    defaults:   { _controller: OneVenteBundle:Commande:save }
+    options:
+        expose: true
+        
+one_commande_delete:
+    path:       /commande/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Commande:delete }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_commande_invoice:
+    path:       /commande/invoice/{id}
+    defaults:   { _controller: OneVenteBundle:Commande:invoice }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_commande_ship:
+    path:       /commande/ship/{id}
+    defaults:   { _controller: OneVenteBundle:Commande:ship }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_avoir_list:
+    path:       /avoir/list
+    defaults:   { _controller: OneVenteBundle:Avoir:list }
+    options:
+        expose: true
+        
+one_avoir_new:
+    path:       /avoir/new
+    defaults:   { _controller: OneVenteBundle:Avoir:new }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_avoir_edit:
+    path:       /avoir/edit/{id}
+    defaults:   { _controller: OneVenteBundle:Avoir:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_avoir_show:
+    path:       /avoir/show/{id}
+    defaults:   { _controller: OneVenteBundle:Avoir:show }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_avoir_save:
+    path:       /avoir/save
+    defaults:   { _controller: OneVenteBundle:Avoir:save }
+    options:
+        expose: true
+        
+one_avoir_delete:
+    path:       /avoir/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Avoir:delete }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_avoir_client:
+    path:       /avoir/listmodal
+    defaults:   { _controller: OneVenteBundle:Avoir:listmodal }
+    options:
+        expose: true
+        
+one_projet_list:
+    path:       /projet/list
+    defaults:   { _controller: OneVenteBundle:Projet:list }
+    options:
+        expose: true
+        
+one_projet_new:
+    path:       /projet/new
+    defaults:   { _controller: OneVenteBundle:Projet:new }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_projet_edit:
+    path:       /projet/edit/{id}
+    defaults:   { _controller: OneVenteBundle:Projet:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_projet_show:
+    path:       /projet/show/{id}
+    defaults:   { _controller: OneVenteBundle:Projet:show }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_projet_save:
+    path:       /projet/save
+    defaults:   { _controller: OneVenteBundle:Projet:save }
+    options:
+        expose: true
+        
+one_projet_delete:
+    path:       /projet/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Projet:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+one_article_list:
+    path:       /article/list
+    defaults:   { _controller: OneVenteBundle:Article:list }
+    options:
+        expose: true
+        
+one_article_new:
+    path:       /article/new
+    defaults:   { _controller: OneVenteBundle:Article:new }
+    options:
+        expose: true
+        
+one_article_edit:
+    path:       /article/edit/{id}
+    defaults:   { _controller: OneVenteBundle:Article:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_article_save:
+    path:       /article/save/{dossier}
+    defaults:   { _controller: OneVenteBundle:Article:save, dossier: -1 }
+    options:
+        expose: true
+        
+one_article_delete:
+    path:       /article/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Article:delete }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_article_new_modal:
+    path:       /article/new-modal/{parent}
+    defaults:   { _controller: OneVenteBundle:Article:newinmodal, parent: vente }
+    options:
+        expose: true
+        
+one_article_opportunite_list:
+    path:       /article-opportunite/list
+    defaults:   { _controller: OneVenteBundle:Article:listforopportunite }
+    options:
+        expose: true
+        
+one_article_vente_list:
+    path:       /article-vente/list
+    defaults:   { _controller: OneVenteBundle:Article:listforvente }
+    options:
+        expose: true
+        
+one_article_vente_add:
+    path:       /article-vente/add
+    defaults:   { _controller: OneVenteBundle:Article:addinvente }
+    options:
+        expose: true
+        
+one_famille_article_new_modal:
+    path:       /famille-article/new
+    defaults:   { _controller: OneVenteBundle:FamilleArticle:newinmodal }
+    options:
+        expose: true
+
+one_famille_article_options_list:
+    path:       /famille-article/options/list
+    defaults:   { _controller: OneVenteBundle:FamilleArticle:listoptions }
+    options:
+        expose: true
+        
+one_famille_article_save:
+    path:       /famille-article/save
+    defaults:   { _controller: OneVenteBundle:FamilleArticle:save }
+    options:
+        expose: true
+        
+one_encaissement_list:
+    path:       /encaissement/list
+    defaults:   { _controller: OneVenteBundle:Encaissement:list }
+    options:
+        expose: true
+        
+one_encaissement_new:
+    path:       /encaissement/new
+    defaults:   { _controller: OneVenteBundle:Encaissement:new }
+    options:
+        expose: true
+        
+one_encaissement_edit:
+    path:       /encaissement/edit/{id}
+    defaults:   { _controller: OneVenteBundle:Encaissement:edit }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_encaissement_save:
+    path:       /encaissement/save
+    defaults:   { _controller: OneVenteBundle:Encaissement:save }
+    options:
+        expose: true
+        
+one_encaissement_show:
+    path:       /encaissement/show/{id}
+    defaults:   { _controller: OneVenteBundle:Encaissement:show }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_encaissement_delete:
+    path:       /encaissement/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Encaissement:delete }
+    methods: [GET]
+    options:
+        expose: true
+        
+one_encaissement_client:
+    path:       /encaissement/listmodal
+    defaults:   { _controller: OneVenteBundle:Encaissement:listmodal }
+    options:
+        expose: true
+        
+one_compte_listoption:
+    path:       /compte/listoption
+    defaults:   { _controller: OneVenteBundle:Compte:listoption }
+    options:
+        expose: true
+        
+one_paiement_list:
+    path:       /paiement/list
+    defaults:   { _controller: OneVenteBundle:Paiement:list }
+    options:
+        expose: true
+        
+one_paiement_get:
+    path:       /paiement/get
+    defaults:   { _controller: OneVenteBundle:Paiement:get }
+    methods: [GET,POST]
+    options:
+        expose: true
+        
+one_paiement_new:
+    path:       /paiement/new
+    defaults:   { _controller: OneVenteBundle:Paiement:new }
+    options:
+        expose: true
+        
+one_encpaiement_new:
+    path:       /encpaiement/new
+    defaults:   { _controller: OneVenteBundle:Paiement:encnew }
+    options:
+        expose: true
+        
+one_avopaiement_new:
+    path:       /avopaiement/new
+    defaults:   { _controller: OneVenteBundle:Paiement:avonew }
+    options:
+        expose: true
+        
+one_paiement_show:
+    path:       /paiement/show/{id}
+    defaults:   { _controller: OneVenteBundle:Paiement:show }
+    methods: [GET]
+    options:
+        expose: true
+            
+one_paiement_save:
+    path:       /paiement/save
+    defaults:   { _controller: OneVenteBundle:Paiement:save }
+    options:
+        expose: true
+        
+one_pdf_generate:
+    path:       /pdf/generate/{type}/{id}
+    defaults:   { _controller: OneVenteBundle:Pdf:generate }
+    methods: [GET,POST]
+    options:
+        expose: true
+        
+one_pdf_print:
+    path:       /pdf/print/{type}/{id}/{dossierId}
+    defaults:   { _controller: OneVenteBundle:Pdf:print }
+    methods: [GET]
+    options:
+        expose: true
+        
+#one_pdf_download:
+#    path:       /pdf/download/{type}/{id}
+#    defaults:   { _controller: OneVenteBundle:Pdf:download }
+#    methods: [GET]
+#    options:
+#        expose: true
+        
+one_email_document:
+    path:       /email/document/{type}/{id}
+    defaults:   { _controller: OneVenteBundle:Email:document }
+    methods: [POST]
+    options:
+        expose: true
+
+one_email_new:
+    path:   /email/new/{tiersId}
+    defaults:   { _controller: OneVenteBundle:Email:new, tiersId: -1 }
+    methods: [GET]
+    options:
+        expose: true
+
+one_email_send:
+    path:   /email/send
+    defaults:   { _controller: OneVenteBundle:Email:send }
+    methods: [POST]
+    options:
+        expose: true
+
+        
+one_parametres:
+    path:       /parametres
+    defaults:   { _controller: OneVenteBundle:Parametre:index }
+    methods: [GET,POST]
+
+one_parametre_show:
+    path:   /parametre/show
+    defaults:   { _controller: OneVenteBundle:Parametre:show }
+    methods: [GET]
+    options:
+        expose: true
+    
+one_catalogues:
+    path:       /catalogues
+    defaults:   { _controller: OneVenteBundle:Catalogue:index }
+    methods: [GET,POST]
+    
+one_modeles:
+    path:       /modeles
+    defaults:   { _controller: OneVenteBundle:Modele:index }
+    methods: [GET,POST]
+    options:
+        expose: true
+
+one_modele_list:
+    path:       /modele/list
+    defaults:   { _controller: OneVenteBundle:Modele:list }
+    methods: [POST]
+    options:
+        expose: true
+    
+one_modele_add:
+    path:       /modele/add
+    defaults:   { _controller: OneVenteBundle:Modele:add }
+    methods: [POST]
+    options:
+        expose: true
+    
+one_modele_edit:
+    path:       /modele/edit/{id}
+    defaults:   { _controller: OneVenteBundle:Modele:edit }
+    methods: [POST]
+    options:
+        expose: true
+    
+one_modele_save:
+    path:       /modele/save/{dossierId}
+    defaults:   { _controller: OneVenteBundle:Modele:save, dossierId: -1 }
+    methods: [POST]
+    options:
+        expose: true
+    
+one_modele_delete:
+    path:       /modele/delete/{id}
+    defaults:   { _controller: OneVenteBundle:Modele:delete }
+    methods: [GET]
+    options:
+        expose: true
+
+one_modele_change:
+    path:       /modele/change
+    defaults:   { _controller: OneVenteBundle:Modele:change }
+    methods: [GET]
+    options:
+        expose: true
+
+
+one_notification_save:
+    path:   /parametre/notification/save/{dossierId}
+    defaults:   { _controller: OneVenteBundle:Parametre:saveNotification, dossierId: -1 }
+    methods:  [POST]
+    options:
+        expose: true

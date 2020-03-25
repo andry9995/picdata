@@ -1,0 +1,49 @@
+/*Overidde inspinia width*/
+/*LOGIN FORM*/
+.middle-box {
+    max-width: 600px;
+    z-index: 100;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+.loginscreen.middle-box {
+    width: 100%;
+}
+
+.main-login-form {
+    border: 1px solid #e2e2e2;
+    padding: 50px 50px 20px;
+    border-radius: 5px;
+}
+
+.logo-name .fa {
+    color: #18a689;
+}
+
+/*FIRST LOGIN*/
+#first-login-container {
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    margin-top: 50px;
+    padding: 20px 50px;
+    max-width: 600px;
+}
+
+#first-login-container .fa {
+    font-size: 180px;
+    color: #18a689;
+}
+
+/*PASSWORD REQUEST*/
+#password-request-container {
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    margin-top: 50px;
+    padding: 20px 50px;
+    max-width: 600px;
+}
+
+#password-request-container .fa {
+    font-size: 180px;
+    color: #18a689;
+}

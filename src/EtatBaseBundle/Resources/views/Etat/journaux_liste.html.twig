@@ -1,0 +1,8 @@
+{% for journal in journaux %}
+    {#<li class="js_eb_journal_liste"><a class="js_eb_mn_item js_eb_child" data-etat="5" data-id_journal="{{ journal.id }}" href=""><i class="fa fa-caret-right"></i> <span>{{ journal.codeStr }} ({{ journal.libelle }})</span></a></li>#}
+    <li class="pointer">
+        <a href="#" data-donnees="5" data-libelle="{{ journal.codeStr }} ({{ journal.libelle }})" data-id_journal="{{ journal.id }}" class="js_menu_item js_menu_left js_journal">
+            {{ journal.codeStr }} ({{ journal.libelle }})
+        </a>
+    </li>
+{% endfor %}

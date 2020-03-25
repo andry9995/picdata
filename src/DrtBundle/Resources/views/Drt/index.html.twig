@@ -1,0 +1,272 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}DRT{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/js-excel/jquery.jexcel.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/js-excel/jquery.jdropdown.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/js-excel/spectrum.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/qtip/jquery.qtip.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+    <link rel="stylesheet" href="{{ asset('css/plugins/js-excel/jquery.jexcel.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/image/css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/drt/css/ecriture.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/drt/css/analyse.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/drt/css/drt.css') }}">
+{% endblock %}
+
+{% block contenu_droite %}
+    <div id="test_controle"></div>
+
+    <div class="col-sm-12">
+        <div class="row">
+            {{ include('DrtBundle:Drt:filtre.html.twig') }}
+            <input type="hidden" class="data_deb">
+            <input type="hidden" class="data_fin">
+            <input type="hidden" class="data_client_nom" data="{{ client_nom }}">
+        </div>
+    </div>
+    <div class="tabs-container">
+        <ul class="nav nav-tabs" id="id_li_active_container">
+            <li class="active tab-echange-type" data-type="0"><a data-toggle="tab" href="#tab-drt">DRT, DRP</a></li>
+            {% if(client_nom == 'SCRIPTURA') %}
+                <li class="tab-import" data-type="1"><a data-toggle="tab" href="#tab-import">Import</a></li>
+            {% endif %}
+            <li class="tab-echange-type" data-type="2"><a data-toggle="tab" href="#tab-analyse">Analyse</a></li>
+            <li class="tab-controle" data-type="2"><a id="id_control_container">Statistique</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-drt" class="tab-pane active">
+                <div class="panel-body">
+                    <div class="col-sm-12" id="show-radio-filter-item" style="display: none;">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                {% for echange_type in echangeType  %}
+                                    <div class="col-lg-6">
+                                        <div class="radio radio-inline">
+                                            {% if loop.first %}
+                                                <input type="radio" name="show-filter-item" id="show-filter-item-{{ echange_type.nom }}" value="{{ echange_type.id }}" checked/>
+                                            {% else %}
+                                                <input type="radio" name="show-filter-item" id="show-filter-item-{{ echange_type.nom }}" value="{{ echange_type.id }}"/>
+                                            {% endif %}
+                                            <label for="show-filter-item-{{ echange_type.nom }}">
+                                                {{ echange_type.nom }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-lg-9" id="id_statut_stat_container" style="margin-top: -10px;">
+                                <span class="simple_tag" id="id_total_echange">Total&nbsp;<span class="badge badge-primary">0</span></span>
+                                <span class="simple_tag statut_stat pointer" data-type="0">Ouverte <span class="badge badge-info">0</span></span>
+                                <span class="simple_tag statut_stat pointer" data-type="1">En cours <span class="badge badge-info">0</span></span>
+                                <span class="simple_tag statut_stat pointer" data-type="2">Partielle <span class="badge badge-info">0</span></span>
+                                <span class="simple_tag statut_stat pointer" data-type="3">Clôturée <span class="badge badge-info">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 30px;">
+                        <div class="col-sm-12" id="col-drt" style="display: none; margin-left: 10px;">
+                            <button class="btn btn-primary btn-outline btn-sm" id="add-drt-echange" type="submit"><i class="fa fa-plus"></i> Ajouter</button>
+                            <div id="resultat-drt" style="padding-top: 5px;">
+                                <table id="js_drt_liste" class="js-jqgrid-table"></table>
+                                <div id="pager_liste_drt"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-import" class="tab-pane">
+                <div class="panel-body">
+                    <div class="col-sm-12" id="div-input-file-import">
+                        <button class="btn btn-primary btn-outline btn-sm" id="btn-import-drt" type="submit" style="margin-bottom: 5px;"><i class="fa fa-upload"></i> Importer</button>
+                        <input type="file" class="form-control" name="js_id_input_file_import[]" multiple id="js_id_input_file_import">
+                    </div>
+                </div>
+            </div>
+            <div id="tab-analyse" class="tab-pane">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <span class="btn btn-white btn-sm cl_export"><i class="fa fa-file-excel-o" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="col-lg-12 cl_container_analyse" style="margin-top: 5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="drt-add-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title drt-add-title"></h4>
+                </div>
+                <div class="modal-body" style="height: 100px;">
+                    <div class="col-sm-12">
+                        <div class="alert alert-warning">
+                            <textarea id="msg-reponse-drt" placeholder="Vous pouvez laisser un message içi..." style="width: 100%;"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" id="div-input-add-file-drt">
+                        <input type="file" class="form-control" name="js_id_input_file_add_drt[]" multiple id="js_id_input_file_add_drt">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-save-drt-echange">
+                        Ajouter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="drt-repondre-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title drt-reponse-title"></h4>
+                </div>
+                <div class="modal-body" style="height: 100px;">
+                    <div class="col-sm-12">
+                        <div class="alert alert-warning">
+                            <textarea id="msg-reponse-rdrt" placeholder="Vous pouvez laisser un message içi..." style="width: 100%;"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <form role="form" id="form-add-reponse" action="{{ url('drt_add_reponse') }}" method="post" enctype="multipart/form-data">
+                            <div class="col-sm-6" id="div-input-file-drt">
+                                <input type="file" class="form-control" name="js_id_input_file_drt[]" multiple id="js_id_input_file_drt">
+                            </div>
+                            <div class="col-sm-6" id="div-input-piece-file-drt">
+                                <input type="file" class="form-control" name="js_id_input_file_piece_drt[]" multiple id="js_id_input_file_piece_drt">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="submit-add-reponse">
+                        Valider
+                    </button>
+                    {#<button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-save-drt-reponse">
+                        Valider
+                    </button>#}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="drt-error-import-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title drt-reponse-title"></h4>
+                </div>
+                <div class="modal-body jqGrid_wrapper" style="height: 400px;">
+                    <div class="col-sm-12"> <h4 class="title-error-import text-center" style="color: #915608;"></h4></div>
+                    <div class="col-sm-12">
+                        <form role="form" id="form-reimport" action="{{ url('drt_import') }}" method="post" enctype="multipart/form-data">
+                            <table id="table_list_error_import"></table>
+                            <div id="pager_list_error_import"></div>
+                            <input type="hidden" id="drt-data-error-import">
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal">Fermer</button>
+                    <button class="btn btn-sm btn-primary btn-outline" id="submit-reimport">
+                        Réimporter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="drt-supprime-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Confirmation suppression du <span class="drt-reponse-title"></span></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-supprime-drt">
+                        Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="js-filtre-fourchette" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Fourchette</h4>
+                </div>
+                <div class="modal-body" style="padding-bottom: 40px; padding-left: 100px;">
+                    <div  class="col-md-10">
+                        <form class="form-horizontal">
+                            <div class="input-group row date col-md-12">
+                                <div class="col-sm-20">
+                                    <input type="text" class="input form-control" name="debut" id="js_debut_date">
+                                </div>
+                                <span class="input-group-addon">Au</span>
+                                <input type="text" class="input form-control" name="fin" id="js_fin_date">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-fourchette-drt">
+                        Valider
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="id_export" method="post"></form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/jexcel/2.0.0/js/jquery.jexcel.js"></script>#}
+    <script src="{{ asset('js/plugins/js-excel/spectrum.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/js-excel/jquery.jdropdown.js') }}"></script>
+    <script src="{{ asset('js/plugins/js-excel/jquery.jexcel.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/jquery.form.js') }}"></script>
+    {#<script src="{{ asset('bundles/drt/js/analyse.js') }}"></script>#}
+    <script src="{{ asset('js/plugins/qtip/jquery.qtip.min.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/ecriture.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/export.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/control.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/drt-uploadfile.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/drt.js') }}"></script>
+{% endblock %}

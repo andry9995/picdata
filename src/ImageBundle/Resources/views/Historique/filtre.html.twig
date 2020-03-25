@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-lg-3" {{ (type <= 2) ? '' : 'hidden' }}>
+        {{ render(controller('AppBundle:Commun:clients' , {'conteneur' : 0})) }}
+    </div>
+    <div class="col-lg-{{ (type <= 2) ? 3 : 4 }}">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="js_filtre">Envoyer</label>
+                <div class="col-lg-10">
+                    <select class="form-control" id="js_filtre">
+                        <option value="0">Aujourd'hui</option>
+                        <option value="1">Hier</option>
+                        <option value="2">Cette&nbsp;Semaine</option>
+                        <option value="3">Semaine&nbsp;pr&eacute;c&eacute;dente</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-{{ (type <= 2) ? 3 : 4 }}">
+        <div class="form-horizontal">
+            <div class="form-group" id="js_utilisateur_container">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-{{ (type <= 2) ? 3 : 4 }}">
+        <span class="btn btn-primary" id="js_charger_tree"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Go</span>
+        <a href="{{ path('img_envoi') }}" class="btn btn-primary btn-outline pull-right"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;Envoi</a>
+    </div>
+</div>

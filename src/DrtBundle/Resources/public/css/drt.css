@@ -1,0 +1,12 @@
+.ui-jqgrid tr.jqgrow td.t-actions {
+    overflow:visible !important;
+    white-space: normal !important;
+}
+
+.ui-priority-secondary, .ui-widget-content .ui-priority-secondary {
+    opacity: 1 !important;
+}
+
+.dropdown-menu {
+    left: -85px;
+}

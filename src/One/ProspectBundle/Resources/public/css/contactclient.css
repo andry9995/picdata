@@ -1,0 +1,37 @@
+/* 
+    Created by Netbeans
+    Created on : 2 juil. 2017, 12:29:15
+    Author : Mamy Rakotonirina
+*/
+
+/*Bouton nouveau contact*/
+.new-contact {
+    background: none;
+    color: #7F6A6C;
+}
+.new-contact:hover {
+    background: #1AB394;
+    border-color: #1AB394;
+    color: #FFFFFF;
+}
+
+/*Liste des contacts*/
+#contact-row .contact-list .row {
+    border: 1px solid #EEEEEE;
+    margin: 5px 1px;
+    padding: 10px 5px;
+}
+#contact-row .contact-list .row .glyphicon-pencil {
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    color: #1CB394;
+    cursor: pointer;
+    padding: 5px;
+}
+#contact-row .contact-list .row .glyphicon-trash {
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    color: #A94442;
+    cursor: pointer;
+    padding: 5px;
+}

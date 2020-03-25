@@ -1,0 +1,99 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Consultation pièces{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker-fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/consultationpiece/js/commun-consultation.js') }}"></script>
+    <script src="{{ asset('bundles/consultationpiece/js/consultation-piece.js') }}?v=2.0.2"></script>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('bundles/consultationpiece/css/consultation-piece.css') }}?v=1.1">#}
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    <div class="row">
+        {{ include('ConsultationPieceBundle:Default:filtre.html.twig')}}
+    </div>
+
+    <div class="row scroller" id="js_scroller_parent">
+
+        <div class="col-sm-2 filtre">
+            {#<div class="ibox-content"></div>#}
+            <div class="row scroller" id="js_filtre_tree">
+                <div id="js_tree"></div>
+            </div>
+
+            <div id="js_filtre_num_piece" style="display:none;">
+                <div class="row">
+                    <label class="control-label">Saisir Numero Pièce</label>
+                </div>
+                <div class="input-group row">
+                    <input type="text" class="form-control" id="js_num_piece">
+                    <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" id="btn-num-piece">Go</button>
+                        </span>
+                </div>
+            </div>
+
+            <div id="js_filtre_date" class="form-group" style="display:none;">
+                <div class="row">
+                    <label class="control-label">Par date Scan</label>
+                </div>
+                <div class="input-daterange input-group row">
+                    <input type="text" class="input form-control" name="debut" id="js_debut_date_scan">
+                    <span class="input-group-addon">Au</span>
+                    <input type="text" class="input form-control" name="fin" id="js_fin_date_scan">
+                    <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" id="btn-date-scan">Go</button>
+                        </span>
+                </div>
+            </div>
+
+            <div id="js_filtre_avancement" style="display:none;">
+                <div class="row">
+                    <label class="control-label">Avancement</label>
+                </div>
+                <div class="input-group row">
+                    <select class="form-control" name="filtre_avancement" id="js_avancement">
+                        <option value="0"></option>
+                        <option value="1">Reçue</option>
+                        <option value="2">Catégorisée</option>
+                        <option value="3">Saisie</option>
+                        <option value="4">Imputée</option>
+                        <option value="5">Comptabilisée</option>
+                    </select>
+                    <span class="input-group-btn">
+                             <button type="button" class="btn btn-primary" id="btn-avancement">Go</button>
+                         </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-10 tableau">
+            <table id="js_piece_liste"></table>
+            <div id="js_piece_pager"></div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        {{ include('ConsultationPieceBundle:Default:rechercheDate.html.twig') }}
+    </div>
+
+
+
+{% endblock %}

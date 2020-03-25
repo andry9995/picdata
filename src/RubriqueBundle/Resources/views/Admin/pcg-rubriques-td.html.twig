@@ -1,0 +1,19 @@
+{% if type == 0 %}
+    {% set class_span = 'label-default' %}
+    {% set class = 'js_td_rubrique' %}
+{% elseif type == 1 %}
+    {% set class_span = 'label-default' %}
+    {% set class = 'js_td_super_rubrique' %}
+{% elseif  type == 2 %}
+    {% set class_span = 'label-default' %}
+    {% set class = 'js_td_hyper_rubrique' %}
+{% else %}
+    {% set class_span = 'label-default' %}
+    {% set class = 'js_td_hyper_rubrique' %}
+{% endif %}
+
+<td class="pointer js_table_td {{ class }}" data-type="{{ type }}">
+    {% for r in rubriques %}
+        <span class="label {{ class_span }} js_rubrique_select" style="margin: 1px!important;" data-id="{{ r.id }}">{{ r.libelle }}</span>
+    {% endfor %}
+</td>

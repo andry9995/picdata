@@ -1,0 +1,79 @@
+<div id="js_notification_add_form">
+    <div class="row">
+        <div class="col-lg-12">
+            <form class="form-horizontal">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox border-bottom">
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="notification-code" class="col-sm-4 control-label">Code *</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" name="notification-code" id="notification-code">
+                                                    <option value=""></option>
+                                                    {% for notification in notifications %}
+                                                        <option value="{{ notification.id }}" data-libelle="{{ notification.libelle }}">{{ notification.code }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="notification-libelle" class="col-sm-4 control-label">Libelle *</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="notification-libelle" name="notification-libelle" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ibox border-bottom">
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="notification-email" class="col-sm-5 control-label">Email *</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" class="form-control" id="notification-email" name="notification-email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="notification-responsable" class="col-sm-5 control-label">Responsable titre *</label>
+                                            <div class="col-sm-7">
+                                                <select class="form-control" name="notification-responsable" id="notification-responsable">
+                                                    <option value=""></option>
+                                                    {% for responsable_titre in responsableTitres %}
+                                                        <option value="{{ responsable_titre.id }}">{{ responsable_titre.libelle }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 text-right">
+                        <span class="btn btn-primary btn-sm js_btn_save_notification"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+                        <span class="btn btn-white btn-sm js_btn_cancel"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

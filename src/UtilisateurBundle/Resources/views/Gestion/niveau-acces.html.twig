@@ -1,0 +1,209 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/utilisateur/css/gestion.css') }}?v=1.3">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/accent-fold/accent-fold.js') }}?v=1.3"></script>
+    <script src="{{ asset('bundles/utilisateur/js/utilisateur-fonctions.js') }}?v=1.3"></script>
+    <script src="{{ asset('bundles/utilisateur/js/niveau-acces.js') }}?v=1.3"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Niveau d'accès des utilisateurs</h5>
+                    <div class="ibox-tools">
+                        <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-content" id="user-container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {% if is_granted('ROLE_SCRIPTURA_ADMIN') %}
+                                {{ render(controller('AppBundle:Commun:clients', {'conteneur': '0', 'tous': '0', 'attr_id': 'client-user', 'label_col': 4, 'select_col': 8})) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h4 class="bg-info padding-6">Listes des utilisateurs</h4>
+                            <div style="width:100%; padding: 0 5px 5px;">
+                            {# <div style="width:100%; display: flex;flex-direction: row-reverse; padding: 0 5px 5px;"> #}
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-lg-4 control-label">Statut</label>
+                                            <div class="col-lg-8">
+                                                <select class="form-control" id="filter-status">
+                                                    <option value="">Tous</option>
+                                                    <option value="0">Actif</option>
+                                                    <option value="1">Supprimer</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">Type</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" id="filter-type">
+                                                    <option value="">Tous</option>
+                                                    <option value="expert_comptable">Expert Comptable</option>
+                                                    <option value="client_final">Client Final</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-lg-5">
+                                    <input id="user-search" type="search" placeholder="Chercher" style="" class="form-control">
+                                </div>
+                            </div>
+                                
+                            </div>
+                            <div id="user-list" style="overflow-y: scroll;">
+                                <ul class="list-group">
+                                    {#<li class="list-group-item active">#}
+                                    {#<span class="badge user-role">Client admin</span>#}
+                                    {#Utilisateur Test#}
+                                    {#</li>#}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="bg-info padding-6">Informations et Rôle</h4>
+                            <div id="user-form" style="overflow-y: scroll;overflow-x: hidden;padding-right:5px;">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2">
+                                            Actif
+                                        </label>
+                                        <div class="col-lg-10">
+                                            <input id="user-actif" type="checkbox" class="js-switch" checked>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2">
+                                            Afficher dossiers démo
+                                        </label>
+                                        <div class="col-lg-10">
+                                            <input id="user-show-demo" type="checkbox" class="js-switch">
+                                        </div>
+                                    </div>
+                                </form>
+                                {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                {{ form_end(form) }}
+                                <div id="user-register-form2">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-2" for="user-role">
+                                                Rôle
+                                            </label>
+                                            <div class="col-lg-10">
+                                                <select id="user-role" name="user_role" class="form-control">
+                                                    <option value=""></option>
+                                                    {% set groupe = 'none' %}
+                                                    {% set new_groupe = true %}
+                                                    {% for user_acces in acces %}
+                                                        {% if groupe != user_acces.groupe %}
+                                                            {% set groupe = user_acces.groupe %}
+                                                            {% set new_group = true %}
+                                                            {% if loop.index > 0 %}
+                                                                </optgroup>
+                                                            {% endif %}
+                                                            <optgroup label="{{ groupe }}">
+                                                        {% else %}
+                                                            {% set new_groupe = false %}
+                                                        {% endif %}
+                                                        <option data-type="{{ user_acces.type }}"
+                                                                value="{{ user_acces.id }}">{{ user_acces.libelle }}</option>
+                                                        {% if loop.last %}
+                                                            </optgroup>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-2" for="user-type">Type</label>
+                                            <div class="col-lg-10">
+                                                <select id="user-type" name="uer_type" class="form-control">
+                                                    {% if user.type is null or user.type == ''%}
+                                                        <option value="" selected="">Séléctionner</option>
+                                                        <option value="expert_comptable">Expert Comptable</option>
+                                                        <option value="client_final">Client Final</option>
+                                                    {% else %}
+                                                        {% if user.type == 'expert_comptable' %}
+                                                            <option value="expert_comptable" selected="">Expert Comptable</option>
+                                                            <option value="client_final">Client Final</option>
+                                                        {% else %}
+                                                            {% if user.type == 'client_final' %}
+                                                                <option value="expert_comptable">Expert Comptable</option>
+                                                                <option value="client_final" selected="">Client Final</option>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <div id="client-group" class="hidden">
+                                        {% if is_granted('ROLE_SCRIPTURA_ADMIN') %}
+                                            {{ render(controller('AppBundle:Commun:clientsMulti', {'label_col': 2, 'select_col': 10})) }}
+                                        {% endif %}
+                                        {{ render(controller('AppBundle:Commun:clientsNonCrypter', {'conteneur': '0', 'tous': '0', 'label_col': 2, 'select_col': 10})) }}
+                                    </div>
+                                    <form id="site-group" class="form-horizontal hidden">
+                                        <div class="form-group">
+                                            <label for="site" class="control-label col-lg-2">Site(s)</label>
+                                            <div class="col-lg-10">
+                                                <select id="site" class="form-control chosen-select" multiple="multiple"
+                                                        data-placeholder="---">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form id="dossier-group" class="form-horizontal hidden">
+                                        <div class="form-group">
+                                            <label for="dossier" class="control-label col-lg-2">Dossier(s)</label>
+                                            <div class="col-lg-10">
+                                                <select id="dossier" class="form-control chosen-select" multiple="multiple"
+                                                        data-placeholder="---">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="pull-left">
+                                        <button id="btn-resend-mail-creation" class="btn btn-danger">Renvoyer mail création compte</button>
+                                    </div>
+                                    <div class="pull-right">
+                                        <button id="btn-save-role-user" class="btn btn-primary">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

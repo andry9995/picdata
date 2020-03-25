@@ -1,0 +1,179 @@
+# src/AppBundle/Resources/config/routing.yml
+
+home_page:
+  path:   /
+  defaults: { _controller: AppBundle:Index:index }
+
+email_template:
+    path: /email-template
+    defaults: { _controller: AppBundle:Default:emailTemplate }
+
+app_clients:
+  path: /app/commun/clients/{conteneur}/{tous}
+  defaults: { _controller: AppBundle:Commun:clients , conteneur : 0, tous: 1 }
+  options:
+    expose: true
+  requirements:
+    conteneur: \d*
+    tous: 0|1
+
+#clients muliples (multi-select)
+app_clients_multi:
+  path: /app/commun/clients-multi
+  defaults: { _controller: AppBundle:Commun:clientsMulti }
+  options:
+    expose: true
+
+app_sites:
+  path: /app/sites/{conteneur}/{client}/{tous}/{infoperdos}
+  defaults: { _controller: AppBundle:Commun:sites ,conteneur : 0 , tous : 1, infoperdos: 0 }
+  options:
+    expose: true
+  requirements:
+    conteneur: \d*
+    tous: \d*
+
+#Listes de tous les sites d'un client
+app_all_sites_client:
+  path: /app/all-sites-clients/{client}/{crypter}
+  defaults: { _controller: AppBundle:Commun:sitesClient, crypter: 1 }
+  methods: [GET]
+  options:
+      expose: true
+  requirements:
+      crypter: 0|1
+
+app_dossiers:
+  path: /app/dossiers/{conteneur}/{site}/{tous}/{client}/{infoperdos}/{tdi}
+  defaults: { _controller: AppBundle:Commun:dossiers, conteneur: 0, tous: 1, infoperdos: 0, tdi: 0 }
+  options:
+    expose: true
+  requirements:
+    conteneur: \d*
+    tous: \d*
+
+app_dossiers_tmp:
+  path: /app/dossiers-tmp/{conteneur}/{site}/{tous}/{client}
+  defaults: { _controller: AppBundle:Commun:dossiersTmp, conteneur: 0, tous: 1 }
+  options:
+    expose: true
+  requirements:
+    conteneur: \d*
+    tous: \d*
+
+#Liste des dossiers d'un client
+#Tous sites confondus
+app_dossiers_client:
+    path: /app/dossiers-client/{client}/{tous}/{json}/{crypter}
+    defaults: { _controller: AppBundle:Commun:dossiersClient, tous: 1, json: 0, crypter: 1 }
+    options:
+        expose: true
+    requirements:
+        tous: 0|1
+        json: 0|1
+        crypter: 0|1
+
+
+app_utilisateurs:
+  path: /app/commun/utilisateurs/{conteneur}/{client}
+  defaults: { _controller: AppBundle:Commun:utilisateurs , conteneur: 0 , client: '' }
+  options:
+    expose: true
+  requirements:
+    conteneur: \d*
+
+app_regime_fiscals:
+  path: /app/regime_fiscals/{conteneur}/{tous}
+  defaults: { _controller: AppBundle:Commun:regimeFiscals , conteneur: 0 , tous: 1 }
+  options:
+    expose: true
+  requirements:
+    conteneur: \d*
+    tous: \d*
+
+app_exercices:
+  path: /app/exercices/{tous}
+  defaults: { _controller: AppBundle:Commun:exercices , tous: 1 }
+  options:
+    expose: true
+  requirements:
+    tous: \d*
+
+app_date_picker:
+  path : /app/date_picker/{dossier}
+  defaults: { _controller: AppBundle:Commun:datePicker }
+  options:
+    expose: true
+
+app_cloture_dossier:
+  path: /app/cloture/{dossier}
+  defaults: { _controller: AppBundle:Commun:cloture }
+  options:
+    expose: true
+
+app_image_picdata:
+  path: /app/image_picdata
+  defaults: { _controller: AppBundle:Commun:imagePicdata }
+  options:
+    expose: true
+  methods: [POST]
+
+app_date_anciennete:
+  path: /app/date_anciennete
+  defaults: { _controller: AppBundle:Commun:dateAnciennete }
+  options:
+    expose: true
+  methods: [POST]
+
+app_date_anciennete_calcule:
+  path: /app/date_anciennete_calcule
+  defaults: { _controller: AppBundle:Commun:dateCalculAnciennete }
+  options:
+    expose: true
+  methods: [POST]
+
+app_cloture_exercices:
+  path: /app/clotures_exercices
+  defaults: { _controller: AppBundle:Commun:clotureExercices }
+  options:
+    expose: true
+  methods: [POST]
+
+app_periodes:
+  path: /app/periodes
+  defaults: { _controller: AppBundle:Commun:periodes }
+  options:
+    expose: true
+  methods: [POST]
+
+app_image:
+  path: /app/image
+  defaults: { _controller: AppBundle:Commun:image }
+  options:
+    expose: true
+  methods: [POST]
+
+app_operateur_by_utilisateur:
+    path: /app/operateur/by/utilisateur
+    defaults: { _controller: AppBundle:MenuIntranet:operateur }
+    options:
+      expose: true
+
+app_user:
+    path: /app/user
+    defaults: { _controller: AppBundle:Commun:user }
+    options:
+      expose: true
+
+app_jwt:
+    path: /app/jwt
+    defaults: { _controller: AppBundle:Commun:jwt }
+    options:
+      expose: true
+    methods: [GET]
+
+app_infos_user:
+    path: /app/infos-user
+    defaults: { _controller: AppBundle:Commun:infosUser }
+    options:
+      expose: true

@@ -1,0 +1,309 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListAvoir();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Avoir Client {{ vente.code }}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="avoir-form" enctype="multipart/form-data">
+            <input type="hidden" id="id" name="id" value="{{ vente.id }}">
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="client-prospect" class="col-md-4 control-label">Prospect ou Client*</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="client-prospect" name="client-prospect" placeholder="" onchange="getListContacts(this.value); updateAddressVente();">
+                            <option value=""></option>
+                            {% for clientProspect in clientProspects %}
+                                <option value="{{ clientProspect.id }}" {% if clientProspect.id == vente.tiers.id %}selected="selected"{% endif %}>{{ clientProspect.intitule }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contact-client" class="col-md-4 control-label">Contact</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="contact-client" name="contact-client" placeholder="" onchange="updateAddressVente();">
+                            <option value=""></option>
+                            {% if contacts|length > 0 %}
+                                {% for contact in contacts %}
+                                    <option value="{{ contact.id }}" {% if vente.contact and contact.id == vente.contact.id %}selected="selected"{% endif %}>{% if contact.prenom != '' %}{{ contact.prenom ~' ' }}{% endif %}{{ contact.nom }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="adresse-facturation" class="col-md-4 control-label">Adresse Facturation</label>
+                    <div class="col-md-6">
+                        <textarea class="form-control" id="adresse-facturation" name="adresse-facturation" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="date-facture" class="col-md-4 control-label">Date</label>
+                    <div class="col-md-6">
+                        <div class="input-group date">
+                            <input type="text" class="form-control datepicker" id="date-facture" name="date-facture" value="{{ vente.dateFacture|date("d/m/Y") }}">
+                            <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status" class="col-md-4 control-label">Exercice de rattachement</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="exercice-rattachament" name="exercice-rattachement" placeholder="">
+                            {% set exerciceId = (vente.exercice is null) ? -1 : vente.exercice  %}
+                            <option value=""></option>
+                            {% for ex in exercices %}
+                                <option value="{{ ex }}" {{ (exerciceId|number_format == ex|number_format) ? 'selected' : ''}}>{{ ex  }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reglement" class="col-md-4 control-label">Règlement</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="reglement" name="reglement" placeholder="">
+                            {% for reglement in reglements %}
+                                <option value="{{ reglement.id }}" {% if reglement.id == vente.oneReglement.id %}selected{% endif %}>{{ reglement.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            {#<div class="form-group">#}
+                {#<label for="client-prospect" class="col-md-2 col-sm-3 col-xs-12 control-label">Prospect ou Client*</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="client-prospect" name="client-prospect" placeholder="" onchange="getListContacts(this.value); updateAddressVente();">#}
+                        {#<option value=""></option>#}
+                        {#{% for clientProspect in clientProspects %}#}
+                            {#<option value="{{ clientProspect.id }}" {% if clientProspect.id == vente.tiers.id %}selected="selected"{% endif %}>{{ clientProspect.intitule }}</option>#}
+                        {#{% endfor %}#}
+                    {#</select>#}
+                {#</div>#}
+                {#<label for="date-facture" class="col-md-2 col-sm-3 col-xs-12 control-label">Date</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<div class="input-group date">#}
+                        {#<input type="text" class="form-control datepicker" id="date-facture" name="date-facture" value="{{ vente.dateFacture|date("d/m/Y") }}">#}
+                        {#<span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="form-group">#}
+                {#<label for="contact-client" class="col-md-2 col-sm-3 col-xs-12 control-label">Contact</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="contact-client" name="contact-client" placeholder="" onchange="updateAddressVente();">#}
+                        {#<option value=""></option>#}
+                        {#{% if contacts|length > 0 %}#}
+                            {#{% for contact in contacts %}#}
+                                {#<option value="{{ contact.id }}" {% if vente.contact and contact.id == vente.contact.id %}selected="selected"{% endif %}>{% if contact.prenom != '' %}{{ contact.prenom ~' ' }}{% endif %}{{ contact.nom }}</option>#}
+                            {#{% endfor %}#}
+                        {#{% endif %}#}
+                    {#</select>#}
+                {#</div>#}
+                {#<label for="reglement" class="col-md-2 col-sm-3 col-xs-12 control-label">Règlement</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="reglement" name="reglement" placeholder="">#}
+                        {#{% for reglement in reglements %}#}
+                            {#<option value="{{ reglement.id }}" {% if reglement.id == vente.oneReglement.id %}selected{% endif %}>{{ reglement.nom }}</option>#}
+                        {#{% endfor %}#}
+                    {#</select>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="form-group">#}
+                {#<label for="adresse-facturation" class="col-md-2 col-sm-3 col-xs-12 control-label">Adresse Facturation</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<textarea class="form-control" id="adresse-facturation" name="adresse-facturation" readonly></textarea>#}
+                {#</div>#}
+            {#</div>#}
+            
+            <hr />
+            <div class="items">
+                <br />
+                <table class="table table-hover article-list">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Article</th>
+                            <th style="width: 25%;">Description</th>
+                            <th style="width: 10%;">Qté</th>
+                            <th style="width: 10%;">Prix HT</th>
+                            <th style="width: 10%;">Rem.%</th>
+                            <th style="width: 10%;">Total HT</th>
+                            <th style="width: 10%;">TVA%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if articles|length > 0 %}
+                            {% for article in articles %}
+                            <tr id="{{ article.id~'-'~'now'|date('U') }}" class="{{ article.id }}" onclick="selectToRemove(this);">
+                                <td style="vertical-align:middle;">
+                                    <input type="hidden" class="form-control artventeid" value="{{ article.id }}">
+                                    <input type="hidden" class="form-control artid" value="{{ article.oneArticle.id }}">
+                                    {{ article.oneArticle.code ~' '~ article.oneArticle.nom }}
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <textarea class="form-control description" onblur="updateAmountTTC();">{{ article.description }}</textarea>
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <input type="number" class="form-control quantite" value="{{ article.quantite }}" onblur="updateAmountTTC();" />
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <input type="text" class="form-control price number" value="{{ article.prix|number_format(0, '.', ' ') }}" onblur="updateAmountTTC();" />
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <input type="number" class="form-control remise" value="{{ article.remise }}" onblur="updateAmountTTC();" />
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <span class="item-amount">0</span>
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <select class="form-control tva" onchange="updateAmountTTC();">
+                                    {% for tva in taxes %}
+                                        <option value="{{ tva.taux }}" {% if article.tvaTaux.taux == tva.taux %}selected="selected"{% endif %}>{{ tva.taux~'%' }}</option>
+                                    {% endfor %}
+                                    </select>
+                                    <input type="hidden" class="form-control serialized" name="articles[]" value="id={{ article.id }}&article-id={{ article.oneArticle.id }}&description={{ article.description }}&quantite={{ article.quantite }}&price={{ article.prix }}&remise={{ article.remise }}&tva={{ article.tvaTaux.taux }}">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-default new-article" onclick="loadListArticleModal('vente');">Produit et Service</button>
+                <button type="button" class="btn btn-default new-article" onclick="removeArticleVente();">Suppression</button>
+                <input type="hidden" id="article-to-remove" value="" />
+            </div>
+            <div id="articles-deleted"></div>
+            <br />
+            <br />
+            <div class="form-group">
+                <label for="note" class="col-md-2 col-sm-3 col-xs-12 control-label">Note imprimée</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <textarea class="form-control" id="note" name="note">{{ vente.note }}</textarea>
+                </div>
+                <label for="montant-ht" class="col-md-2 col-sm-3 col-xs-12 control-label">Total HT</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-ht" name="montant-ht" value="0" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="remise-ht" class="col-md-2 col-sm-3 col-xs-12 control-label">Remise (%)</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="number" class="form-control" id="remise-ht" name="remise-ht" value="{{ vente.remise }}" onchange="updateAmountTTC();">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="montant-remise" class="col-md-2 col-sm-3 col-xs-12 control-label">Remise (montant)</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-remise" name="montant-remise" value="0" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="montant-tva" class="col-md-2 col-sm-3 col-xs-12 control-label">TVA</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-tva" name="montant-tva" value="{{ venteDetails['tva'] }}" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="montant-ttc" class="col-md-2 col-sm-3 col-xs-12 control-label">Total TTC</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-ttc" name="montant-ttc" value="0" readonly>
+                </div>
+            </div>
+            <hr />
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Avancé</span>
+            <div class="advanced-group hidden">
+                <div class="form-group">
+                    <label for="contact-livraison" class="col-md-4 control-label">Contact Livraison</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <select class="form-control" id="contact-livraison" name="contact-livraison" placeholder="" onchange="updateAddressLivraisonVente();">
+                            <option value=""></option>
+                            {% if contacts|length > 0 %}
+                                {% for contact in contacts %}
+                                    <option value="{{ contact.id }}" {% if vente.contactLivraison and contact.id == vente.contactLivraison.id %}selected="selected"{% endif %}>{% if contact.prenom != '' %}{{ contact.prenom ~' ' }}{% endif %}{{ contact.nom }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="adresse-livraison" class="col-md-4 control-label">Adresse Livraison</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <textarea class="form-control" id="adresse-livraison" name="adresse-livraison" readonly></textarea>
+                    </div>
+                </div>
+                <hr />
+                {#<div class="form-group">
+                    <label for="projet" class="col-md-4 control-label">Projet</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <select class="form-control" id="projet" name="projet">
+                            <option value=""></option>
+                            {% for projet in projets %}
+                                <option value="{{ projet.id }}" {% if vente.oneProjet and vente.oneProjet.id==projet.id %}selected{% endif %}>{{ projet.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>#}
+            </div>
+                        
+            <hr />
+            <div id="dropzone">
+                <h3 class="droptext">Faites glisser les fichiers à joindre</h3>
+                <span>ou parcourir vos fichier</span>
+                <input type="file" class="hidden" name="files" multiple />
+            </div>
+            <div id="dropzone-uploaded">
+                {% if fichiers|length > 0 %}
+                    {% for fichier in fichiers %}
+                        {% set uniqid_ext = fichier.nom|split('.') %}
+                        <div class="col-md-4" id="{{ uniqid_ext[0] }}">
+                            <div class="uploaded-content">
+                                <div class="content-image">
+                                    {% if uniqid_ext[1] == 'png' or uniqid_ext[1] == 'jpg' or uniqid_ext[1] == 'jpeg' %} 
+                                    <img src="{{ fichier.path }}{{ fichier.nom }}">
+                                    {% else %}
+                                    <img src="/bundles/oneprospect/img/default-file.png">
+                                    {% endif %}
+                                </div>
+                                <div class="content-footer">
+                                    <p>{{ fichier.nom }}</p>
+                                    <input type="hidden" name="uploaded-files[]" value="{{ fichier.path }}{{ fichier.nom }}" />
+                                </div>
+                            </div>
+                            <span onclick="deleteUploadedImage('{{ uniqid_ext[0] }}', '{{ fichier.nom }}')">x</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div id="dropzone-deleted"></div>
+        </form>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListAvoir();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveAvoir();">Enregistrer</button>
+        </div>
+    </div>
+</div>

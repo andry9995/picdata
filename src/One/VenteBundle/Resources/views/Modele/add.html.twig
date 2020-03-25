@@ -1,0 +1,404 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListModele();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Nouveau Modèle</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="modele-form">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="modele-name" class="col-md-2 control-label">Nom du modèle*</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="modele-name"  name="modele-name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modele-description" class="col-md-2 control-label">Description du modèle</label>
+                        <div class="col-md-6">
+                            <textarea class="form-control" id="modele-description"  name="modele-description"></textarea>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="modele-preview" style="color: {{ default.fontColor }}; font-family: {{ default.fontFamily }}; font-size: {{ default.fontSize }}px;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="company-name">{{ params.companyNom }}<br></span>
+                                <span class="company-address">{{ params.companyAdresse }}<br></span>
+                                <span class="company-country">{{ params.companyPays.nom }} </span><span class="company-postal-code">{{ params.companyCodePostal }}<br></span>
+                                <span class="company-email">{{ params.companyMail }}<br></span>
+                                <span class="company-tel">{{ params.companyTel }}<br></span>
+                                <span class="company-siteweb">{{ params.companySiteweb }}<br></span>
+                            </div>
+                            <div class="col-md-6 pos-right">
+                                <span class="document-type">Facture<br></span>
+                                <span class="document-code">N° DOC-001<br></span>
+                                <span class="document-date">18/10/2017<br></span>
+                                <span class="document-reglement">Comptant<br></span>
+                                <span class="document-total">Montant à payer <b>233,00 {{ params.comptableDevise.symbole }}</b><br></span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6"><span class="customer-num"><b>Client CUS-123</b><br><br></span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="shipping-address-label">{{ default.shippingAddressLabel }}</span><br>
+                                <span class="shipping-customer-contact">Jane Doe<br></span>
+                                <span class="shipping-customer-company">ACME Company<br></span>
+                                <span class="shipping-customer-address">101 Van Ness<br></span>
+                                <span class="shipping-customer-city">San Francisco CA 94103<br></span>
+                                <span class="shipping-customer-country">Etats-unis<br></span>
+                                <span class="shipping-customer-tel">Tel: (555) 555-5555<br></span>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="billing-address-label">{{ default.billingAddressLabel }}</span><br>
+                                <span class="billing-customer-contact">Jane Doe<br></span>
+                                <span class="billing-customer-company">ACME Company<br></span>
+                                <span class="billing-customer-address">2239 Union St.<br></span>
+                                <span class="billing-customer-city">San Francisco CA 94103<br></span>
+                                <span class="billing-customer-country">Etats-unis<br></span>
+                                <span class="billing-customer-tel">Tel: (555) 555-5555<br></span>
+                                <span class="company-tva-intracom">TVA Intracommunautaire : 1235<br></span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <tr>
+                                        <th style="background-color: {{ default.headColor }};"><span class="designation-label">{{ default.designationLabel }}</span></th>
+                                        <th style="background-color: {{ default.headColor }};" class="pos-right quantity-col"><span class="quantity-label">{{ default.quantityLabel }}</span></th>
+                                        <th style="background-color: {{ default.headColor }};" class="pos-right price-col"><span class="price-label">{{ default.priceLabel }}</span></th>
+                                        <th style="background-color: {{ default.headColor }};" class="pos-right">Montant HT</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="article-code">PS-001 </span><span class="article-name">Nom article</span><br>
+                                            <span class="article-description">Description article</span>
+                                        </td>
+                                        <td class="pos-right quantity-col">2</td>
+                                        <td class="pos-right price-col">8,00 {{ params.comptableDevise.symbole }}<span class="article-unit"> /heure</span></td>
+                                        <td class="pos-right">16,00 {{ params.comptableDevise.symbole }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="article-code">PS-001 </span><span class="article-name">Nom article</span><br>
+                                            <span class="article-description">Description article</span>
+                                        </td>
+                                        <td class="pos-right quantity-col">2</td>
+                                        <td class="pos-right price-col">64,00 {{ params.comptableDevise.symbole }}<span class="article-unit"> /jour</span></td>
+                                        <td class="pos-right">128,00 {{ params.comptableDevise.symbole }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-8">
+                                <table class="table">
+                                    <tr>
+                                        <td><span class="ht-label">Total HT</span></td>
+                                        <td class="pos-right"><span class="ht-value">143 {{ params.comptableDevise.symbole }}</span></td>
+                                    </tr>
+                                    <tr style="background-color: #F0F0F0;">
+                                        <td><span class="ttc-label">Total TTC</span></td>
+                                        <td class="pos-right"><span class="ttc-label">143 {{ params.comptableDevise.symbole }}</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p class="payment-info">
+                                    <span class="payment-info-label">{{ default.paymentInfoLabel }}</span><br>
+                                    <span class="deadline"><b>143,00 {{ params.comptableDevise.symbole }}</b> le <b>31/10/2017</b></span><br>
+                                    <span class="payment-info-default"></span><br>
+                                </p>
+                            </div>
+                            <div class="col-md-8"><span class="global-note"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="modele-config">
+                        <hr/>
+                        <h4>APPARENCE</h4>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="head-color" class="col-md-4 control-label">Couleur des entêtes</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control colorpicker" id="head-color" name="head-color" value="{{ default.headColor }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="font-family" class="col-md-4 control-label">Police</label>
+                            <div class="col-md-6 col-sm-8 col-xs-8">
+                                <select class="form-control" id="font-family" name="font-family" placeholder="">
+                                    <option value="Arial" {% if default.fontFamily == 'Arial' %}selected="selected"{% endif %}>Arial</option>
+                                    <option value="Courier new" {% if default.fontFamily == 'Courier new' %}selected="selected"{% endif %}>Courier new</option>
+                                    <option value="Times New Roman" {% if default.fontFamily == 'Times New Roman' %}selected="selected"{% endif %}>Times New Roman</option>
+                                    <option value="Palatino" {% if default.fontFamily == 'Palatino' %}selected="selected"{% endif %}>Palatino</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="font-size" class="col-md-4 control-label">Taille de police</label>
+                            <div class="col-md-6 col-sm-8 col-xs-8">
+                                <select class="form-control" id="font-size" name="font-size" placeholder="">
+                                    <option value="10" {% if default.fontSize == '10' %}selected="selected"{% endif %}>Petite</option>
+                                    <option value="13" {% if default.fontSize == '13' %}selected="selected"{% endif %}>Moyenne</option>
+                                    <option value="16" {% if default.fontSize == '16' %}selected="selected"{% endif %}>Grande</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="font-color" class="col-md-4 control-label">Couleur de police</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control colorpicker" id="font-color" name="font-color" value="{{ default.fontColor }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Nom de l'entreprise</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-company-name-1" value="1" name="show-company-name" {% if default.showCompanyName == 1 %}checked{% endif %}>
+                                    <label for="show-company-name-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-company-name-0" value="0" name="show-company-name" {% if default.showCompanyName == 0 %}checked{% endif %}>
+                                    <label for="show-company-name-0">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <h4>ENTETE</h4>
+                        <hr/>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Reglement</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-reglement-1" value="1" name="show-reglement" {% if default.showReglement == 1 %}checked{% endif %}>
+                                    <label for="show-reglement-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-reglement-0" value="0" name="show-reglement" {% if default.showReglement == 0 %}checked{% endif %}>
+                                    <label for="show-reglement-0">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Numéro client</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-num-client-1" value="1" name="show-num-client" {% if default.showNumClient == 1 %}checked{% endif %}>
+                                    <label for="show-num-client-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-num-client-0" value="0" name="show-num-client" {% if default.showNumClient == 0 %}checked{% endif %}>
+                                    <label for="show-num-client-0">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Tel client</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-tel-client-1" value="1" name="show-tel-client" {% if default.showTelClient == 1 %}checked{% endif %}>
+                                    <label for="show-tel-client-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-tel-client-0" value="0" name="show-tel-client" {% if default.showTelClient == 0 %}checked{% endif %}>
+                                    <label for="show-tel-client-0">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Adresse de livraison</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-shipping-address-1" value="1" name="show-shipping-address" {% if default.showShippingAddress == 1 %}checked{% endif %}>
+                                    <label for="show-shipping-address-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-shipping-address-0" value="0" name="show-shipping-address" {% if default.showShippingAddress == 0 %}checked{% endif %}>
+                                    <label for="show-shipping-address-0">Non</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="shipping-address-label" name="shipping-address-label"  value="{{ default.shippingAddressLabel }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Adresse de facturation</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="billing-address-right-1" value="1" name="billing-address-right" {% if default.billingAddressRight == 1 %}checked{% endif %}>
+                                    <label for="billing-address-right-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="billing-address-right-0" value="0" name="billing-address-right" {% if default.billingAddressRight == 0 %}checked{% endif %}>
+                                    <label for="billing-address-right-0">Non</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="billing-address-label" name="billing-address-label"  value="{{ default.billingAddressLabel }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">TVA Intracom</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-tva-intracom-1" value="1" name="show-tva-intracom" {% if default.showTvaIntracom == 1 %}checked{% endif %}>
+                                    <label for="show-tva-intracom-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-tva-intracom-0" value="0" name="show-tva-intracom" {% if default.showTvaIntracom == 0 %}checked{% endif %}>
+                                    <label for="show-tva-intracom-0">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <h4>TABLEAU</h4>
+                        <hr/>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Désignation</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="designation-label" name="designation-label"  value="{{ default.designationLabel }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Quantité</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-quantity-1" value="1" name="show-quantity" {% if default.showQuantity == 1 %}checked{% endif %}>
+                                    <label for="show-quantity-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-quantity-0" value="0" name="show-quantity" {% if default.showQuantity == 0 %}checked{% endif %}>
+                                    <label for="show-quantity-0">Non</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="quantity-label" name="quantity-label"  value="{{ default.quantityLabel }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Prix unitaire</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-price-1" value="1" name="show-price" {% if default.showPrice == 1 %}checked{% endif %}>
+                                    <label for="show-price-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-price-0" value="0" name="show-price" {% if default.showPrice == 0 %}checked{% endif %}>
+                                    <label for="show-price-0">Non</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="price-label" name="price-label"  value="{{ default.priceLabel }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Unité de mesure</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-unit-1" value="1" name="show-unit" {% if default.showUnit == 1 %}checked{% endif %}>
+                                    <label for="show-unitt-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-unit-0" value="0" name="show-unit" {% if default.showUnit == 0 %}checked{% endif %}>
+                                    <label for="show-unit-0">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Code produit</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-product-code-1" value="1" name="show-product-code" {% if default.showProductCode == 1 %}checked{% endif %}>
+                                    <label for="show-product-code-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-product-code-0" value="0" name="show-product-code" {% if default.showProductCode == 0 %}checked{% endif %}>
+                                    <label for="show-product-code-0">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <h4>BAS DU DOCUMENT</h4>
+                        <hr/>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Information de paiement</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-payment-info-1" value="1" name="show-payment-info" {% if default.showPaymentInfo == 1 %}checked{% endif %}>
+                                    <label for="show-payment-info-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-payment-info-0" value="0" name="show-payment-info" {% if default.showPaymentInfo == 0 %}checked{% endif %}>
+                                    <label for="show-payment-info-0">Non</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="payment-info-label" name="payment-info-label"  value="{{ default.paymentInfoLabel }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Echéance</label>
+                            <div class="col-md-6">
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-deadline-1" value="1" name="show-deadline" {% if default.showDeadline == 1 %}checked{% endif %}>
+                                    <label for="show-deadline-1">Oui</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" id="show-deadline-0" value="0" name="show-deadline" {% if default.showDeadline == 0 %}checked{% endif %}>
+                                    <label for="show-deadline-0">Non</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Information Bancaire et Paiement</label>
+                            <div class="col-md-6">
+                                <textarea class="form-control" id="payment-info-default" name="payment-info-default">{{ default.paymentInfoDefault }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Notes globales</label>
+                            <div class="col-md-6">
+                                <textarea class="form-control" id="global-note" name="global-note">{{ default.paymentInfoDefault }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListModele();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveModele();">Enregistrer</button>
+        </div>
+    </div>
+</div>
+
+<br/>
+<br/>

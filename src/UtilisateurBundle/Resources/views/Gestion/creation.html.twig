@@ -1,0 +1,131 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/utilisateur/css/gestion.css') }}?v=1.2">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/utilisateur/js/utilisateur-fonctions.js') }}?v=1.2"></script>
+    <script src="{{ asset('bundles/utilisateur/js/creation.js') }}?v=1.2"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Ajouter un nouvel utilisateur</h5>
+            <div class="ibox-tools">
+                <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </div>
+        </div>
+        <div id="box-user-content" class="ibox-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-danger text-center hidden" id="user-register-alert">
+                        <span class="alert-message"></span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+                <div class="col-lg-6">
+                    <form class="form-horizontal" id="user-register-form2">
+                        <div class="form-group">
+                            <label class="control-label col-lg-4">
+                                Actif
+                            </label>
+                            <div class="col-lg-8">
+                                <input id="user-actif" type="checkbox" class="js-switch" checked>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4">
+                                Afficher dossiers démo
+                            </label>
+                            <div class="col-lg-8">
+                                <input id="user-show-demo" type="checkbox" class="js-switch">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4" for="user-role">
+                                Rôle
+                            </label>
+                            <div class="col-lg-8">
+                                <select id="user-role" name="user_role" class="form-control">
+                                    <option value=""></option>
+                                    {% set groupe = 'none' %}
+                                    {% set new_groupe = true %}
+                                    {% for user_acces in acces %}
+                                        {% if groupe != user_acces.groupe %}
+                                            {% set groupe = user_acces.groupe %}
+                                            {% set new_group = true %}
+                                            {% if loop.index > 0 %}
+                                                </optgroup>
+                                            {% endif %}
+                                            <optgroup label="{{ groupe }}">
+                                        {% else %}
+                                            {% set new_groupe = false %}
+                                        {% endif %}
+                                        <option data-type="{{ user_acces.type }}"
+                                                value="{{ user_acces.id }}">{{ user_acces.libelle }}</option>
+                                        {% if loop.last %}
+                                            </optgroup>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-4" for="user-type">Type</label>
+                            <div class="col-lg-8">
+                                <select id="user-type" name="uer_type" class="form-control">
+                                    <option value="expert_comptable">Expert Comptable</option>
+                                    <option value="client_final">Client Final</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div id="client-group" class="hidden">
+                        {% if is_granted('ROLE_SCRIPTURA_ADMIN') %}
+                            {{ render(controller('AppBundle:Commun:clientsMulti', {'label_col': 4, 'select_col': 8})) }}
+                        {% endif %}
+                        {{ render(controller('AppBundle:Commun:clientsNonCrypter', {'conteneur': '0', 'tous': '0', 'label_col': 4, 'select_col': 8})) }}
+                    </div>
+                    <form id="site-group" class="form-horizontal hidden">
+                        <div class="form-group">
+                            <label for="site" class="control-label col-lg-4">Site(s)</label>
+                            <div class="col-lg-8">
+                                <select id="site" class="form-control chosen-select" multiple="multiple"
+                                        data-placeholder="---">
+
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="dossier-group" class="form-horizontal hidden">
+                        <div class="form-group">
+                            <label for="dossier" class="control-label col-lg-4">Dossier(s)</label>
+                            <div class="col-lg-8">
+                                <select id="dossier" class="form-control chosen-select" multiple="multiple"
+                                        data-placeholder="---">
+
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <button id="btn-save-user" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

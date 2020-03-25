@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs" id="id_ul_tab" data-last_id="{{ cleDossierExts|length }}">
+    {% for key, cleDossierExt in cleDossierExts %}
+        <li class="{{ key == 0 ? 'active' : '' }} cl_tab_cle_dossier_ext" data-index="{{ key }}" id="id_li_corr_{{ key }}">
+            <a data-toggle="tab" href="#tab-{{ key }}">{{ lTypeComptas[cleDossierExt.typeCompte] }}&nbsp;&nbsp;&nbsp;<i class="fa fa-times pointer cl_hide_cle_dossier_ext" aria-hidden="true"></i></a>
+        </li>
+    {% endfor %}
+</ul>
+<div class="tab-content" id="id_div_tab">
+    {% for key, cleDossierExt in cleDossierExts %}
+        <div id="tab-{{ key }}" data-options="{{ cleDossierAdds[key].options }}" data-pcgs="{{ cleDossierAdds[key].pcgs }}" data-pccs="{{ cleDossierAdds[key].pccs }}" class="tab-pane {{ key == 0 ? 'active' : '' }}" data-index="{{ key }}" data-id="{{ cleDossierExt.id|boost }}" data-type_compte="{{ cleDossierExt.typeCompte }}">
+            <div class="panel-body"></div>
+        </div>
+    {% endfor %}
+</div>

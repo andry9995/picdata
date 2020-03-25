@@ -1,0 +1,4 @@
+<option value="-1"></option>
+{% for banquecompte in banqueComptes %}
+    <option value="{{ banquecompte.id }}">{{ banquecompte.numcompte }}</option>
+{% endfor %}

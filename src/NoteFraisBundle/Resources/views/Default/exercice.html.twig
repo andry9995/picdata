@@ -1,0 +1,10 @@
+
+<table class="table table-bordered no-margin table-no-padding table-periode-annee pointer">
+    <thead>
+    <tr>
+        {% for exercice in exericices %}
+            <th class="text-center {{ (note is null)? '' : (note.annee == exercice) ? 'active' :  '' }}" data-value="{{ exercice }}">{{ exercice }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+</table>

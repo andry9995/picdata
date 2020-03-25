@@ -1,0 +1,36 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadShowProjet({{ projet.id }});"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Projet {{ projet.nom }}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="projet-form">
+            <input type="hidden" id="id" name="id" value="{{ projet.id }}">
+            <div class="form-group">
+                <label for="nom" class="col-md-4 control-label">Nom*</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="nom" name="nom" value="{{ projet.nom }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-md-4 control-label">Description</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <textarea class="form-control" id="description" name="description">{{ projet.description }}</textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadShowProjet({{ projet.id }});">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveProjet();">Enregistrer</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+{% extends "AdminBundle:Default:index.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/onevente/css/default.css') }}?1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/datefilter.css') }}?1"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/onevente/js/default.js') }}"></script>
+    <script src="{{ asset('bundles/oneprospect/js/datefilter.js') }}"></script>
+    <script src="{{ asset('bundles/onevente/js/article.js') }}"></script>
+    <script src="{{ asset('bundles/onevente/js/catalogue.js') }}"></script>
+    <script src="{{ asset('bundles/onevente/js/famille-article.js') }}"></script>
+
+    <script src="{{ asset('bundles/notefrais/js/communTpe.js') }}"></script>
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    {{ include('NoteFraisBundle:Default:filtre.html.twig') }}
+
+    <div class="row">
+        <div class="col-lg-12" id="page-container">
+            
+        </div>
+    </div>
+    
+    <div class="modal fade" id="primary-modal" tabindex="-1" role="dialog" aria-labelledby="primary-modal-title">
+        <div class="modal-dialog modal-lg modal-content" role="document"></div>
+    </div>
+    
+    <input type="hidden" id="view" name="view" value="bloc"><br />
+    <input type="hidden" id="type" name="type" value="all"><br />
+    <input type="hidden" id="q" name="q" value=""><br />
+    <input type="hidden" id="sort" name="sort" value=""><br />
+    <input type="hidden" id="sortorder" name="sortorder" value="ASC"><br />
+    <input type="hidden" id="parent" name="parent" value=""><br />
+    <input type="hidden" id="parentid" name="parentid" value=""><br />
+    <input type="hidden" id="parent2" name="parent2" value=""><br />
+    <input type="hidden" id="parentid2" name="parentid2" value=""><br />
+    <input type="hidden" id="period" name="period" value="all"><br />
+    <input type="hidden" id="startdate" name="startdate" value=""><br />
+    <input type="hidden" id="enddate" name="enddate" value="">
+{% endblock %}

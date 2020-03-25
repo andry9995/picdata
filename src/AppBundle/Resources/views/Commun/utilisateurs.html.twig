@@ -1,0 +1,13 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Utilisateur</label>
+        <div class="col-lg-10">
+            <select class="form-control" id="utilisateur">
+                    <option value="0">Tous</option>
+                {% for utilisateur in utilisateur %}
+                    <option value="{{ utilisateur.id }}">{{utilisateur.login}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,53 @@
+<div class="ibox" style="margin-bottom: 4px!important;">
+    <div class="ibox-content" style="padding: 6px!important;">
+        <div role="form" class="form-inline">
+            <div class="form-group">
+                <label for="id_add_banque_compte">N&deg;Compte</label>
+                <input class="form-control input-sm" type="text" id="id_banque_compte_num">
+            </div>
+            <span class="btn btn-white btn-sm" id="id_banque_compte_add"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter</span>
+        </div>
+    </div>
+</div>
+
+<div class="ibox">
+    <div class="ibox-content" style="padding: 0!important;">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Banque</th>
+                <th>Compte</th>
+                <th>Code&nbsp;Jnl</th>
+                <th>Compte&nbsp;Comptable</th>
+                <th>Mode&nbsp;Import</th>
+            </tr>
+            </thead>
+            <tbody id="id_tbody_bc">
+                {% for banqueCompte in banqueComptes %}
+                    {{ include('BanqueBundle:ReleveBanque2:mode-import-tr.html.twig', { 'banqueCompte':banqueCompte }) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="hidden" id="id_hidden_pcc_banque">
+    <option value="{{ 0 }}"></option>
+    {% for pcc in pccBanques %}
+        <option value="{{ pcc.id }}">{{ pcc.compte }}</option>
+    {% endfor %}
+</div>
+
+<div class="hidden" id="id_hidden_journal_dossier">
+    <option value="{{ 0 }}"></option>
+    {% for jd in journalDossiers %}
+        <option value="{{ jd.id }}">{{ jd.codeStr }}</option>
+    {% endfor %}
+</div>
+
+<div class="hidden" id="id_hidden_mode_saisie">
+    <option value="0">Saisie</option>
+    <option value="1">Depuis la compta</option>
+</div>
+
+<div id="id_test_"></div>

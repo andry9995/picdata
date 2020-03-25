@@ -1,0 +1,33 @@
+.gras
+{
+    font-weight: bold!important;
+}
+.no-moze
+{
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance: none;
+}
+
+.qtip-tache-css .qtip-content{
+    width: 400px !important;
+ }
+
+.qtip-tache-css{
+    max-width: 400px;
+}
+
+.qtip-ob-css .qtip-content{
+    width: 180px !important;
+ }
+
+.qtip-ob-css{
+    max-width: 180px;
+}
+
+.aucun-mq-ob {
+    border: 1px solid #ff9800 !important;
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #ce7c05;
+    text-align: center;
+}

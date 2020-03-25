@@ -1,0 +1,152 @@
+{% extends "AdminBundle:Default:index.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/onevente/css/default.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/datefilter.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/onevente/css/client.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/contactclient.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/opportunite.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/tache.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/appel.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/upload.css') }}?1.1"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/onevente/js/default.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/datefilter.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/client.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/contactclient.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/opportunite.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/tache.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/devis.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/facture.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/commande.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/avoir.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/encaissement.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/paiement.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/projet.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/upload.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/appels.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/article.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/pdf.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/email.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/modele.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/notefrais/js/communTpe.js') }}?1.1"></script>
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    {#{{ include('NoteFraisBundle:Default:filtre.html.twig') }}#}
+
+    {{ include('@OneVente/Filtre/filtre.html.twig') }}
+
+    <div class="col-lg-12">
+        <div class="tabs-container">
+            <ul id="tab-ventes" class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-dashboard">Tableau de bord</a></li>
+                <li class="" id="onglet-clients"><a data-toggle="tab" href="#tab-client">Clients</a></li>
+                <li class="" id="onglet-devis"><a data-toggle="tab" href="#tab-devis">Devis</a></li>
+                <li class="" id="onglet-factures"><a data-toggle="tab" href="#tab-facture">Factures Client</a></li>
+                <li>
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                      Plus <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="collapsed">
+                        <li class="tab-plus" id="onglet-commandes"><a data-toggle="tab" href="#tab-commande">Commandes Client</a></li>
+                        <!--<li class="" id="onglet-projets"><a data-toggle="tab" href="#tab-projet">Projets</a></li>-->
+                        <!--<li class="" id="onglet-produit-service"><a data-toggle="tab" href="#tab-produit-service">Produits et Services</a></li>-->
+                        <li class="tab-plus" id="onglet-paiements"><a data-toggle="tab" href="#tab-paiement">Paiments Client</a></li>
+                        <li class="tab-plus" id="onglet-encaissements"><a data-toggle="tab" href="#tab-encaissement">Encaissements Clients</a></li>
+                        <li class="tab-plus" id="onglet-avoirs"><a data-toggle="tab" href="#tab-avoir">Avoirs Client</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-dashboard" class="tab-pane active">
+                    <div class="panel-body">
+                        <h3>Tableau de bord</h3>
+                    </div>
+                </div>
+                <div id="tab-client" class="tab-pane">
+                    <div class="panel-body">
+                        
+                    </div>
+                </div>
+                <div id="tab-devis" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Devis</h3>
+                    </div>
+                </div>
+                <div id="tab-facture" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Factures Client</h3>
+                    </div>
+                </div>
+                <div id="tab-commande" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Commandes Client</h3>
+                    </div>
+                </div>
+                <div id="tab-projet" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Projets</h3>
+                    </div>
+                </div>
+                <div id="tab-produit-service" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Produits et Services</h3>
+                    </div>
+                </div>
+                <div id="tab-paiement" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Paiements Client</h3>
+                    </div>
+                </div>
+                <div id="tab-encaissement" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Encaissements Clients</h3>
+                    </div>
+                </div>
+                <div id="tab-avoir" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Avoirs Client</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="primary-modal" tabindex="-1" role="dialog" aria-labelledby="primary-modal-title">
+        <div class="modal-dialog modal-lg modal-content" role="document"></div>
+    </div>
+    
+    <!--<input type="text" id="view" name="view" value="bloc">view<br />
+    <input type="text" id="type" name="type" value="all">type<br />
+    <input type="text" id="q" name="q" value="">q<br />
+    <input type="text" id="sort" name="sort" value="">sort<br />
+    <input type="text" id="sortorder" name="sortorder" value="ASC">sortorder<br />
+    <input type="text" id="parent" name="parent" value="">parent<br />
+    <input type="text" id="parentid" name="parentid" value="">parentid<br />
+    <input type="text" id="parent2" name="parent2" value="">parent2<br />
+    <input type="text" id="parentid2" name="parentid2" value="">parentid2<br />
+    <input type="text" id="period" name="period" value="all">period<br />
+    <input type="text" id="startdate" name="startdate" value="">startdate<br />
+    <input type="text" id="enddate" name="enddate" value="">enddate-->
+    
+    <input type="hidden" id="view" name="view" value="bloc"><br />
+    <input type="hidden" id="type" name="type" value="all"><br />
+    <input type="hidden" id="stat" name="stat" value="all"><br />
+    <input type="hidden" id="q" name="q" value=""><br />
+    <input type="hidden" id="sort" name="sort" value=""><br />
+    <input type="hidden" id="sortorder" name="sortorder" value="ASC"><br />
+    <input type="hidden" id="parent" name="parent" value=""><br />
+    <input type="hidden" id="parentid" name="parentid" value=""><br />
+    <input type="hidden" id="parent2" name="parent2" value=""><br />
+    <input type="hidden" id="parentid2" name="parentid2" value=""><br />
+    <input type="hidden" id="period" name="period" value="all"><br />
+    <input type="hidden" id="startdate" name="startdate" value=""><br />
+    <input type="hidden" id="enddate" name="enddate" value="">
+{% endblock %}

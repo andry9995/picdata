@@ -1,0 +1,154 @@
+<div class="ibox ibox-shadow">
+    <div class="ibox-content">
+		<div class="row">
+		    <div class="col-lg-3">
+		        <div class="row">
+		            <div class="col-lg-12">
+		                {{ render(controller('AppBundle:Commun:clients', { 'tous' : 1, 'attr_id': 'client-evolution', 'label_col': 4, 'select_col': 8})) }}
+		            </div>
+		        </div>
+		        <div class="row">
+		        	 <div class="col-lg-12">
+		                <form class="form-horizontal">
+		                    <div class="form-group" style="margin-bottom: 10px;">
+		                        <label for="analyse-evolution" class="control-label col-lg-4" style="text-align: left;">
+		                            <span>Présentation</span>
+		                        </label>
+		                        <div class="col-lg-8">
+		                           <select class="form-control" id="analyse-evolution">
+		                            <option value=""></option>
+		                            <option selected="selected" value="1">Par mois</option>
+		                            <option value="2">En cumul</option>
+		                        </select>
+		                        </div>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		     </div>
+
+		     <div class="col-lg-2">
+		        <div class="row">
+		            <div class="col-lg-12">
+		                <form class="form-horizontal">
+		                    <div class="form-group">
+		                        <label for="site-evolution" class="control-label col-lg-5" style="text-align:left">
+		                            <span>Site</span>
+		                            <span class="label label-warning">0</span>
+		                        </label>
+		                        <div class="col-lg-7">
+		                            <select data-ref="" class="site form-control"
+		                                    id="site-evolution"></select>
+		                        </div>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		        <div class="row">
+		            <div class="col-md-12" style="padding-bottom: 10px;">
+		                <button id="btn-selection-dossier" class="btn btn-sm btn-default btn-outline btn-block" >Selection dossiers</button>
+
+		                <div class="modal" id="modal-selection-dossier" tabindex="-1" role="dialog" aria-hidden="true">
+		                <div class="modal-dialog">
+		                    <div class="modal-content animated fadeInRight">
+		                        <div class="modal-header">
+		                            <button type="button" class="close" data-dismiss="modal">
+		                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		                            </button>
+		                            <h4 class="modal-title">Selection dossiers</h4>
+		                        </div>
+		                        <div class="modal-body" style="padding-bottom: 40px; padding-left: 55px;">
+		                            <div  class="col-md-12">
+		                                <form class="form-horizontal">
+		                                    <div class="input-group row date col-md-12">
+		                                        <div class="row">
+		                                            <div class="col-md-4">
+		                                                <select class="form-control" id="operateur-sd">
+		                                                    <option value="0">Opérateur</option>
+		                                                    <option value="1">Egal</option>
+		                                                    <option value="2">Supérieur</option>
+		                                                    <option value="3">Inférieur</option>
+		                                                </select>
+		                                            </div>
+		                                            <div class="col-md-4">
+		                                                <input type="number" placeholder="Valeur" id="value-sd"
+		                                                       class="form-control">
+		                                            </div>
+		                                            <div class="col-md-4">
+		                                                <select class="form-control" id="filtre-sd">
+		                                                    <option value="0"></option>
+		                                                    <option value="1">Images</option>
+		                                                    <option value="2">% N - 1</option>
+		                                                </select>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </form>
+		                            </div>
+		                        </div>
+		                        <div class="modal-footer">
+		                            <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal" id="btn-annuler-nb"><i class="fa fa-times-circle"></i> Annuler</button>
+		                            <button type="button" id="btn-valider-nb" class="btn btn-sm btn-primary btn-outline">
+		                                <i class="fa fa-arrow-circle-o-right"></i> Valider
+		                            </button>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            </div>
+		        </div>
+		    </div>
+
+		    <div class="col-lg-2">
+		    	<div class="row">
+		            <div class="col-lg-12">
+		                <form class="form-horizontal">
+		                    <div class="form-group" style="margin-bottom: 10px;">
+		                        <label for="dossier-evolution" class="control-label col-lg-4">
+		                            <span>Dossier</span>
+		                            <span class="label label-warning">0</span>
+		                        </label>
+		                        <div class="col-lg-8">
+		                            <select id="dossier-evolution" data-placeholder="Séléctionner un dossier" class="form-control select-dossier-evolution">
+		                                <option value=""></option>
+		                            </select>
+		                        </div>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		        
+		    </div>
+
+		    <div class="col-lg-2">
+		        <div class="row">
+		            <div class="col-lg-12">
+		                <form class="form-horizontal">
+		                    <div class="form-group">
+		                    	{{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'attr_id' : 'exercice-evolution' , 'label_col':3, 'select_col':9, 'nbr': 8 , 'in_form' : false } )) }}
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		        
+
+		    </div>
+
+		    <div class="col-lg-2">
+		        <div class="row">
+		            <div class="col-lg-12">
+		                    <button id="btn-go-evolution" class="btn btn-primary" style="width: 100%;">
+		                        <i class="fa fa-arrow-circle-o-right"></i> Go
+		                    </button>
+		            </div>
+		        </div>
+		        
+		    </div>
+
+		</div>
+	</div>
+</div>
+
+
+
+

@@ -1,0 +1,31 @@
+{% extends 'DashboardBundle::dashboard.html.twig' %}
+
+{% block titre %}Correspondance des PIECES{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/etat/css/control.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/daterangepicker/daterangepicker-bs3.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/correspondance/filtre.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/correspondance/index.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-lg-4">
+            {{ include('ImageBundle:Correspondance:filtre.html.twig') }}
+        </div>
+        <div class="col-lg-8">
+            <div class="ibox">
+                <div class="ibox-content" id="js_container"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

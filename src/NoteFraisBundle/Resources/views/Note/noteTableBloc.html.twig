@@ -1,0 +1,71 @@
+{% for details in detailNotes %}
+
+    {% set action =
+    '<div class="input-group">
+        <div class="input-group-btn">
+            <button data-toggle="dropdown" class="btn btn-xs btn-white dropdown-toggle btn-note-action pull-right" type="button"><i class="fa fa-tasks"></i></button>
+                 <ul class="dropdown-menu pull-right">
+                     <li><a href="#" class="action-note-editer">Editer</a></li>
+                     <li><a href="#" class="action-note-details">Détails</a></li>
+                 </ul>
+        </div>
+     </div>'
+    %}
+
+    {% set note = details['note'] %}
+    {% set depense = details['depense'] %}
+    {% set depenseIcone = '<span><i class="fa fa-file"></i><span>' %}
+    {% set devise = '<span><i class="fa fa-eur"></i></span>' %}
+
+    <div class="col-md-4">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title" data-id="{{ note.id|boost }}">
+                <h5>{{ note.libelle }}</h5>
+                <span class="pull-right"></span>
+            </div>
+            <div class="ibox-content">
+
+                <ul class="list-group clear-list m-t">
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ depense['periodeDu'] }}</span>
+                        <span class="label label-success">Période du</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ depense['periodeAu'] }}</span>
+                        <span class="label label-success">Péeriode au</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ depense['totalTtc']|number_format(2, '.', ',') }}&nbsp;&nbsp;{{ devise|raw }}</span>
+                        <span class="label label-success">Total</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="pull-right">{{ depense['remboursable'] }}&nbsp;&nbsp;{{ devise|raw }}</span>
+                        <span class="label label-success">Remboursable</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="label label-success">Dépense(s)</span>
+                        <span class="pull-right">{{ depense['nbDepense'] }}&nbsp;&nbsp;{{ depenseIcone|raw }}</span>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="ibox-footer">
+
+                <div class="row">
+                    {{ action|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% endfor %}

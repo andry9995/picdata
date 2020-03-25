@@ -1,0 +1,60 @@
+<div class="form-horizontal">
+
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Type</label>
+        <div class="col-lg-8">
+            <select data-placeholder="Exemple Client" class="form-control chosen-select" id="js_contact_type">
+                {% set contactTypeId = (contact is null) ? -1 : (contact.ndfContactType is null) ? -1 : contact.ndfContactType.id %}
+
+                <option value=""></option>
+
+                {% for contactType in contactTypes %}
+                    <option value="{{ contactType.id }}" {{ (contactType.id == contactTypeId) ? 'selected' : ''  }}>{{ contactType.libelle }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">Nom</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Nom du contact" class="form-control" id="js_contact_nom" value="{{ (contact is null) ? '' : contact.nom }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">Prénom</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Prénom du contact" class="form-control" id="js_contact_prenom" value="{{ (contact is null) ? '' : contact.prenom }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">E-mail</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Exemple contact@mail.com" class="form-control" id="js_contact_mail" value="{{ (contact is null) ? '' : contact.mail }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">Téléphone</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Exemple +123456789101" class="form-control" id="js_contact_telephone" value="{{ (contact is null) ? '' : contact.telephone }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">Fonction</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Exemple Directeur" class="form-control" id="js_contact_fonction" value="{{ (contact is null) ? '' : contact.fonction }}">
+        </div>
+    </div>
+
+    <div>
+        <button class="btn btn-sm btn-primary pull-right" id="js_save_contact"><strong>Sauvegarder</strong></button>
+    </div>
+
+</div>
+

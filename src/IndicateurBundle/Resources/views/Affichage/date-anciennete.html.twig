@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-sm-12">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Date</label>
+                <div class="col-lg-10"><input type="text" placeholder="Date" class="form-control input-sm js_date_anciennete" value="{{ date_anciennete|date('Y-m-d') }}"></div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="js_table_anciennete">
+            <thead>
+                <tr>
+                    <th><input type="text" class="form-control input-sm js_td_anciennete"></th>
+                    <th class="pointer js_anciennete_add text-center"><i class="fa fa-plus btn" aria-hidden="true"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="js_td_anciennete">30</td>
+                    <td class="pointer js_anciennete_delete text-center"><i class="fa fa-trash-o btn" aria-hidden="true"></i></td>
+                </tr>
+                <tr>
+                    <td class="js_td_anciennete">60</td>
+                    <td class="pointer js_anciennete_delete text-center"><i class="fa fa-trash-o btn" aria-hidden="true"></i></td>
+                </tr>
+                <tr>
+                    <td class="js_td_anciennete">90</td>
+                    <td class="pointer js_anciennete_delete text-center"><i class="fa fa-trash-o btn" aria-hidden="true"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <span class="btn btn-xs btn-primary js_valider_anciennete">Valider</span>
+        <span class="btn btn-xs btn-primary js_reset_anciennete">Reset</span>
+    </div>
+</div>

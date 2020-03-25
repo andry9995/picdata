@@ -1,0 +1,35 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% block titre %}Journal de banque{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('js/plugins/qtip/jquery.qtip.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/datePickerPopOverV2.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/journal/periode.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/journal/pcc_banque_compte.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/compte_detail.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/journal/filtre-date.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/journal/control.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/journal/export.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/journal/params.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/journal/index.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/qtip/jquery.qtip.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/datePickerPopOverV2.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/banque/css/journal.css') }}">
+{% endblock %}
+
+{% block wrapper_content %}
+    {{ include('BanqueBundle:JournalBanque:filtre.html.twig') }}
+    <div class="ibox">
+        <div class="ibox-content" id="id_journal_banque">
+
+        </div>
+    </div>
+    <form id="id_export" method="post"></form>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Banques et Pieces Manquantes{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/jqGrid/jQuery.jqGrid.setColWidth.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/chartJs/Chart.min.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/consultationpiece/js/consultation-piece.js') }}?v=1.6"></script>
+    <script src="{{ asset('bundles/consultationpiece/js/commun-consultation.js') }}"></script>
+    <script src="{{ asset('bundles/consultationpiece/js/releve-manquant.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/banque/js/index.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/consultationpiece/css/consultation-piece.css') }}?v=1.0">
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    <div class="row">
+
+        <div class="col-lg-2">
+            {{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0, 'tous' : 0})) }}
+        </div>
+
+        <div class="col-lg-2" id="js_conteneur_site">
+
+        </div>
+
+        <div class="col-lg-2" id="js_conteneur_dossier">
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-5 control-label">
+                        <span>Banque</span>
+                    </label>
+                    <div class="col-lg-7">
+                        <select class="form-control" id="js_banque">
+                            <option></option>
+
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-2">
+
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-5 control-label">
+                        <span>Exercice</span>
+                    </label>
+                    <div class="col-lg-7">
+                        <select class="form-control" id="js_exercice">
+                            <option value="0"></option>
+                            {{ render(controller('ConsultationPieceBundle:ConsultationPiece:exercice')) }}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-1">
+            <button class="btn btn-primary" type="submit" id="btn-go-releve-manquant">GO</button>
+        </div>
+
+    </div>
+
+    {{ include('BanqueBundle:Default:tabs.html.twig') }}
+
+
+    <div class="row">
+        {{ include('ConsultationPieceBundle:releveBanqueManquant:numCompteBanque.html.twig') }}
+    </div>
+
+    <input type="hidden" id="js_num_compte_hidden" value="" data-id="{{ 0|boost }}">
+
+{% endblock %}

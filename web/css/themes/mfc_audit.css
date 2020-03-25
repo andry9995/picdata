@@ -1,0 +1,88 @@
+/* THEME BLUE */
+body {
+    background-color: #f9f9f9;
+    color: #676a6c;
+    position: relative;
+}
+body.fixed-nav #wrapper .navbar-static-side, body.fixed-nav #wrapper #page-wrapper {
+    margin-top: 50px;
+    height: 95% !important;
+}
+
+body.fixed-nav #wrapper .navbar-static-side {
+    box-shadow: 1px -5px 2px #888;
+}
+
+.nav > li.active {
+    background-color: #fcfcfc;
+}
+
+.nav.side-menu > li.active {
+    border-left: 4px solid #0071bd;
+}
+
+.nav > li > a {
+    color: #676a6c;
+    font-weight: normal;
+}
+
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus,
+.navbar-default .nav > li.active > a {
+    font-weight: 700;
+    color: #555;
+    background-color: #f9f9f9;
+}
+.navbar.navbar-fixed-top {
+    background-color: #0071bd;
+    border-bottom: 1px solid #0071bd !important;
+    box-shadow: 0 1px 2px #0058a4;
+}
+
+.navbar-fixed-top .btn.btn-white{
+    color: #0058a4 !important;
+}
+
+.navbar-fixed-top .navbar-minimalize {
+    background-color: #0071bd;
+    border-color: #0071bd;
+    color: #fff
+}
+
+.navbar-fixed-top .navbar-minimalize:active,
+.navbar-fixed-top .navbar-minimalize:focus {
+    background-color: #0071bd;
+    border-color: #0071bd;
+    color: #fff
+}
+
+.nav-header {
+    padding: 15px 20px;
+    /*background: url("img/profil-blue.png") no-repeat;*/
+    background-color: #0071bd;
+}
+.nav-header a {
+    color: #f9f9f9;
+}
+.nav-header .text-muted {
+    color: #f5f5f5;
+}
+
+.mini-navbar .nav-second-level {
+    background-color: #f1f1f1;
+    box-shadow: 1px 1px 2px #888;
+}
+
+body.mini-navbar .nav-header {
+    padding: 0;
+    background-color: #0071bd;
+}
+
+#footer {
+    background: #f9f9f9;
+    z-index: 9999;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+}

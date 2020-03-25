@@ -1,0 +1,103 @@
+<div class="table-responsive">
+    <table class="footable table table-striped table-hover toggle-arrow-tiny table-categorie" data-page-size="8" data-sort="false">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Libelle</th>
+            <th>Compte de charges</th>
+            <th>Compte de Tva</th>
+            <th>Taux Tva</th>
+            <th>% Rec. TVA</th>
+            <th>Etat</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+            {% set nbRows = 0 %}
+
+            {% for c in ndfCategories %}
+
+                {% set cid = c.id %}
+                <tr  class="categorie">
+                    <td colspan="7" style="background-color: #aaa !important; color: #FFFFFF">{{ c.libelle }}</td>
+                    {% set nbRows = nbRows + 1 %}
+                </tr>
+
+                {% for i in 0 .. ndfSouscategoriesDossierPcg|length-1 %}
+
+
+                    {% set scdPcg = ndfSouscategoriesDossierPcg[i] %}
+                    {% set  scd = scdPcg['ndfSouscategorie'] %}
+                    {% set pcgCharge = scdPcg['pcgCharge'] %}
+                    {% set pcgTva = scdPcg['pcgTva'] %}
+
+                    {% if scd.ndfsouscategorie.ndfCategorie.id == cid %}
+                        {% set tvaTaux = (scd.tvaTaux is null) ? ''  : scd.tvaTaux.taux ~' %' %}
+                        {% set tvaRec = (scd.tvaRec is null) ? '' : scd.tvaRec ~ ' %' %}
+                        {% set tvaRec2 = (scd.tvaRec2 is null) ? '' : scd.tvaRec2 ~ ' %' %}
+                        {% if tvaRec != '' %}
+                            {% if tvaRec2 != '' %}
+                                {% set tvaRec = tvaRec ~ ', ' ~ tvaRec2 %}
+                            {% endif %}
+                        {% else %}
+                            {% if tvaRec2 != '' %}
+                                {% set tvaRec = tvaRec2 %}
+                            {% endif %}
+                        {% endif %}
+                        {% set compteCharge = (scd.pccCharge is null) ? pcgCharge : scd.pccCharge.compte ~ ' - ' ~ scd.pccCharge.intitule%}
+                        {% set compteTva = (scd.pccTva is null) ? pcgTva : scd.pccTva.compte ~ ' - ' ~ scd.pccTva.intitule %}
+
+
+                        {% set dataStatus = (scd.status is null) ? '0' : scd.status %}
+                        {% set status = (dataStatus == 0) ? '<span class="label label-warning" data-status="0" style="display: inline-block;width: 100%;">Desctivée</span>' : '<span class="label label-info" data-status="1" style="display: inline-block;width: 100%;">Activée</span>' %}
+
+
+                        <tr data-id="{{ scd.id|boost }}">
+                            <td class="categorie-check">
+                                <div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="checkbox-success">
+                                    <label></label>
+                                </div>
+                            </td>
+                            <td>{{ scd.libelle }}</td>
+                            <td> {{ compteCharge }} </td>
+                            <td>{{ compteTva}} </td>
+                            <td>{{ tvaTaux }}</td>
+                            <td>{{ tvaRec }}</td>
+                            <td class="categorie-status">{{ status|raw }}</td>
+                        </tr>
+
+                        {% set nbRows = nbRows + 1 %}
+
+                        {% if nbRows - 8 == 0 %}
+                            <tr class="categorie">
+                                <td colspan="7" style="background-color: #aaa !important; color: #FFFFFF">{{ c.libelle }}</td>
+                            </tr>
+                            {% set nbRows = 1 %}
+
+                        {% endif %}
+
+                    {% endif %}
+                {% endfor %}
+
+                {% if nbRows - 8 == 0 %}
+                    {% set nbRows = 0 %}
+                {% endif %}
+
+            {% endfor %}
+
+
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td colspan="12">
+                <ul class="pagination pull-right"></ul>
+            </td>
+        </tr>
+        </tfoot>
+
+
+    </table>
+</div>

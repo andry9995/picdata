@@ -1,0 +1,33 @@
+{% set periode_spliter = periodeBinary|split('') %}
+{% set check_annuel = (periode_spliter[0] == '1') ? 'checked' : '' %}
+{% set check_semestre = (periode_spliter[1] == '1') ? 'checked' : '' %}
+{% set check_trimestre = (periode_spliter[2] == '1') ? 'checked' : '' %}
+{% set check_mois = (periode_spliter[3] == '1') ? 'checked' : '' %}
+
+<div class="js_cl_container_periode">
+    <div class="form-group form-group-small-margin">
+        {# periode #}
+        <div class="col-lg-12" id="js_indicateur_periode">
+            <div class="checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" class="js_periode" id="periode_3" {{ check_annuel }}>
+                <label for="periode_3">Annuel</label>
+            </div>
+            <div class="checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" class="js_periode" id="periode_2" {{ check_semestre }}>
+                <label for="periode_2">Semestre</label>
+            </div>
+            <div class="checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" class="js_periode" id="periode_1" {{ check_trimestre }}>
+                <label for="periode_1">Trimestre</label>
+            </div>
+            <div class="checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" class="js_periode" id="periode_0" {{ check_mois }}>
+                <label for="periode_0">Mois</label>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 5px!important;" class="text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm js_validate_periodes"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<script src="{{ asset('js/jquery-2.1.1.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        $('input#id_code', window.parent.document).val($('#id_code').val()).click();
+    });
+</script>
+<input type="hidden" id="id_code" value="{{ code }}">

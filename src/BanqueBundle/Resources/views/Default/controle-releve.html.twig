@@ -1,0 +1,51 @@
+{#{% extends 'BanqueBundle:Default:index.html.twig' %}#}
+
+{#{% block javascripts %}#}
+    {#{{ parent() }}#}
+    {#<script src="{{ asset('bundles/banque/js/controle-releve.js') }}"></script>#}
+{#{% endblock %}#}
+
+{#{% block contenu_banque %}#}
+
+    {#<div class="row scroller" id="js_controle_releve">#}
+        {#<table id="js_controle_releve_liste"></table>#}
+        {#<div id="js_controle_releve_pager"></div>#}
+    {#</div>#}
+{#{% endblock %}#}
+
+
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Controle relevé{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/banque/js/controle/index.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/banque/js/controle-releve.js') }}?v=1.0"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row bande">
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-5">{{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'label_col':4, 'select_col':8 } )) }}</div>
+                <div class="col-sm-7">{{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0,'label_col':3,'select_col':9 })) }}</div>
+            </div>
+        </div>
+        <div class="hidden" id="js_conteneur_site"></div>
+        <div class="col-sm-3" id="js_conteneur_dossier"></div>
+        <div class="col-sm-2" id="js_id_conteneur_banque"></div>
+        <div class="col-sm-3" id="js_id_conteneur_compte"></div>
+    </div>
+
+    <div id="js_controle_releve">
+        <table id="js_controle_releve_liste"></table>
+        <div id="js_controle_releve_pager"></div>
+    </div>
+{% endblock %}

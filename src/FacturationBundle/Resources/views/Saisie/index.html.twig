@@ -1,0 +1,147 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/facturation/css/facturation.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/facturation/css/saisie.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/facturation/js/facturation-functions.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/facturation/js/saisie.js') }}?v=1.0"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ render(controller('AppBundle:Commun:clients',{'conteneur': 0, 'tous': 0})) }}
+            </div>
+            <div class="hidden" id="js_conteneur_site"></div>
+            <div class="col-lg-3" id="js_conteneur_dossier"></div>
+            <div class="col-lg-3">
+                {{ render(controller('AppBundle:Commun:exercices',{'tous': 0})) }}
+            </div>
+            <div class="col-lg-2">
+                <div class="label label-default label-nb-ligne">Nb Ligne client(s) :
+                    <span id="nb-ligne-client" class="pull-right"></span>
+                </div>
+                <div class="label label-default label-nb-ligne">Nb Ligne dossier :
+                    <span id="nb-ligne-dossier" class="pull-right"></span>
+                </div>
+                <div class="label label-danger label-nb-ligne">Remise sur volume :
+                    <span id="remise-pourcentage" class="pull-right"></span>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <button class="btn btn-sm btn-success" id="btn-client-associe">Sel. Clients</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 text-right">
+                <div class="btn-group btn-group-sm" role="group">
+                    <button id="btn-saisi-fini" type="button"
+                            class="btn btn-primary btn-saisie-toggle-action">Voir mois saisis
+                    </button>
+                    <button id="btn-nouveau-saisi" type="button"
+                            class="btn btn-default btn-saisie-toggle-action">Saisir un mois
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <form id="form-saisi-fini" class="form-horizontal form-select-mois">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Cumul au</label>
+                        <div class="col-lg-8">
+                            <select id="select-saisi-fini" class="form-control"></select>
+                        </div>
+                    </div>
+                </form>
+                <form id="form-nouveau-saisi" class="form-horizontal form-select-mois hidden">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Cumul au</label>
+                        <div class="col-lg-8">
+                            <input data-selected-date type="text" id="select-nouveau-saisi"
+                                   class="form-control text-center">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-2">
+                {{ render(controller('FacturationBundle:ParamGen:anneeTarif')) }}
+            </div>
+            <div class="col-lg-3">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-5 control-label">Type Remise</label>
+                        <span id="type-remise" data-type-remise-id="" class="label label-success label-remise">Aucune</span>
+                        <span id="change-type-remise-form">
+                                            <button id="btn-change-type-remise"
+                                                    class="btn btn-primary btn-outline btn-xs">Modifier
+                                            </button>
+                                        </span>
+                    </div>
+                </form>
+            </div>
+            <div id="type-remise-form" class="col-lg-12 hidden">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Remise</label>
+                        <div class="col-lg-7">
+                            {{ render(controller('FacturationBundle:ParamGen:remiseNiveau', {json: 0, attr_class: 'form-control remise-niveau-select', attr_id: 'remise-niveau', first_empty: 1})) }}
+                        </div>
+                    </div>
+                    <button id="btn-save-type-remise" class="btn btn-primary btn-sm btn-block">OK</button>
+                </form>
+            </div>
+            <div class="col-lg-1">
+                <button id="btn-saisie" class="btn btn-primary">Go</button>
+            </div>
+        </div>
+        <div class="tabs-container jqgrid-tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#saisie">Saisie par dossier</a></li>
+                <li class=""><a data-toggle="tab" href="#controle">Contrôle</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="saisie" class="tab-pane active">
+                    <div class="panel-body">
+                        <table id="js_saisie" class="js-jqgrid-table"></table>
+                        <div id="pager_saisie"></div>
+                    </div>
+                </div>
+                <div id="controle" class="tab-pane">
+                    <div class="panel-body">
+                        <div class="text-right" style="margin-bottom: 5px;">
+                            <button id="btn-controle" class="btn btn-primary btn-sm">Afficher Récap</button>
+                        </div>
+                        <table id="js_controle" class="js-jqgrid-table"></table>
+                        <div id="pager_controle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="select-client-modal" class="modal fade" tabindex="-1" role="dialog"></div>
+
+    {# Modal détail des imports par cellule dans Contrôle #}
+    <div class="modal" id="detail-controle-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight" style="width: 900px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="detail-controle-modal-title">Détails des imports</h4>
+                </div>
+                <div class="modal-body" style="height: 350px; padding: 5px 20px 0;">
+                    <table id="js_controle_detail_image" class="js-jqgrid-table"></table>
+                    <div id="pager_controle_detail_image"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal">Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

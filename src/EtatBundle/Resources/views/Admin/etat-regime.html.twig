@@ -1,0 +1,251 @@
+{#keyRegime:keyRegime, etatRegime:etatRegime, keyEtat:key#}
+
+{#{{ dump(etatRegime) }}#}
+
+<div class="ibox js_indicateur_sortable js_etat ibox-margin-bottom ibox-shadow" data-id="{{ etatRegime.etatRegime.id|boost }}" style="margin-bottom: 2px!important;">
+    <div class="ibox-title">
+        <h5>
+            {% if etatRegime.niveau == 0 %}
+                <span>Model&nbsp;g&eacute;n&eacute;ral</span>
+            {% elseif etatRegime.niveau == 1 %}
+                <span>Sp&eacute;cifique&nbsp;pour&nbsp;le&nbsp;client&nbsp;</span>
+            {% elseif etatRegime.niveau == 2 %}
+                <span>Sp&eacute;cifique&nbsp;pour&nbsp;le&nbsp;dossier&nbsp;</span>
+            {% else %}
+                <span>&nbsp;</span>
+            {% endif %}
+        </h5>
+        <div class="ibox-tools">
+            {#{% set content_ = include('AppBundle:Commun:summernote.html.twig') %}#}
+            {#<span class="hidden js_summers">
+                {{ content_|raw }}
+            </span>#}
+
+            <span class="js_cl_edit_style btn btn-white btn-xs js_cl_toll"><i class="fa fa-font" aria-hidden="true"></i></span>
+            <span class="btn btn-xs js_tooltip js_show_periode_admin btn-white js_cl_toll"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+            {#<span class="btn btn-xs js_tooltip js_mode_control btn-default">Mode&nbsp;Ctrl</span>
+            <span class="btn btn-white btn-outline text-gray btn-xs js_cl_toll js_show_ctrl hidden"><i class="fa fa-sliders" aria-hidden="true"></i></span>#}
+
+            <span class="btn btn-xs js_tooltip js_valider_indicateur js_cl_toll {{ (etatRegime.etatRegime.valider == 1) ? 'btn-primary' : 'btn-default' }}"><i class="fa fa-check" aria-hidden="true"></i></span>
+
+            {# format #}
+            <span class="btn-group btn-group-xs js_cl_toll">
+                <span class="btn-group btn-group-xs">
+                    <span data-toggle="dropdown" class="btn btn-white dropdown-toggle">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </span>
+                    <ul class="dropdown-menu">
+                        <li class="js_add_row_col" data-action="4"><a href="#">Ligne</a></li>
+                        <li class="js_add_row_col" data-action="6"><a href="#">Colonne</a></li>
+                    </ul>
+                </span>
+                <span class="btn btn-white js_format_delete" data-action="5"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                <span class="js_format_col hidden btn-group btn-group-xs js_format_contener">
+                    <span data-toggle="dropdown" class="btn btn-white dropdown-toggle">
+                        <span>Format</span>&nbsp;<span class="caret"></span>
+                    </span>
+                    <ul class="dropdown-menu text-center">
+                        <li class="js_format_format" data-type="0"><a href="#">&nbsp;</a></li>
+                        <li class="js_format_format" data-type="1"><a href="#"><i class="fa fa-percent" aria-hidden="true"></i></a></li>
+                        <li class="js_format_format" data-type="2"><a href="#"><i class="fa fa-eur" aria-hidden="true"></i></a></li>
+                    </ul>
+                </span>
+                <span class="js_format_col hidden btn btn-white js_format_format js_format_decimal active">Avec&nbsp;D&eacute;cimal</span>
+            </span>
+
+            {# rubriques #}
+            <div class="btn-group js_cl_toll">
+                <a class="btn btn-white btn-outline text-gray btn-xs dropdown-toggle" data-toggle="dropdown" href="#">Rubriques</a>
+                <ul class="dropdown-menu dropdown-user js_rubrique_sel_ul">
+                    <li class="js_rubrique_sel js_rubrique_sel_0" data-type="0"><a href="#">Rubriques</a></li>
+                    <li class="js_rubrique_sel js_rubrique_sel_1" data-type="1"><a href="#">Super-rubriques</a></li>
+                    <li class="js_rubrique_sel js_rubrique_sel_2 active" data-type="2"><a href="#">Hyper-rubriques</a></li>
+                </ul>
+            </div>
+
+            {# variation #}
+            <select class="form-control-inspinia js_variation_cell js_cl_toll" style="margin-bottom: 5px!important;">
+                {% for i in -4..4 %}
+                    {% if i < 0 %}
+                        {% set v = i %}
+                    {% elseif i > 0 %}
+                        {% set v = '+' ~ i %}
+                    {% else %}
+                        {% set v = '' %}
+                    {% endif %}
+                    <option value="{{ i }}" {{ (i == 0) ? 'selected' : '' }}>N{{ v }}</option>
+                {% endfor %}
+            </select>
+
+            {# full screen #}
+            <a class="fullscreen-link btn btn-white btn-outline text-gray btn-xs">
+                <i class="fa fa-expand"></i>
+            </a>
+
+            {# reduire #}
+            <a class="collapse-link btn btn-white btn-outline text-gray btn-xs">
+                <i class="fa fa-chevron-up"></i>
+            </a>
+
+            {#<span class="btn btn-xs js_tooltip js_valider_indicateur {{ (indicateur.valider == 1) ? 'btn-primary' : 'btn-default' }}"><i class="fa fa-check" aria-hidden="true"></i></span>
+
+            {% if (client is not null and indicateur.client == client) or (dossier is not null and indicateur.dossier == dossier) or (client is null and dossier is null) %}
+                <a class="btn btn-white btn-outline text-gray btn-xs pointer js_indicateur_show_edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <a class="btn btn-white btn-outline text-gray btn-xs js_remove_indicateur"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            {% endif %}
+
+            {% if (dossier is not null and indicateur.dossier is null) or (client is not null and indicateur.client is null)  %}
+                <span class="btn btn-xs js_tooltip js_dupliquer btn-white" data-type="2"><i class="fa fa-files-o" aria-hidden="true"></i></span>
+                <a class="btn btn-xs text-black js_show_indicateur {{ (indicateur.enabled) ? 'btn-primary' : 'btn-default' }}" data-type="2" title="Afficher cet indicateur">Afficher</a>
+            {% endif %}#}
+
+            {# enabled #}
+        </div>
+    </div>
+
+    {% set row_max = etatRegime.etatRegime.rowNumber - 1 %}
+    {% set col_max = etatRegime.etatRegime.colNumber - 1 %}
+
+    {# cell #}
+    {% set cell_row_col = {} %}
+    {% for cell in etatRegime.cells %}
+        {% set cell_row_col = cell_row_col|merge({ (cell.row ~ '-' ~ cell.col) : cell }) %}
+    {% endfor %}
+
+    {# format column #}
+    {% set col_formats = {} %}
+    {% set decimals = {} %}
+    {% for format in etatRegime.colsFormats %}
+        {% set key_ = format.col %}
+        {% set col_formats = col_formats|merge({ (',' ~ key_) : (format.format)}) %}
+        {% set decimals = decimals|merge({ (',' ~ key_) : (format.avecDecimal) }) %}
+    {% endfor %}
+
+    {# td to graphe #}
+    {#{% set tds_to_graphes = {} %}
+    {% for td_to_graphe in indicateur.tdsToGraphes %}
+        {% set key_ = -td_to_graphe.col %}
+        {% set tds_to_graphes = tds_to_graphes|merge({ (',' ~ key_) : (td_to_graphe.id) }) %}
+    {% endfor %}#}
+
+    <div class="ibox-content scroller js_height_ibox_tableau" style="padding: 5px!important;">
+        <table class="table table-no-bordered table-hover table-condensed table-resizable">
+            <tbody>
+                <tr>
+                    <td nowrap class="gray-bg text-center js_format_edit js_select_multiple" data-row="-1" data-col="-1"></td>
+                    {% set ind = 0 %}
+                    {% set break = false %}
+                    {% for colAlpha in 'A'..'Z' if not break %}
+                        <td nowrap class="gray-bg text-center js_format_edit" data-row="-1" data-col="{{ ind }}"
+                            data-format="{{ (col_formats[',' ~ ind] is defined) ? col_formats[',' ~ ind] : 0 }}"
+                            data-decimal="{{ (decimals[',' ~ ind] is defined) ? decimals[',' ~ ind] : 0 }}"
+                        >{{ colAlpha }}</td>
+                        {% set ind = ind + 1 %}
+                        {% set break = (ind > col_max) %}
+                    {% endfor %}
+                </tr>
+            {% for i in 0..row_max %}
+                <tr class="no-padding">
+                    <td nowrap class="gray-bg text-center js_format_edit" style="width: 5%!important;" data-row="{{ i }}" data-col="-1">{{ i + 1 }}</td>
+                    {% for j in 0..col_max %}
+                        {% set cell = (cell_row_col[i ~ '-' ~ j] is defined) ? cell_row_col[i ~ '-' ~ j] : null %}
+                        {% set cell_style = (cell_row_col[i ~ '-' ~ j] is defined and
+                                cell_row_col[i ~ '-' ~ j].stylesObject is defined and
+                                cell_row_col[i ~ '-' ~ j].stylesObject != null) ? cell_row_col[i ~ '-' ~ j].stylesObject : dStyles %}
+
+                        {#{% if cell_row_col[i ~ '-' ~ j] is defined %}
+                            {% set cell = cell_row_col[i ~ '-' ~ j] %}
+                            {% set border_spliter = cell.borderBinary|split('') %}
+                            {% set border_4 = border_spliter[0] %}
+                            {% set border_5 = border_spliter[1] %}
+                            {% set border_6 = border_spliter[2] %}
+                            {% set border_7 = border_spliter[3] %}
+                            {% set border_0 = border_spliter[4] %}
+                            {% set border_1 = border_spliter[5] %}
+                            {% set border_2 = border_spliter[6] %}
+                            {% set border_3 = border_spliter[7] %}
+                        {% else %}
+                            {% set cell = null %}
+                            {% set border_4 = '0' %}
+                            {% set border_5 = '0' %}
+                            {% set border_6 = '0' %}
+                            {% set border_7 = '0' %}
+                            {% set border_0 = '0' %}
+                            {% set border_1 = '0' %}
+                            {% set border_2 = '0' %}
+                            {% set border_3 = '0' %}
+                        {% endif %}#}
+                        <td nowrap data-row="{{ i }}" data-col="{{ j }}" class="padding-6 js_cell_indicateur
+                                        {#{{ (border_4 == '1') ? 'cell_border_4' : '' }}
+                                        {{ (border_5 == '1') ? 'cell_border_5' : '' }}
+                                        {{ (border_6 == '1') ? 'cell_border_6' : '' }}
+                                        {{ (border_7 == '1') ? 'cell_border_7' : '' }}
+                                        {{ (border_0 == '1') ? 'cell_border_0' : '' }}
+                                        {{ (border_1 == '1') ? 'cell_border_1' : '' }}
+                                        {{ (border_2 == '1') ? 'cell_border_2' : '' }}
+                                        {{ (border_3 == '1') ? 'cell_border_3' : '' }}#}"
+                            {#style="font-family: {{ (cell is not null) ? cell.fontFamily : '' }};
+                                    font-weight: {{ (cell is not null) ? cell.fontBold : 'normal' }};
+                                    font-style:{{ (cell is not null) ? cell.fontItalic : 'normal' }};
+                                    text-align: {{ (cell is not null) ? cell.textAlign : 'left' }};
+                                    text-indent: {{ (cell is not null) ? cell.indent : 0 }}px;
+                                    color: {{ (cell is not null) ? cell.color : '' }};
+                                    background-color: {{ (cell is not null) ? cell.bgColor : '' }};"#}
+                            style="
+                                    font-family: {{ (cell_style is not null and cell_style.font is defined) ? cell_style.font : '' }};
+                                    font-weight: {{ (cell_style is not null and cell_style.weight is defined) ? cell_style.weight : 'normal' }};
+                                    font-style: {{ (cell_style is not null and cell_style.style is defined) ? cell_style.style : 'normal' }};
+                                    font-size: {{ (cell_style is not null and cell_style.size is defined) ? cell_style.size : '' }};
+                                    text-align: {{ (cell_style is not null and cell_style.align is defined) ? cell_style.align : 'left' }};
+                                    {#text-indent: {{ (cell is not null) ? cell.indent : 0 }}px;#}
+                                    color: {{ (cell_style is not null and cell_style.color is defined) ? cell_style.color : '' }};
+                                    background-color: {{ (cell_style is not null and cell_style.bg is defined) ? cell_style.bg : '' }};
+                                    border-top: {{ (cell_style is not null and cell_style.bt is defined) ? cell_style.bt : '' }};
+                                    border-left: {{ (cell_style is not null and cell_style.bl is defined) ? cell_style.bl : '' }};
+                                    border-right: {{ (cell_style is not null and cell_style.br is defined) ? cell_style.br : '' }};
+                                    border-bottom: {{ (cell_style is not null and cell_style.bb is defined) ? cell_style.bb : '' }};
+                                    "
+                            data-decimal="{{ (cell_style is not null and cell_style.dec is defined) ? cell_style.dec : 0 }}"
+                            data-format="{{ (cell_style is not null and cell_style.f is defined) ? cell_style.f : 0 }}"
+                        >
+                            {% if cell is not null %}
+                                {% set index = 0 %}
+                                {% for ch in cell.formule|split('') %}
+                                    {% if ch == '#' %}
+                                        {% set operande = cell.operandes[index] %}
+                                        {% set variation = operande.variationN %}
+
+                                        {% if variation > 0 %}
+                                            {% set text_v = '+' ~ variation %}
+                                        {% elseif variation < 0 %}
+                                            {% set text_v = variation  %}
+                                        {% else %}
+                                            {% set text_v = ''  %}
+                                        {% endif %}
+
+                                        <span class="operateur operande label label-default" data-type="{{ operande.rubrique.type }}" data-id="{{ operande.rubrique.id }}" data-variation="{{ operande.variationN }}" style="padding: 5px!important;">
+                                                <small>
+                                                    <strong>{{ operande.rubrique.libelle }}</strong>&nbsp;&nbsp;
+                                                    <i class="badge badge-danger" style="margin-bottom: 3px!important;"><small>N{{ text_v }}</small></i>
+                                                </small>
+                                            </span>
+
+                                        {% set index = index + 1 %}
+                                    {% else %}
+                                        {% if ch|trim == '' %}
+                                            {% set ch = '&nbsp;' %}
+                                        {% endif %}
+                                        <span class="operateur" style="margin: 0!important;">{{ ch|raw }}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <span>&nbsp;</span>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

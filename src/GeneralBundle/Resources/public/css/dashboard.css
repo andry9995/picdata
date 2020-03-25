@@ -1,0 +1,228 @@
+/*!
+ * General Bundle css - https://lesexperts.biz
+ * Mise en forme des lignes dans les tables
+ *
+ * Copyright (c) 2019
+ */
+
+.qtip-pilotage .qtip-content{
+    width: 400px !important;
+ }
+
+.qtip-pilotage{
+    max-width: 400px;
+}
+
+.qtip-shadow {
+    -webkit-box-shadow: 3px 3px 5px 3px rgba(0,0,0,0.35);
+    -moz-box-shadow: 3px 3px 5px 3px rgba(0,0,0,0.35);
+    box-shadow: 3px 3px 5px 3px rgba(0,0,0,0.35);
+}
+
+
+/*Scrollbar dans qtip*/
+.my-custom-scrollbar {
+  position: relative;
+  height: 200px;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+} 
+
+td.js-percent-n, td.js-percent-n-1 {
+    font-size: 10px !important;
+    font-style: italic !important;
+}
+
+.center {
+    text-align: center !important;
+}
+
+/*Situation des comptes bancaires*/
+tr#tr-dossier > td, tr#tr-compte > td, tr#tr-releve > td, #tr-inexitants > td {
+    font-weight: bold !important;
+    color: #444 !important;
+}
+
+tr#tr-dossier > td.js-list, tr#tr-compte > td.js-list, tr#tr-releve > td.js-list,#tr-inexitants > td.js-list {
+    text-align: left !important;
+}
+
+tr#tr-valide > td.js-list,#tr-en-cours > td.js-list {
+    text-align: left !important;
+    font-weight: bold;
+    color: #686b6d !important;
+    /*padding-left: 25px !important;*/
+}
+
+tr#tr-valide > td,#tr-en-cours > td {
+    font-weight: bold;
+    color: #686b6d !important;
+}
+
+tr#tr-a-jour > td.js-list, tr#tr-m-1 > td.js-list, tr#tr-m-2 > td.js-list, tr#tr-incomplets > td.js-list {
+    text-align: left !important;
+    /*padding-left: 50px !important;*/
+}
+
+tr#tr-dossier > td.js-n,tr#tr-dossier > td.js-n-1,tr#tr-a-jour > td.js-n,tr#tr-dossier > td.js-n,tr#tr-dossier > td.js-n-1, tr#tr-m-1 > td.js-n, tr#tr-m-2 > td.js-n, tr#tr-incomplets > td.js-n, tr#tr-en-cours > td.js-n, tr#tr-inexitants > td.js-n,tr#tr-a-jour > td.js-n-1, tr#tr-m-1 > td.js-n-1, tr#tr-m-2 > td.js-n-1, tr#tr-incomplets > td.js-n-1, tr#tr-en-cours > td.js-n-1, tr#tr-inexitants > td.js-n-1 {
+    cursor: pointer;
+}
+
+tr#obm-chq > td.js-n,tr#obm-chq > td.js-n-1,tr#obm-dossier > td.js-n,tr#obm-dossier > td.js-n-1,tr#obm-remises > td.js-n,tr#obm-remises > td.js-n-1,tr#obm-vrt > td.js-n,tr#obm-vrt > td.js-n-1,tr#obm-lcr > td.js-n,tr#obm-lcr > td.js-n-1,tr#obm-frais > td.js-n,tr#obm-frais > td.js-n-1{
+    cursor: pointer;
+}
+td.aucun {
+    border: 1px solid #ff9800 !important;
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #ce7c05;
+    text-align: center;
+}
+
+td.qtip-dossier {
+    /*border: 1px solid #1bb394 !important;
+    background-color: rgba(27, 179, 148, 0.1);
+    color: #016b55;
+    text-align: center;*/
+    background-color: rgba(27, 179, 148, 0.1);
+    color: #016b55;
+    border: none !important;
+    border-bottom: 1px solid #1bb394 !important;
+}
+
+th.head{
+    border: none !important;
+    border-bottom: 1px solid #1bb394 !important;
+    border-top: 1px solid #1bb394 !important;
+}
+
+.panel-body {
+    padding: 15px 2px 0 2px !important;
+}
+
+.qtip-panel-title{
+    text-align: center;
+}
+
+/*Opération bancaires manquantes*/
+tr#obm-dossier > td, tr#obm-compte > td, tr#obm-manquantes > td {
+    font-weight: bold !important;
+    color: #444 !important;
+}
+
+tr#obm-dossier > td.js-list, tr#obm-compte > td.js-list, tr#obm-manquantes > td.js-list {
+    text-align: left !important;
+}
+
+tr#obm-remises > td.js-list,#obm-chq > td.js-list,#obm-cb > td.js-list,#obm-lcr > td.js-list,#obm-vrt > td.js-list,#obm-frais > td.js-list,#obm-autres > td.js-list {
+    text-align: left !important;
+    font-weight: bold;
+    color: #686b6d !important;
+    /*padding-left: 25px !important;*/
+}
+
+tr#obm-remises > td,#obm-chq > td,#obm-cb > td,#obm-lcr > td,#obm-vrt > td, #obm-frais > td,#obm-autres > td {
+    font-weight: bold;
+    color: #686b6d !important;
+}
+
+/*Travaux bancaires en cours*/
+tr#tbc-dossier > td, tr#tbc-compte > td, tr#tbc-lignes > td {
+    font-weight: bold !important;
+    color: #444 !important;
+}
+
+tr#tbc-dossier > td.js-list, tr#tbc-compte > td.js-list, tr#tbc-lignes > td.js-list {
+    text-align: left !important;
+}
+
+tr#tbc-rapp > td.js-list,#tbc-encours > td.js-list,#tbc-lettrees > td.js-list,#tbc-imputees > td.js-list,#tbc-avalider > td.js-list,#tbc-pm > td.js-list {
+    text-align: left !important;
+    font-weight: bold;
+    color: #686b6d !important;
+    /*padding-left: 25px !important;*/
+}
+
+tr#tbc-rapp > td,#tbc-encours > td,#tbc-lettrees > td,#tbc-imputees > td,#tbc-avalider > td,#tbc-pm > td {
+    font-weight: bold;
+    color: #686b6d !important;
+}
+
+/*Dossiers avec des pièces manquantes*/
+tr#dpm-dossier > td, tr#dpm-dmanques > td{
+    font-weight: bold !important;
+    color: #444 !important;
+}
+
+tr#dpm-dossier > td.js-list, tr#dpm-dmanques > td.js-list {
+    text-align: left !important;
+}
+
+tr#dpm-rb > td.js-list,#dpm-ob > td.js-list,#dpm-ci > td.js-list,#dpm-ffrs > td.js-list,#dpm-fclients > td.js-list {
+    text-align: left !important;
+    font-weight: bold;
+    color: #686b6d !important;
+    /*padding-left: 25px !important;*/
+}
+
+tr#dpm-rb > td,#dpm-ob > td,#dpm-ci > td,#dpm-ffrs > td,#dpm-fclients > td {
+    font-weight: bold;
+    color: #686b6d !important;
+}
+
+/*Situation des travaux en cours*/
+tr#tc-dossier > td{
+    font-weight: bold !important;
+    color: #444 !important;
+}
+
+tr#tc-dossier > td.js-list {
+    text-align: left !important;
+}
+
+tr#tc-drtimp > td.js-list,#tc-drtafaire > td.js-list,#tc-drtenattente > td.js-list,#tc-finissables > td.js-list,#tc-afscriptura > td.js-list,#tc-termines > td.js-list {
+    text-align: left !important;
+    font-weight: bold;
+    color: #686b6d !important;
+    /*padding-left: 22px !important;*/
+}
+
+tr#tc-drtimp > td,#tc-drtafaire > td,#tc-drtenattente > td,#tc-finissables > td,#tc-afscriptura > td,#tc-termines > td {
+    font-weight: bold;
+    color: #686b6d !important;
+}
+
+tr#tc-insuffisantes > td.js-list, tr#tc-rbinc > td.js-list {
+    text-align: left !important;
+    /*padding-left: 50px !important;*/
+}
+
+/*Tâches réalisées et dépassées*/
+tr#rd-tva > td,tr#rd-is > td,tr#rd-maj > td{
+    font-weight: bold !important;
+    color: #444 !important;
+}
+
+tr#rd-tva > td.js-list,tr#rd-is > td.js-list,tr#rd-maj > td.js-list {
+    text-align: left !important;
+}
+
+.panel-default > .panel-heading .badge {
+    color: #f5f5f5 !important;
+    background-color: #333 !important;
+    background-color: #23c6c8 !important;
+    margin-bottom: 4px !important;
+}
+
+.tar_tache{
+    font-weight: bold !important;
+    color: #000000 !important;
+}
+
+.ui-jqgrid-bdiv{
+    max-height: 500px; 
+    height: auto! important; 
+}
+
+.qtip-pilotage-detail {width: auto !important;}

@@ -1,0 +1,111 @@
+rubrique_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: RubriqueBundle:Default:index }
+
+#############################   admin   ##############################
+rubrique_admin:
+    path: /rubrique/admin_gen/{admin_dossier}
+    defaults: { _controller : RubriqueBundle:Admin:index , admin_dossier : 0}
+    requirements:
+        admin_dossier: \d*
+rubrique_admin_dossier:
+    path: /rubrique/admin/{admin_dossier}
+    defaults: { _controller : RubriqueBundle:Admin:index , admin_dossier : 1 }
+    requirements:
+        admin_dossier: \d*
+rubrique_compte_indicateur:
+    path: /rubrique/compte_indicateur
+    defaults: { _controller : RubriqueBundle:Admin:compteIndicateur }
+    options:
+        expose: true
+    methods: [POST]
+rubrique_save_rubrique:
+    path: /rubrique/save_rubrique/{pcg}
+    defaults: { _controller : RubriqueBundle:Admin:changeRubrique , pcg : 0 }
+    options:
+        expose: true
+    methods: [POST]
+rubrique_rubriques:
+    path: /rubriques
+    defaults: { _controller : RubriqueBundle:Admin:rubriques }
+    options:
+        expose: true
+    methods: [POST]
+rubriques_admin:
+    path: /rubriques/admin
+    defaults: { _controller : RubriqueBundle:Admin:rubriquesAdmin }
+    options:
+        expose: true
+rubriques_admin_edit:
+    path: /rubriques/edit
+    defaults: { _controller : RubriqueBundle:Admin:rubriquesEdit }
+    options:
+        expose: true
+    methods: [POST]
+rubriques_pcg_edit:
+    path: /rubrique/edit/{pcg}
+    defaults: { _controller : RubriqueBundle:Admin:pcgRubriqueEdit }
+    options:
+        expose: true
+    methods: [POST]
+rubrique_pcg_validate:
+    path: /rubrique/pcg/validate
+    defaults: { _controller : RubriqueBundle:Admin:rubriqueValidate }
+    options:
+        expose: true
+    methods: [POST]
+rubrique_pcg_test:
+    path: /rubrique/pcg/test
+    defaults: { _controller: RubriqueBundle:Admin:testResult }
+    options:
+        expose: true
+    methods: [POST]
+rubrique_pcg_change:
+    path: /rubrique/pcg/change
+    defaults: { _controller: RubriqueBundle:Admin:rubriqueChange }
+    options:
+        expose: true
+    methods: [POST]
+rubrique_formule_edit:
+    path: /rubrique/formule/edit
+    defaults: { _controller: RubriqueBundle:Admin:editFormule }
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+rubrique_table_rubriques:
+    path: /rubrique/table
+    defaults: { _controller: RubriqueBundle:Admin:tableRubriques }
+    options:
+        expose: true
+    methods:  [POST]
+rubrique_table_edit:
+    path: /rubrique/table/edit
+    defaults: { _controller: RubriqueBundle:Admin:tableEditRubrique }
+    options:
+        expose: true
+    methods:  [POST]
+rubrique_table_show_calcules:
+    path: /rubrique/table/calcules
+    defaults: { _controller: RubriqueBundle:Admin:tableShowCalcules }
+    options:
+        expose: true
+    methods:  [POST]
+rubrique_table_rubriques_filles:
+    path: /rubrique/table/formule/rubriques
+    defaults: { _controller: RubriqueBundle:Admin:tableRubiquesFilles }
+    options:
+        expose: true
+    methods:  [POST]
+
+
+#############################   affichage   ##############################
+rubriques_sel:
+    path: /rubriques/sel/{type}
+    defaults: { _controller: RubriqueBundle:Default:rubriques , type : 0 }
+    options:
+        expose: true
+    requirements:
+        type: \d*

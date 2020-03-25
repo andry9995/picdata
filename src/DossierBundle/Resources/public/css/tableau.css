@@ -1,0 +1,159 @@
+#config_tab_3 .ui-jqgrid .ui-jqgrid-htable th {
+    height: 40px;
+    padding: 0 2px 0 2px;
+}
+
+#config_tab_3 .ui-jqgrid .ui-jqgrid-htable th div {
+    overflow: hidden;
+    position: relative;
+    height: 40px;
+}
+
+#config_tab_2 .ui-jqgrid .ui-jqgrid-htable th {
+    height: 40px;
+    padding: 2px 2px 0 2px;
+}
+
+#config_tab_2 .ui-jqgrid .ui-jqgrid-htable th div {
+    overflow: hidden;
+    position: relative;
+    height: 40px;
+}
+
+#notif_scriptura_tab .ui-jqgrid .ui-jqgrid-htable th {
+    height: 40px;
+    padding: 2px 2px 0 2px;
+}
+
+#notif_scriptura_tab .ui-jqgrid .ui-jqgrid-htable th div {
+    overflow: hidden;
+    position: relative;
+    height: 40px;
+}
+
+body {
+  background-color: #eee;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+#top-bar {
+  margin: 10px;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+  min-height: 119px;
+}
+
+#center-panel {
+  background: white;
+  min-height: 180px;
+  min-width: 180px;
+  max-width: 420px;
+  padding: 10px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+#bottom-panel {
+  background: white;
+  padding: 10px;
+  display: block;
+  min-height: 120px;
+  margin: 10px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+#scroll-box {
+  border: 1px solid #ccc;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+#scroll-box .letter-container {
+  display: inline-flex;
+  flex-wrap: nowrap;
+}
+
+.letter-container {
+  display: block;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tile-wrapper {
+  width: 95px;
+  height: 80px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.tile {
+  background-color: mediumvioletred;
+  color: #fafafa;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+  width: 90px;
+  height: 60px;
+  cursor: move;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  text-align: center;
+}
+
+.tile[clone] {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tile.bottom {
+  background: cornflowerblue;
+}
+
+.tile.center {
+  background-color: seagreen;
+}
+
+.ibox {
+    border-left: 3px solid #e7eaec;
+    border-right: 3px solid #e7eaec;
+    border-bottom: 3px solid #e7eaec;
+}
+
+.ibox-shadow {
+    box-shadow: none !important;
+}
+
+.ibox-title h5{
+  float: none !important;
+}
+
+.dateOnlyDatePicker .ui-datepicker-year {
+  display: none;
+}

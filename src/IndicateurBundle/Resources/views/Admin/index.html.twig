@@ -1,0 +1,35 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Admin Indicateur{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block contenu_droite %}
+
+
+    {#<div class="row">
+        <div class="col-lg-12">
+            {% include 'IndicateurBundle:Default:file.html.twig' %}
+        </div>
+    </div>#}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ render(controller('IndicateurBundle:GroupIndicateur:groupIndicateurs',{ })) }}
+    {% else %}
+        not granted
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Nestable List -->
+    <script src="{{ asset('js/plugins/nestable/jquery.nestable.js') }}"></script>
+
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/index.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/group_indicateur.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/indicateur.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/indicateur-item.js') }}"></script>
+{% endblock %}

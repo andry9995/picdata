@@ -1,0 +1,52 @@
+{% extends '::base-login.html.twig' %}
+
+{%- block body_class -%}
+    gray-bg
+{%- endblock -%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/utilisateur/css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <h1 class="logo-name"><i class="fa fa-lock"></i></h1>
+
+            <h3>Connexion</h3>
+
+
+            <form class="m-t main-login-form" role="form" action="{{ path("login_check", {}) }}" method="post">
+            {% if error %}
+                    <div class="alert alert-danger">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <strong>{{ error.messageKey|trans(error.messageData, 'security') }}</strong>
+                        {#<strong>Email et/ou mot de passe incorrect.</strong>#}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="email" required="" autofocus
+                           value="{{ last_username }}" id="username" name="_username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="mot de passe" required=""
+                           id="password" name="_password">
+                </div>
+                <div class="form-group text-left">
+                    <label> <input type="checkbox" class="i-checks" id="remember_me" name="_remember_me"> Mémoriser
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <a href="{{ path('user_password_request') }}"><strong><small>Mot de passe oublié ?</small></strong></a>
+            </form>
+
+            <div class="alert alert-warning">
+                Le SITE est optimis&eacute; pour les navigateurs <strong class="text-success-">CHROME, FIREFOX, etc...</strong><br>
+                Il peut presenter des erreurs d'ex&eacute;cution si vous utilisez <strong class="text-danger">INTERNET EXPLORER</strong> qui n'est plus maintenu par MICROSOFT
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

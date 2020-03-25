@@ -1,0 +1,101 @@
+<div class="form-horizontal">
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">Marque</label>
+        <div class="col-lg-8">
+            <select data-placeholder="Exemple Peugeot" class="form-control chosen-select" id="js_marque">
+                <option value=""></option>
+
+                {% set vehiculeMarqueId = (vehicule is null) ? -1 : (vehicule.vehiculeMarque is null) ? -1 : vehicule.vehiculeMarque.id %}
+
+                {% for marque in marques %}
+                    <option value="{{ marque.id }}" {{ (marque.id == vehiculeMarqueId) ? 'selected' : '' }}>{{ marque.libelle }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">Modèle</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Exemple 308" class="form-control" id="js_modele" value="{{ (vehicule is null) ? '' : vehicule.modele}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">Immatricule</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Exemple AA-123-AA" class="form-control" id="js_immatricule" value="{{ (vehicule is null) ? '' : vehicule.immatricule}}">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Type Remboursement</label>
+        <div class="col-lg-8">
+            <select data-placeholder="Exemple Frais réel" class="form-control chosen-select" id="js_type_remboursement">
+                <option value=""></option>
+
+                {% set typeRemboursementId = (vehicule is null) ? -1 : (vehicule.typeVehicule is null) ? -1 : vehicule.typeVehicule.id %}
+
+                {% for typeRemboursement in typeRemboursements %}
+                    <option value="{{ typeRemboursement.id }}" {{ (typeRemboursement.id == typeRemboursementId) ? 'selected' : '' }}>{{ typeRemboursement.libelle }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Type Véhicule</label>
+        <div class="col-lg-8">
+            <select data-placeholder="Exemple Voiture" class="form-control chosen-select" id="js_type_vehicule" >
+                <option value=""></option>
+
+                {% set typeVehiculeId = (vehicule is null) ? -1 : (vehicule.ndfTypeVehicule is null) ? -1 : vehicule.ndfTypeVehicule.id %}
+
+                {% for typeVehicule in typeVehicules %}
+                    <option value="{{ typeVehicule.id }}" {{ (typeVehicule.id == typeVehiculeId) ? 'selected' : '' }}>{{ typeVehicule.libelle }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Carburant</label>
+        <div class="col-lg-8">
+            <select data-placeholder="Exemple Essence" class="form-control chosen-select" id="js_carburant_vehicule" >
+                <option value=""></option>
+
+                {% set carburantId = (vehicule is null) ? -1 : (vehicule.carburant is null) ? -1 : vehicule.carburant.id %}
+
+                {% for carburant in carburants %}
+                    <option value="{{ carburant.id }}" {{ (carburant.id == carburantId) ? 'selected' : '' }}>{{ carburant.libelle }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Puissance fiscal</label>
+
+        <div class="col-lg-8">
+            <div class="input-group m-b">
+                <input type="text" placeholder="Exemple 6" class="form-control" id="js_puissance_fiscal" value="{{ (vehicule is null) ? '' : vehicule.nbCv }}">
+                <span class="input-group-addon">CV</span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn btn-sm btn-primary pull-right" id="js_save_vehicule"><strong>Sauvegarder</strong></button>
+    </div>
+
+</div>
+

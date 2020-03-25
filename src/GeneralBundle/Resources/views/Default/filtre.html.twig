@@ -1,0 +1,71 @@
+<div class="col-lg-12">
+	<div class="row">
+		<div class="col-lg-2">
+            <div class="row">
+                <div class="col-lg-12">
+                    {{ render(controller('AppBundle:Commun:clients', { 'tous': 2, 'attr_id': 'dashboard-client', 'label_col': 3, 'select_col': 9})) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+        	<div class="row">
+        		<div class="col-lg-12">
+        			{{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'attr_id' : 'dashboard-exercice' , 'label_col':3, 'select_col':9, 'nbr': 8 } )) }}
+        		</div>
+        	</div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-lg-12">
+                    <form class="form-horizontal">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="dashboard-site" class="control-label col-lg-2">
+                                <span>Site</span>
+                                <span class="label label-warning">0</span>
+                            </label>
+                            <div class="col-lg-10">
+                                <select data-ref="" class="site form-control"
+                                        id="dashboard-site"></select>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+        	<div class="row">
+        		<div class="col-lg-12">
+        			<form class="form-horizontal">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="dashboard-dossier" class="control-label col-lg-3">
+                                <span>Dossiers</span>
+                                <span id="dashboard-nb-dossier" class="label label-warning">0</span>
+                            </label>
+                            <div class="col-lg-9">
+                                <select class="dossier form-control" id="dashboard-dossier"></select>
+                            </div>
+                        </div>
+                    </form>
+        		</div>
+        	</div>
+        </div>
+
+        {# <div class="col-lg-3">
+        	<div class="row">
+        		<div class="col-lg-8">
+        			<div class="btn-group" style="width: 210px;">
+                        <button id="btn-go-dashboard" class="btn btn-primary" style="width: 70%;">
+                            <i class="fa fa-arrow-circle-o-right"></i> Go
+                        </button>
+                        <button id="expand-grid" class="btn btn-default hidden" type="button"><i class="fa fa-angle-up"></i>
+                        </button>
+                    </div>
+                </div>
+        	</div>
+        </div> #}
+	</div>
+</div>

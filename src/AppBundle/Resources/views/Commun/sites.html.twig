@@ -1,0 +1,55 @@
+{#sites#}
+{% if attr_id == '' %}
+    {% set attr_id = 'site' %}
+{% endif %}
+{% set disable = '' %}
+{% set selected = '' %}
+{% if sites|length <= 1 %}
+    {% set disable = 'disabled' %}
+    {% set selected = 'selected' %}
+{% endif %}
+
+{#Raha site_defaut dia izay ankoatry ny SITE no selectionner-na#}
+{% if site_defaut %}
+    {% set selected = 'selected' %}
+{% endif %}
+
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-lg-{{- label_col -}}">
+            <span>Site</span>
+            <span class="label label-warning">{{ sites|length }}</span>
+        </label>
+        <div class="col-lg-{{- select_col -}}">
+            <select data-ref="{{ attr_data }}" class="site form-control" id="{{ attr_id }}" {{ disable }}>
+                {% if not site_defaut %}
+                    {% if tous == 1 %}
+                        <option value="{{ 0|boost }}" selected="selected">Tous</option>
+                    {% else %}
+                        <option value="{{ 0|boost }}" selected="selected"></option>
+                    {% endif %}
+
+                {% else %}
+                    {% if tous == 1 %}
+                        <option value="{{ 0|boost }}">Tous</option>
+                    {% else %}
+                        <option value="{{ 0|boost }}"></option>
+                    {% endif %}
+                {% endif %}
+
+                {% for site in sites %}
+                    {% if site_defaut %}
+                        {% if site.nom|lower != 'site'%}
+                            <option value="{{ site.id|boost }}" {{ selected }}>{{ (site.nom != '') ? site.nom : ' ' }}</option>
+                        {% else %}
+                            <option value="{{ site.id|boost }}">{{ (site.nom != '') ? site.nom : ' ' }}</option>
+                        {% endif %}
+                    {% else %}
+                        <option value="{{ site.id|boost }}" {{ selected }}>{{ (site.nom != '') ? site.nom : ' ' }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

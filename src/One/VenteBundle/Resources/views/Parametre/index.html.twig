@@ -1,0 +1,59 @@
+{% extends "AdminBundle:Default:index.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/onevente/css/default.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/datefilter.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/onevente/css/client.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/contactclient.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/opportunite.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/tache.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/appel.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/upload.css') }}?1.1"/>
+    <link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/infoperdos.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/onevente/js/default.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/datefilter.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/client.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/contactclient.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/opportunite.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/tache.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/devis.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/facture.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/commande.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/avoir.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/encaissement.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/paiement.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/projet.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/upload.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/appels.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/article.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/pdf.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/email.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/modele.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/notefrais/js/communTpe.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/parametre.js') }}"></script>
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    {{ include('NoteFraisBundle:Default:filtre.html.twig') }}
+
+    <br/>
+
+    <div class="col-lg-12" id="parmetre-container">
+
+
+
+
+    </div>
+
+    <div class="modal fade" id="primary-modal" tabindex="-1" role="dialog" aria-labelledby="primary-modal-title">
+        <div class="modal-dialog modal-lg modal-content" role="document"></div>
+    </div>
+
+{% endblock %}

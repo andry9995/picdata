@@ -1,0 +1,6 @@
+parameters:
+   # Parametre API Zendesk
+    zendesk_config:
+        username  : pcastellan@scriptura.biz
+        password  : Tamatave2017
+        subdomaine: https://scriptura6903.zendesk.com

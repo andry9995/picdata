@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="{{ asset('twemoji-awesome/dist/twemoji-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ asset('bundles/app/css/rename-en-cours.css') }}">
+<div class="tabs-container" id="js_id_container_tabs">
+    <ul class="nav nav-tabs">
+        <li class="active" data-val="0"><a data-toggle="tab" href="#tab-principal">Gestion</a></li>
+        <li class="" data-val="1"><a data-toggle="tab" href="#tab-gestion-banque">Gestion des banques</a></li>
+        <li class="" data-val="2"><a data-toggle="tab" href="#tab-controle">Contr&ocirc;le&nbsp;des&nbsp;banques</a></li>
+        <li class="" data-val="3"><a data-toggle="tab" href="#tab-releve">Relevés de banques</a></li>
+        <li class="" data-val="4"><a data-toggle="tab" href="#tab-piece-manquante">Pi&egrave;ces&nbsp;Manquantes</a></li>
+        <li class="" data-val="5"><a data-toggle="tab" href="#tab-prep-tva">Préparation TVA</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab-principal" class="tab-pane active" data-val="0">
+            <div class="panel-body">
+                {{ include('BanqueBundle:Default:principal.html.twig') }}
+            </div>
+        </div>
+
+        <div id="tab-gestion-banque" class="tab-pane" data-val="1">
+            <div class="panel-body">
+                {#{{ include('AppBundle:Commun:page-en-cours.html.twig') }}#}
+                <div class="row scroller">
+                    <table id="js_banque_liste"></table>
+                    <div id="js_banque_pager"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-controle" class="tab-pane" data-val="2">
+            <div class="panel-body">
+                <div class="row scroller" id="js_scroller_parent">
+                    <table id="js_releve_liste"></table>
+                    <div id="js_releve_pager"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-releve" class="tab-pane" data-val="3">
+            <div class="panel-body">
+
+            </div>
+        </div>
+        <div id="tab-piece-manquante" class="tab-pane" data-val="4">
+            <div class="panel-body">
+                {{ include('AppBundle:Commun:page-en-cours.html.twig') }}
+            </div>
+        </div>
+
+        <div id="tab-prep-tva" class="tab-pane" data-val="5">
+            <div class="panel-body">
+                {{ include('AppBundle:Commun:page-en-cours.html.twig') }}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="js_id_flottante_hidden" style="display: none!important;">
+    {{ include('AppBundle:Commun:page-en-cours.html.twig') }}
+</div>

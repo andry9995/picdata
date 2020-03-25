@@ -1,0 +1,309 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="dropdown pull-right option">
+            <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+            </span>
+            <ul class="dropdown-menu dropdown-menu-right pull-right">
+                <li>
+                    <a onclick="loadDuplicateFournisseur();">Dupliquer Fournisseur</a>
+                </li>
+            </ul>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary" data-toggle="modal" onclick="loadNewFournisseur();">Nouveau Fournisseur</button>
+        </div>
+    </div>
+</div>
+
+{% if fournisseurs|length > 0 or tiers|length > 0 or period != 'all' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="filter-bar">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="input-group">
+                        <span class="input-group-addon btn-search" onclick="searchFournisseur();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </span>
+                            <input type="text" class="form-control search" name="search" value="{{ q }}" placeholder="Recherche dans Fournisseurs">
+                            <span class="glyphicon glyphicon-remove hidden init-search" aria-hidden="true" onclick="initSearchFournisseur();"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-12 col-xs-12">
+                        <div class="dropdown pull-right sort-date {% if sort != 'datecreation' %}hidden{% endif %}">
+                            {% if period == 'today' %}{% set sortdate = "Aujourd'hui" %}
+                            {% elseif period == 'lastweek' %}{% set sortdate = 'Semaine dernière' %}
+                            {% elseif period == 'thisweek' %}{% set sortdate = 'Cette semaine' %}
+                            {% elseif period == 'nextweek' %}{% set sortdate = 'Semaine prochaine' %}
+                            {% elseif period == 'lastmonth' %}{% set sortdate = 'Mois dernier' %}
+                            {% elseif period == 'thismonth' %}{% set sortdate = 'Ce mois' %}
+                            {% elseif period == 'nextmonth' %}{% set sortdate = 'Mois prochain' %}
+                            {% elseif period == 'lastyear' %}{% set sortdate = 'Année dernière' %}
+                            {% elseif period == 'thisyear' %}{% set sortdate = 'Cette année' %}
+                            {% elseif period == 'custom' %}{% set sortdate = startperiod ~' - '~ endperiod %}
+                            {% else %}{% set sortdate = 'Toutes les dates' %}
+                            {% endif %}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-calendar"></span> {{ sortdate }} <span class="glyphicon glyphicon-menu-down"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="date-field">
+                                    <input type="text" class="form-control datepicker startdate" value="{{ startperiod }}">
+                                    <input type="text" class="form-control datepicker enddate" value="{{ endperiod }}">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="setPeriod('custom'); loadListFournisseur();"></span>
+                                <li{% if period == 'all' or period == '' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('all'); loadListFournisseur();">
+                                        {% if period == 'all' or period == '' %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Toutes les dates
+                                    </a></li>
+                                <li role="separator" class="divider"></li>
+                                <li{% if period == 'today' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('today'); loadListFournisseur();">
+                                        {% if period == 'today'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Aujourd'hui
+                                    </a></li>
+                                <li role="separator" class="divider"></li>
+                                <li{% if period == 'thisweek' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('thisweek'); loadListFournisseur();">
+                                        {% if period == 'thisweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Cette semaine
+                                    </a></li>
+                                <li{% if period == 'thismonth' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('thismonth'); loadListFournisseur();">
+                                        {% if period == 'thismonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Ce mois
+                                    </a></li>
+                                <li{% if period == 'thisyear' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('thisyear'); loadListFournisseur();">
+                                        {% if period == 'thisyear'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Cette année
+                                    </a></li>
+                                <li role="separator" class="divider"></li>
+                                <li{% if period == 'nextweek' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('nextweek'); loadListFournisseur();">
+                                        {% if period == 'nextweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Semaine prochaine
+                                    </a></li>
+                                <li{% if period == 'nextmonth' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('nextmonth'); loadListFournisseur();">
+                                        {% if period == 'nextmonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Mois prochain
+                                    </a></li>
+                                <li role="separator" class="divider"></li>
+                                <li{% if period == 'lastweek' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('lastweek'); loadListFournisseur();">
+                                        {% if period == 'lastweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Semaine dernière
+                                    </a></li>
+                                <li{% if period == 'lastmonth' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('lastmonth'); loadListFournisseur();">
+                                        {% if period == 'lastmonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Mois dernier
+                                    </a></li>
+                                <li{% if period == 'lastyear' %} class="active"{% endif %}>
+                                    <a onclick="setPeriod('lastyear'); loadListFournisseur();">
+                                        {% if period == 'lastyear'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Année dernière
+                                    </a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown pull-right">
+                            {% if sort == 'name' or sort == '' %}{% set sorttext = 'Par Nom' %}{% endif %}
+                            {% if sort == 'codefournisseur' %}{% set sorttext = 'Par Code du Fournisseur' %}{% endif %}
+                            {% if sort == 'datecreation' %}{% set sorttext = 'Par Date de Création' %}{% endif %}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ sorttext }} <span class="glyphicon glyphicon-menu-down"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li{% if sort == 'datecreation' %} class="active"{% endif %}>
+                                    <a onclick="setSort('datecreation'); loadListFournisseur();">
+                                        {% if sort == 'datecreation' %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Par Date de Création
+                                    </a></li>
+                                <li{% if sort == 'name' or sort == '' %} class="active"{% endif %}>
+                                    <a onclick="setSort('name'); setPeriod('all'); loadListFournisseur();">
+                                        {% if sort == 'name' or sort == '' %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Par Nom
+                                    </a></li>
+                                <li{% if sort == 'codefournisseur' %} class="active"{% endif %}>
+                                    <a onclick="setSort('codefournisseur'); setPeriod('all'); loadListFournisseur();">
+                                        {% if sort == 'codefournisseur' %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Par Code du fournisseur
+                                    </a></li>
+                            </ul>
+                        </div>
+                        <span class="pull-right sortorder" onclick="
+                        {% if sortorder == 'ASC' %}setSortOrder('DESC');{% else %}setSortOrder('ASC');{% endif %} loadListFournisseur();
+                                ">
+                        {% if sortorder == 'ASC' %}<span class="glyphicon glyphicon-arrow-up"></span>{% endif %}
+                            {% if sortorder == 'DESC' %}<span class="glyphicon glyphicon-arrow-down"></span>{% endif %}
+                    </span>
+                    </div>
+                    <div class="col-md-1 col-sm-12 col-xs-12">
+                        <div class="input-group pull-right">
+                        <span class="input-group-addon view-bloc">
+                            <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                        </span>
+                            <span class="input-group-addon view-list">
+                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="select-bar hidden">
+                <span class="pull-left elements-selected"></span>
+                <a class="pull-left unckecked-all" onclick="uncheckAll();">tout désélectionner</a>
+                <button class="btn btn-danger pull-right delete-selected" onclick="deleteSelectedFournisseur();">Supprimer</button>
+                <a class="pull-right cancel-select" onclick="uncheckAll();">Annuler</a>
+            </div>
+        </div>
+    </div>
+    <div class="row list-view">
+        <div class="col-sm-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Email</th>
+                    <th>Tel</th>
+                    <th>Code du fournisseur</th>
+                    <th>Note</th>
+                    <th class="action"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for fournisseur in fournisseurs %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="element" value="{{ fournisseur.id }}" onchange="toggleThis();" />
+                        </td>
+                        <td><a onclick="initAllFilter(); loadShowFournisseur({{ fournisseur.id }}, true);">{{ fournisseur.nomVisible }}</a></td>
+                        <td>
+                            {% if fournisseur.adresse != '' %}
+                                {{ fournisseur.adresse ~ ', ' }}
+                            {% endif %}
+                            {% if fournisseur.ville != '' %}
+                                {{ fournisseur.ville ~ ', ' }}
+                            {% endif %}
+                            {{ (fournisseur.pays is null) ? '' : fournisseur.pays.nom }}
+                        </td>
+                        <td>{{ fournisseur.email }}</td>
+                        <td>{{ fournisseur.telephone }}</td>
+                        <td>{{ fournisseur.numeroFournisseur }}</td>
+                        <td> {{ fournisseur.note }} </td>
+                        <td>
+                            <div class="dropdown">
+                            <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                            </span>
+                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                    <li class="remove-action">
+                                        <a onclick="deleteFournisseur({{ fournisseur.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+
+                {#{% for client in tiers %}#}
+                    {#<tr>#}
+                        {#<td><input type="checkbox" class="element" value="{{ client.id }}" onchange="toggleThis();" /></td>#}
+                        {#<td><a onclick="initAllFilter(); loadShowFournisseur({{ client.id }}, false);">{{ client.intitule }}</a></td>#}
+                        {#<td></td>#}
+                        {#<td></td>#}
+                        {#<td></td>#}
+                        {#<td></td>#}
+                        {#<td></td>#}
+                        {#<td>#}
+                            {#<div class="dropdown">#}
+                            {#<span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+                                {#<class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>#}
+                            {#</span>#}
+                                {#<ul class="dropdown-menu dropdown-menu-right pull-right">#}
+                                    {#<li class="remove-action">#}
+                                        {#<a><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>#}
+                                    {#</li>#}
+                                {#</ul>#}
+                            {#</div>#}
+                        {#</td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+
+
+
+
+
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row bloc-view fournisseur-bloc-view">
+        {% for fournisseur in fournisseurs %}
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="bloc">
+                    <div class="bloc-content">
+                        <span class="bloc-title pull-left"><a onclick="initAllFilter(); loadShowFournisseur({{ fournisseur.id }}, true);">{{ fournisseur.nomVisible }}</a></span>
+                        <span class="bloc-sub-title pull-right">{{ fournisseur.numeroFournisseur }}</span>
+                        <br />
+                        <br />
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                        <span class="bloc-address">
+                            {% if fournisseur.adresse != '' %}
+                                {{ fournisseur.adresse ~ ', ' }}
+                            {% endif %}
+                            {% if fournisseur.adresse != '' %}
+                                {{ fournisseur.adresse ~ ', ' }}
+                            {% endif %}
+                            {{ (fournisseur.pays is null) ? '' : fournisseur.pays.nom }}
+                        </span>
+                        <br />
+                        {% if fournisseur.telephone != '' %}
+                            <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                            <span class="bloc-email">{{ fournisseur.telephone }}</span>&nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        {% if fournisseur.email != '' %}
+                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                            <span class="bloc-tel">{{ fournisseur.email }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="bloc-footer">
+                        <div class="dropdown">
+                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                    </span>
+                            <div class="clear-fix"></div>
+                            <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                <li class="remove-action">
+                                    <a onclick="deleteFournisseur({{ fournisseur.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {#{% for tier in tiers %}#}
+            {#<div class="col-md-3 col-sm-12 col-xs-12">#}
+                {#<div class="bloc">#}
+                    {#<div class="bloc-content">#}
+                        {#<span class="bloc-title pull-left"><a onclick="initAllFilter(); loadShowFournisseur({{ tier.id }}, false);">{{ tier.intitule }}</a></span>#}
+                        {#<span class="bloc-sub-title pull-right">{{ tier.compteStr }}</span>#}
+                        {#<br />#}
+
+                    {#</div>#}
+                    {#<div class="bloc-footer">#}
+                        {#<div class="dropdown">#}
+                    {#<span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+                        {#<class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>#}
+                    {#</span>#}
+                            {#<div class="clear-fix"></div>#}
+                            {#<ul class="dropdown-menu dropdown-menu-right pull-right">#}
+                                {#<li class="remove-action">#}
+                                {#</li>#}
+                            {#</ul>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#{% endfor %}#}
+
+    </div>
+{% endif %}

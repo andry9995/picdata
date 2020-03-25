@@ -1,0 +1,204 @@
+banque_pm:
+    path: /
+    defaults: { _controller: BanqueBundle:BanquePm:index }
+
+banque_pm_item:
+    path: /item
+    defaults: { _controller: BanqueBundle:BanquePm:item }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_imputation:
+    path: /pm_imputation
+    defaults: { _controller: BanqueBundle:BanquePm:imputation }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_pcc_tier:
+    path: /pm/pcc_tier
+    defaults: { _controller: BanqueBundle:BanquePm:tiersPccs }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_tr_edited:
+    path: /pm/tr_edited
+    defaults: { _controller: BanqueBundle:BanquePm:newTr }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_image_uploader:
+    path: /pm/image/uploader
+    defaults: { _controller: BanqueBundle:BanquePm:imageUploader }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_upload:
+    path: /pm/image/upload
+    defaults: { _controller: BanqueBundle:BanquePm:upload }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_pm_show_edit_tiers:
+    path: /pm/tiers/edit/show
+    defaults: { _controller: BanqueBundle:BanquePm:showEditTiers }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_pm_save_tiers:
+    path: /pm/tiers/save
+    defaults: { _controller: BanqueBundle:BanquePm:saveTiers }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_pm_tiers_change:
+    path: /pm/tiers/change
+    defaults: { _controller: BanqueBundle:BanquePm:changeTiers }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_pm_detail_mois:
+    path: /pm/detail/mois
+    defaults: { _controller: BanqueBundle:BanquePm:detailMois }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_pm_exceptions_container:
+    path: /pm/exceptions/container
+    defaults: { _controller: BanqueBundle:CleException:ClePmExceptionContainer }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_exceptions:
+    path: /pm/exceptions
+    defaults: { _controller: BanqueBundle:CleException:ClePmException }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_exception_params:
+    path: /pm/exceptions/params
+    defaults: { _controller: BanqueBundle:CleException:cleExceptionParams }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_exception_save:
+    path: /pm/exceptions/save
+    defaults: { _controller: BanqueBundle:CleException:cleExceptionSave }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_export:
+    path: /pm/export
+    defaults: { _controller: BanqueBundle:CleException:export }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_image_comment_save:
+    path: /pm/image_comment/save
+    defaults: { _controller: BanqueBundle:BanquePm:imageCommentSave }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_observation_save:
+    path: /pm/observation/save
+    defaults: { _controller: BanqueBundle:BanquePm:saveObservation }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_send_mail:
+    path: /pm/mail
+    defaults: { _controller: BanqueBundle:BanquePm:sendMail }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_show_ob_manquante:
+    path: /pm/show/ob
+    defaults: { _controller: BanqueBundle:BanquePm:showObManquante }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_ob_save_status:
+    path: /pm/save/statut
+    defaults: { _controller: BanqueBundle:BanquePm:saveStatusOb }
+    options:
+        expose: true
+
+banque_pm_show_detail_pm:
+    path: /pm/show/details-pm
+    defaults: { _controller: BanqueBundle:BanquePm:showDetailsPm }
+    methods:  [POST]
+    options:
+        expose: true 
+
+banque_pm_notification:
+    path:   /notification
+    defaults: { _controller: BanqueBundle:BanquePm:notification }
+
+banque_pm_notification_type_mail:
+    path:   /notification/type-mail
+    defaults: { _controller: BanqueBundle:BanquePm:notificationTypeMail }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_pm_notification_log:
+    path:   /notification/log-mail
+    defaults: { _controller: BanqueBundle:BanquePm:notificationGetLogForDossier }
+    methods: [POST]
+    options:
+        expose: true 
+
+banque_pm_notification_log_contenu_mail:
+    path:   /notification/log-mail/contenu
+    defaults: { _controller: BanqueBundle:BanquePm:notificationGetContenuLogForDossier }
+    methods: [POST]
+    options:
+        expose: true
+
+########### param s categorie-dossier 
+banque_pm_sc_param:
+    path: /pm/s_categorie/show_param
+    defaults: { _controller: BanqueBundle:SCategorie:sCategorieDossier }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_sc_save_status:
+    path: /pm/s_categorie/save
+    defaults: { _controller: BanqueBundle:SCategorie:saveStatus }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_pm_sc_save_stats_dossiers:
+    path: /pm/s_categorie/dossiers/save
+    defaults: { _controller: BanqueBundle:SCategorie:saveStatusDossiers }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_nature_releve_save:
+    path: /pm/nature_releve/save
+    defaults: { _controller: BanqueBundle:SCategorie:natureReleve }
+    methods:  [POST]
+    options:
+        expose: true
+

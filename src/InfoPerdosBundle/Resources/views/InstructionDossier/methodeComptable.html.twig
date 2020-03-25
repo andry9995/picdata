@@ -1,0 +1,74 @@
+<form class="form-horizontal" id="js_form_instr_methode_comptable">
+
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Rapprochement&nbsp;banque</label>
+                <div class="col-lg-6">
+                    <select class="form-control instr_methode_comptable rapprochement_banque" name="rapprochement_banque" data-field="RapprochementBanque" id="js_instr_rapprochement_banque">
+                        <option></option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                        <option value="2">Indifférent</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Suivi&nbsp;des&nbsp;chèques&nbsp;émis</label>
+                <div class="col-lg-6">
+                    <select class="form-control instr_methode_comptable suivi_cheque_emis" name="suivi_cheque_emis" data-field="MethodeSuiviCheque" id="js_instr_suivi_cheque_emis">
+                        {% set suiviChequeId = (instructionDossier is null) ? -1 : (instructionDossier.methodeSuiviCheque.id is not defined) ? -1 : instructionDossier.methodeSuiviCheque.id  %}
+                        <option></option>
+                        {% for methodeSuiviCheque in methodeSuiviCheques %}
+                            <option value="{{ methodeSuiviCheque.id }}" {{ (methodeSuiviCheque.id == suiviChequeId)? 'selected': '' }}>
+                                {{ methodeSuiviCheque.libelle }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Gestion des dates d'ecritures</label>
+                <div class="col-lg-6">
+                    <select class="form-control instr_methode_comptable" name="gestion_date_ecriture" data-field="GestionDateEcriture" id="js_instr_gestion_date_ecriture">
+                        {% set gestionDateEcrId = (instructionDossier is null) ? -1 : (instructionDossier.gestionDateEcriture.id is not defined) ? -1 : instructionDossier.gestionDateEcriture.id %}
+                        <option></option>
+                        {% for gestionDateEcr in gestionDateEcritures %}
+                            <option value="{{ gestionDateEcr.id }}" {{ (gestionDateEcrId == gestionDateEcr.id) ? 'selected':'' }}>
+                                {{ gestionDateEcr.libelle }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Logiciel utilisé</label>
+                <div class="col-lg-6">
+                    <select class="form-control instr_methode_comptable" name="logiciel" data-field="Logiciel" id="js_instr_logiciel">
+
+                        {% set logicielId = (instructionDossier is null) ? -1 : (instructionDossier.getLogiciel.id is not defined) ? -1 : instructionDossier.getLogiciel.id%}
+                        <option></option>
+                        {% for logiciel in logiciels %}
+                            <option value="{{ logiciel.id }}" {{ (logicielId == logiciel.id) ? 'selected':'' }} nb-caractere="{{ (logiciel.nbCaractere is null) ? 10000 : logiciel.nbCaractere }}">
+                                {{ logiciel.libelle}}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>

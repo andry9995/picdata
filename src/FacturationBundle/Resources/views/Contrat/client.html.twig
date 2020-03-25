@@ -1,0 +1,6 @@
+<select id="{{ attr_id }}" class="{{ attr_class }}">
+    <option value=""></option>
+    {% for client in clients %}
+        <option value="{{ client.id }}">{{ client.nom }}</option>
+    {% endfor %}
+</select>

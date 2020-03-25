@@ -1,0 +1,226 @@
+{% set typeDateFournisseur = -1 %}
+{% set nbreJourFournisseur = -1 %}
+{% set dateLeFournisseur = -1 %}
+
+{% set typeDateClient = -1 %}
+{% set nbreJourClient = -1 %}
+{% set dateLeClient = -1 %}
+
+{% if reglePaiementDossierFournisseur is not null %}
+    {% if reglePaiementDossierFournisseur.typeDate is not null %}
+        {% set typeDateFournisseur =  reglePaiementDossierFournisseur.typeDate %}
+    {% endif %}
+
+    {% if reglePaiementDossierFournisseur.nbreJour is not null %}
+        {% set nbreJourFournisseur = reglePaiementDossierFournisseur.nbreJour %}
+    {% endif %}
+
+    {% if reglePaiementDossierFournisseur.dateLe is not null %}
+        {% set dateLeFournisseur = reglePaiementDossierFournisseur.dateLe %}
+    {% endif %}
+
+{% else %}
+    {% if reglePaiementClientFournisseur is not null %}
+        {% if reglePaiementClientFournisseur.typeDate is not null %}
+            {% set typeDateFournisseur = reglePaiementClientFournisseur.typeDate %}
+        {% endif %}
+
+        {% if reglePaiementClientFournisseur.nbreJour is not null %}
+            {% set nbreJourFournisseur = reglePaiementClientFournisseur.nbreJour %}
+        {% endif %}
+
+        {% if reglePaiementClientFournisseur.dateLe is not null %}
+            {% set dateLeFournisseur = reglePaiementClientFournisseur.dateLe %}
+        {% endif %}
+
+    {% endif %}
+
+{% endif %}
+
+
+{% if reglePaiementDossierClient is not null %}
+    {% if reglePaiementDossierClient.typeDate is not null %}
+        {% set typeDateClient =  reglePaiementDossierClient.typeDate %}
+    {% endif %}
+
+    {% if reglePaiementDossierClient.nbreJour is not null %}
+        {% set nbreJourClient = reglePaiementDossierClient.nbreJour %}
+    {% endif %}
+
+    {% if reglePaiementDossierClient.dateLe is not null %}
+        {% set dateLeClient = reglePaiementDossierClient.dateLe %}
+    {% endif %}
+
+{% else %}
+    {% if reglePaiementClientClient is not null %}
+        {% if reglePaiementClientClient.typeDate is not null %}
+            {% set typeDateClient = reglePaiementClientClient.typeDate %}
+        {% endif %}
+
+        {% if reglePaiementClientClient.nbreJour is not null %}
+            {% set nbreJourClient = reglePaiementClientClient.nbreJour %}
+        {% endif %}
+
+        {% if reglePaiementClientClient.dateLe is not null %}
+            {% set dateLeClient = reglePaiementClientClient.dateLe %}
+        {% endif %}
+
+    {% endif %}
+
+{% endif %}
+
+<div class="col-lg-6">
+
+    <div class="ibox border-bottom">
+        <div class="ibox-content">
+            <h2>Fournisseur</h2>
+
+            <div class="row">
+
+
+                <div class="col-sm-12">
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Date</label>
+                        <div class="col-sm-8">
+
+                            <select class="form-control" name="f-regle-paiement-date" id="f-regle-paiement-date"
+                                    data-id="0" title="">
+
+                                <option value=""></option>
+                                <option value="0" {{ (typeDateFournisseur == 0 or typeDateFournisseur == -1) ? 'selected' : '' }}>Date Facture</option>
+                                <option value="1" {{ (typeDateFournisseur == 1) ? 'selected' : ''  }}>Date Livraison</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">Nombre de jours</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control info_regle_paiement"
+                                   name="f-regle-paiement-nbre-jour" id="f-regle-paiement-nbre-jour"
+                                   data-id="0" value="{{ (nbreJourFournisseur == -1) ? '45' : nbreJourFournisseur}}">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6">
+
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label instruction">Date le</label>
+                        <div class="col-sm-2">
+                            <div class="checkbox checkbox-success checkbox-inline">
+                                <input type="checkbox" class="checkbox-primary" name="f-regle-paiement-date-le-active"
+                                       id="f-regle-paiement-date-le-active" {{ (dateLeFournisseur != -1) ? 'checked' : '' }}>
+                                <label></label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <select class="form-control info_regle_paiement" name="f-regle-paiement-date-le"
+                                    id="f-regle-paiement-date-le" data-id="0"
+                                    {{ (dateLeFournisseur == -1) ? 'disabled' : '' }}>
+
+                                <option value="" {{ (dateLeFournisseur == -1) ? 'selected' : '' }}></option>
+                                {% for i in 5..30 %}
+                                    {% if i is divisible by(5) %}
+                                        <option value="{{ i }}" {{ (dateLeFournisseur == i) ? 'selected' : '' }}>{{ i }}</option>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-6">
+
+    <div class="ibox border-bottom">
+
+        <div class="ibox-content">
+            <h2>Client</h2>
+
+            <div class="row">
+
+                <div class="col-sm-12">
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Date</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="c-regle-paiement-date" id="c-regle-paiement-date"
+                                    data-id="1">
+
+                                <option value=""></option>
+                                <option value="0" {{ (typeDateClient == 0 or typeDateClient == -1) ? 'selected' : '' }}>Date Facture</option>
+                                <option value="1" {{ (typeDateClient == 1) ? 'selected' : ''  }}>Date Livraison</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">Nombre de jours</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control"
+                                   name="c-regle-paiement-nbre-jour" id="c-regle-paiement-nbre-jour"
+                                   data-id="1"
+                                   value="{{ (nbreJourClient == -1) ? '45' : nbreJourClient }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label instruction">Date le</label>
+                        <div class="col-sm-2">
+                            <div class="checkbox checkbox-success checkbox-inline">
+                                <input type="checkbox" class="checkbox-primary" id="c-regle-paiement-date-le-active"
+                                       name="c-regle-paiement-date-le-active" {{ (dateLeClient != -1)? 'checked' : '' }}>
+                                <label></label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <select class="form-control" name="c-regle-paiement-date-le"
+                                    id="c-regle-paiement-date-le" data-id="1"
+                                    {{ (dateLeClient == -1) ? 'disabled' : '' }}>
+
+                                <option value="" {{ (dateLeClient == -1) ? 'selected' : '' }}></option>
+                                {% for i in 5..30 %}
+                                    {% if i is divisible by(5) %}
+                                        <option value="{{ i }}" {{ (dateLeClient == i) ? 'selected' : '' }}>{{ i }}</option>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

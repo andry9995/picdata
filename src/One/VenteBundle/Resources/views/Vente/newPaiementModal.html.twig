@@ -1,0 +1,82 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Paiements</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="row unpaid-list">
+            <div class="col-sm-12">
+                <table class="table table-hover">
+                    <thead>
+                    <th>Date</th>
+                    <th>Montant</th>
+                    <th>Payé</th>
+                    <th>Solde</th>
+                    </thead>
+                    <tbody>
+                    <tr id="0">
+                        <td>{{ "now"|date("d/m/Y") }}</td>
+                        <td class="totalVisible"></td>
+                        <td>{{ '0'|number_format(2, '.', ' ') }}</td>
+                        <td class="unpaidvisible"></td>
+                        <input type="hidden" class="total" value="0">
+                        <input type="hidden" class="paid" value="0">
+                        <input type="hidden" class="unpaid" value="0">
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="row option-button">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-default choose" onclick="createPaiement();">
+                            <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Recevoir Paiement
+                        </button>
+
+                        <button type="button" class="btn btn-default choose" onclick="loadClientAvoir(true);">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Utiliser un Avoir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row paiement-list hidden">
+                    <br/>
+                    <form class="form-horizontal" id="paiement-form">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                <th>Date</th>
+                                <th>Paiement</th>
+                                <th>Payé</th>
+                                <th>Ref Bancaire</th>
+                                <th>Retard Jour</th>
+                                <th>Compte Bancaire</th>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row remove-button hidden">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-default choose" onclick="removeSelectedPaiement();">
+                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Supprimer le Paiement sélectionné
+                </button>
+            </div>
+        </div>
+
+        <input type="hidden" id="facture-selected" value="0">
+        <input type="hidden" id="paiement-selected" value="">
+        <input type="hidden" id="clientid" value="">
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closePaiementModal();">Valider</button>
+    </div>
+</div>
+

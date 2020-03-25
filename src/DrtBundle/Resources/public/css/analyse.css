@@ -1,0 +1,15 @@
+.popover
+{
+    position: relative;
+    z-index: 10000!important;
+}
+
+.jexcel_contextmenu
+{
+    z-index: 10000!important;
+}
+
+.row-red
+{
+    background-color: #FD7A66!important;
+}

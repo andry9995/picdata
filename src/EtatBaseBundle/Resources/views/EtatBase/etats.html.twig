@@ -1,0 +1,46 @@
+<div class="tabs-container" id="js_container_tabs">
+    <ul class="nav nav-tabs">
+        <li data-etat="0" class="active"><a data-toggle="tab" href="#tab-bg">Balance&nbsp;g&eacute;n&eacute;rale</a></li>
+        <li data-etat="1"><a data-toggle="tab" href="#tab-bc">Balance&nbsp;Clients</a></li>
+        <li data-etat="2"><a data-toggle="tab" href="#tab-bf">Balance&nbsp;Fournisseurs</a></li>
+        <li data-etat="3"><a data-toggle="tab" href="#tab-gl">Grand&nbsp;Livre</a></li>
+        <li data-etat="4"><a data-toggle="tab" href="#tab-jn">Journaux</a></li>
+        <li data-etat="5"><a data-toggle="tab" href="#tab-jc">Journal&nbsp;Centralisateur</a></li>
+        <li>
+            <a id="js_chart_footer">
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab-bg" class="tab-pane active" data-etat="0">
+            <div class="panel-body">
+                {{ include('EtatBaseBundle:EtatBase:balance-generale.html.twig') }}
+            </div>
+        </div>
+        <div id="tab-bc" class="tab-pane" data-etat="1">
+            <div class="panel-body">
+                {{ include('EtatBaseBundle:EtatBase:balance-tiers.html.twig', { type: 1 }) }}
+            </div>
+        </div>
+        <div id="tab-bf" class="tab-pane" data-etat="2">
+            <div class="panel-body">
+                {{ include('EtatBaseBundle:EtatBase:balance-tiers.html.twig', { type: 0 }) }}
+            </div>
+        </div>
+        <div id="tab-gl" class="tab-pane" data-etat="3">
+            <div class="panel-body">
+                {{ include('EtatBaseBundle:EtatBase:grand-livre.html.twig') }}
+            </div>
+        </div>
+        <div id="tab-jn" class="tab-pane" data-etat="4">
+            <div class="panel-body">
+                {{ include('EtatBaseBundle:EtatBase:journaux.html.twig') }}
+            </div>
+        </div>
+        <div id="tab-jc" class="tab-pane" data-etat="5">
+            <div class="panel-body">
+                {{ include('EtatBaseBundle:EtatBase:journal-centralisateur.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>

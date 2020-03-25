@@ -1,0 +1,60 @@
+<div class="row bande">
+    <div class="col-sm-4">
+        <div class="row">
+            <div class="col-sm-5">{{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'label_col':4, 'select_col':8 } )) }}</div>
+            <div class="col-sm-7">{{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0,'label_col':3,'select_col':9 })) }}</div>
+        </div>
+    </div>
+    <div class="hidden" id="js_conteneur_site"></div>
+    <div class="col-sm-3" id="js_conteneur_dossier"></div>
+    <div class="col-sm-2" id="js_id_conteneur_banque"></div>
+    <div class="col-sm-2 hidden" id="id_conteneur_date_anciennete">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_date_anciennete">
+                    <span>Date</span>
+                </label>
+                <div class="col-lg-8" style="position:relative;">
+                    <select class="form-control" id="id_date_anciennete">
+                        <option value="0">Ech&eacute;ance</option>
+                        <option value="1">Facture</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="row">
+            <div class="col-sm-9 div_container hidden" id="js_id_conteneur_interval">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="id_interval">
+                            <span>Intervalle</span>
+                        </label>
+                        <div class="col-lg-8" style="position:relative;">
+                            <input type="text" id="id_interval" placeholder="90 - 120 - 150" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 div_container" id="js_id_conteneur_compte"></div>
+            <div class="col-sm-4">
+                <div><span class="btn btn-sm btn-white hidden" id="id_show_exception"><i class="fa fa-cogs" aria-hidden="true"></i></span></div>
+                <div class="btn-group">
+                    <span data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle"><i class="fa fa-download" aria-hidden="true"></i></span>
+                    <ul class="dropdown-menu">
+                        <li class="cl_export" data-onglet="0" data-format="xls"><a href="#">L'Onglet&nbsp;actif</a></li>
+                        <li class="cl_export" data-onglet="1" data-format="xls"><a href="#">Tous</a></li>
+                    </ul>
+                </div>
+                {# <div class="btn-group">
+                    <span data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <ul class="dropdown-menu">
+                        <li class="cl_mail" data-onglet="0"><a href="#">Envoyer</a></li>
+                        <li class="cl_mail" data-onglet="1"><a href="{{ path('dossier_admin_liste') }}" target="_blank">Paramètre</a></li>
+                    </ul>
+                </div> #}
+            </div>
+        </div>
+    </div>
+</div>

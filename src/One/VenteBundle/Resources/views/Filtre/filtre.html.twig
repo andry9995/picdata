@@ -1,0 +1,27 @@
+<div class="row ndf-filtre">
+    <div class="col-sm-3">
+        {{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0, 'tous' : 0})) }}
+    </div>
+    <div class="col-sm-3" id="js_conteneur_site">
+
+    </div>
+    <div class="col-sm-3" id="js_conteneur_dossier">
+
+    </div>
+    <div class="col-sm-3">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label">
+                    <span>Exercice</span>
+                </label>
+                <div class="col-lg-4">
+                    <select class="form-control" id="exercice">
+                        <option></option>
+                        {{ render(controller('ConsultationPieceBundle:ConsultationPiece:exercice')) }}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

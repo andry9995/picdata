@@ -1,0 +1,49 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-new-client-title">Allouer un encaissement</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Payé Par</th>
+                            <th>Montant Restant</th>
+                            <th>Montant TTC</th>
+                            <th>Type</th>
+                            <th>Moyen de paiement</th>
+                            <th>Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for encaissement in encaissements %}
+                            {% set encdate = encaissement.dateEncaissement|date('d/m/Y') %}
+                            {% set encmontant = encaissementAmounts[encaissement.id] %}
+                            {% set encmode = encaissement.oneMoyenPaiement.id %}
+                            {% set itemval = encaissement.id~';'~encdate~';'~encmontant~';'~encmode %}
+                        <tr>
+                            <td><input type="checkbox" class="enc-item" value="{{ itemval }}"></td>
+                            <td>{{ encaissement.dateEncaissement|date('d/m/Y') }}</td>
+                            <td>{{ encaissement.oneClientProspect.nomVisible }}</td>
+                            <td>{{ encaissementAmounts[encaissement.id]|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                            <td>{{ encaissementAmounts[encaissement.id]|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                            <td>{{ encaissement.oneTypeEncaissement.nom }}</td>
+                            <td>{{ encaissement.oneMoyenPaiement.nom }}</td>
+                            <td>{{ encaissement.code }}</td>                 
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" onclick="selecteClientEncaissement();">Sélectionner</button>
+    </div>
+</div>

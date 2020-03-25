@@ -1,0 +1,125 @@
+{% set menu_active = true %}
+{% set class_with_js = 'js_menu_left' %}
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu side-menu">
+            <li class="nav-header">
+                {% if app.user %}
+                    <div class="dropdown profile-element" style="position: relative;">
+                        {% if  clientTheme.getLogo() is not null %}
+                            <span><img alt="logo" src="{{ asset('img/logo/' ~ clientTheme.getLogo()) }}" width="190" height="110"/></span>
+                        {% else %}
+                            <span style="display: inline-block; width: 190px; height: 125px;"></span>
+                        {% endif %}
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear" style="margin-top: 15px;">
+                            <span class="block m-t-xs"><strong
+                                        class="font-bold">{{ app.user.prenom }} {{ app.user.nom }}</strong></span>
+                            {# <span class="text-muted text-xs block">{{ app.user.accesUtilisateur.libelle }}<b
+                                        class="caret"></b></span> #}
+                        </span>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Contacts</a></li>
+                            <li><a href="#">Mailbox</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="logo-element">{{ app.user.prenom|truncate(1)|upper ~ app.user.nom|truncate(1)|upper }}</div>
+            </li>
+
+            {% for menu in menus if menu.id in menus_id and menu.lien|route_exists %}
+                <li class="pointer">
+                    <a href="{{ (menu.class is not null) ? '#' : path(menu.lien) }}"
+                       data-donnees="{{ (menu.donnees != null) ? menu.donnees : '' }}"
+                       data-libelle="{{ menu.libelle }}"
+                       data-lien="{{ (menu.donnees) }}"
+                       class="js_menu_item {{ (menu.js != 0) ? class_with_js : '' }}" title="{{ menu.libelle }} {{ (menu.class is null) ? '' : menu.class }}">
+                        <i class="fa {{ menu.icon }}"></i>
+                        <span class="nav-label">{{ menu.libelle }}</span>
+                        {% if menu.child|length > 0 %}
+                            <span class="fa arrow"></span>
+                        {% endif %}
+                    </a>
+                    {% if menu.child|length > 0 %}
+                        <ul class="nav nav-second-level collapse">
+                            {% for menu_item in menu.child if menu_item.id in menus_id and menu_item.lien|route_exists %}
+                                <li class="pointer">
+                                    <a href="{{ (menu_item.class is not null) ? '#' : path(menu_item.lien) }}"
+                                       data-donnees="{{ (menu_item.donnees != null) ? menu_item.donnees : '' }}"
+                                       data-libelle="{{ menu_item.libelle }}"
+                                       data-lien="{{ (menu_item.donnees) }}"
+                                       class="js_menu_item menu-justify {{ (menu_item.js != 0) ? class_with_js : '' }} {{ (menu_item.class is null) ? '' : menu_item.class }}">
+                                        {#<i class="fa {{ menu_item.icon }}"></i>#}
+                                        {{ menu_item.libelle }}
+                                        {% if menu_item.child|length > 0 %}
+                                            <i class="fa arrow"></i>
+                                        {% endif %}
+                                    </a>
+                                    {% if menu_item.child|length > 0 %}
+                                        <ul class="nav nav-third-level collapse">
+                                            {% for menu_item_2 in menu_item.child if menu_item_2.id in menus_id and menu_item_2.lien|route_exists %}
+                                                <li class="pointer">
+                                                    <a href="{{ (menu_item_2.class is not null) ? '#' : path(menu_item_2.lien) }}"
+                                                       data-donnees="{{ (menu_item_2.donnees != null) ? menu_item_2.donnees : '' }}"
+                                                       data-libelle="{{ menu_item_2.libelle }}"
+                                                       data-lien="{{ (menu_item_2.donnees) }}"
+                                                       class="js_menu_item menu-justify {{ (menu_item_2.js != 0) ? class_with_js : '' }} {{ (menu_item_2.class is null) ? '' : menu_item_2.class }}">
+                                                        {#<i class="fa {{ menu_item_2.icon }}"></i>#}
+                                                        {{ menu_item_2.libelle }}
+                                                        {% if menu_item_2.child|length > 0 %}
+                                                            <i class="fa arrow"></i>
+                                                        {% endif %}
+                                                    </a>
+                                                    {% if menu_item_2.child|length > 0 %}
+                                                        <ul class="nav nav-fourth-level collapse">
+                                                            {% for menu_item_3 in menu_item_2.child if menu_item_3.id in menus_id and menu_item_3.lien|route_exists %}
+                                                                <li class="pointer">
+                                                                    <a href="{{ (menu_item_3.class is not null) ? '#' : path(menu_item_3.lien) }}"
+                                                                       data-donnees="{{ (menu_item_3.donnees != null) ? menu_item_3.donnees : '' }}"
+                                                                       data-libelle="{{ menu_item_3.libelle }}"
+                                                                       data-lien="{{ (menu_item_3.donnees) }}"
+                                                                       class="js_menu_item menu-justify {{ (menu_item_3.js != 0) ? class_with_js : '' }} {{ (menu_item_3.class is null) ? '' : menu_item_3.class }}">
+                                                                        {#<i class="fa {{ menu_item_3.icon }}"></i>#}
+                                                                        {{ menu_item_3.libelle }}
+                                                                        {% if menu_item_3.child|length > 0 %}
+                                                                            <i class="fa arrow"></i>
+                                                                        {% endif %}
+                                                                    </a>
+                                                                    {% if menu_item_3.child|length > 0 %}
+                                                                        <ul class="nav nav-fifth-level collapse">
+                                                                        {% for menu_item_4 in menu_item_3.child if menu_item_4.id in menus_id and menu_item_4.lien|route_exists %}
+                                                                            <li class="pointer">
+                                                                                <a href="{{ (menu_item_4.class is not null) ? '#' : path(menu_item_4.lien) }}"
+                                                                                   data-donnees="{{ (menu_item_4.donnees != null) ? menu_item_4.donnees : '' }}"
+                                                                                   data-libelle="{{ menu_item_4.libelle }}"
+                                                                                   data-lien="{{ (menu_item_4.donnees) }}"
+                                                                                   class="js_menu_item menu-justify {{ (menu_item_4.js != 0) ? class_with_js : '' }} {{ (menu_item_4.class is null) ? '' : menu_item_4.class }}">
+                                                                                    {#<i class="fa {{ menu_item_4.icon }}"></i>#}
+                                                                                    {{ menu_item_4.libelle }}
+                                                                                </a>
+                                                                            </li>
+                                                                            </ul>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% endif %}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

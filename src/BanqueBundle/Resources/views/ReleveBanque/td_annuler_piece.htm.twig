@@ -1,0 +1,6 @@
+{% set ids = '' %}
+{% set index = 0 %}
+{% for image in images %}
+    {% set ids = ids ~ image.id|boost ~ ((index == images|length - 1) ? '' : ';') %}
+    {% set index = index + 1 %}
+{% endfor %}<span class="type" data-type="{{ imputationPar }}"><span class="pointer js_show_image_affecter" data-id="{{ ids }}"><i class="fa {{ (images|length == 1) ? 'fa-file-pdf-o' : 'fa-files-o' }}" aria-hidden="true"></i>&nbsp;{{ libelle }}</span>&nbsp;&nbsp;<i class="fa fa-times js_annuler_imputation pointer" aria-hidden="true"></i></span>

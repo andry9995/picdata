@@ -1,0 +1,11 @@
+#src/DashboardBundle/Resources/config/routgin.yml#
+
+dashboard_homepage:
+    path:     /dashboard
+    defaults: { _controller: DashboardBundle:Dashboard:container }
+
+dashboard_homepage_index:
+    path:   /dashboard/home
+    defaults:   { _controller: DashboardBundle:Dashboard:index }
+    options:
+        expose: true

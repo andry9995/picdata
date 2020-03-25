@@ -1,0 +1,61 @@
+<table class="MsoNormalTable" border=1 cellpadding=0 width=600 style="width:450.0pt;mso-cellspacing:1.5pt;border:dotted #0E6AAD 1.0pt;mso-yfti-tbllook:1184;mso-padding-alt:0 0 0 0;">
+    <tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;">
+        <td style="border:solid #0E6AAD 1.0pt;background:white;padding:7.5pt 7.5pt 7.5pt 7.5pt;">
+            <table class="MsoNormalTable" border=0 cellspacing=0 cellpadding=0 width=600 style="width:450.0pt;border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0 0 0 0;">
+                <tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;">
+                    <td style='border:solid #0E6AAD 1.0pt;background:#F9F9F9;padding:7.5pt 7.5pt 7.5pt 7.5pt'>
+                        <p class="MsoNormal" align="center" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;text-align:center;">
+                            <b>Madame, Monsieur</b>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+
+
+            <table class="MsoNormalTable" border=0 cellspacing=0 cellpadding=0 width=600 style="width:450.0pt;border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm;">
+                <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+                    <td style='border:solid #0E6AAD 1.0pt;background:#F9F9F9;padding:7.5pt 7.5pt 7.5pt 7.5pt;background-position-x:0%;background-position-y:0%'>
+                        <p class="MsoNormal" align=center style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;text-align:center;">
+                            <b>Dossier {{ dossier.nom }} créé</b>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+
+            <table class="MsoNormalTable" border=0 cellspacing=0 cellpadding=0 width=600
+                   style="width:450.0pt;border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0 0 0 0;">
+                <tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;">
+                    <td style="border:solid #0E6AAD 1.0pt;background:#F9F9F9;padding:7.5pt 7.5pt 7.5pt 7.5pt;background-position-x:0%;background-position-y:0%;">
+                        {% set site = dossier.site %}
+                        {{ client.nom }}<br/>
+                        {{ site.nom }} <br/>
+
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto"> </p>
+
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto">
+                            Le dossier {{ dossier.nom }} est complété.
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+                            Vous pouvez désormais envoyer les images sur le site.
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+                            Toutes les fonctionnalités sont activées.
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto"></p>
+
+                        <p style="float: right">Bonne journée</p>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+
+            {#{% if client.id != 559 %}#}
+                {#<img src="{{ embed }}" height="100" width="100" style="float:right">#}
+            {#{% endif %}#}
+
+        </td>
+    </tr>
+</table>

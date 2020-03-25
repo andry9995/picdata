@@ -1,0 +1,18 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">
+            <span>Client</span>
+            <span class="label label-warning">{{ clients|length }}</span>
+        </label>
+        <div class="col-lg-10">
+            <select class="form-control" id="js_type_graphe">
+                {% if type_graphes|length > 1 %}
+                    <option value="{{ 0|boost }}"></option>
+                {% endif %}
+                {% for type_graphe in type_graphes %}
+                    <option value="{{ type_graphes.id|boost }}">{{ (type_graphes.libelle != '') ? type_graphes.libelle : ' ' }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,13 @@
+.operateur
+{
+    margin-right: 2px!important;
+}
+.blink
+{
+    font-weight: bold!important;
+}
+
+.swal2-container
+{
+    z-index: 100000!important;
+}

@@ -1,0 +1,209 @@
+<div class="modal-content">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-7 preview" style="color: {{ modele.fontColor }}; font-family: {{ modele.fontFamily }}; font-size: {{ modele.fontSize }}px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        {#<span class="company-name" {% if modele.showCompanyName == 0 %}style="display: none;"{% endif %}>{{ params.companyNom }}<br></span>#}
+                        {#<span class="company-address">{{ params.companyAdresse }}<br></span>#}
+                        {#<span class="company-country">{{ params.companyPays.nom }} </span><span class="company-postal-code">{{ params.companyCodePostal }}<br></span>#}
+                        {#<span class="company-email">{{ params.companyMail }}<br></span>#}
+                        {#<span class="company-tel">{{ params.companyTel }}<br></span>#}
+                        {#<span class="company-siteweb">{{ params.companySiteweb }}<br></span>#}
+
+
+                        <span class="company-name" {% if modele.showCompanyName == 0 %}style="display: none;"{% endif %}>{{ dossier.rsSte }}<br></span>
+                        <span class="company-address">{{ dossier.numRue}}<br></span>
+                        <span class="company-country">{{ dossier.ville }} </span>
+                        <span class="company-postal-code">{{ dossier.codePostal }}<br></span>
+
+                    </div>
+                    <div class="col-md-6 pos-right">
+                        {% if encaissement.oneTypeEncaissement.id == 1 %}
+                        <span class="document-type">FACTURE<br/>D'ACOMPTE</span><br/>
+                        {% elseif encaissement.oneTypeEncaissement.id == 2 %}
+                        <span class="document-type">FACTURE<br/>D'ENCAISSEMENT</span><br/>
+                        {% elseif encaissement.oneTypeEncaissement.id > 2 %}
+                        <span class="document-type">FACTURE<br/>DE SAISIE DE VENTE</span><br/>
+                        {% endif %}
+                        <span class="document-code">N° {{ encaissement.code }}</span><br/>
+                        <span class="document-date">{{ encaissement.dateEncaissement|date("d/m/Y") }}</span><br/>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6"><span class="customer-num" {% if modele.showNumClient == 0 %}style="display: none;"{% endif %}><b>Client {{ encaissement.tiers.numeroClient }}</b><br><br></span></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <p class="billing-address" {% if modele.billingAddressRight == 0 %}style="display: none;"{% endif %}>
+                            {% set paysFacturation = (encaissement.tiers.paysFacturation is null) ? '' : encaissement.tiers.paysFacturation.nom %}
+                            <span class="billing-address-label">{{ modele.billingAddressLabel }}</span><br>
+                            <span class="billing-customer-contact">{{ encaissement.tiers.intitule }}</span><br/>
+                            {% if encaissement.tiers.adresseFacturation1 %}
+                            <span class="billing-customer-address">{{ encaissement.tiers.adresseFacturation1 }}</span><br/>
+                            {% endif %}
+                            {% if encaissement.tiers.codePostalFacturation %}
+
+                            <span class="billing-customer-country">{{ paysFacturation ~' '~encaissement.tiers.codePostalFacturation }}</span><br/>
+                            {% else %}
+                            <span class="billing-customer-country">{{ paysFacturation }}</span><br/>
+                            {% endif %}
+                            {% if encaissement.tiers.email %}
+                            <span class="billing-customer-email">Email : {{ encaissement.tiers.email }}</span><br/>
+                            {% endif %}
+                            {% if encaissement.tiers.telephone %}
+                            <span class="billing-customer-tel">Tel : {{ encaissement.tiers.telephone }}</span><br/>
+                            {% endif %}
+                            {% if encaissement.tiers.siteWeb %}
+                            <span class="billing-customer-website">Site web : {{ encaissement.tiers.siteWeb }}</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-popup">
+                            <thead>
+                                <tr style="background-color: {{ modele.headColor }}">
+                                    <th style="background-color: {{ modele.headColor }}">Date réception</th>
+                                    <th style="background-color: {{ modele.headColor }}">Mode paiement</th>
+                                    <th style="background-color: {{ modele.headColor }}">Référence Bancaire</th>
+                                    <th class="pos-right" style="background-color: {{ modele.headColor }}">Montant HT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set totalHT = 0 %}
+                                {% for article in articles %}
+                                <tr>
+                                    <td><span>{{ encaissement.dateEncaissement|date("d/m/Y") }}</span></td>                
+                                    <td><span>{{ encaissement.oneMoyenPaiement.nom }}</span></td>                
+                                    <td><span></span></td>                
+                                    {#<td class="pos-right"><span>{{ article.montant|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>                #}
+                                    <td class="pos-right">
+                                        <span>{{ article.montant|number_format(2, '.', ' ')}}</span>
+                                    </td>
+                                </tr>
+                                {% set totalHT = totalHT + article.montant %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8">
+                        <table class="table table-popup" style="width: 100%">
+                            <tbody>
+                                <tr>
+                                    <td><span class="ht-label"><b>Total HT</b></span></td>               
+                                    {#<td class="pos-right"><span class="ht-value"><b>{{ totalHT|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</b></span></td>               #}
+                                    <td class="pos-right">
+                                        <span class="ht-value"><b>{{ totalHT|number_format(2, '.', ' ')}}</b></span>
+                                    </td>
+                                </tr>
+                                <tr class="total-ttc">
+                                    <td><span class="ttc-label"><b>Total TTC</b></span></td>               
+                                    {#<td class="pos-right"><span class="ttc-label"><b>{{ totalHT|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</b></span></td>               #}
+                                    <td class="pos-right">
+                                        <span class="ttc-label"><b>{{ totalHT|number_format(2, '.', ' ') }}</b></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" {% if modele.showPaymentInfo == 0 %}style="display: none;"{% endif %}>
+                    <div class="col-md-6">
+                        <p>{{ modele.paymentInfoLabel }}</p>
+                        <p>{{ encaissement.note|nl2br }}</p>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <div class="col-md-5 preview-action">
+                <div class="all-action">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="email-action">
+                                <button type="button" class="btn btn-primary btn-lg" onclick="showEmailAction();">
+                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><br/>Email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="print-action">
+                                <button type="button" class="btn btn-default btn-lg" onclick="window.open('{{ path('one_pdf_print', {'type': 'encaissement', 'id': encaissement.id,  'dossierId': dossier.id|boost}) }}');">
+                                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="download-action">
+                                {#<button type="button" class="btn btn-default btn-lg" onclick="window.open('{{ path('one_pdf_download', {'type': 'encaissement', 'id': encaissement.id}) }}');">#}
+                                <button type="button" class="btn btn-default btn-lg" onclick="window.open('{{ path('one_pdf_print', {'type': 'encaissement', 'id': encaissement.id,  'dossierId': dossier.id|boost}) }}');">
+                                    <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> Télécharger le PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="download-action">
+                                <label for="change-modele">Changer de modèle</label>
+                                <select class="form-control" id="change-modele" onchange="changeModele(this, {{ encaissement.id }}, 'encaissement');">
+                                    {% for mod in modeles %}
+                                        <option value="{{ mod.id }}" {% if modele.modele.id == mod.id %}selected="selected"{% endif %}>{{ mod.modeleName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+                                    
+                <div class="send-action hidden">
+                    <p class="back-all-action" onclick="showAllAction();"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Retour</p>
+                    <form id="email-form">
+                        <div class="form-group">
+                            <label for="recipient">A*</label>
+                            <input type="email" class="form-control" id="recipient" name="recipient">
+                        </div>
+                        <div class="form-group">
+                            <label for="sender">De: </label>
+                            <select class="form-control" id="sender" name="sender">
+                                {#<option value="contact@mamyrakotonirina.com">{{ 'Mamy Rakotonirina < contact@mamyrakotonirina.com >' }}</option>#}
+                                <option value="{{ utilisateur.email }}">{{ utilisateur.nomComplet~" <"~utilisateur.email~" >" }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Objet: </label>
+                            <input type="text" class="form-control" id="subject" name="subject" value="Oneup - Encaissement de Vente N° {{ encaissement.code }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea class="form-control" id="message" name="message"></textarea>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> M'envoyer une copie
+                            </label>
+                        </div>
+                    </form>
+                    <button class="btn btn-primary" onclick="sendDocument('encaissement', {{ encaissement.id }});">Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

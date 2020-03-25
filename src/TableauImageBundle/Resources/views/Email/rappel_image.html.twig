@@ -1,0 +1,98 @@
+<DIV style="FONT-SIZE: 14px; FONT-FAMILY: Tahoma,Arial,Helvetica,sans-serif">
+    <TABLE style="FONT-SIZE: 14px; BORDER-TOP: #ccc 1px dotted; FONT-FAMILY: Tahoma,Arial,Helvetica,sans-serif; BORDER-RIGHT: #ccc 1px dotted; WIDTH: 600px; BORDER-BOTTOM: #ccc 1px dotted; COLOR: #000; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 10px; BORDER-LEFT: #ccc 1px dotted; PADDING-RIGHT: 10px; text-align: center">
+        <TBODY>
+        <TR>
+            <TD>
+                <TABLE style="BORDER-TOP: #ccc 1px dotted; BORDER-RIGHT: #ccc 1px dotted; WIDTH: 600px; BORDER-COLLAPSE: collapse; BORDER-BOTTOM: #ccc 1px dotted; BORDER-SPACING: 10px; BORDER-LEFT: #ccc 1px dotted;" cellpadding="5">
+                    <TBODY>
+                    <TR style="BORDER-TOP: #ccc 1px dotted; BORDER-RIGHT: #ccc 1px dotted; BORDER-BOTTOM: #ccc 1px dotted; BORDER-LEFT: #ccc 1px dotted; BACKGROUND-COLOR: #f9f9f9">
+                        <TD style="BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid; FONT-WEIGHT: bold; PADDING-BOTTOM: 10px; TEXT-ALIGN: center; PADDING-TOP: 10px; PADDING-LEFT: 10px; BORDER-LEFT: #ccc 1px solid; PADDING-RIGHT: 10px">
+                            {{ config.politesse }} {{ config.titre_contact }} {{ config.nom_contact }},
+                            <BR><BR>
+                            Envoi de vos pièces
+                        </TD>
+                    </TR>
+                    </TBODY>
+                </TABLE>
+
+                <TABLE style="color:#575454;font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:13px;BORDER-TOP: #ccc 1px dotted; BORDER-RIGHT: #ccc 1px dotted; WIDTH: 600px; BORDER-COLLAPSE: collapse; BORDER-BOTTOM: #ccc 1px dotted; BORDER-SPACING: 10px; BORDER-LEFT: #ccc 1px dotted;" cellpadding="5">
+                    <TBODY>
+                    <TR style="BORDER-TOP: #ccc 1px dotted; BORDER-RIGHT: #ccc 1px dotted; BORDER-BOTTOM: #ccc 1px dotted; BORDER-LEFT: #ccc 1px dotted; BACKGROUND-COLOR: #f9f9f9">
+                        <TD style="BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid; PADDING-BOTTOM: 5px; TEXT-ALIGN: justify; PADDING-TOP: 10px; PADDING-LEFT: 10px; BORDER-LEFT: #ccc 1px solid; PADDING-RIGHT: 10px">
+                            {#contenu du mail#}
+                            {{ config.contenu }}
+                            <BR>
+                            <BR>
+                            <BR>
+                        </TD>
+                    </TR>
+                    <TR style="text-align: center;BACKGROUND-COLOR: #f9f9f9;">
+                        {#Tableau des images manquantes#}
+                        <TABLE style="width: 100%;color:#575454;font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:13px;border-collapse:collapse;border:1px solid #ccc;">
+                            <THEAD>
+                                <tr style="border:1px solid #ccc; background-color:#e0ddd9;">
+                                    <th style="border:1px solid #ccc; width: 50%;">CATEGORIE PIECES</th>
+                                    <th style="border:1px solid #ccc;  width: 50%;">MOIS SANS PIECES</th>
+                                </tr>
+                            </THEAD>
+                            <TBODY>
+                                {% for manquant in manquants %}
+                                    {% for categorie, mois in manquant %}
+                                        <tr style="border:1px solid #ccc;">
+                                            <td style="border:1px solid #ccc;">{{ categorie }}</td>
+                                            <td style="border:1px solid #ccc;text-align:right;">{{ mois }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                            </TBODY>
+                        </TABLE>
+                        {#<BR><BR><BR>#}
+                        <TABLE style="width: 100%;color:#575454;font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:13px;border-collapse:collapse;border:1px solid #ccc;">
+                            <TBODY>
+                            <TR style="BORDER-TOP: #ccc 1px dotted; BORDER-RIGHT: #ccc 1px dotted; BORDER-BOTTOM: #ccc 1px dotted; BORDER-LEFT: #ccc 1px dotted; BACKGROUND-COLOR: #f9f9f9">
+                                <TD style="BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; BORDER-BOTTOM: #ccc 1px solid; PADDING-BOTTOM: 10px; TEXT-ALIGN: justify; PADDING-TOP: 10px; PADDING-LEFT: 10px; BORDER-LEFT: #ccc 1px solid; PADDING-RIGHT: 10px">
+                                    {#contenu organisation#}
+                                    <DIV style="WIDTH: 100%; FONT-WEIGHT: bold; TEXT-ALIGN: center">
+                                        UNE BONNE ORGANISATION EST LA CONDITION POUR UNE COMPTABILITÉ FIABLE
+                                    </DIV>
+                                    <BR>
+                                    Une comptabilité bien tenue garantit le respect
+                                    des échéances et la qualité des écritures comptables. Ceci peut vous éviter bien des désagréments en cas de retard de dépôt des documents,
+                                    comme en cas de contrôle fiscal. Nous sommes totalement dépendant de vos envois quant à l'exhaustivité des pièces reçues,
+                                    ainsi que des dates auxquelles elles nous parviennent.
+                                </TD>
+                            </TR>
+                            </TBODY>
+                        </TABLE>
+                        <BR><BR>
+                        <TABLE style="width: 100%;color:#575454;font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:14px;border-collapse:collapse;">
+                            <TBODY>
+                            <TR>
+                                <TD>
+                                    {#LOGO#}
+                                    <DIV style="TEXT-ALIGN:left">
+                                        {% if clientTheme.getLogoForEmail(client_id) != '' %}
+                                            <img src="{{ absolute_url(asset(clientTheme.getLogoForEmail(client_id))) }}" alt="logo" width="180" height="130">
+                                        {% else %}
+                                            {#Le cabinet.#}
+                                        {% endif %}
+                                    </DIV>
+                                </TD>
+                                <TD style="TEXT-ALIGN: right">
+                                    Votre expert comptable
+                                    <BR>
+                                    {{ config.nom_client }}
+                                </TD>
+                            </TR>
+                            </TBODY>
+                        </TABLE>
+                    </TR>
+                    </TBODY>
+                </TABLE>
+            </TD>
+        </TR>
+        </TBODY>
+    </TABLE>
+</DIV>
+<BR>
+<BR>

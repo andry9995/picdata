@@ -1,0 +1,21 @@
+{% extends 'base-error.html.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <h1>403</h1>
+
+        <h3 class="font-bold">Accès refusé!</h3>
+
+        <div class="error-desc">
+            <p>Vous n'avez pas accès à cette page/resource.</p>
+            {#<p>Message: <code>{{ status_text }}</code></p>#}
+            <p><strong>Si vous pensez que c'est une erreur, merci de contacter l'administrateur.</strong></p>
+
+            <div style="margin-top: 30px;">
+                <a class="btn btn-primary btn-block" href="{{ path('dashboard_homepage') }}">
+                    <i class="fa fa-arrow-circle-o-left"></i> Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

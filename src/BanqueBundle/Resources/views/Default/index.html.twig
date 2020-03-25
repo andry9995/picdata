@@ -1,0 +1,36 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Banques{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/jqGrid/jQuery.jqGrid.setColWidth.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/chartJs/Chart.min.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/consultationpiece/js/consultation-piece.js') }}?v=1.6"></script>
+    <script src="{{ asset('bundles/consultationpiece/js/commun-consultation.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/index.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/consultationpiece/css/consultation-piece.css') }}?v=1.0">
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    {% block filtre %}
+        {{ include('BanqueBundle:Default:filtre.html.twig') }}
+    {% endblock %}
+
+
+    <div class="ibox-content">
+        {% block contenu_banque %}
+
+        {% endblock %}
+    </div>
+{% endblock %}

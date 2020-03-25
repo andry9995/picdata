@@ -1,0 +1,19 @@
+{% if attr_id != '' %}
+    {% set select_id = attr_id %}
+{% else %}
+    {% set select_id = 'model-tarif' %}
+{% endif %}
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-3 control-label">
+            <span>Modèles</span>
+        </label>
+        <div class="col-lg-9">
+            <select id="{{ select_id }}" class="form-control">
+                {% for modele in modeles %}
+                    <option class="text-center" value="{{ modele.id }}">{{ modele.libelle }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

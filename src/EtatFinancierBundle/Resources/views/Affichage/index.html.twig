@@ -1,0 +1,33 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Etat financier{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/etatfinancier/css/etat.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/etatbase/css/menu.css') }}">
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {{ include('EtatFinancierBundle:Affichage:filtre.html.twig') }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            {% include 'EtatFinancierBundle:Affichage:menu.html.twig' %}
+        </div>
+        <div class="col-sm-9 gray-bg" id="js_ef_a_exporter">
+            {% include 'EtatBaseBundle:Default:content.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/etatfinancier/js/affichage_filtre.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/menu.js') }}"></script>
+    <script src="{{ asset('bundles/etatfinancier/js/etat_financier.js') }}"></script>
+{% endblock %}

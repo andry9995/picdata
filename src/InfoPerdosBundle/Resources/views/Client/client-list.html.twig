@@ -1,0 +1,22 @@
+<div class="full-height-scroll" id="js_client_list">
+    <div>
+        <ul class="list-group">
+
+            {% for client in clients %}
+                   <li class="list-group-item show-edit-client pointer" data-id="{{ client.id|boost }}" data-status="{{ client.status }}">
+                       <span class="badge"><i class="fa fa-edit"></i></span>
+
+                       {% if client.status == 1 %}
+    	                   <i class="fa fa-circle pastille-status status-actif"></i>
+                       {% else %}
+	                       <i class="fa fa-circle pastille-status status-inactif"></i>
+                       {% endif %}
+
+                       {{ client.nom }}
+
+                   </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>

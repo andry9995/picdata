@@ -1,0 +1,100 @@
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Date opération</th>
+            <th>Libelle</th>
+            <th>Mouvements</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% if releve.debit != 0 %}
+                    {% set mouvementR = (-releve.debit) %}
+                {% else %}
+                    {% if releve.credit != 0 %}
+                        {% set mouvementR = (releve.credit) %}
+                    {% endif %}
+                {% endif %}
+
+                <td>{{ releve.dateReleve|date('d/m/Y') }}</td>
+                <td>{{ releve.libelle }}</td>
+                <td {{ (mouvementR >= 0) ? '' : 'class="text-danger"' }}>{{ mouvementR|number_format(2, '.', ' ') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Détails du relevé</h3>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Bilan</th>
+            <th>Resultat</th>
+            <th>Compte TVA</th>
+            <th>Mouvements</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% if releveDetails|length > 0 %}
+
+        {% for releveDetail in releveDetails %}
+            {% if releveDetail.debit != 0 %}
+                {% set mouvementD = (-releveDetail.debit) %}
+            {% else %}
+                {% if releveDetail.credit != 0 %}
+                    {% set mouvementD = (releveDetail.credit) %}
+                {% endif %}
+            {% endif %}
+            <tr>
+                <td>{{ (releveDetail.compteTiers2 is not null)? releveDetail.compteTiers2.compteStr : "" }}</td>
+                <td>{{ (releveDetail.compteChg2 is not null) ? releveDetail.compteChg2.compte : "" }}</td>
+                <td>{{ (releveDetail.compteTva2 is not null)? releveDetail.compteTva2.compte : "" }}</td>
+                <td {{ (mouvementD >= 0) ? '' : 'class="text-danger"' }}>{{ mouvementD|number_format(2, '.', ' ') }}</td>
+            </tr>
+
+        {% endfor %}
+
+
+        {% else %}
+            {% if releve.compteTiersTemp %}
+                <tr>
+                    <td>{{ (releve.compteTiersTemp.compteStr) }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+
+            {% if releve.compteChgTemp %}
+                <tr>
+                    <td></td>
+                    <td>{{ (releve.compteChgTemp.compte) }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endif %}
+
+            {% if releve.compteTvaTemp %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{{ (releve.compteTvaTemp.compte) }}</td>
+                    <td></td>
+                </tr>
+
+            {% endif %}
+
+        {% endif %}
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <div class="col-lg-6">
+            <input type="file" class="form-control" name="envoi_pm" id="js_envoi_pm">
+        </div>
+        <div class="col-lg-6">
+           <button class="btn btn-primary btn-block" id="btn-envoi-pm"><i class="fa fa-upload"></i>&nbsp;&nbsp;Envoyer</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,172 @@
+{% set comptes = grand_livres.comptes %}
+{% set intitules = grand_livres.soldes_debit %}
+{% set ecritures = grand_livres.debits %}
+{% set ecritures_an = grand_livres.credits %}
+{% set solde_tiers_an = grand_livres.soldes_credit %}
+
+{% set total_debit_gen = 0 %}
+{% set total_credit_gen = 0 %}
+{% set total_solde_debit_gen = 0 %}
+{% set total_solde_credit_gen = 0 %}
+
+<div class="row">
+    {% if comptes|length != 1 %}
+    <div class="col-sm-2">
+        <div class="scroller no-padding">
+            <table class="table table-condensed table-stripped">
+                {% for compte in comptes %}
+                    <tr>
+                        <td><a class="js_tooltip" data-tooltip="{{ intitules[compte] }}" href="#{{ compte }}">{{ compte }}</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    <div class="{{ (comptes|length == 1) ? 'col-sm-12' : 'col-sm-10' }} no-padding">
+        <div class="{#full-height-scroll#} scroller" id="js_eb_gl_donnee">
+            {% for compte in comptes %}
+                <a name="{{ compte }}"></a>
+                <div class="ibox margin-ibox gray-bordered">
+                    <div class="ibox-title">
+                        <h5><span class="btn btn-primary btn-xs"><strong>{{ compte }}</strong></span>&nbsp;<small class="m-l-sm">{{ intitules[compte] }}</small></h5>
+                        <div class="ibox-tools">
+                            <a class="fullscreen-link">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <table class="table table-condensed table-hover table-bordered" aria-labelledby="gbox_js_eb_table_to_grid">
+                            <thead>
+                            <tr>
+                                <th width="10%">Date</th>
+                                <th width="8%">Journal</th>
+                                <th width="10%" class="text-info">Pi&egrave;ce</th>
+                                <th width="28%">Libell&eacute;</th>
+                                <th width="10%" class="text-right">D&eacute;bit</th>
+                                <th width="10%" class="text-danger text-right">Cr&eacute;dit</th>
+                                <th width="4%">L</th>
+                                <th width="10%" class="text-right">Solde&nbsp;D&eacute;bit</th>
+                                <th width="10%" class="text-danger text-right">Solde&nbsp;Cr&eacute;dit</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set solde_debit = 0 %}
+                            {% set solde_credit = 0 %}
+
+                            {% set total_debit = 0 %}
+                            {% set total_credit = 0 %}
+
+                            {% if ecritures_an[compte] is defined %}
+                                {% set ecriture = ecritures_an[compte].gl %}
+                                {% set debit = ecritures_an[compte].db %}
+                                {% set credit = ecritures_an[compte].cr %}
+                                {% set solde = debit - credit %}
+                                {% set solde_debit = (solde > 0) ? solde : 0 %}
+                                {% set solde_credit = (solde < 0) ? solde|abs : 0 %}
+
+                                {% set total_debit = total_debit + debit %}
+                                {% set total_credit = total_credit + credit %}
+
+                                <tr class="active">
+                                    <td>{{ ecriture.dateEcr|date("d/m/Y") }}</td>
+                                    <td>{{ ecriture.journalDossier.codeStr }}</td>
+                                    <td>A Nouv</td>
+                                    <td>SOLDE DES A NOUVEAUX</td>
+                                    <td class="text-right">{{ (debit != 0) ? debit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                    <td class="text-danger text-right">{{ (credit != 0) ? credit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                    <td></td>
+                                    <td class="text-right">{{ (solde_debit != 0) ? solde_debit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                    <td class="text-danger text-right">{{ (solde_credit != 0) ? solde_credit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                </tr>
+                            {% endif %}
+
+                            {% if ecritures[compte] is defined %}
+                                {% for ecriture in ecritures[compte] %}
+                                    {% set debit = ecriture.debit %}
+                                    {% set credit = ecriture.credit %}
+                                    {% set solde = solde_debit - solde_credit + debit - credit %}
+                                    {% set solde_debit = (solde > 0) ? solde : 0 %}
+                                    {% set solde_credit = (solde < 0) ? solde|abs : 0 %}
+
+                                    {% set compte_tier = (ecriture.dateEcr is defined) ? null : ecriture.tiers.tiers.compteStr %}
+                                    {% set ecriture = (ecriture.dateEcr is defined) ? ecriture : ecriture.tiers %}
+
+                                    {% if compte_tier != null %}
+                                        {% if solde_tiers_an[compte_tier] is defined %}
+                                            {% set solde_tiers = solde_tiers_an[compte_tier].solde %}
+                                            {% if solde_tiers > 0 %}
+                                                {% set debit = debit + solde_tiers %}
+                                            {% else %}
+                                                {% set credit = credit + solde_tiers|abs %}
+                                            {% endif %}
+
+                                            {% set solde = debit - credit %}
+                                            {% set solde_debit = (solde > 0) ? solde : 0 %}
+                                            {% set solde_credit = (solde < 0) ? solde|abs : 0 %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% set total_debit = total_debit + debit %}
+                                    {% set total_credit = total_credit + credit %}
+
+                                    <tr>
+                                        <td>{{ ecriture.dateEcr|date('d/m/Y') }}</td>
+                                        <td>{{ (compte_tier == null) ? ecriture.journalDossier.codeStr : '' }}</td>
+                                        <td class="{{ (ecriture.image != null and compte_tier == null) ? 'text-info pointer js_show_image' : '' }}" aria-describedby="{{ (ecriture.image != null and compte_tier == null) ? 'js_eb_table_to_grid_js_eb_piece' : '' }}" data-id_image="{{ ((ecriture.image != null) ? ecriture.image.id : 0)|boost }}">{{ (compte_tier == null) ? ((ecriture.image != null) ? ecriture.image.nom : ecriture.imageStr) : '' }}</td>
+                                        <td>{{ (compte_tier == null) ? ecriture.libelle : (ecriture.tiers.intitule ~ ((solde_tiers_an[compte_tier] is defined) ? ' Avec solde des AN' : '')) }}</td>
+                                        <td class="text-right">{{ (debit != 0) ? debit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                        <td class="text-danger text-right">{{ (credit != 0) ? credit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                        <td>{{ (compte_tier == null) ? ecriture.lettrage : '' }}</td>
+                                        <td class="text-right">{{ (solde_debit != 0) ? solde_debit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                        <td class="text-danger text-right">{{ (solde_credit != 0) ? solde_credit|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                            <tfoot>
+                            {% set solde = total_debit - total_credit %}
+                            {% set total_solde_debit = (solde > 0) ? solde : 0 %}
+                            {% set total_solde_credit = (solde < 0) ? solde|abs : 0 %}
+
+                            {% if debit is defined %}
+                                {% set total_debit_gen = total_debit_gen + debit %}
+                                {% set total_credit_gen = total_credit_gen + credit %}
+                            {% endif %}
+
+                            {% set total_solde_debit_gen = total_solde_debit_gen + total_solde_debit %}
+                            {% set total_solde_credit_gen = total_solde_credit_gen + total_solde_credit %}
+
+                            <tr class="active">
+                                <th colspan="4" class="text-right">Totaux du compte {{ compte }}</th>
+                                <th class="text-right">{{ (total_debit != 0) ? total_debit|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                                <th class="text-right text-danger">{{ (total_credit != 0) ? total_credit|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                                <th></th>
+                                <th class="text-right">{{ (total_solde_debit != 0) ? total_solde_debit|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                                <th class="text-right text-danger">{{ (total_solde_credit != 0) ? total_solde_credit|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <table class="table table-condensed table-bordered js_eb_gl_tg">
+                <thead>
+                <tr>
+                    <th width="56%" class="text-right">TOTAUX&nbsp;DE&nbsp;LA&nbsp;SELECTION</th>
+                    <th width="10%" class="text-right">{{ (total_debit_gen != 0) ? total_debit_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                    <th width="10%" class="text-danger text-right">{{ (total_credit_gen != 0) ? total_credit_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                    <th width="4%"></th>
+                    <th width="10%" class="text-right">{{ (total_solde_debit_gen != 0) ? total_solde_debit_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                    <th width="10%" class="text-danger text-right">{{ (total_solde_credit_gen != 0) ? total_solde_credit_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

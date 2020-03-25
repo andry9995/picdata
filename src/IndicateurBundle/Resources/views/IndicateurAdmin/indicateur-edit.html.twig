@@ -1,0 +1,289 @@
+{# periode #}
+{% set check_annuel = 'checked' %}
+{% set check_semestre = 'checked' %}
+{% set check_trimestre = 'checked' %}
+{% set check_mois = 'checked' %}
+{% if indicateur is not null %}
+    {% set periode_spliter = indicateur.periodeBinary|split('') %}
+    {% set check_annuel = (periode_spliter[0] == '1') ? 'checked' : '' %}
+    {% set check_semestre = (periode_spliter[1] == '1') ? 'checked' : '' %}
+    {% set check_trimestre = (periode_spliter[2] == '1') ? 'checked' : '' %}
+    {% set check_mois = (periode_spliter[3] == '1') ? 'checked' : '' %}
+{% endif %}
+<div class="form-horizontal" id="js_form_edit_indicateur_item"
+      data-id="{{ ((indicateur is not null) ? indicateur.id : 0)|boost }}">
+    <div class="form-group form-group-small-margin">
+        <label class="col-lg-1 control-label">Nom</label>
+        <div class="col-lg-5">
+            <input type="text" placeholder="Nom" class="form-control"
+                   id="js_indicateur_libelle" value="{{ (indicateur is not null) ? indicateur.libelle : '' }}">
+        </div>
+        <label class="col-lg-1 control-label">Descript&deg;</label>
+        <div class="col-lg-5">
+            <input type="text" placeholder="Description" class="form-control"
+                   id="js_indicateur_description" value="{{ (indicateur is not null) ? indicateur.description : '' }}">
+        </div>
+    </div>
+    <div class="form-group form-group-small-margin">
+        {# periode #}
+        <label class="col-lg-1 control-label">P&eacute;riode</label>
+        <div class="col-lg-5" id="js_indicateur_periode">
+            <div class="checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" class="js_periode" id="periode_3" {{ check_annuel }}>
+                <label for="periode_3">Annuel</label>
+            </div>
+            <div class="checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" class="js_periode" id="periode_2" {{ check_semestre }}>
+                <label for="periode_2">Semestre</label>
+            </div>
+            <div class="checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" class="js_periode" id="periode_1" {{ check_trimestre }}>
+                <label for="periode_1">Trimestre</label>
+            </div>
+            <div class="checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" class="js_periode" id="periode_0" {{ check_mois }}>
+                <label for="periode_0">Mois</label>
+            </div>
+        </div>
+
+        {# unite #}
+        <label class="col-lg-1 control-label">Unit&eacute;</label>
+        <div class="col-lg-5">
+            <input type="text" placeholder="Unit&eacute;" class="form-control"
+                    id="js_indicateur_unite" value="{{ (indicateur is not null) ? indicateur.unite : '' }}"
+                    {{ ((indicateur is not null and indicateur.isTable == 1)) ? 'disabled' : '' }}>
+        </div>
+    </div>
+
+    {# theme limite affichage #}
+    <div class="form-group form-group-small-margin {{ (indicateur is null or (indicateur is not null and indicateur.isTable == 1)) ? 'hidden' : '' }}">
+        <label class="col-lg-1 control-label">Thème&nbsp;</label>
+        <div class="col-lg-5">
+            {% set theme = (indicateur is not null) ? indicateur.theme : 0 %}
+            <select class="form-control" id="js_indicateur_theme">
+                <option value="{{ 0 }}" {{ (theme == 0) ? 'selected' : '' }}>Default</option>
+                <option value="{{ 1 }}" {{ (theme == 1) ? 'selected' : '' }}>Dark&nbsp;unica</option>
+                <option value="{{ 2 }}" {{ (theme == 2) ? 'selected' : '' }}>Sand&nbsp;signika</option>
+                <option value="{{ 4 }}" {{ (theme == 4) ? 'selected' : '' }}>Simple</option>
+                <option value="{{ 7 }}" {{ (theme == 7) ? 'selected' : '' }}>Economist</option>
+                <option value="{{ 8 }}" {{ (theme == 8) ? 'selected' : '' }}>Firefox</option>
+            </select>
+        </div>
+        <label class="col-lg-1 control-label {{ (indicateur is not null and indicateur.typeOperation != 1) ? 'hidden' : '' }}" id="js_indicateur_limit_label">Limite&nbsp;</label>
+        <div class="col-lg-5 {{ (indicateur is not null and indicateur.typeOperation != 1) ? 'hidden' : '' }}">
+            <input type="text" placeholder="Limite d'affichage" class="form-control" id="js_indicateur_limit" value="{{ (indicateur is not null) ? ((indicateur.max > 0) ? indicateur.max : '') : '' }}">
+        </div>
+    </div>
+</div>
+
+{# type operation #}
+{# 0 : par mois; 1 : montant tiers; 2 : tri par date; 3 : tri par date anciennete #}
+{% set check_normal = '' %}
+{% set check_tri_value = '' %}
+{% set check_tri_date = '' %}
+{% set check_tri_anciennete = '' %}
+
+{% if indicateur is not null %}
+    {% if indicateur.typeOperation == 0 %}
+        {% set check_normal = 'checked' %}
+    {% elseif indicateur.typeOperation == 1 %}
+        {% set check_tri_value = 'checked' %}
+    {% elseif indicateur.typeOperation == 2 %}
+        {% set check_tri_date = 'checked' %}
+    {% elseif indicateur.typeOperation == 3 %}
+        {% set check_tri_anciennete = 'checked' %}
+    {% else %}
+    {% endif %}
+{% else %}
+    {% set check_normal = 'checked' %}
+{% endif %}
+<div class="form-horizontal {{ (indicateur is not null and indicateur.isTable == 1) ? 'hidden' : '' }}">
+    <div class="form-group form-group-small-margin">
+        <label class="col-lg-1 control-label">Afficher</label>
+        <div class="col-lg-5" id="js_indicateur_type_operateur">
+            <div class="radio radio-info radio-inline">
+                <input type="radio" id="radio_type_normal" data-value="0" class="js_radio_operateur"  value="0" name="radio_oper" {{ check_normal }}>
+                <label for="radio_type_normal">Mois</label>
+            </div>
+            <div class="radio radio-inline">
+                <input type="radio" id="radio_type_tri_valeur" data-value="1" class="js_radio_operateur"  value="1" name="radio_oper" {{ check_tri_value }}>
+                <label for="radio_type_tri_valeur">Tiers</label>
+            </div>
+            <div class="radio radio-inline">
+                <input type="radio" id="radio_type_tri_anciennete" data-value="3" class="js_radio_operateur"  value="3" name="radio_oper" {{ check_tri_anciennete }}>
+                <label for="radio_type_tri_anciennete">Anciennet&eacute;</label>
+            </div>
+        </div>
+        <label class="col-lg-1 control-label">Analyse</label>
+        <div class="col-lg-5" id="js_indicateur_analyses">
+            {% set check_evolution = 'checked' %}
+            {% set check_comparaison = '' %}
+            {% set check_cumule = '' %}
+
+            {% if indicateur is not null %}
+                {% set analyse_spliter = indicateur.analyseBinary|split('') %}
+                {% set check_evolution = (analyse_spliter[1] == '1') ? 'checked' : '' %}
+                {% set check_comparaison = (analyse_spliter[2] == '1') ? 'checked' : '' %}
+                {% set check_cumule = (analyse_spliter[3] == '1') ? 'checked' : '' %}
+            {% endif %}
+
+            <div class="checkbox checkbox-warning checkbox-inline">
+                <input type="checkbox" class="js_analyse" id="js_analyse_evolution" value="option1" {{ check_evolution }}>
+                <label for="js_analyse_evolution">Evolution</label>
+            </div>
+            <div class="checkbox checkbox-warning checkbox-inline">
+                <input type="checkbox" class="js_analyse" id="js_analyse_comparaison" value="option1" {{ check_comparaison }}>
+                <label for="js_analyse_comparaison">Comparaison</label>
+            </div>
+            <div class="checkbox checkbox-warning checkbox-inline">
+                <input type="checkbox" class="js_analyse" id="js_analyse_cumule" value="option1" {{ check_cumule }}>
+                <label for="js_analyse_cumule">Cumule</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-group-small-margin">
+    </div>
+</div>
+
+{# type affichage #}
+<div class="form-horizontal">
+    <div class="form-group form-group-small-margin">
+        <label class="col-lg-1 control-label">Affichage</label>
+        <div class="col-lg-11" id="js_indicateur_graphes">
+            {% set graphe_index = 1 %}
+            {% for graphe in graphes %}
+                {% set image = 'img/charts/' ~ graphe.img %}
+                {% set checked = '' %}
+                {% if indicateur is not null %}
+                    {% if graphe in indicateur.graphes %}
+                        {% set checked = 'graphe-selected' %}
+                    {% endif %}
+                {% endif %}
+                <div class="col-lg-2">
+                    <img src="{{ asset(image) }}" class="graphe-image js_graphe {{ checked }}" data-id="{{ graphe.id|boost }}" data-code="{{ graphe.code }}" title="{{ graphe.libelle }}">
+                </div>
+                {% set graphe_index = graphe_index + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{# formule #}
+{% set class_n_1 = 'danger' %}
+{% set class_n = 'default' %}
+{% set class_n1 = 'primary' %}
+
+{% set check_rubrique = '' %}
+{% set check_super_rubrique = '' %}
+{% set check_hyper_rubrique = '' %}
+
+{% if indicateur is not null %}
+    {% if indicateur.operandes|length != 0 %}
+        {% set rubrique = indicateur.operandes[0].rubrique %}
+        {% if rubrique.type == 0 %}
+            {% set check_rubrique = 'checked' %}
+        {% elseif rubrique.type == 1 %}
+            {% set check_super_rubrique = 'checked' %}
+        {% elseif rubrique.type == 2 %}
+            {% set check_hyper_rubrique = 'checked' %}
+        {% else %}
+        {% endif %}
+    {% endif %}
+{% else %}
+    {% set check_hyper_rubrique = 'checked' %}
+{% endif %}
+
+<div class="panel panel-default {{ (indicateur is not null and indicateur.isTable == 1) ? 'hidden' : '' }}" id="js_indicateur_formule_panel">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="form-group form-group-small-margin">
+                    <div class="checkbox checkbox-inline col-lg-offset-1">
+                        <input type="checkbox" id="id_show_clot" {{ (indicateur is null or (indicateur is not null and indicateur.showExerciceClos == 1)) ? 'checked' : '' }}>
+                        <label for="id_show_clot">Afficher exercice non Cl&ocirc;t</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 text-center" id="js_group_rubrique">
+                <div class="radio radio-info radio-inline">
+                    <input type="radio" id="radio_type_rubrique" data-val="0" name="radio_type" class="js_radio_type" {{ check_rubrique }}>
+                    <label for="radio_type_rubrique">Rubrique</label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="radio_type_super_rubrique" data-val="1" name="radio_type" class="js_radio_type" {{ check_super_rubrique }} >
+                    <label for="radio_type_super_rubrique">Super-Rubrique</label>
+                </div>
+                <div class="radio radio-success radio-inline">
+                    <input type="radio" id="radio_type_hyper_rubrique" data-val="2" name="radio_type" class="js_radio_type" {{ check_hyper_rubrique }}>
+                    <label for="radio_type_hyper_rubrique">Hyper-Rubrique</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body form-horizontal">
+        <div class="form-group form-group-small-margin">
+            <label class="col-lg-2 control-label">Rubrique</label>
+            <div class="col-lg-6 text-center" id="js_conteneur_rubrique"></div>
+            <div class="col-lg-2">
+                <select id="js_varation_n" class="form-control">
+                    <option value="-1" data-class="label-{{ class_n_1 }}" class="text-{{ class_n_1 }}">n-1</option>
+                    <option value="0" data-class="label-{{ class_n }}" selected>n</option>
+                    <option value="1" data-class="label-{{ class_n1 }}" class="text-{{ class_n1 }}">n+1</option>
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <span class="btn btn-default btn-sm" id="js_add_rubrique">Ajouter</span>
+            </div>
+        </div>
+
+        <div class="form-group form-group-small-margin">
+            <label class="col-lg-2 control-label">Nom&nbsp;&agrave;&nbsp;afficher</label>
+            <div class="col-lg-6">
+                <input type="text" placeholder="Nom à afficher" class="form-control" id="js_indicateur_nom_afficher" value="{{ (indicateur is not null) ? indicateur.libelleAffiche : '' }}">
+            </div>
+            {# decimal #}
+            <div class="col-lg-4 checkbox checkbox-primary checkbox-inline">
+                <input type="checkbox" id="js_is_decimal" {{ (indicateur is not null and indicateur.isDecimal == 1) ? 'checked' : '' }}>
+                <label for="js_is_decimal">Avec&nbsp;d&eacute;cimal</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="js_formule" class="form-control scroller"
+                     style="border: 1px solid #CCCCCC !important;margin-top: 5px !important; word-wrap: break-word!important; padding: 5px !important;height: 60px;width: 100%!important;">
+                    {% if indicateur is not null and indicateur.isTable != 1 %}
+                        {% set index = 0 %}
+                        {% for ch in indicateur.formule|split('') %}
+                            {% if ch == '#' %}
+                                {% if indicateur.operandes[index].variationN == -1 %}
+                                    {% set class_variation = class_n_1 %}
+                                {% elseif indicateur.operandes[index].variationN == 1 %}
+                                    {% set class_variation = class_n1 %}
+                                {% else %}
+                                    {% set class_variation = class_n %}
+                                {% endif %}
+                                <span class="label label-{{ class_variation }} operateur operande" data-variation="{{ indicateur.operandes[index].variationN }}" style="margin-right: 1px !important;margin-left: 1px !important;" data-id="{{ indicateur.operandes[index].rubrique.id|boost }}">{{ indicateur.operandes[index].rubrique.libelle }}</span>
+                                {% set index = index + 1 %}
+                            {% else %}
+                                <span class="operateur">{{ ch }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <span class="blink" id="js_blink_formule">|</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:15px !important">
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-primary btn-sm" id="js_btn_save_indicateur_item"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+    </div>
+</div>
+
+<input type="text" style="height: 0 !important;width: 0!important;" id="js_focus"/>
+
+<input type="hidden" id="js_indicateur_is_add" value="{{ (indicateur is not null) ? 1 : 0 }}" />

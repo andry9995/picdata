@@ -1,0 +1,189 @@
+<form class="form-horizontal" id="js_form_meth_methode_comptable">
+
+    <div class="row">
+        <div class="col-sm-6">
+
+            {#<div class="form-group">#}
+                {#<label class="col-lg-5 control-label">Ventes au comptoir</label>#}
+                {#<div class="col-lg-6">#}
+                    {#<select class="form-control" name="vente_comptoir" id="js_vente_comptoir">#}
+                        {#{% set venteComptoir = (methodeComptable is null)? -1 : (methodeComptable.venteComptoir is null) ? -1 : methodeComptable.venteComptoir%}#}
+                        {#<option></option>#}
+                        {#<option value="0" {{ (venteComptoir == 0 )? 'selected' :'' }}>Non</option>#}
+                        {#<option value="1" {{ (venteComptoir ==1)?'selected' : '' }}>Oui</option>#}
+
+                    {#</select>#}
+                {#</div>#}
+            {#</div>#}
+
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Ventes</label>
+                <div class="col-lg-6">
+                    <select class="form-control meth_methode_comptable" name="vente" id="js_vente" data-field="Vente">
+                        {% set vente = (methodeComptable is null)? -1 : (methodeComptable.vente is null) ? -1 : methodeComptable.vente %}
+                        <option></option>
+                        {#<option value="0" {{ (vente == 0)? 'selected': '' }}>Saisie factures, import excel  </option>#}
+                        {#<option value="1" {{ (vente == 1)? 'selected': '' }}>Recap de caisse / Directement banque</option>#}
+                        <option value="1" {{ (vente == 1)? 'selected': '' }}>Saisie factures</option>
+                        <option value="0" {{ (vente == 0) ? 'selected' : '' }}>Import excel</option>
+                        <option value="3" {{ (vente == 3)? 'selected': '' }}>Caisse</option>
+                        <option value="2" {{ (vente == 2)? 'selected': '' }}>Autre</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Achats</label>
+                <div class="col-lg-6">
+                    <select class="form-control meth_methode_comptable" name="achat" id="js_achat" data-field="Achat">
+                        {% set achat = (methodeComptable is null)? -1 : (methodeComptable.achat is null) ? -1 : methodeComptable.achat %}
+                        <option></option>
+                        <option value="1" {{ (achat == 1)? 'selected': '' }}>Saisie sur factures</option>
+                        <option value="0" {{ (achat == 0)? 'selected': '' }}>Import excel</option>
+                        <option value="2" {{ (achat == 2)? 'selected': '' }}>Autre</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Banques</label>
+                <div class="col-lg-6">
+                    <select class="form-control meth_methode_comptable" name="banque" id="js_banque" data-field="Banque">
+                        {% set banque = (methodeComptable is null)? -1 : (methodeComptable.banque is null) ? -1 : methodeComptable.banque %}
+                        <option></option>
+                        <option value="1" {{ (banque == 1)? 'selected': '' }}>Saisie</option>
+                        <option value="0" {{ (banque == 0)? 'selected': '' }}>Import ecritures</option>
+                        <option value="2" {{ (banque == 2)? 'selected': '' }}>Déjà importé dans l'archive</option>
+                    </select>
+                </div>
+            </div>
+
+            {#<div class="form-group">#}
+                {#<label class="col-lg-5 control-label">Nombre&nbsp;de&nbsp;banques</label>#}
+                {#<div class="col-lg-6">#}
+                    {#<select class="form-control" name="nombre_banque" id="js_nombre_banque">#}
+                        {#{% set nbBanque = (methodeComptable is null)? -1 : (methodeComptable.nbBanque is null) ? -1 : methodeComptable.nbBanque %}#}
+                        {#<option></option>#}
+                        {#{% for i in 1..5 %}#}
+                            {#<option value="{{ i }}" {{ (nbBanque == i) ? 'selected': '' }}>{{ i }}</option>#}
+                        {#{% endfor %}#}
+                        {#<option value="6" {{ (nbBanque>=6) ? 'selected':'' }}>Plus</option>#}
+                    {#</select>#}
+                {#</div>#}
+            {#</div>#}
+
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Saisie&nbsp;des&nbsp;OD&nbsp;de&nbsp;paye</label>
+                <div class="col-lg-6">
+                    <select class="form-control meth_methode_comptable" name="saisie_od_paye" id="js_saisie_od_paye" data-field="SaisieOdPaye">
+                        {% set odPaye = (methodeComptable is null)? -1 : (methodeComptable.saisieOdPaye is null) ? -1 : methodeComptable.saisieOdPaye %}
+                        <option></option>
+                        <option value="1" {{ (odPaye == 1)? 'selected': '' }}>Oui</option>
+                        <option value="0" {{ (odPaye == 0)? 'selected': '' }}>Non</option>
+                        <option value="2" {{ (odPaye == 2)? 'selected': '' }}>Import</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Analytique</label>
+                <div class="col-lg-6">
+                    <select class="form-control meth_methode_comptable" name="analytique" id="js_analytique" data-field="Analytique">
+                        {% set analytique = (methodeComptable is null)? -1 : (methodeComptable.analytique is null) ? -1 : methodeComptable.analytique %}
+                        <option></option>
+                        <option value="0" {{ (analytique == 0)? 'selected': '' }}>Non</option>
+                        <option value="1" {{ (analytique == 1)? 'selected': '' }}>1 Axe</option>
+                        <option value="2" {{ (analytique == 2)? 'selected': '' }}>2 Axes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Rapprochement&nbsp;banque</label>
+                <div class="col-lg-6">
+
+                    {% set rapprochementBanque = 1 %}
+                    {% set suiviChequeId = 1 %}
+                    {% if methodeComptable is not null %}
+                        {% if (methodeComptable.methodeSuiviCheque is null) and (methodeComptable.rapprochementBanque is null)  %}
+                            {% if instructionDossier is not null %}
+                                {% set rapprochementBanque = (instructionDossier.rapprochementBanque is null) ? 1 : instructionDossier.rapprochementBanque %}
+
+                                {% if instructionDossier.methodeSuiviCheque is null %}
+                                    {% if instructionDossier.rapprochementBanque is null %}
+                                            {% set suiviChequeId = 1 %}
+                                        {% else %}
+                                            {% set suiviChequeId = -1 %}
+                                    {% endif %}
+
+                                {% else %}
+                                    {% set suiviChequeId = instructionDossier.methodeSuiviCheque.id %}
+
+                                {% endif %}
+
+                            {% endif %}
+
+                        {% else %}
+
+                            {% set rapprochementBanque = methodeComptable.rapprochementBanque %}
+                            {% set suiviChequeId = (methodeComptable.methodeSuiviCheque is null) ? -1 : methodeComptable.methodeSuiviCheque.id %}
+
+                        {% endif %}
+
+
+                    {% else %}
+
+                        {% if instructionDossier is not null %}
+                            {% set rapprochementBanque = (instructionDossier.rapprochementBanque is null) ? 1 : instructionDossier.rapprochementBanque %}
+
+                            {% if instructionDossier.methodeSuiviCheque is null %}
+                                {% if instructionDossier.rapprochementBanque is null %}
+                                    {% set suiviChequeId = 1 %}
+                                {% else %}
+                                    {% set suiviChequeId = -1 %}
+                                {% endif %}
+
+                            {% else %}
+                                {% set suiviChequeId = instructionDossier.methodeSuiviCheque.id %}
+
+                            {% endif %}
+
+                        {% endif %}
+
+
+                    {% endif %}
+
+                    <select class="form-control meth_methode_comptable rapprochement_banque" name="rapprochement_banque_doss" data-field="RapprochementBanque" id="js_rapprochement_banque_doss">
+                        {#{% set rapprochementBanque = (methodeComptable is null) ? -1 : (methodeComptable.rapprochementBanque is null) ? -1  : methodeComptable.rapprochementBanque%}#}
+                        <option {{ (rapprochementBanque == -1) ? 'selected' : ''  }}></option>
+                        <option value="1" {{ (rapprochementBanque == 1) ? 'selected' : ''  }}>Oui</option>
+                        <option value="0" {{ (rapprochementBanque == 0) ? 'selected' : ''  }}>Non</option>
+                        <option value="2" {{ (rapprochementBanque == 2) ? 'selected' : ''  }}>Indifférent</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Suivi&nbsp;des&nbsp;chèques&nbsp;émis</label>
+                <div class="col-lg-6">
+                    <select class="form-control meth_methode_comptable suivi_cheque_emis" name="suivi_cheque_emis_doss" data-field="MethodeSuiviCheque" id="js_suivi_cheque_emis_doss">
+                        {#{% set suiviChequeId = (methodeComptable is null) ? -1 : (methodeComptable.methodeSuiviCheque.id is not defined) ? -1 : methodeComptable.methodeSuiviCheque.id  %}#}
+                        <option></option>
+                        {% for methodeSuiviCheque in methodeSuiviCheques %}
+                            <option value="{{ methodeSuiviCheque.id }}" {{ (methodeSuiviCheque.id == suiviChequeId)? 'selected': '' }}>
+                                {{ methodeSuiviCheque.libelle }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</form>

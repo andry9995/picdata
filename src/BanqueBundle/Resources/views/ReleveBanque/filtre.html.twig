@@ -1,0 +1,9 @@
+<div class="row bande">
+    <div class="col-sm-2">{{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0,'label_col':3,'select_col':9 })) }}</div>
+    <div class="hidden" id="js_conteneur_site"></div>
+    <div class="col-sm-3" id="js_conteneur_dossier"></div>
+    <div class="col-sm-2" id="js_id_conteneur_banque"></div>
+    <div class="col-sm-3" id="js_id_conteneur_compte"></div>
+    <div class="col-sm-2">{{ render(controller('AppBundle:Commun:exercices', { 'tous':2 })) }}</div>
+</div>
+{#<div class="row bande white-bg" id="js_id_control"></div>#}

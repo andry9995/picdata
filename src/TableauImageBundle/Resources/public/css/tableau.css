@@ -1,0 +1,188 @@
+#param-categorie-modal .ui-jqgrid .ui-jqgrid-htable th {
+    height: 40px;
+    padding: 0 2px 0 2px;
+}
+
+#param-periode-modal .ui-jqgrid .ui-jqgrid-htable th {
+    height: 40px;
+    padding: 0 2px 0 2px;
+}
+
+#param-categorie-modal .ui-jqgrid .ui-jqgrid-htable th div {
+    overflow: hidden;
+    position: relative;
+    height: 40px;
+}
+
+#param-periode-modal .ui-jqgrid .ui-jqgrid-htable th div {
+    overflow: hidden;
+    position: relative;
+    height: 40px;
+}
+
+#mois-plus-tout, #jour-tout {
+    text-align-last: center;
+    padding-left: 25px;
+}
+
+.ui-jqgrid tr.jqgrow td {
+    padding: 5px;
+}
+
+#tableau-image .ui-th-column {
+    font-weight: bold;
+}
+
+#tableau-image .ui-jqgrid tr.jqgrow td {
+    padding: 0 5px;
+    height: 18px;
+}
+
+#tableau-image .ui-jqgrid tr.ui-row-ltr td {
+    border: none;
+    color: #676a6c;
+}
+
+#tableau-image .ui-th-column.ui-th-ltr {
+    color: #676a6c;
+}
+
+#tableau-image .ui-jqgrid tr.ui-row-ltr td a:not(.with-retard) {
+    color: #676a6c;
+}
+
+#tableau-image .ui-jqgrid tr.ui-row-ltr td a.with-retard {
+    color: transparent;
+}
+
+.text-attente-reponse {
+    color: #9171e3;
+}
+
+.checkbox-purple input[type="checkbox"]:checked + label::before,
+.checkbox-purple input[type="radio"]:checked + label::before {
+    background-color: #9171e3;
+    border-color: #9171e3;
+}
+
+.checkbox-purple input[type="checkbox"]:checked + label::after,
+.checkbox-purple input[type="radio"]:checked + label::after {
+    color: #fff;
+}
+
+/* Couleur Tbimage */
+.text-fini {
+    color: #27c74d;
+}
+
+.text-finissable {
+    color: #26a0c2;
+}
+
+.text-attente-image {
+    color: #acb9ca;
+}
+
+.text-attente-reponse {
+    color: #9171e3;
+}
+
+.texte-non-traitable {
+    color: #d9534f;
+}
+
+.checkbox-purple input[type="checkbox"]:checked + label::before,
+.checkbox-purple input[type="radio"]:checked + label::before {
+    background-color: #9171e3;
+    border-color: #9171e3;
+}
+
+.checkbox-purple input[type="checkbox"]:checked + label::after,
+.checkbox-purple input[type="radio"]:checked + label::after {
+    color: #fff;
+}
+
+.radio-purple input[type="radio"] + label::after {
+    background-color: #9171e3;
+}
+
+.radio-purple input[type="radio"]:checked + label::before {
+    border-color: #9171e3;
+}
+
+.radio-purple input[type="radio"]:checked + label::after {
+    background-color: #9171e3;
+}
+
+.row_header.dossier-attente-image .js-tableau-dossier,
+.hidden-categorie .row_header.dossier-attente-image {
+        background: #acb9ca !important;
+    color: #676a6c !important;
+}
+
+.row_header.dossier-finissable .js-tableau-dossier,
+.hidden-categorie .row_header.dossier-finissable {
+    background: #c3e2f3 !important;
+    color: #676a6c !important;
+}
+
+.row_header.dossier-fini .js-tableau-dossier,
+.hidden-categorie .row_header.dossier-fini {
+    background: #9bebc6 !important;
+    color: #676a6c !important;
+}
+
+.row_header.dossier-attente-reponse .js-tableau-dossier,
+.hidden-categorie .row_header.dossier-attente-reponse {
+    background: #bf9beb !important;
+    color: #676a6c !important;
+}
+
+.row_header.dossier-non-traitable .js-tableau-dossier,
+.hidden-categorie .row_header.dossier-non-traitable {
+    background: #e48e82 !important;
+    color: #676a6c !important;
+}
+
+.hidden-categorie .jqgrow.ui-row-ltr:not(.row_header),
+.attente-image-show .jqgrow.ui-row-ltr:not(.dossier-attente-image),
+.non-traitable-show .jqgrow.ui-row-ltr:not(.dossier-non-traitable),
+.fini-show .jqgrow.ui-row-ltr:not(.dossier-fini),
+.finissable-show .jqgrow.ui-row-ltr:not(.dossier-finissable),
+.attente-reponse-show .jqgrow.ui-row-ltr:not(.dossier-attente-reponse) {
+    display: none;
+}
+
+.hidden-categorie .jqgrow.ui-row-ltr .hide-on-mask,
+.hidden-categorie .jqgrow.ui-row-ltr .hide-on-mask a {
+    color: transparent !important;
+}
+
+
+/*NOTIFICATION*/
+.smtp-help-item {
+    margin-bottom: 5px;
+}
+.smtp-help-item .label {
+    display: inline-block;
+    width: 80px;
+    text-align: left;
+}
+
+#rappel-image .ui-jqgrid .ui-jqgrid-htable th {
+    height: 40px;
+    padding: 0 2px 0 2px;
+}
+
+#rappel-image .ui-jqgrid .ui-jqgrid-htable th div {
+    overflow: hidden;
+    position: relative;
+    height: 40px;
+}
+
+button.pagination {
+    margin-bottom: 10px !important;
+    padding: 5px !important;
+    width: auto !important;
+    margin-left: 10px !important;
+}

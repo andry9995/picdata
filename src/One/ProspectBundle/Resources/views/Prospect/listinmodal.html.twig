@@ -1,0 +1,46 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-new-prospect-title">Choisir un Client</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>Qualification</th>
+                            <th>Note</th>
+                            <th>Ville</th>
+                            <th>Code Postal</th>
+                            <th>Pays</th>
+                            <th>Secteur activité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prospect in prospects %}
+                            <tr>
+                                <td><input type="checkbox" class="account" value="{{ prospect.id~';'~prospect.numeroClient~';'~prospect.intitule }}"></td>
+                                <td>{{ prospect.intitule }}</td>
+                                <td>{{ prospect.oneQualification.nom }}</td>
+                                <td>{{ prospect.note }}</td>
+                                <td>{{ prospect.villeFacturation }}</td>
+                                <td>{{ prospect.codePostalFacturation }}</td>
+                                <td>{{ prospect.paysFacturation.nom }}</td>
+                                <td>{{ prospect.oneActivite.nom }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" onclick="selectAccount();">Sélectionner</button>
+    </div>
+</div>
+                

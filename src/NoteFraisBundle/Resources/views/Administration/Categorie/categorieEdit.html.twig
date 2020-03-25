@@ -1,0 +1,77 @@
+<div class="form-horizontal">
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Initulé</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Intitulé de la catégorie" class="form-control" id="js_libelle" value="{{ (catDoss is null) ? '' : catDoss.libelle}}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Compte de charges</label>
+        <div class="col-lg-8">
+            <select data-placeholder="Exemple 625000" class="chosen-select form-control" id="js_pcc_charge">
+                <option value=""></option>
+
+                {% set pccChargeId = (catDoss is null) ? -1 : (catDoss.pccCharge is null) ? -1 : catDoss.pccCharge.id %}
+
+                {% for pcc in pccs %}
+                    <option value="{{ pcc.id }}" {{ (pcc.id == pccChargeId) ? 'selected' : '' }}>{{ pcc.compte }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Compte de TVA</label>
+        <div class="col-lg-8">
+            <select data-placeholder="Exemple 445000" class="chosen-select form-control" id="js_pcc_tva">
+                <option value=""></option>
+
+                {% set pccTvaId = (catDoss is null) ? -1 : (catDoss.pccTva is null) ? -1 : catDoss.pccTva.id %}
+
+                {% for pcc in pccs %}
+                    <option value="{{ pcc.id }}" {{ (pcc.id == pccTvaId) ? 'selected' :  '' }}>{{ pcc.compte }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Taux de récupération TVA</label>
+        <div class="col-lg-8">
+            <div class="input-group m-b">
+                <input type="text" placeholder="Exemple 10" class="form-control" id="js_tva_rec" value="{{ (catDoss is null) ? '' : catDoss.tvaRec }}">
+                <span class="input-group-addon">%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Description</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Vos commentaires ici" class="form-control" id="js_description" value="{{ (catDoss is null) ? '' : catDoss.description }}">
+        </div>
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="col-lg-4 control-label">
+
+            {% set status = 0 %}
+            {%  set status = (catDoss is null) ? 0 : (catDoss.status is null) ? 0 : catDoss.status %}
+
+            <input type="checkbox" class="i-checks" id="js_status" {{ (status == 1) ? 'checked' : '' }}>
+            Activer la catégorie
+        </label>
+
+        <div class="col-lg-8">
+
+        <button class="btn btn-sm btn-primary pull-right" id="js_save_categorie"><strong>Sauvegarder</strong></button>
+        </div>
+
+    </div>
+</div>

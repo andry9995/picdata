@@ -1,0 +1,24 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Trésorerie{% endblock %}
+
+{% block contenu_droite %}
+    {{ include('EtatBundle:Tresorerie/show:filtre.html.twig') }}
+    {{ include('EtatBundle:Tresorerie/show:indicateurs.html.twig') }}
+    {{ include('EtatBundle:Tresorerie/show:tresorerie.html.twig') }}
+    {{ include('EtatBundle:Tresorerie/detail:container.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/highchart/highcharts.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/tresorerie/tresorerie.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/tresorerie/index.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/tresorerie/detail.js') }}"></script>
+{% endblock %}

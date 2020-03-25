@@ -1,0 +1,76 @@
+<div class="row" id="filtre-journal">
+    <div class="row">
+        <div class="col-sm-2">{{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'label_col':4, 'select_col':8 } )) }}</div>
+        <div class="col-sm-3">{{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0,'label_col':2,'select_col':10 })) }}</div>
+        <div class="col-sm-3" id="js_conteneur_dossier"></div>
+        <div class="col-sm-3">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-lg-5" for="journal-dossier">
+                        <span>Journal Dossier</span>
+                    </label>
+                    <div class="col-lg-7">
+                        <select class="form-control" id="journal-dossier" >
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2" id="id_container_btn_periode">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-lg-4">Mois</label>
+                    <div class="col-lg-8">
+                        <span type="button" style="width:100%" class="btn btn-white" id="id_periode_btn" data-container="body" data-toggle="popover" data-placement="bottom" data-content="">
+                            <i class="fa fa-calendar-o"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-3 text-center">
+                    <div class="text-left">
+                        <div class="checkbox checkbox-inline">
+                            <input id="from-picdoc" type="checkbox" checked>
+                            <label for="from-picdoc">PicDoc #</label>
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <div class="checkbox checkbox-inline">
+                            <input id="from-compta" type="checkbox" checked>
+                            <label for="from-compta">Compta *</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" id="btn-historique">
+                    <span class="simple_tag white-bg" id="id_import_historique"><i class="fa fa-info-circle"></i>&nbsp;Imports</span>
+                </div>
+                <div class="col-sm-2">
+                    <div class="btn-group">
+                        <span data-toggle="dropdown" class="btn btn-white btn-sm dropdown-toggle"><i class="fa fa-download" aria-hidden="true"></i></span>
+                        <ul class="dropdown-menu">
+                            <li class="cl_export" data-type="xls"><a href="#">Excel</a></li>
+                            <li class="cl_export" data-type="xml"><a href="#">XML</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <span class="btn btn-primary btn-sm" id="btn-go">GO</span>
+                </div>
+                {#<div class="col-sm-2">#}
+                    {#<span class="btn btn-primary btn-sm" id="btn-go-centralisateur">Centralisateur</span>#}
+                {#</div>#}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="js_date_picker_hidden hidden"></div>
+    <div class="hidden" id="js_conteneur_site"></div>
+</div>

@@ -1,0 +1,245 @@
+<div class="form-horizontal">
+
+    {% set gasoil = false %}
+
+    {% if sCatDoss is not null %}
+        {% if sCatDoss.ndfSouscategorie is not null %}
+            {% if sCatDoss.ndfSouscategorie.soussouscategorie is not null %}
+                {% if sCatDoss.ndfSouscategorie.soussouscategorie.id == 67 %}
+                    {% set gasoil = true %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+
+    {% set placeHolderCharge = '' %}
+
+    {% for like in likeCharges %}
+
+        {% set pcc = like %}
+
+        {% if pcc|length < 6 %}
+            {% for i in pcc|length .. 5 %}
+                {% set  pcc = pcc~'X' %}
+            {% endfor %}
+        {% endif %}
+
+        {% if placeHolderCharge == ""  %}
+            {% set placeHolderCharge = pcc %}
+        {% else %}
+            {% set placeHolderCharge = placeHolderCharge ~', '~ pcc %}
+        {% endif %}
+    {% endfor %}
+
+    {% set placeHolderCharge = (placeHolderCharge == '') ? 'Choisir un compte' : placeHolderCharge %}
+
+
+    {% set placeHolderTva = '' %}
+
+    {% for like in likeTvas %}
+
+        {% set pcc = like %}
+        {% if pcc|length < 6  %}
+            {% for i in pcc|length .. 5 %}
+                {% set  pcc = pcc~'X' %}
+            {% endfor %}
+        {% endif %}
+
+        {% if placeHolderTva == ""  %}
+            {% set placeHolderTva = pcc %}
+        {% else %}
+            {% set placeHolderTva = placeHolderTva ~', '~ pcc %}
+        {% endif %}
+    {% endfor %}
+
+    {% set placeHolderTva = (placeHolderTva == '') ? 'Non soumis' : placeHolderTva %}
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Catégorie</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Intitulé de la catégorie" class="form-control" id="js_libelle"
+                   value="{{ (sCatDoss is null) ? '' : sCatDoss.libelle }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Plan comptable Charge</label>
+        <div class="col-lg-8">
+            <div class="input-group">
+                <input type="text" placeholder="Plan comptable" class="form-control" id="js_pcg_charge"
+                       value="{{ (placeHolderCharge == 'Choisir un compte') ? '' : placeHolderCharge }}" disabled>
+                <span class="input-group-addon js_edit_pcg pointer" id="js_edit_pcg_charge" title="Modifier le(s) PCG(s)">
+                    <i class="fa fa-edit"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Compte entreprise</label>
+        <div class="col-lg-8">
+
+            <div class="input-group">
+
+                <select data-placeholder="{{ placeHolderCharge }}" class="js_pcc chosen-select form-control" id="js_pcc_charge">
+                    <option value="">{{ placeHolderCharge }}</option>
+
+                    {% set pccChargeId = (sCatDoss is null) ? -1 : (sCatDoss.pccCharge is null) ? -1 : sCatDoss.pccCharge.id %}
+
+                    {% for pcc in pccCharges %}
+                        <option value="{{ pcc.id|boost }}" {{ (pcc.id == pccChargeId) ? 'selected' : '' }}>
+                            {{ pcc.compte }} - {{ pcc.intitule }}</option>
+                    {% endfor %}
+
+                </select>
+
+                <span class="input-group-addon js_edit_pcc" title="Modifier ce compte"><i class="fa fa-edit pointer"></i></span>
+                <span class="input-group-addon js_add_pcc" title="Ajouter un nouveau compte"><i class="fa fa-plus pointer"></i></span>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Plan comptable TVA</label>
+        <div class="col-lg-8">
+            <div class="input-group">
+                <input type="text" placeholder="Plan comptable" class="form-control" id="js_pcg_tva"
+                       value="{{ (placeHolderTva == 'Non soumis')? '' : placeHolderTva }}" disabled>
+                <span class="input-group-addon js_edit_pcg pointer" id="js_edit_pcg_tva" title="Modifier le(s) PCG(s)">
+                    <i class="fa fa-edit"></i>
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+    {% set nonSoumis = false %}
+
+    {% set pccTvaId = (sCatDoss is null) ? -1 : (sCatDoss.pccTva is null) ? -1 : sCatDoss.pccTva.id %}
+
+    {% if pccTvaId == -1 %}
+        {% set nonSoumis = true %}
+    {% endif %}
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Compte de TVA</label>
+        <div class="col-lg-8">
+
+            <div class="input-group">
+
+                <select data-placeholder="{{ placeHolderTva }}" class="js_pcc chosen-select form-control"
+                        id="js_pcc_tva">
+
+                    <option value="{{ (placeHolderTva == 'Non soumis') ? -1 : '' }}"
+                            {{ (pccTvaId == -1 and placeHolderTva == 'Non soumis') ? 'selected' : '' }}>
+                        {{ placeHolderTva }}
+                    </option>
+                    {% if placeHolderTva != 'Non soumis' %}
+                        <option value="-1" {{ (pccTvaId == -1) ? 'selected' : '' }}>Non soumis</option>
+                    {% endif %}
+                    {% for pcc in pccTvas %}
+                        <option value="{{ pcc.id|boost }}" {{ (pcc.id == pccTvaId) ? 'selected' :  '' }}>
+                            {{ pcc.compte }} - {{ pcc.intitule }}</option>
+                    {% endfor %}
+
+                </select>
+
+                <span class="input-group-addon js_edit_pcc" title="Modifier ce compte"><i class="fa fa-edit pointer"></i></span>
+                <span class="input-group-addon js_add_pcc" title="Ajouter un nouveau compte"><i class="fa fa-plus pointer"></i></span>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Taux TVA Réc</label>
+        <div class="col-lg-8">
+            <div class="input-group m-b">
+                <input type="number" placeholder="Exemple 10" class="form-control" id="js_tva_rec"
+                       value="{{ (sCatDoss is null) ? '' : (sCatDoss.tvaRec is null) ? '' : sCatDoss.tvaRec }}"
+                {{ (nonSoumis == true) ? 'disabled' : '' }}>
+                <span class="input-group-addon">%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" {{ (gasoil == false) ? 'hidden' : '' }}>
+        <label class="col-lg-4 control-label">Taux TVA Réc. 2</label>
+        <div class="col-lg-8">
+            <div class="input-group m-b">
+                <input type="number" placeholder="Exemple 10" class="form-control" id="js_tva_rec2"
+                       value="{{ (sCatDoss is null) ? '' : (sCatDoss.tvaRec2 is null) ? '' : sCatDoss.tvaRec2 }}"
+                        {{ (nonSoumis == true) ? 'disabled' : '' }}>
+                <span class="input-group-addon">%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Taux TVA</label>
+        <div class="col-lg-8">
+
+            <div class="input-group m-b">
+
+                <select data-placeholder="Choisir un Taux" class="chosen-select form-control" id="js_tva_taux"
+                {{ (nonSoumis == true) ? 'disabled' : '' }}>
+
+                    <option value="">Choisir un Taux</option>
+
+                    {% set tvaTauxId = -1 %}
+
+                    {% if sCatDoss is not null %}
+
+                        {% if sCatDoss.tvaTaux is not null %}
+                            {% set tvaTauxId = sCatDoss.tvaTaux.id %}
+
+                        {# raha mbola tsy misy tvataux dia ilay any @ parametrage par defaut no afficher-na #}
+                        {% else %}
+                            {% if sCatDoss.ndfSouscategorie is not null %}
+                                {% if sCatDoss.ndfSouscategorie.tvaTaux is not null %}
+                                    {% set tvaTauxId = sCatDoss.ndfSouscategorie.tvaTaux.id %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% for tva in tvaTauxs %}
+                        <option value="{{ tva.id }}" {{ (tva.id == tvaTauxId) ? 'selected' :  '' }}>{{ tva.taux }}</option>
+                    {% endfor %}
+
+                </select>
+
+                <span class="input-group-addon">%</span>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+
+        <label class="col-lg-4 control-label">
+
+            {% set status = 0 %}
+            {%  set status = (sCatDoss is null) ? 0 : (sCatDoss.status is null) ? 0 : sCatDoss.status %}
+
+            <input type="checkbox" class="i-checks" id="js_status" {{ (status == 1) ? 'checked' : '' }}>
+            Activer la catégorie
+        </label>
+
+        <div class="col-lg-8">
+
+            <button class="btn btn-sm btn-primary pull-right" id="js_save_sous_categorie"><strong>Sauvegarder</strong></button>
+        </div>
+
+    </div>
+</div>

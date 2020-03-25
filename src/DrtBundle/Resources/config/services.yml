@@ -1,0 +1,4 @@
+services:
+#    drt.example:
+#        class: DrtBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

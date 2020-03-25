@@ -1,0 +1,71 @@
+################################COMMUNS##########################################
+etat_financier_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: EtatFinancierBundle:Default:index }    
+
+
+    
+################################PARAMETRAGE##########################################
+etat_financier_admin:
+    path:   /etat_financier
+    defaults: { _controller: EtatFinancierBundle:Admin:index }
+etat_financier_show:
+    path: /etat_financier/show/{etat}/{dossier}/{regime}
+    defaults: { _controller: EtatFinancierBundle:Etat:showEtat }
+    options:
+        expose: true        
+etat_financier_filtre_parametrage:
+    path: /etat_financier/parametrage/{etat}
+    defaults: { _controller:EtatFinancierBundle:Etat:showFiltreParametrage , etat: 0 }
+    options:
+        expose: true
+    requirements:
+        etat: \d*
+etat_financier_compte:
+    path: /etat_financier/compte/{etat}/{brut}
+    defaults: { _controller:EtatFinancierBundle:Etat:comptes , etat: 0 , brut: 1 }
+    options:
+        expose: true
+    requirements:
+        etat: \d*
+        brut: \d*
+etat_financier_edit:
+    path: /etat_financier/edit/{etat}/{action}/{rang}/{calcul}/{parent}/{etat_select}/{regime}/{dossier}/{libelle}
+    defaults: { _controller:EtatFinancierBundle:Etat:editEtat , etat : 0 , action : 0 , rang : 1000 , calcul : 4 , parent : 0 , etat_select : 0 , regime : 0 , dossier : 0 , libelle : ''}
+    options:
+        expose: true
+    requirements:
+        etat: \d*
+        action : \d*
+        rang: \d*
+        calcul: \d*
+        parent: \d*
+        etat_select: \d*
+etat_financier_compte_edit:
+    path: /etat_financier/edit_compte/{id_compte}/{id_etat_compte}/{id_etat}/{status_debit}/{status_credit}/{brut}
+    defaults: { _controller:EtatFinancierBundle:Etat:editEtatCompte , id_compte : 0 ,id_etat_compte : 0 ,id_etat : 0 ,status_debit : 0 ,status_credit : 0 ,brut : 1 }
+    options:
+        expose: true
+    requirements:
+        id_compte: \d*
+        id_etat_compte: \d*
+        id_etat: \d*
+        status_debit: \d*
+        status_credit: \d*
+        brut: \d*
+
+
+        
+################################AFFICHAGE##########################################
+etat_financier:
+    path: /etatFinancier
+    defaults: { _controller: EtatFinancierBundle:Affichage:index }
+etat_financier_show_item:
+    path: /etatFinancier/{etat}
+    defaults: { _controller: EtatFinancierBundle:Affichage:show , etat : 0 }
+    options:
+        expose: true
+    requirements:
+        etat: \d*
+    methods: [POST]
+

@@ -1,0 +1,134 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-new-prospect-title">Edition Contact</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="contact-client-form">
+            <input type="hidden" class="form-control" id="id" name="id">
+            <div class="form-group">
+                <label for="nom" class="col-md-4 control-label">Nom*</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="nom">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="prenom" class="col-md-4 control-label">Prénom</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="prenom" name="prenom" placeholder="prénom">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-md-4 control-label">Email</label>
+                <div class="col-md-8">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tel-portable" class="col-md-4 control-label">Téléphone portable</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="tel-portable" name="tel-portable" placeholder="téléphone portable">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tel-pro" class="col-md-4 control-label">Téléphone professionnel</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="tel-pro" name="tel-pro" placeholder="téléphone professionnel">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tel-perso" class="col-md-4 control-label">Téléphone personnel</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="tel-perso" name="tel-perso" placeholder="téléphone personnel">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="adresse-1" class="col-md-4 control-label">Adresse</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="adresse-1" name="adresse-1"
+                           placeholder="ligne 1">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-8 col-md-offset-4">
+                    <input type="text" class="form-control" id="adresse-2" name="adresse-2"
+                           placeholder="ligne 2">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-4">
+                    <input type="text" class="form-control" id="ville" name="ville" placeholder="ville">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="code-postal" name="code-postal"
+                           placeholder="code postal">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-4">
+                    <select class="form-control" id="pays" name="pays" placeholder="pays">
+
+
+                        {#{% for country in countries %}#}
+                            {#<option value="{{ country.id }}" {% if country.alpha2 == mycountry %}selected="selected"{% endif %}>{{ country.nom }}</option>#}
+                        {#{% endfor %}#}
+
+                        {#{% set paysId = (prospect.paysFacturation is not null) ? prospect.paysFacturation.id : -1%}#}
+                        <option></option>
+
+
+
+                        {% for country in countries %}
+                            <option value="{{ country.id}}" }}>{{ country.nom }}</option>
+                        {% endfor %}
+
+
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="note" class="col-md-4 control-label">Note</label>
+                <div class="col-md-8">
+                    <textarea class="form-control" id="note" name="note" placeholder="note"></textarea>
+                </div>
+            </div>
+            <hr />
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Avancé</span>
+            <div class="advanced-group hidden">
+                <div class="form-group">
+                    <label for="service" class="col-md-4 control-label">Service</label>
+                    <div class="col-md-4">
+                        <select class="form-control" id="service" name="service">
+                            <option value=""></option>
+                            <option value="Direction">Direction</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Production">Production</option>
+                            <option value="Informatique">Informatique</option>
+                            <option value="Administratif">Administratif</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fonction" class="col-md-4 control-label">Fonction</label>
+                    <div class="col-md-4">
+                        <select class="form-control" id="fonction" name="fonction">
+                            <option value=""></option>
+                            <option value="Mandataire">Mandataire</option>
+                            <option value="Directeur">Directeur</option>
+                            <option value="Chef de service">Chef de service</option>
+                            <option value="Assistant">Assistant</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" onclick="editContactClient();">Enregistrer</button>
+    </div>
+</div>

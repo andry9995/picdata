@@ -1,0 +1,100 @@
+{% set margin = 15 %}
+{{ include('BanqueBundle:ReleveBanque:releve-line.html.twig', { 'releve': releve }) }}
+<div id="test_compte"></div>
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-8">
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_engagement" value="0" {{ (methode == 0) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_engagement">Engagement</label>
+        </div>
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_tresorerie" value="1" {{ (methode == 1) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_tresorerie">Tr&eacute;sorerie</label>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="checkbox checkbox-inline checkbox-warning">
+            <input id="jd_id_pas_piece" type="checkbox" {{ (releve is not null and releve.maj == 3) ? 'checked' : '' }}>
+            <label for="jd_id_pas_piece">Pas&nbsp;de&nbsp;Pi&egrave;ce</label>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox ibox-shadow" id="id_box_imputation">
+            <div class="ibox-title">
+                <h5>imputation</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="fullscreen-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="padding: 0!important;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="30%">Type</th>
+                            <th width="48%">Compte</th>
+                            <th width="20%">Montant</th>
+                            <th width="2%"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="id_tbody_imputation">
+                        {% for i in 1..6 %}
+                            {% set type = (releveCheckeds[i - 1] is defined) ? releveCheckeds[i - 1].type : -1 %}
+                            <tr data-index="{{ i }}" data-id_compte="{{ (releveCheckeds[i - 1] is defined) ? releveCheckeds[i - 1].idCompte : 0 }}" data-id_releve_detail="{{ ((releveCheckeds[i - 1] is defined) ? releveCheckeds[i - 1].idReleveDetail : 0)|boost }}">
+                                <td>
+                                    <div class="radio radio-info radio-inline" data-type="0">
+                                        <input type="radio" class="cl_type_in_tr" id="bilan-tiers-{{ i }}" value="1" {{ type == 1 ? 'checked' : '' }} name="radio-type-{{ i }}">
+                                        <label for="bilan-tiers-{{ i }}">Auxiliaire</label>
+                                    </div>
+                                    <div class="radio radio-info radio-inline" data-type="0">
+                                        <input type="radio" class="cl_type_in_tr" id="bilan-pcc-{{ i }}" value="0" {{ type == 0 ? 'checked' : '' }} name="radio-type-{{ i }}">
+                                        <label for="bilan-pcc-{{ i }}">PCC</label>
+                                    </div>
+                                    <div class="radio radio-danger radio-inline" data-type="1">
+                                        <input type="radio" class="cl_type_in_tr" id="charge-{{ i }}" value="2" {{ type == 2 ? 'checked' : '' }} name="radio-type-{{ i }}">
+                                        <label for="charge-{{ i }}">Charge</label>
+                                    </div>
+                                    <div class="radio radio-success radio-inline" data-type="1">
+                                        <input type="radio" class="cl_type_in_tr" id="tva-{{ i }}" value="3" {{ type == 3 ? 'checked' : '' }} name="radio-type-{{ i }}">
+                                        <label for="tva-{{ i }}">Tva</label>
+                                    </div>
+                                </td>
+                                <td><select class="form-control input-sm cl_select_compte"></select></td>
+                                <td><input class="form-control input-sm text-right cl_montant" type="text" value="{{ (releveCheckeds[i - 1] is defined) ? -releveCheckeds[i - 1].montant : 0 }}"></td>
+                                <td class="pointer cl_remove_imput text-center"><i class="fa fa-times" aria-hidden="true"></i></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hidden" id="id_options_hidden">
+    <div class="cl_option cl_option_1" data-value="1">{{ bilanTiersOptions|raw }}</div>
+    <div class="cl_option cl_option_0" data-value="0">{{ bilanPccOptions|raw }}</div>
+    <div class="cl_option cl_option_2" data-value="2">{{ chargeOptions|raw }}</div>
+    <div class="cl_option cl_option_3" data-value="3">{{ tvaOptions|raw }}</div>
+</div>
+
+<div class="row bande white-bg">
+    <div class="col-lg-3 hidden">
+        <label>Non&nbsp;Pris:&nbsp;</label>
+        <span class="label js_ecart">&nbsp;</span>
+    </div>
+    <div class="col-lg-12">
+        <div class="text-right">
+            <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+            <span class="btn btn-sm btn-primary" id="id_valider_imputation"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+        </div>
+    </div>
+</div>

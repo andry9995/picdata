@@ -1,0 +1,92 @@
+<div class="panel-body">
+    <div class="panel-group" id="id_accordion">
+        {% for key, indicateurTbDomaine in indicateurTbDomaines %}
+            <div class="panel panel-default" data-id="{{ indicateurTbDomaine.id|boost }}">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <a data-toggle="collapse" class="cl_nom_domaine" data-parent="#id_accordion" href="#collapse{{ key }}">
+                            <i class="cl_chevron fa fa-chevron-down {{ key == 0 ? 'hidden' : '' }}" aria-hidden="true"></i>
+                            <i class="cl_chevron fa fa-chevron-up {{ key == 0 ? '' : 'hidden' }}" aria-hidden="true"></i>
+                        </a>
+                        <input class="cl_nom_domaine_edit" style="border: none!important; background-color: transparent!important;" value="{{ indicateurTbDomaine.nom }}">
+                        &nbsp;
+                        <span data-toggle="dropdown" class="pull-right js_cl_edit_indicateur js_add btn btn-xs btn-white dropdown-toggle"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        &nbsp;
+                        <span class="btn btn-xs btn-white pull-right cl_remove_domaine"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+                <div id="collapse{{ key }}" class="panel-collapse collapse {{ key == 0 ? 'in' : '' }}">
+                    <div class="panel-body" style="overflow-y: auto;">
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% for indicateursTbInfoperdo in indicateurTbInfoPerdos %}
+            <div data-type="1" class="panel panel-default cl_li" data-id="{{ indicateursTbInfoperdo.id|boost }}">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        {{ indicateursTbInfoperdo.indicateurInfoPerdos.header }}
+                        <span class="btn btn-xs btn-white pull-right js_cl_delete_indicateur"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{#<div class="file-manager">
+    <div class="row">
+        <div class="col-lg-{{ (affichage == 1) ? '6' : '12' }}">
+            <span class="btn btn-block btn-primary btn-sm compose-mail js_cl_edit_indicateur js_add"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter</span>
+        </div>
+        {% if affichage == 1 %}
+            <div class="col-lg-6">
+                <span class="btn btn-block btn-primary btn-sm compose-mail js_add_in_infoperdos"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Infos&nbsp;Dossier</span>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="space-25"></div>
+    <h5>Indicateurs</h5>
+    {% set total = 0 %}
+    <ul class="folder-list m-b-md" id="js_sortable" style="padding: 0">
+        {% for indicateursTb in indicateursTbs %}
+            <li data-type="0" class="js_cl_edit_indicateur" data-id="{{ indicateursTb.id|boost }}">
+                <a href="#">
+                    <span class="js_cl_lib">{{ indicateursTb.libelle }}</span>
+                    &nbsp;
+                    <i class="js_cl_delete_indicateur fa fa-trash-o pull-right" aria-hidden="true"></i>
+                    &nbsp;
+                    <span class="label label-warning pull-right">{{ indicateursTb.ponderation }}</span>
+                </a>
+            </li>
+            {% set total = total + indicateursTb.ponderation %}
+        {% endfor %}
+
+        {% for indicateursTbInfoperdo in indicateurTbInfoPerdos %}
+            <li data-type="1" class="" style="background-color: #C6C6C6" data-id="{{ indicateursTbInfoperdo.id|boost }}">
+                <a href="#">
+                    &nbsp;
+                    <i class="fa fa-cubes" aria-hidden="true"></i>
+                    <span class="js_cl_lib">{{ indicateursTbInfoperdo.indicateurInfoPerdos.header }}</span>
+                    &nbsp;
+                    <i class="js_cl_delete_indicateur fa fa-trash-o pull-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <h5>Ponderation</h5>
+    <ul class="category-list" style="padding: 0">
+        {% if total == 100 %}
+            {% set cl_ponderation = 'text-navy' %}
+        {% elseif total < 100 %}
+            {% set cl_ponderation = 'text-warning' %}
+        {% else %}
+            {% set cl_ponderation = 'text-danger' %}
+        {% endif %}
+        <li><a href="#"><i class="fa fa-circle {{ cl_ponderation }}"></i><span id="id_total_ponderation">{{ total }}</span></a></li>
+    </ul>
+</div>
+#}

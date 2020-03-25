@@ -1,0 +1,4 @@
+services:
+#    one_vente.example:
+#        class: One\VenteBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

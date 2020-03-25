@@ -1,0 +1,36 @@
+{% if crypter == 1 %}
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="dossier" class="control-label col-lg-{{- label_col -}}">Dossiers</label>
+            <div class="col-lg-{{- select_col -}}">
+                <select class="dossier form-control" id="dossier">
+                    {% if tous == 1 %}
+                        <option value="{{ 0|boost }}" selected="selected">Tous</option>
+                    {% else %}
+                        <option value="{{ 0|boost }}" selected="selected">&nbsp;</option>
+                    {% endif %}
+                    {% for dossier in dossiers %}
+                        <option value="{{ dossier.id|boost }}">{{ (dossier.nom != '') ? dossier.nom : ' ' }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </form>
+{% else %}
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="dossier" class="control-label col-lg-{{- label_col -}}"></label>
+            <div class="col-lg-{{- select_col -}}"></div>
+            <select class="dossier form-control" id="dossier">
+                {% if tous == 1 %}
+                    <option value="0" selected="selected">Tous</option>
+                {% else %}
+                    <option value="0" selected="selected">&nbsp;</option>
+                {% endif %}
+                {% for dossier in dossiers %}
+                    <option value="{{ dossier.id }}">{{ (dossier.nom != '') ? dossier.nom : ' ' }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+{% endif %}

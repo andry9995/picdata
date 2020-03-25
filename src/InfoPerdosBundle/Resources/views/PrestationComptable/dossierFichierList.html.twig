@@ -1,0 +1,10 @@
+{% for pj in piecesJointes %}
+    {% set pieceJointe = pj['piecejointe'] %}
+    {% set chemin = pj['chemin'] %}
+    <li data-id="{{ pieceJointe.id }}" class="list-group-item dossier-fichier-item">
+        <a target="_blank" href="{{ chemin }}">
+            <i class="fa fa-file-pdf-o file-pdf"></i>&nbsp;&nbsp;{{ pieceJointe.fichier }}
+        </a>
+        <i class="fa fa-trash pull-right delete-file-pdf" title="Supprimer le fichier"></i>
+    </li>
+{% endfor %}

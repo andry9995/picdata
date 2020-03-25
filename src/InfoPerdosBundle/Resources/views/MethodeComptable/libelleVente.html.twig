@@ -1,0 +1,60 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Choisir parmis les elements suivants et faites un glisser/déposer vers Libellé Ecriture Vente
+    </div>
+    <div class="panel-body">
+        <div id="libelle-modele-vente" class="row connectedSortable" style="height: 150px;">
+            {% for libelleModeleVente in libelleModeleVentes %}
+                <div class="col-sm-2">
+                    <div class="ibox libelle-box">
+                        <div class="ibox-content">
+                            <div class="form-group" data-id="{{ libelleModeleVente.libelleItem.id }}">
+                                <label>{{ libelleModeleVente.libelleItem.intitule }}</label>
+                                <input type="number" placeholder="nbre caractere" class="form-control"
+                                       value="{{ (libelleModeleVente.libelleItem.nbCaractere is null) ? '' : libelleModeleVente.libelleItem.nbCaractere }}"
+                                        {{ (libelleModeleVente.libelleItem.id == 5 or libelleModeleVente.libelleItem.id == 7) ? 'disabled' : '' }}
+                                >
+                                <select class="form-control">
+                                    <option value="0" selected>Début</option>
+                                    <option value="1">Fin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Libellé Ecriture Vente
+    </div>
+    <div class="panel-body">
+        <div id="libelle-vente" class="row connectedSortable libelle" style="height: 150px;">
+            {% for libelleVente in libelleVentes %}
+                <div class="col-sm-2">
+                    <div class="ibox libelle-box">
+                        <div class="ibox-content">
+                            <div class="form-group" data-id="{{ libelleVente.libelleItem.id }}">
+                                <label>{{ libelleVente.libelleItem.intitule }}</label>
+                                <input type="number" placeholder="nbre caractere" class="form-control"
+                                       value="{{(libelleVente.nbCaractere is not null) ? libelleVente.nbCaractere :
+                                       (libelleVente.libelleItem.nbCaractere is not null) ? libelleVente.libelleItem.nbCaractere : '' }}"
+                                        {{ (libelleVente.libelleItem.id == 5 or libelleVente.libelleItem.id == 7) ? 'disabled' : '' }}
+                                >
+                                <select class="form-control">
+                                    {% set position  = (libelleVente.position is null) ? -1 : libelleVente.position  %}
+                                    <option value="0" {{ (position == 0) ? 'selected' : '' }}>Début</option>
+                                    <option value="1" {{ (position == 1) ? 'selected' : '' }}>Fin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

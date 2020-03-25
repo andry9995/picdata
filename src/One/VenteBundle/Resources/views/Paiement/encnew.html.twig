@@ -1,0 +1,51 @@
+{% if page == 'paiement' %}
+<tr id="{{ '0-'~'now'|date('U') }}" class="item-selectable {{ facid }}" onclick="selectItem(this); getSelectedPaiement(this);">
+    <td>
+        {{ encdate }}
+        <input type="hidden" class="form-control  date-paiement" value="{{ encdate }}">
+    </td>
+    <td>
+        {{ encmontant|number_format(2, '.', ' ') }}
+        <input type="hidden" class="form-control montant-paiement" value="{{ encmontant }}">
+    </td>
+    <td>
+        {{ encmoyen.nom }}
+        <input type="hidden" class="form-control  moyen-paiement" value="{{ encmoyen.id }}">
+    </td>
+    <td><input type="text" class="form-control ref-bancaire-paiement" value="" onchange="updatePaiement(this);"></td>
+    <td>
+        0
+        <input type="hidden" class="form-control retard-paiement" value="0">
+        <input type="hidden" class="form-control compte-paiement" value="">
+        <input type="hidden" class="form-control encid" value="{{ encid }}">
+        <input type="hidden" class="form-control avoid" value="0">
+        <input type="hidden" class="form-control paiement" name="paiement[]" value="{{ facid~';0;'~encdate~';'~encmontant~';'~encmoyen.id~';;0;;'~encid~';0' }}">
+    </td>
+</tr>
+{% elseif page == 'facture' %}
+<tr id="{{ '0-'~'now'|date('U') }}" class="item-selectable {{ facid }}" onclick="selectItem(this); getSelectedPaiement(this);">
+    <td>
+        {{ encdate }}
+        <input type="hidden" class="form-control date-paiement" value="{{ encdate }}">
+    </td>
+    <td>
+        {{ encmoyen.nom }}
+        <input type="hidden" class="form-control  moyen-paiement" value="{{ encmoyen.id }}">
+    </td>
+    <td>
+        {{ encmontant|number_format(2, '.', ' ') }}
+        <input type="hidden" class="form-control montant-paiement" value="{{ encmontant }}">
+    </td>
+    <td><input type="hidden" class="form-control ref-bancaire-paiement" value=""></td>
+    <td>
+        0
+        <input type="hidden" class="form-control retard-paiement" value="0">
+    </td>
+    <td>
+        <input type="hidden" class="form-control compte-paiement" value="">
+        <input type="hidden" class="form-control encid" value="{{ encid }}">
+        <input type="hidden" class="form-control avoid" value="0">
+        <input type="hidden" class="form-control paiement" name="paiement[]" value="{{ facid~';0;'~encdate~';'~encmontant~';'~encmoyen.id~';;0;;'~encid~';0' }}">
+    </td>
+</tr>
+{% endif %}

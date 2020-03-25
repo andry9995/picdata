@@ -1,0 +1,146 @@
+<form class="form-horizontal" id ="js_form_info_forme_juridique">
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Statuts</label>
+                <div class="col-lg-6">
+                    <select class="form-control info-juridique info_forme_juridique" name="statut" id="js_statut" data-field="Statut">
+
+                        {% set statut = (dossier is null) ? -1 : (dossier.statut is null) ? -1 : dossier.statut %}
+                        <option {{ (statut == -1) ? 'selected' :'' }}></option>
+                    {#<option value="1" {{ ((statut == 3) or (statut == 1)) ? 'selected' :'' }} est-envoye="{{ (statut == 3) ? 1 :'' }}">A envoyer</option>#}
+                    {#<option value="2" {{ ((statut == 4) or (statut == 2)) ? 'selected' :'' }} est-envoye="{{ (statut == 4) ? 1 :'' }}">Ne pas envoyer</option>#}
+
+                        <option value="1" {{ ((statut == 3) or (statut == 1)) ? 'selected' : '' }} est-envoye="{{ (statut == 3) ? 1 :'' }}">A envoyer</option>#}
+                        <option value="0" {{ (statut == 0) ? 'selected' : '' }}>Ne pas envoyer</option>
+                        <option value="2" {{ (statut == 2) ? 'selected' : '' }}>Non applicable</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">KBis</label>
+                <div class="col-lg-6">
+                    <select class="form-control info-juridique info_forme_juridique" name="kbis" id="js_kbis" data-field="Kbis">
+
+                        {% set kbis = (dossier is null) ? -1 : (dossier.kbis is null) ? -1 : dossier.kbis %}
+
+                        <option {{ (kbis == -1) ? 'selected' :'' }}></option>
+                        {#<option value="1" {{ ((kbis == 3) or (kbis == 1)) ? 'selected' :'' }} est-envoye="{{ (kbis == 3) ? 1 :'' }}">A envoyer</option>#}
+                        {#<option value="2" {{ ((kbis == 4) or (kbis == 2)) ? 'selected' :'' }} est-envoye="{{ (kbis == 4) ? 1 :'' }}">Ne pas envoyer</option>#}
+
+
+                        <option value="1" {{ ((kbis == 3) or (kbis == 1)) ? 'selected' :'' }} est-envoye="{{ (kbis == 3) ? 1 :'' }}">A envoyer</option>
+                        <option value="0" {{ (kbis == 0) ? 'selected' :'' }} >Ne pas envoyer</option>
+                        <option value="2" {{ (kbis == 2) ? 'selected' : '' }}>Non applicable</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Baux</label>
+                <div class="col-lg-6">
+                    <select class="form-control info-juridique info_forme_juridique" name="baux" id="js_baux" data-field="Baux">
+
+                        {% set baux = (dossier is null) ? -1 : (dossier.baux is null) ? -1 : dossier.baux %}
+
+                        <option {{ (baux == -1) ? 'selected' : '' }}></option>
+                        {#<option value="1" {{ ((baux == 3) or (baux == 1)) ? 'selected' : '' }} est-envoye="{{ (baux == 3) ? 1 :'' }}">A envoyer</option>#}
+                        {#<option value="2" {{ ((baux == 4) or (baux == 2)) ? 'selected' : '' }} est-envoye="{{ (baux == 4) ? 1 :'' }}">Ne pas envoyer</option>#}
+                        {#<option value="0" {{ (baux == 0) ? 'selected' : '' }}>Non applicable</option>#}
+
+
+                        <option value="1" {{ ((baux == 3) or (baux == 1)) ? 'selected' : '' }} est-envoye="{{ (baux == 3) ? 1 :'' }}">A envoyer</option>
+                        <option value="0" {{ (baux == 0) ? 'selected' : '' }}>Ne pas envoyer</option>
+                        <option value="2" {{ (baux == 2) ? 'selected' : '' }}>Non applicable</option>
+
+
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Assurances</label>
+                <div class="col-lg-6">
+                    <select class="form-control info-juridique info_forme_juridique" name="assurance" id="js_assurance" data-field="Assurance">
+                        {% set assurance = (dossier is null) ? -1 : (dossier.assurance is null) ? -1 : dossier.assurance %}
+                        <option {{ (assurance== -1) ? 'selected' :'' }}></option>
+                        {#<option value="1" {{ ((assurance == 3) or (assurance == 1)) ? 'selected' :'' }} est-envoye="{{ (assurance == 3) ? 1 :'' }}">A envoyer</option>#}
+                        {#<option value="2" {{ ((assurance == 4) or (assurance == 2)) ? 'selected' :'' }} est-envoye="{{ (assurance == 4) ? 1 :'' }}">Ne pas envoyer</option>#}
+                        {#<option value="0" {{ (assurance== 0) ? 'selected' :'' }}>Non applicable</option>#}
+
+
+                        <option value="1" {{ ((assurance == 3) or (assurance == 1)) ? 'selected' :'' }} est-envoye="{{ (assurance == 3) ? 1 :'' }}">A envoyer</option>
+                        <option value="0" {{ (assurance == 0) ? 'selected' :'' }}>Ne pas envoyer</option>
+                        <option value="2" {{ (assurance== 2) ? 'selected' :'' }}>Non applicable</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Autres</label>
+                <div class="col-lg-6">
+                    <select class="form-control info-juridique info_forme_juridique" name="autre" id="js_autre" data-field="Autre">
+                        {% set autre = (dossier is null) ? -1 : (dossier.autre is null) ? -1 : dossier.autre%}
+
+                        <option {{ (autre == -1) ? 'selected' : '' }}></option>
+                        {#<option value="1" {{ ((autre == 3) or (autre == 1)) ? 'selected' : '' }} est-envoye="{{ (autre == 3) ? 1 :'' }}">A envoyer</option>#}
+                        {#<option value="2" {{ ((autre == 2) or (autre == 4)) ? 'selected' : '' }} est-envoye="{{ (autre == 4) ? 1 :'' }}">Ne pas envoyer</option>#}
+                        {#<option value="0" {{ (autre == 0) ? 'selected' : '' }}>Non applicable</option>#}
+
+                        <option value="1" {{ ((autre == 3) or (autre == 1)) ? 'selected' : '' }} est-envoye="{{ (autre == 3) ? 1 :'' }}">A envoyer</option>
+                        <option value="0" {{ (autre == 0) ? 'selected' : '' }} >Ne pas envoyer</option>
+                        <option value="2" {{ (autre == 2) ? 'selected' : '' }}>Non applicable</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Emprunts</label>
+                <div class="col-lg-6">
+                    <select class="form-control info-juridique info_forme_juridique" name="emprunt" id="js_emprunt" data-field="Emprunt">
+                        {% set emprunt = (dossier is null) ? -1 : (dossier.emprunt is null) ? -1 : dossier.emprunt %}
+                        <option {{ (emprunt == -1) ? 'selected' :'' }}></option>
+{#<option value="1" {{ ((emprunt == 3) or (emprunt == 1)) ? 'selected' :'' }} est-envoye="{{ (emprunt == 3) ? 1 :'' }}">A envoyer</option>#}
+{#<option value="2" {{ ((emprunt == 4) or (emprunt == 2)) ? 'selected' :'' }} est-envoye="{{ (emprunt == 4) ? 1 :'' }}">Ne pas envoyer</option>#}
+{#<option value="0" {{ (emprunt== 0) ? 'selected' :'' }}>Non applicable</option>#}
+                        <option value="1" {{ ((emprunt == 3) or (emprunt == 1)) ? 'selected' :'' }} est-envoye="{{ (emprunt == 3) ? 1 :'' }}">A envoyer</option>
+                        <option value="0" {{ (emprunt == 0) ? 'selected' :'' }}>Ne pas envoyer</option>
+                        <option value="2" {{ (emprunt== 2) ? 'selected' :'' }}>Non applicable</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Leasing</label>
+                <div class="col-lg-6">
+                    <select class="form-control info-juridique info_forme_juridique" name="leasing" id="js_leasing" data-field="Leasing">
+                        {% set leasing = (dossier is null) ? -1 : (dossier.leasing is null) ? -1 : dossier.leasing %}
+                        <option {{ (leasing == -1) ? 'selected' : '' }}></option>
+{#<option value="1" {{ ((leasing == 3) or (leasing == 1)) ? 'selected' : '' }} est-envoye="{{ (leasing == 3) ? 1 :'' }}">A envoyer</option>#}
+{#<option value="2" {{ ((leasing == 4) or (leasing == 2)) ? 'selected' : '' }} est-envoye="{{ (leasing == 4) ? 1 :'' }}">Ne pas envoyer</option>#}
+{#<option value="0" {{ (leasing == 0) ? 'selected' : '' }}>Non applicable</option>#}
+                        <option value="1" {{ ((leasing == 3) or (leasing == 1)) ? 'selected' : '' }} est-envoye="{{ (leasing == 3) ? 1 :'' }}">A envoyer</option>
+                        <option value="0" {{ (leasing == 0) ? 'selected' : '' }} >Ne pas envoyer</option>
+                        <option value="2" {{ (leasing == 2) ? 'selected' : '' }}>Non applicable</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

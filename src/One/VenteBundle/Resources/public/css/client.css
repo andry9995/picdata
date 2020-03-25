@@ -1,0 +1,72 @@
+/* 
+    Created by Netbeans
+    Created on : 3 août 2017, 10:41:43
+    Author : Mamy Rakotonirina
+*/
+
+/*Affichage bloc*/
+.client-bloc-view .bloc {
+    background: #F9F9F9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.client-bloc-view .bloc .bloc-content {
+    display: block;
+    padding: 10px;
+}
+.client-bloc-view .bloc .bloc-content .bloc-title {
+    font-size: 1.6rem;
+}
+.client-bloc-view .bloc .btn-default {
+    background: none;
+    border: none;
+    color: #1BB394;
+}
+.client-bloc-view .bloc .bloc-footer {
+    background: #FFFFFF;
+    border-top: 1px solid #E7EAEC;
+    display: block;
+    margin-top: 10px;
+    min-height: 50px;
+    padding-top: 10px;
+}
+.client-bloc-view .bloc .bloc-footer .dropdown {
+    min-height: 25px;
+}
+
+/*Affichage détails*/
+.client-detail-infos {
+    background-color: #F9F9F9;
+    border: 1px solid #E7EAEC;
+    padding: 10px;
+}
+.glyphicon.edit-action {
+    cursor: pointer;
+}
+
+.client-detail-infos .item {
+    display: flex;
+}
+.client-detail-infos .item .glyphicon {
+    width: 20px;
+}
+.client-detail-infos .item .fa {
+    width: 20px;
+}
+.client-detail-infos .item .info-text {
+    flex: 1.0;
+}
+
+.client-detail-infos .contact-name {
+    color: #1CB394;
+}
+
+.schedule{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.notification-details > div > span:nth-child(3)
+{
+    display: inline-block;
+    margin-left: 10px;
+}

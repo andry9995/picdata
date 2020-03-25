@@ -1,0 +1,167 @@
+{% set margin = 15 %}
+
+{{ include('BanqueBundle:ReleveBanque:releve-line.html.twig', { 'releve': releve }) }}
+
+<div id="test_banque"></div>
+
+{#<div class="row bande white-bg hidden" style="margin-bottom: {{ margin }}px!important;">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="id_banques">Banque</label>
+            <div class="col-lg-8">
+                <div class="input-group">
+                    <select data-placeholder="Tous" class="chosen-select form-control input-sm" id="id_banques" multiple>
+                        {% for bq in banques %}
+                            <option value="{{ bq.id|boost }}" {{ (bq.id in bIds) ? 'selected' : '' }}>{{ bq.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>#}
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    <table class="table" style="margin-bottom:0">
+        <thead>
+
+        <tr>
+            <th width="55%">Cl&eacute;</th>
+            <th width="5%">Taux&nbsp;Tva</th>
+            <th width="10%">Type</th>
+            <th width="10%">Bilan</th>
+            <th width="10%">TVA</th>
+            <th width="10%">R&eacute;sultat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="jd_id_tr_container">
+            {% set cleTexte = (cle is null) ? cleLibelle : cle.cle|replace({ "%":"" }) %}
+            {% for cle2 in cle2s %}
+                {% set cleTexte = cleTexte ~ '[[' ~ cle2.cle ~ ']]' %}
+            {% endfor %}
+            <td><input value="{{ cleTexte }}" id="js_id_cle_libelle" class="form-control input-sm"></td>
+            <td><input value="" id="js_id_taux_tva" class="form-control input-sm"></td>
+            <td>
+                <div class="btn-group">
+                    <span data-toggle="dropdown" class="dropdown-toggle btn btn-white btn-sm" aria-expanded="false">{{ (cle is not null) ? cle.banqueType.libelle : banqueTypes[0].libelle }}&nbsp;<span class="caret"></span></span>
+                    <ul class="dropdown-menu" id="js_id_type_compta">
+                        {% set i = 0 %}
+                        {% for banqueType in banqueTypes %}
+                            <li class="js_cl_banque_type {{ ((i == 0 and cle is null) or (cle is not null and cle.banqueType.id == banqueType.id)) ? 'active' : '' }}" data-id-uncrypted="{{ banqueType.id }}" data-id="{{ banqueType.id|boost }}"><a href="#">{{ banqueType.libelle }}</a></li>
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </td>
+            {# 0: resultat; 1:tva; 2 : bilan #}
+
+            <td data-type="2" class="js_bilan {{ (bilanPcgs == '[]') ? 'text-danger' : '' }}"><i class="fa fa-2x pointer js_compte js_compte_b fa-edit compte-edited" data-pcgs="{{ bilanPcgs }}" data-pccs="{{ bilanPccs }}"></i></td>
+            <td data-type="1" class="js_tva {{ (tvaPcgs == '[]') ? 'text-danger' : '' }}"><i class="fa fa-2x pointer js_compte js_compte_t fa-square-o" data-pcgs="{{ tvaPcgs }}" data-pccs="{{ tvaPccs }}"></i></td>
+            <td data-type="0" class="js_res {{ (resPcgs == '[]') ? 'text-danger' : '' }}"><i class="fa fa-2x pointer js_compte js_compte_r fa-square-o" data-pcgs="{{ resPcgs }}" data-pccs="{{ resPccs }}"></i></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="test_cle"></div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <span>Plan&nbsp;Comptable</span>
+                <span class="btn btn-white btn-xs pull-right text-black js_save_compte"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
+            </div>
+            <div class="panel-body" style="padding:3px">
+                {% set h = 150 %}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <span class="label label-default">Plan&nbsp;Comptable&nbsp;G&eacute;neral</span>
+                        <div id="js_id_tree_pcg_container" class="scroller" style="height: {{ h }}px!important;"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <span class="label label-default">Plan&nbsp;Comptable&nbsp;du&nbsp;dossier&nbsp;{{ dossier.nom }}</span>
+                        <span class="pointer js_add_pcc" data-toggle="popover" data-placement="left" data-content="{{ addCompte }}" data-original-title="" title="">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </span>
+                        <input class="form-control input-sm search-input">
+                        <div id="js_id_tree_pcc_container" class="scroller" style="height: {{ h }}px!important;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    {% set typeCompta = (cle is not null) ? cle.typeCompta : methode %}
+    <div class="col-lg-9">
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_engagement" value="0" {{ (typeCompta == 0) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_engagement">Engagement</label>
+        </div>
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_tresorerie" value="1" {{ (typeCompta == 1) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_tresorerie">Tr&eacute;sorerie</label>
+        </div>
+        {#<div class="radio radio-inline">
+            <input type="radio" id="js_id_tresorerie_avec_piece" value="2" {{ (typeCompta == 2) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_tresorerie_avec_piece">Tr&eacute;sorerie&nbsp;avec&nbsp;pi&egrave;ce</label>
+        </div>#}
+        {#<div class="radio radio-inline">
+            <input type="radio" id="js_id_ecriture_particuliere" value="3" {{ (typeCompta == 3) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_ecriture_particuliere">Ecriture&nbsp;Particulière</label>
+        </div>#}
+    </div>
+    <div class="col-lg-3">
+        <div class="checkbox checkbox-inline checkbox-warning">
+            <input id="jd_id_pas_piece" type="checkbox" {{ (cleDossier is not null and cleDossier.cle.pasPiece == 1) ? 'checked' : '' }}>
+            <label for="jd_id_pas_piece">Pas&nbsp;de&nbsp;Pi&egrave;ce</label>
+        </div>
+        {#<div class="checkbox checkbox-inline checkbox-info">
+            <input id="js_spec_for_dossier" type="checkbox" {{ cle ? 'checked' : '' }}>
+            <label for="js_spec_for_dossier">Tous&nbsp;Dossier</label>
+        </div>#}
+    </div>
+</div>
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12">
+        <table class="table" style="margin-bottom:0">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Bilan</th>
+                <th>Tva</th>
+                <th>R&eacute;sultat</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>PCG</th>
+                <td id="td_2"></td>
+                <td id="td_1"></td>
+                <td id="td_0"></td>
+            </tr>
+            <tr class="active text-success">
+                <th>Ecriture</th>
+                <td id="td_2_pcc"></td>
+                <td id="td_1_pcc"></td>
+                <td id="td_0_pcc"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<input type="hidden" id="js_id_cle_a_modifier" data-is_edit="{{ (cleDossier is not null) ? 1 : 0 }}" value="{{ ((cleDossier is not null) ? cleDossier.cle.id : 0)|boost }}">
+
+<div class="row">
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-sm btn-danger js_save_cle {{ (cleDossier is not null) ? '' : 'hidden' }}" data-type="2"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Supprimer&nbsp;cette&nbsp;CLE</span>
+        <span class="btn btn-sm btn-white js_save_cle" data-type="0"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Enregistrer&nbsp;CLE</span>
+        <span class="btn btn-sm btn-primary js_save_cle {{ (typeCompta == 2) ? 'hidden' : '' }}" id="js_id_save_and_propage" data-type="1"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Enregistrer&nbsp;propager&nbsp;cette&nbsp;CLE</span>
+    </div>
+</div>

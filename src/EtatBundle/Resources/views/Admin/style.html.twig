@@ -1,0 +1,276 @@
+<div class="js_cl_container_styles">
+    <div class="tabs-container">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#tab-remplissage">Remplissage</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-bordure">Bordure</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-remplissage" class="tab-pane active">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                {% set police = (styles is defined and styles.font is defined) ? styles.font|trim : '' %}
+                                <label for="police_id">Police</label>
+                                <select class="form-control js_cl_police" id="police_id">
+                                    {% set val = '' %}
+                                    <option value="{{ val }}" {{ (val == police or police == 'd') ? 'selected' : '' }}>Par&nbsp;D&eacute;faut</option>
+                                    {% set val = 'Calibri' %}
+                                    <option value="{{ val }}" {{ (val == police) ? 'selected' : '' }}>Calibri</option>
+                                    {% set val = 'serif' %}
+                                    <option value="{{ val }}" {{ (val == police) ? 'selected' : '' }}>Serif</option>
+                                    {% set val = '"Century Gothic"' %}
+                                    <option value="{{ val }}" {{ (val == police) ? 'selected' : '' }}>Century gothic</option>
+                                    {% set val = '"Arial"' %}
+                                    <option value="{{ val }}" {{ (val == police) ? 'selected' : '' }}>Arial</option>
+                                    {% set val = '"Times New Roman"' %}
+                                    <option value="{{ val }}" {{ (val == police) ? 'selected' : '' }}>Times</option>
+                                    {% set val = 'Tahoma' %}
+                                    <option value="{{ val }}" {{ (val == police) ? 'selected' : '' }}>Tahoma</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                {% set style_weight = 0 %}
+                                {% set style = 0 %}
+                                {% set weight = 0 %}
+
+                                {% if styles is defined %}
+                                    {% if styles.style is defined and styles.style|trim|lower == 'italic' %}
+                                        {% set style = 1 %}
+                                    {% endif %}
+                                    {% if styles.weight is defined and styles.weight|trim|lower == 'bold' %}
+                                        {% set weight = 1 %}
+                                    {% endif %}
+
+                                    {% if style == 1 and weight == 0 %}
+                                        {% set style_weight = 1 %}
+                                    {% elseif style == 0 and weight == 1 %}
+                                        {% set style_weight = 2 %}
+                                    {% elseif style == 1 and weight == 1 %}
+                                        {% set style_weight = 3 %}
+                                    {% else %}
+                                        {% set style_weight = 0 %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <label for="style_id">Style</label>
+                                <select class="form-control js_cl_style" id="style_id">
+                                    <option value="0" {{ (style_weight == 0) ? 'selected' : '' }}>Normal</option>
+                                    <option value="1" {{ (style_weight == 1) ? 'selected' : '' }}>Italique</option>
+                                    <option value="2" {{ (style_weight == 2) ? 'selected' : '' }}>Gras</option>
+                                    <option value="3" {{ (style_weight == 3) ? 'selected' : '' }}>Gras&nbsp;Italique</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                {% set size = (styles is defined and styles.size is defined) ? styles.size : 13 %}
+                                <label for="taille_id">Taille</label>
+                                <select class="form-control js_cl_taille" id="taille_id">
+                                    {% set val = 8 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 9 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 10 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 11 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 13 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>Par&nbsp;D&eacute;faut</option>
+                                    {% set val = 14 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 16 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 18 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 20 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 22 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 24 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 26 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 28 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 36 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 48 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                    {% set val = 72 %}
+                                    <option value="{{ val }}" {{ (val == size) ? 'selected' : '' }}>{{ val }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="row">
+                                <div class="col-lg-6" id="js_container_color">
+                                    <label>Couleur</label>
+                                    {{ include('AppBundle:Commun:table-color-picker.html.twig') }}
+                                </div>
+                                <div class="col-lg-6" id="js_container_bg">
+                                    <div class="hidden" id="id-bg-hidden" data-val="{{ (styles is defined and styles.bg is defined) ? styles.bg : 'rgba(0, 0, 0, 0)' }}"></div>
+                                    <label>Arri&egrave;re&nbsp;Plan</label>
+                                    {{ include('AppBundle:Commun:table-color-picker.html.twig') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    {% set align = (styles is defined and styles.align is defined) ? styles.align : 'left' %}
+                                    {% if align == 'start' %}
+                                        {% set align = 'left' %}
+                                    {% endif %}
+                                    <label>Align.</label>
+                                    <div class="radio">
+                                        {% set val = 'left' %}
+                                        <input type="radio" id="radio-left" value="{{ val }}" name="radio-align" {{ (align == val) ? 'checked' : '' }}>
+                                        <label for="radio-left">Gauche</label>
+                                    </div>
+                                    <div class="radio">
+                                        {% set val = 'center' %}
+                                        <input type="radio" id="radio-center" value="{{ val }}" name="radio-align" {{ (align == val) ? 'checked' : '' }}>
+                                        <label for="radio-center">Centrer</label>
+                                    </div>
+                                    <div class="radio">
+                                        {% set val = 'right' %}
+                                        <input type="radio" id="radio-right" value="{{ val }}" name="radio-align" {{ (align == val) ? 'checked' : '' }}>
+                                        <label for="radio-right">Droite</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    {% set format = (styles is defined and styles.f is defined) ? styles.f : 0 %}
+                                    <label>Format</label>
+                                    <div class="radio radio-danger">
+                                        {% set val = 0 %}
+                                        <input type="radio" id="format-0" value="{{ val }}" name="radio-format" data-content="" {{ (format == val) ? 'checked' : '' }}>
+                                        <label for="format-0">Aucun</label>
+                                    </div>
+                                    <div class="radio radio-danger">
+                                        {% set val = 1 %}
+                                        <input type="radio" id="format-1" value="{{ val }}" name="radio-format" data-content='<i class="fa fa-percent" aria-hidden="true"></i>' {{ (format == val) ? 'checked' : '' }}>
+                                        <label for="format-1"><i class="fa fa-percent" aria-hidden="true"></i></label>
+                                    </div>
+                                    <div class="radio radio-danger">
+                                        {% set val = 2 %}
+                                        <input type="radio" id="format-2" value="{{ val }}" name="radio-format" data-content='<i class="fa fa-eur" aria-hidden="true"></i>' {{ (format == val) ? 'checked' : '' }}>
+                                        <label for="format-2"><i class="fa fa-eur" aria-hidden="true"></i></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    {% set dec = (styles is defined and styles.dec is defined) ? styles.dec : 0 %}
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="decimal-id" type="checkbox" {{ (dec == 0) ? '' : 'checked' }}>
+                                        <label for="decimal-id">Avec&nbsp;D&eacute;cimal</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-bordure" class="tab-pane">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>Style</label>
+                            <div class="radio" style="border: 2px dashed #FFFFFF">
+                                <input type="radio" id="radio-b-none" value="none" name="radio-b-type" checked>
+                                <label for="radio-b-none">Aucun</label>
+                            </div>
+                            <div class="radio" style="border-bottom: 2px solid #a9a9a9">
+                                <input type="radio" id="radio-b-solid" value="solid" name="radio-b-type">
+                                <label for="radio-b-solid">Trait&nbsp;simple</label>
+                            </div>
+                            <div class="radio" style="border-bottom: 2px dotted #a9a9a9">
+                                <input type="radio" id="radio-b-dotted" value="dotted" name="radio-b-type">
+                                <label for="radio-b-dotted">Pointill&eacute;s</label>
+                            </div>
+                            <div class="radio" style="border-bottom: 2px dashed #a9a9a9">
+                                <input type="radio" id="radio-b-dashed" value="dashed" name="radio-b-type">
+                                <label for="radio-b-dashed">Tirets</label>
+                            </div>
+                            <div class="radio" style="border-bottom: double #a9a9a9">
+                                <input type="radio" id="radio-b-double" value="double" name="radio-b-type">
+                                <label for="radio-b-double">Double</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="bordure_taille_id">Epaisseur</label>
+                            <select class="form-control js_cl_bordure_taille" id="bordure_taille_id">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-5" id="js_container_border_color">
+                            <label>Couleur</label>
+                            {{ include('AppBundle:Commun:table-color-picker.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="text-center">
+            <div class="checkbox">
+                <input type="checkbox" id="apercu-border-top" class="js_apercu_border" data-border="border-top">
+                <label for="apercu-border-top"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 text-left">
+                <div class="checkbox">
+                    <input type="checkbox" id="apercu-border-left" class="js_apercu_border" data-border="border-left">
+                    <label for="apercu-border-left"></label>
+                </div>
+            </div>
+
+            {% set style_apercu = (style_weight == 1 or style_weight == 3) ? 'italic' : 'normal' %}
+            {% set weight_apercu = (style_weight == 2 or style_weight == 3) ? 'bold' : '' %}
+            <div class="col-lg-6 bg-white" id="js_id_apercu" data-decimal="0" data-format="0" style="padding: 5px!important;
+                    font-family: {{ police }};
+                    font-style: {{ style_apercu }};
+                    font-weight: {{ weight_apercu }};
+                    font-size: {{ size }}px;
+                    color: {{ (styles is defined and styles.color is defined) ? styles.color : 'rgba(0, 0, 0, 0)' }};
+                    background-color: {{ (styles is defined and styles.bg is defined) ? styles.bg : 'rgba(0, 0, 0, 0)' }};
+                    text-align: {{ (styles is defined and styles.align is defined) ? styles.align : 'left' }};
+                    border-top: {{ (styles is defined and styles.bt is defined) ? styles.bt : 'none' }};
+                    border-left: {{ (styles is defined and styles.bl is defined) ? styles.bl : 'none' }};
+                    border-right: {{ (styles is defined and styles.br is defined) ? styles.br : 'none' }};
+                    border-bottom: {{ (styles is defined and styles.bb is defined) ? styles.bb : 'none' }};
+            "
+            >
+                <span>APERCU&nbsp;&nbsp;</span>
+                <span id="js_id_apercu_format"></span></div>
+            <div class="col-lg-3 text-right">
+                <div class="checkbox">
+                    <input type="checkbox" id="apercu-border-right" class="js_apercu_border" data-border="border-right">
+                    <label for="apercu-border-right"></label>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <div class="checkbox">
+                <input type="checkbox" id="apercu-border-bottom" class="js_apercu_border" data-border="border-bottom">
+                <label for="apercu-border-bottom"></label>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 5px!important;" class="text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm js_validate_styles"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+    </div>
+</div>

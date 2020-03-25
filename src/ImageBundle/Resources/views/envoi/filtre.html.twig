@@ -1,0 +1,52 @@
+{# client & site #}
+<div class="row">
+    <div class="col-lg-7">
+        {{ render(controller('AppBundle:Commun:clients' , {'conteneur' : 0})) }}
+    </div>
+    <div class="col-lg-5" id="js_conteneur_site"></div>
+</div>
+
+{# dossier & exercice #}
+<div class="row">
+    <div class="col-lg-7" id="js_conteneur_dossier"></div>
+    <div class="col-lg-5">
+        {{ render(controller('AppBundle:Commun:exercices' , { 'tous': 0})) }}
+    </div>
+</div>
+
+{# options d envoi #}
+<div class="row">
+    <div class="col-lg-6 text-center">
+        <fieldset class="form-group">
+            <span class="checkbox checkbox-default">
+                <input id="js_is_analytique" type="checkbox">
+                <label for="js_is_analytique">Ajouter un analytique</label>
+            </span>
+        </fieldset>
+        <form role="form" id="js_form_analytique" class="hidden">
+            <div class="form-group" id="js_analytique_conteneur"></div>
+        </form>
+    </div>
+    <div class="col-lg-6 text-center">
+        <fieldset class="form-group">
+            <span class="checkbox checkbox-danger">
+                <input id="js_is_urgent" type="checkbox">
+                <label for="js_is_urgent">Envoyer en urgence</label>
+            </span>
+        </fieldset>
+        <form role="form" id="js_form_urgent" class="hidden">
+            <div class="form-group">
+                <textarea placeholder="Votre commentaire" class="form-control" id="js_commentaire"></textarea>
+                <span class="help-block m-b-none">Commentaire &agrave; envoyer aux responsables du dossier</span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="hr-line-dashed"></div>
+
+{# Control d 'envoi #}
+<div class="row">
+    <div class="col-lg-6 text-center"><span class="btn btn-warning" id="js_annuler_envoi"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;ANNULER</span></div>
+    <div class="col-lg-6 text-center"><span class="btn btn-primary" id="js_valider_envoi"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;VALIDER</span></div>
+</div>

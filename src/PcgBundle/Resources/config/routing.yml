@@ -1,0 +1,9 @@
+pcg_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PcgBundle:Default:index }
+pcg_edit:
+    path:     /pcg/edit
+    defaults: { _controller: PcgBundle:Default:edit }
+    options:
+      expose: true
+    methods:  [POST]

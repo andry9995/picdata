@@ -1,0 +1,13 @@
+<div class="ibox" id="id_cle_selected" data-cle="{{ cle.id|boost }}">
+    <div class="ibox-heading">
+        <div class="row">
+            <div class="col-sm-7">{{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0,'label_col':2,'select_col':10 })) }}</div>
+            <div class="col-sm-5" id="js_conteneur_site"></div>
+            <div class="col-sm-7" id="js_conteneur_dossier"></div>
+            <div class="col-sm-5 text-right">
+                <span class="btn btn-danger btn-sm cl_edit_exception" data-action="1"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;Ajouter&nbsp;Exception</span>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-content" id="id_container_table_dossiers_exclude" data-datas="{{ cleDossiers }}"></div>
+</div>

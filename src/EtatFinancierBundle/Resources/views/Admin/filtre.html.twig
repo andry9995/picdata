@@ -1,0 +1,134 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/etatfinancier/css/etat.css') }}"
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-sm-8">
+            {% if filtre == 1 %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        {{ render(controller('AppBundle:Commun:regimeFiscals',{'conteneur' : 0 , 'tous' : 0})) }}  
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        {{ render(controller('AppBundle:Commun:sites',{'conteneur' : 0 ,  'client' : client.id , 'tous' : 1})) }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ render(controller('AppBundle:Commun:dossiers',{'conteneur' : 0 ,  'site' : 0 , 'tous' : 0})) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-sm-4 text-right">
+            <a href="{{ path('etat_financier_admin') }}" class="btn btn-primary btn-outline"><strong><i class="fa fa-undo"></i><span>&nbsp;&nbsp;Retour</span></strong></a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="{{ (parametrage == 1) ?  ((etat == 0 or etat == 4) ? 'col-sm-4' : 'col-sm-6') : 'col-sm-12' }}">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            {% if etat == 0 %}<i class="fa fa-2x fa-font"></i><span>&nbsp;&nbsp;BILAN&nbsp;ACTIF</span>{% endif %}
+                            {% if etat == 1 %}<i class="fa fa-2x fa-file-powerpoint-o"></i><span>&nbsp;&nbsp;BILAN&nbsp;PASSIF</span>{% endif %}
+                            {% if etat == 2 %}<i class="fa fa-2x fa-file-o"></i><span>&nbsp;&nbsp;PRODUITS&nbsp;ET&nbsp;CHARGES</span>{% endif %}
+                            {% if etat == 3 %}<i class="fa fa-2x fa-table"></i><span>&nbsp;&nbsp;TABLEAU&nbsp;OEC</span>{% endif %}
+                            {% if etat == 4 %}<i class="fa fa-2x fa-cog"></i><span>&nbsp;&nbsp;COMPTES</span>{% endif %}
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="fullscreen-link">
+                                    <i class="fa fa-expand"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content no-padding full-height-scroll scroller">
+                    <div class="table-responsive" id="etat"></div>
+                </div>
+            </div>            
+        </div>
+
+        {% if parametrage == 1%}
+            <div class="{{ (etat == 0 or etat == 4) ? 'col-sm-8' : 'col-sm-6' }}">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                {% if etat == 4 %}
+                                    <i class="fa fa-2x fa-cog"></i>
+                                    <span>&nbsp;&nbsp;VISUALISATION&nbsp;GLOBALE</span>
+                                {% else %}
+                                    <i class="fa fa-2x fa-cog"></i>
+                                    <span>&nbsp;&nbsp;COMPTES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <div class="checkbox checkbox-inline">
+                                        <input type="checkbox" id="js_tous_compte" value="0">
+                                        <label for="js_tous_compte">Afficher tous les comptes</label>
+                                    </div>                                        
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="fullscreen-link">
+                                        <i class="fa fa-expand"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <div class="row">
+                            {% set class = (etat == 0) ? 'col-sm-6' : ((etat == 4) ? 'col-sm-3' : 'col-sm-12') %}
+                            <div class="{{ class }}">
+                                <div class="semi-transparent fixed bg-marker {{ (etat == 0) ? '' : 'hidden' }}"><span class="badgexxxxx badge-defaultxxxx">BRUT</span></div>
+                                <div class="table-responsive full-height-scroll scroller" id="{{ (etat == 4) ? 'etat_1' : 'compte_brut' }}"></div>
+                            </div>
+
+                            {% if etat == 0 %}
+                            <div class="{{ class }}">
+                                <div class="semi-transparent fixed bg-marker {{ (etat == 0) ? '' : 'hidden' }}"><span class="badgexxxxx badge-defaultxxxx">AMORT.</span></div>
+                                <div class="table-responsive full-height-scroll scroller" id="compte_amort"></div>
+                            </div>
+                            {% endif %}
+
+                            {% if etat == 4 %}
+                            <div class="{{ class }}">
+                                <div class="table-responsive scroller" id="etat_2"></div>
+                            </div>
+                            <div class="{{ class }}">
+                                <div class="table-responsive scroller" id="etat_3"></div>
+                            </div>
+                            <div class="{{ class }}">
+                                <div class="table-responsive scroller" id="etat_4"></div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>                    
+    <input type="hidden" value="{{ etat }}" id="etat_select" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/etatfinancier/js/filtre.js') }}"></script>
+    <script src="{{ asset('bundles/etatfinancier/js/etat.js') }}"></script>
+    <script src="{{ asset('bundles/etatfinancier/js/compte.js') }}"></script>
+{% endblock %}

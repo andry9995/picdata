@@ -1,0 +1,134 @@
+login:
+    path:     /login
+    defaults: { _controller: UtilisateurBundle:Security:login }
+    methods: [GET]
+    options:
+        expose: true
+
+login_check:
+    path:     /login_check
+    methods: [POST]
+
+logout:
+    path:     /logout
+    methods: [GET]
+
+#Créer un utilisateur
+user_register:
+    path:     /register
+    defaults: { _controller: UtilisateurBundle:Gestion:creation }
+    options:
+        expose: true
+#Enregistrer ajout utilisateur
+user_register_add:
+    path: /register/add
+    defaults: { _controller: UtilisateurBundle:Gestion:add }
+    methods: [POST]
+    options:
+        expose: true
+
+#Niveau d'accès des utilisateurs
+user_niveau_acces:
+    path: /users/acces-level
+    defaults: { _controller:  UtilisateurBundle:Gestion:NiveauAcces }
+
+#User first login
+user_first_login:
+    path:     /user/first-login
+    defaults:  { _controller: UtilisateurBundle:Security:firstLogin }
+
+#Mot de passe oublié
+user_password_request:
+    path: /password-request
+    defaults: { _controller: UtilisateurBundle:Security:passwordRequest }
+
+#Confirmer changement mot de passe
+#En cliquant sur un lien dans un email
+user_password_request_email_confirm:
+    path: /password-request-confirm/{email}/{token}
+    defaults: { _controller: UtilisateurBundle:Security:passwordRequestConfirm }
+    methods: [GET]
+
+#Formulaire pour changer mot de passe
+user_password_reset:
+    path: /password-reset/{email}/{token}
+    defaults: { _controller: UtilisateurBundle:Security:passwordReset }
+
+#Liste des utilisateurs d'un client
+client_users_list:
+    path: /client-users-list/{client}
+    defaults: { _controller: UtilisateurBundle:Gestion:clientUsers }
+    methods: [GET]
+    options:
+        expose: true
+
+#Role et niveau d'accès d'un utilisateur
+user_roles_and_acces:
+    path: /users/roles-and-acces/{user}
+    defaults: { _controller: UtilisateurBundle:Gestion:userRoleAndAcces }
+    methods: [GET]
+    options:
+        expose: true
+
+#Modif roles et niveau d'accus utilisateur
+user_roles_and_acces_edit:
+    path: /users/roles-and-acces/{user}
+    defaults: { _controller: UtilisateurBundle:Gestion:userRoleAndAccesEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+#Renvoyer mail de création compte
+user_resend_mail_creation:
+    path: /users/resend-mail-creation/{user}
+    defaults: { _controller: UtilisateurBundle:Gestion:resendMailCreation }
+    methods: [POST]
+    options:
+        expose: true
+
+#Acces aux menus des utilisateurs
+user_menu_acces:
+    path: /users/acces-menu
+    defaults: { _controller:  UtilisateurBundle:Gestion:AccesMenu }
+
+user_menu_par_role:
+    path: /acces/menu-par-role/{role}
+    defaults: { _controller: UtilisateurBundle:Gestion:roleMenu }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        role: \d+
+
+#Menu par Role Edit
+user_menu_par_role_edit:
+    path: /acces/menu-par-role/{role}
+    defaults: { _controller: UtilisateurBundle:Gestion:roleMenuEdit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        role: \d+
+
+#Menu par Utilisateur
+user_menu_par_user:
+    path: /acces/menu-par-user/{user}
+    defaults: { _controller: UtilisateurBundle:Gestion:userMenu }
+    methods: [GET]
+    options:
+        expose: true
+
+#Menu par Utilisateur Edit
+user_menu_par_user_edit:
+    path: /acces/menu-par-user/{user}/{default}
+    defaults: { _controller: UtilisateurBundle:Gestion:userMenuEdit, default: 0 }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        default: 0|1
+
+user_connexion_aide:
+    path: /user-connexion-help/{token}
+    defaults: { _controller: UtilisateurBundle:Security:connexionHelp }
+    methods: [GET]

@@ -1,0 +1,323 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListEncaissement();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Nouvel Encaissement Client</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="encaissement-form" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="type-encaissement" class="col-md-4 control-label">Type d'encaissement*</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="type-encaissement" name="type-encaissement" onchange="changeType(this.value);">
+                                {% for typeencaissement in typeencaissements %}
+                                    <option value="{{ typeencaissement.id }}" {% if typeencaissement.id == 3 %}selected{% endif %}>{{ typeencaissement.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="client-prospect" class="col-md-4 control-label">Prospect ou Client*</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="client-prospect" name="client-prospect" placeholder="" {% if parent=='client' %}readonly{% endif %}>
+                                {% if parent=='client' %}
+                                    {% for clientProspect in clientProspects %}
+                                        {% if clientProspect.id == parentid %}
+                                            <option value="{{ clientProspect.id }}" selected="selected">{{ clientProspect.intitule }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <option value=""></option>
+                                    {% for clientProspect in clientProspects %}
+                                        <option value="{{ clientProspect.id }}">{{ clientProspect.intitule }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {#<div class="form-group">#}
+                {#<label for="type-encaissement" class="col-md-2 col-sm-3 col-xs-12 control-label">Type d'encaissement*</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="type-encaissement" name="type-encaissement" onchange="changeType(this.value);">#}
+                        {#{% for typeencaissement in typeencaissements %}#}
+                            {#<option value="{{ typeencaissement.id }}" {% if typeencaissement.id == 3 %}selected{% endif %}>{{ typeencaissement.nom }}</option>#}
+                        {#{% endfor %}#}
+                    {#</select>#}
+                {#</div>#}
+                {#<label for="client-prospect" class="col-md-2 col-sm-3 col-xs-12 control-label">Prospect ou Client*</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="client-prospect" name="client-prospect" placeholder="" {% if parent=='client' %}readonly{% endif %}>#}
+                        {#{% if parent=='client' %}#}
+                            {#{% for clientProspect in clientProspects %}#}
+                                {#{% if clientProspect.id == parentid %}#}
+                                {#<option value="{{ clientProspect.id }}" selected="selected">{{ clientProspect.intitule }}</option>#}
+                                {#{% endif %}#}
+                            {#{% endfor %}#}
+                        {#{% else %}#}
+                            {#<option value=""></option>#}
+                            {#{% for clientProspect in clientProspects %}#}
+                                {#<option value="{{ clientProspect.id }}">{{ clientProspect.intitule }}</option>#}
+                            {#{% endfor %}#}
+                        {#{% endif %}#}
+                    {#</select>#}
+                {#</div>#}
+            {#</div>#}
+
+            <hr />
+
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="date-encaissement" class="col-md-4 control-label">Date</label>
+                        <div class="col-md-6">
+                            <div class="input-group date">
+                                <input type="text" class="form-control datepicker" id="date-encaissement" name="date-encaissement" value="{{ "now"|date("d/m/Y") }}">
+                                <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status" class="col-md-4 control-label">Exercice de rattachement</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="exercice-rattachament" name="exercice-rattachement" placeholder="">
+                                <option value=""></option>
+                                {% for ex in exercices %}
+                                    <option value="{{ ex }}" {{ (exercice|number_format == ex|number_format) ? 'selected' : ''}}>{{ ex  }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="montant" class="col-md-4 control-label" readonly>Montant*</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control number" id="montant" name="montant" value="0" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="note" class="col-md-4 control-label">Notes</label>
+                        <div class="col-md-6">
+                            <textarea class="form-control" id="note" name="note"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="moyen-paiement" class="col-md-4 control-label">Moyen de Paiement</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="moyen-paiement" name="moyen-paiement" placeholder="" >
+                                {% for moyenpaiement in moyenpaiements %}
+                                    <option value="{{ moyenpaiement.id }}" {% if moyenpaiement.id == 5 %}selected{% endif %}>{{ moyenpaiement.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="banque" class="col-md-4 control-label">Banque</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="banque" name="banque">
+                                <option  value="-1"></option>
+                                {% for banque in banques %}
+                                    {% set nomBanque = (banque.banque is null) ? '' : banque.banque.nom %}
+                                    <option value="{{ banque.id }}">{{ nomBanque }}</option>
+                                {% endfor %}
+                                {#<option value="">Déposer plus tard</option>#}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id-transaction" class="col-md-4 control-label" readonly>Id transaction</label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" id="id-transaction" name="id-transaction">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="acompte-type hidden">
+                        <hr />
+                        <div class="form-group">
+                            <label for="compte" class="col-md-4 control-label">Compte</label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="compte" name="compte">
+                                    <option value="-1"></option>
+                                    {% for pcc in pccs %}
+                                        <option value="{{ pcc.id }}">{{ pcc.compte ~' ('~pcc.intitule ~')' }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="saisie-vente-type">
+                <hr />
+                <div class="items">
+                    <br />
+                    <table class="table table-hover article-list">
+                        <thead>
+                        <tr>
+                            <th>Compte</th>
+                            <th>Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button type="button" class="btn btn-default new-article" onclick="addNewCompte();">Ajouter compte</button>
+                    <button type="button" class="btn btn-default new-article" onclick="removeCompte();">Supprimer compte</button>
+                    <input type="hidden" id="article-to-remove" value="" />
+                </div>
+                <div id="articles-deleted"></div>
+                <br />
+                <br />
+            </div>
+
+            {#<div class="form-group">#}
+                {#<label for="date-encaissement" class="col-md-2 col-sm-3 col-xs-12 control-label">Date</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<div class="input-group date">#}
+                        {#<input type="text" class="form-control datepicker" id="date-encaissement" name="date-encaissement" value="{{ "now"|date("d/m/Y") }}">#}
+                        {#<span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<label for="moyen-paiement" class="col-md-2 col-sm-3 col-xs-12 control-label">Moyen de Paiement</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="moyen-paiement" name="moyen-paiement" placeholder="" >#}
+                        {#{% for moyenpaiement in moyenpaiements %}#}
+                            {#<option value="{{ moyenpaiement.id }}" {% if moyenpaiement.id == 5 %}selected{% endif %}>{{ moyenpaiement.nom }}</option>#}
+                        {#{% endfor %}#}
+                    {#</select>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="form-group">#}
+                {#<label for="montant" class="col-md-2 col-sm-3 col-xs-12 control-label" readonly>Montant*</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<input type="text" class="form-control number" id="montant" name="montant" value="0" readonly>#}
+                {#</div>#}
+                {#<label for="banque" class="col-md-2 col-sm-3 col-xs-12 control-label">Banque</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="banque" name="banque">#}
+                        {#<option  value="-1"></option>#}
+                        {#{% for banque in banques %}#}
+                            {#{% set nomBanque = (banque.banque is null) ? '' : banque.banque.nom %}#}
+                            {#<option value="{{ banque.id }}">{{ nomBanque }}</option>#}
+                        {#{% endfor %}#}
+                        {#<option value="">Déposer plus tard</option>#}
+                    {#</select>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="form-group">#}
+                {#<label for="note" class="col-md-2 col-sm-3 col-xs-12 control-label">Notes</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<textarea class="form-control" id="note" name="note"></textarea>#}
+                {#</div>#}
+                {#<label for="id-transaction" class="col-md-2 col-sm-3 col-xs-12 control-label" readonly>Id transaction</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<input type="number" class="form-control" id="id-transaction" name="id-transaction">#}
+                {#</div>#}
+            {#</div>#}
+                    {##}
+            {#<div class="acompte-type hidden">#}
+                {#<hr />#}
+                {#<div class="form-group">#}
+                    {#<label for="compte" class="col-md-4 control-label">Compte</label>#}
+                    {#<div class="col-md-6 col-sm-8 col-xs-8">#}
+                        {#<select class="form-control" id="compte" name="compte">#}
+                            {#{% for compte in comptes %}#}
+                                {#<option value="{{ compte.id }}">{{ compte.libelle~' ('~compte.compte~')' }}</option>#}
+                            {#{% endfor %}#}
+                            {#<option value="-1"></option>#}
+                            {#{% for pcc in pccs %}#}
+                                {#<option value="{{ pcc.id }}">{{ pcc.compte ~' ('~pcc.intitule ~')' }}</option>#}
+                            {#{% endfor %}#}
+
+                        {#</select>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+                        {##}
+            {#<div class="saisie-vente-type">#}
+                {#<hr />#}
+                {#<div class="items">#}
+                    {#<br />#}
+                    {#<table class="table table-hover article-list">#}
+                        {#<thead>#}
+                            {#<tr>#}
+                                {#<th>Compte</th>#}
+                                {#<th>Montant</th>#}
+                            {#</tr>#}
+                        {#</thead>#}
+                        {#<tbody></tbody>#}
+                    {#</table>#}
+                    {#<button type="button" class="btn btn-default new-article" onclick="addNewCompte();">Ajouter compte</button>#}
+                    {#<button type="button" class="btn btn-default new-article" onclick="removeCompte();">Supprimer compte</button>#}
+                    {#<input type="hidden" id="article-to-remove" value="" />#}
+                {#</div>#}
+                {#<div id="articles-deleted"></div>#}
+                {#<br />#}
+                {#<br />#}
+            {#</div>#}
+                        
+            {#<hr />
+            <div class="form-group">
+                <label for="projet" class="col-md-4 control-label">Projet</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="projet" name="projet" {% if parent=='projet' %}readonly{% endif %}>
+                        {% if parent=='projet' %}
+                            {% for projet in projets %}
+                                {% if projet.id == parentid %}
+                                <option value="{{ projet.id }}" selected="selected">{{ projet.nom }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <option value=""></option>
+                            {% for projet in projets %}
+                                <option value="{{ projet.id }}">{{ projet.nom }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+            </div>#}
+
+            <hr />
+            <div id="dropzone">
+                <h3 class="droptext">Faites glisser les fichiers à joindre</h3>
+                <span>ou parcourir vos fichier</span>
+                <input type="file" class="hidden" name="files" multiple />
+            </div>
+            <div id="dropzone-uploaded"></div>
+            <div id="dropzone-deleted"></div>
+        </form>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListEncaissement();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveEncaissement();">Enregistrer</button>
+        </div>
+    </div>
+</div>

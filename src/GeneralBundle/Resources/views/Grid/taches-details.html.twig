@@ -1,0 +1,53 @@
+<div class="info-{{idModal}}" data-titre="{{titre}}" class="hidden"></div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="contact-box center-version">
+            <table class="table" data-page-size="8">
+                <thead>
+                <tr class="th-col">
+                    <th class="text-center col-sm-2"><strong>Dossiers</strong></th>
+                    {% if showCompte %}
+                        <th class="text-center col-sm-1">Compte</th>
+                    {% endif %}
+                    <th class="text-center col-sm-1">Clôture</th>
+                    <th class="text-center col-sm-1">Responsable</th>
+                    <th class="text-center col-sm-1">RB</th>
+                    <th class="text-center col-sm-1">OB</th>
+                    <th class="text-center col-sm-1">Rappro</th>
+                    <th class="text-center col-sm-1">Pièce à <br> lettrer</th>
+                    <th class="text-center col-sm-1">Pièce <br> manquant</th>
+                    <th class="text-center col-sm-1">Chèque <br> inconnus</th>
+                    <th class="text-center col-sm-1">Dernière <br> demande</th>
+                    <th class="text-center col-sm-1">Depassé</th>
+                </tr>
+                </thead>
+                <tbody>
+                	{% if detailsTaches|length > 0 %}
+	                    {% for d in detailsTaches %}
+	                        <tr class="tr-tache-detail">
+	                            <td class="text-left col-sm-2"><strong>{{d.dossier}}</strong></td>
+                                {% if showCompte %}
+                                    <td class="text-center col-sm-1 qtip_compte_details" data-banque="{{d.nomBanque}}">{{d.compte}}</td>
+                                {% endif %}
+                                <td class="text-center col-sm-1">{{d.cloture}}</td>
+	                            <td class="text-center col-sm-1">{{d.responsable}}</td>
+	                            <td class="text-center col-sm-1 qtip_rb" data-color="{{d.colorRb}}"><i class="fa fa-circle" style="color:{{ d.colorRb }};margin-left: 0px !important; padding-top: 3px;"></i></td>
+	                            <td class="text-center col-sm-1 qtip_ob" data-color="{{d.colorOb}}"><i class="fa fa-circle" style="color:{{ d.colorOb }};margin-left: 0px !important; padding-top: 3px;"></i></td>
+	                            <td class="text-center col-sm-1 qtip_rappro" data-color="{{d.colorRappro}}"><i class="fa fa-circle" style="color:{{ d.colorRappro}};margin-left: 0px !important; padding-top: 3px;"></i></td>
+	                            <td class="text-center col-sm-1">{{d.alettrer}}</td>
+	                            <td class="text-center col-sm-1">{{d.nb_pc_manquant}}</td>
+	                            <td class="text-center col-sm-1">{{d.chq_inconnu}}</td>
+	                            <td class="text-center col-sm-1">{{d.date_envoi}}</td>
+                                <td class="text-center col-sm-1">{{d.depasser}}</td>
+	                        </tr>
+	                    {% endfor %}
+	                {% else %}
+	                	 <tr>
+                            <td class="text-center" colspan="10"><strong>Aucuns travaux</strong></td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

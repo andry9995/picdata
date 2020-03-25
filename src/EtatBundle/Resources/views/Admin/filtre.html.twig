@@ -1,0 +1,25 @@
+<div class="row">
+    {% if adminGranted %}
+        <div class="col-sm-2" id="js_div_general">
+            <span class="checkbox checkbox-default">
+                <input id="js_is_general" type="checkbox" {{ (adminGranted) ? 'checked' : '' }}>
+                <label for="js_is_general">Model g&eacute;neral</label>
+            </span>
+        </div>
+    {% endif %}
+    <div class="col-sm-10">
+        <div class="row">
+            {% if adminGranted %} {#and etat == 0#}
+                <div class="col-sm-4 js_type_client_container {{ (adminGranted) ? '' : 'hidden' }}">
+                    {{ render(controller('AppBundle:Commun:regimeFiscals',{'conteneur':0,'tous':0})) }}
+                    {{ include('EtatBundle:Admin:type-societe.html.twig') }}
+                </div>
+            {% endif %}
+            <div class="col-sm-4 js_cl_contener_dossier {{ (adminGranted) ? 'hidden' : '' }}">
+                {{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0})) }}
+            </div>
+            <div class="col-sm-4 js_cl_contener_dossier {{ (adminGranted) ? 'hidden' : '' }}" id="js_conteneur_site"></div>
+            <div class="col-sm-4 js_cl_contener_dossier {{ (adminGranted) ? 'hidden' : '' }}" id="js_conteneur_dossier"></div>
+        </div>
+    </div>
+</div>

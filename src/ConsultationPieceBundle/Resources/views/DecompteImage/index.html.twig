@@ -1,0 +1,18 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% block titre %}
+    Décompte d'image
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block wrapper_content %}
+	<div class="row">
+        {{ include('ConsultationPieceBundle:DecompteImage:filtre.html.twig')}}
+	</div>
+{% endblock %}

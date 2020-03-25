@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-lg-4" for="id_pcc_banque_compte">
+                    <span>Compte</span>
+                    <span class="label label-warning">{{ pccs|length }}</span>
+                </label>
+                <div class="col-lg-8">
+                    <select class="form-control" id="id_pcc_banque_compte">
+                        <option value="{{ 0|boost }}"></option>
+                        {% for pcc in pccs %}
+                            <option value="{{ pcc.id|boost }}" {{ pcc.id == idPccBc ? 'selected' : '' }}>{{ pcc.compte ~ ' - ' ~ pcc.intitule }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-lg-4" for="id_pcc_journal_dossier">
+                    <span>Jnl</span>
+                    <span class="label label-warning">{{ journauxDossiers|length }}</span>
+                </label>
+                <div class="col-lg-8">
+                    <select class="form-control" id="id_pcc_journal_dossier">
+                        <option value="{{ 0|boost }}"></option>
+                        {% for journalDossier in journauxDossiers %}
+                            <option value="{{ journalDossier.id|boost }}" {{ journalDossier.id == idJournaDossierBc ? 'selected' : '' }}>{{ journalDossier.codeStr ~ ' - ' ~ journalDossier.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

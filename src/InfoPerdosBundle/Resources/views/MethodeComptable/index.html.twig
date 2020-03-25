@@ -1,0 +1,132 @@
+<div id="tile-container" class="letter-container">
+    <div class="tile-wrapper" style="height: 80px; width: 95px;">
+        <div class="tile" style="visibility: inherit; opacity: 1;">
+        BNC_LIA
+        <div>
+            25/05/10
+        </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="scroller">
+
+
+    <div class="row">
+        <div class="col-lg-3 developper">
+            {{ include('InfoPerdosBundle:Default:toutDevelopperReplier.html.twig') }}
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="btn btn-xs btn-primary btn-block btn-tout-valider" type="submit" id = "btn-validation-methode-comptable">Valider la page</button>
+                </div>
+            </div>
+        </div>
+
+        {{ include('InfoPerdosBundle:Default:progession.html.twig') }}
+
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-12">
+                    <textarea id="js_remarque_methode_comptable" name="textarea" rows="5" cols="17" placeholder="Les onglets doivent être renseignés dans l'ordre de 1 à 5. Certaines zones sont obligatoires afin de valider la création du dossier, et pouvoir envoyer les images. Quand les zones obligatoires d'un onglet sont renseignées l'onglet est souligné en vert au lieu de rouge">{{ (remarqueDossier is null or remarqueDossier.methodeComptable == "")? "" : remarqueDossier.methodeComptable }}</textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br/>
+
+    <div class="row">
+
+        <div class="col-sm-6" style="padding-left: 0; padding-right: 0; ">
+            <div class="ibox ibox-shadow">
+                <div class="ibox-title">
+                    <div class="col-sm-4"><h5>Convention Comptable</h5></div>
+                    <div class="col-sm-2"><button class="btn btn-sm btn-primary" type="submit" id = "btn-validation-meth-covention-comptable">Valider</button></div>
+                    <div class="col-sm-2"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></div>
+                </div>
+                <div class="ibox-content">
+                    {{ include('InfoPerdosBundle:MethodeComptable:conventionComptable.html.twig') }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6" style="padding-left: 0; padding-right: 0; ">
+            <div class="ibox ibox-shadow">
+                <div class="ibox-title">
+                    <div class="col-sm-4"><h5>Périodicité</h5></div>
+                    <div class="col-sm-2"><button class="btn btn-sm btn-primary" type="submit" id = "btn-validation-meth-periodicite">Valider</button></div>
+                    <div class="col-sm-2"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></div>
+                </div>
+                <div class="ibox-content">
+                    {{ include('InfoPerdosBundle:MethodeComptable:periodicite.html.twig') }}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+                <div class="col-sm-2"><h5>Méthodes comptables</h5></div>
+                <div class="col-sm-1"><button class="btn btn-sm btn-primary" type="submit" id = "btn-validation-meth-methode-comptable">Valider</button></div>
+                <div class="col-sm-1"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></div>
+            </div>
+
+            <div class="ibox-content">
+                {{ include('InfoPerdosBundle:MethodeComptable:methodeComptable.html.twig')}}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+                <div class="col-sm-2"><h5>Libellé Ecriture Achat</h5></div>
+                <div class="col-sm-1"><button class="btn btn-sm btn-primary btn-validation-meth-libelle" data-id="1">Valider</button></div>
+                <div class="col-sm-1"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></div>
+
+            </div>
+
+            <div class="ibox-content">
+                {{ include('InfoPerdosBundle:MethodeComptable:libelleAchat.html.twig')}}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+                <div class="col-sm-2"><h5>Libellé Ecriture Vente</h5></div>
+                <div class="col-sm-1"><button class="btn btn-sm btn-primary btn-validation-meth-libelle" data-id="3">Valider</button></div>
+                <div class="col-sm-1"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></div>
+
+            </div>
+
+            <div class="ibox-content">
+                {{ include('InfoPerdosBundle:MethodeComptable:libelleVente.html.twig')}}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+                <div class="col-sm-2"><h5>Libellé Ecriture Banque</h5></div>
+                <div class="col-sm-1"><button class="btn btn-sm btn-primary btn-validation-meth-libelle" data-id="5">Valider</button></div>
+                <div class="col-sm-1"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></div>
+
+            </div>
+
+            <div class="ibox-content">
+                {{ include('InfoPerdosBundle:MethodeComptable:libelleBanque.html.twig')}}
+            </div>
+        </div>
+    </div>
+</div>

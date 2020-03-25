@@ -1,0 +1,56 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-new-prospect-title">Ajouter un Article</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <button class="btn btn-primary" data-toggle="modal" onclick="loadNewArticleModal('vente');">Nouveau</button>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" id="article-form">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Code Article</th>
+                                <th>Nom</th>
+                                <th>Description</th>
+                                <th>Prix de Vente</th>
+                                <th>Prix d'Achat</th>
+                                <th>Unité de mesure</th>
+                                <th>Famille article</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for article in articles %}
+                                <tr>
+                                    <td><input type="checkbox" class="articles" name="articles[]" value="{{ article.id~';'~article.code~';'~article.nom~';'~article.oneUniteArticle.nom~';'~article.prixVente~';'~article.tvaTaux.taux }}"></td>
+                                    <td>{{ article.code }}</td>
+                                    <td>{{ article.nom }}</td>
+                                    <td>{{ article.description }}</td>
+                                    <td>{{ article.prixVente|number_format(0, '.', ' ') }}</td>
+                                    <td>{{ article.prixAchat|number_format(0, '.', ' ') }}</td>
+                                    <td>{{ article.oneUniteArticle.nom }}</td>
+                                    <td>{{ article.oneFamilleArticle.nom }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" onclick="selectArticleVente();">Sélectionner</button>
+    </div>
+</div>
+                

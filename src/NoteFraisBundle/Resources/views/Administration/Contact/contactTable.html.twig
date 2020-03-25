@@ -1,0 +1,40 @@
+<div class="table-responsive">
+    <table class="footable table table-striped table-hover toggle-arrow-tiny table-contact" data-page-size="8">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Type</th>
+            <th>E-mail</th>
+            <th>Téléphone</th>
+            <th>Fonction</th>
+        </tr>
+        </thead>
+
+        <tbody>
+            {% for contact in contacts %}
+
+                <tr data-id="{{ contact.id|boost }}">
+                    <td class="contact-nom">{{ contact.nom }}</td>
+                    <td class="contact-prenom">{{ contact.prenom }}</td>
+                    <td class="contact-type">{{ (contact.ndfContactType is null) ? '' : contact.ndfContactType.libelle }}</td>
+                    <td class="contact-mail">{{ contact.mail }}</td>
+                    <td class="contact-telephone">{{ contact.telephone }}</td>
+                    <td class="contact-fonction">{{ contact.fonction }}</td>
+                </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td colspan="12">
+                <ul class="pagination pull-right"></ul>
+            </td>
+        </tr>
+        </tfoot>
+
+
+    </table>
+</div>

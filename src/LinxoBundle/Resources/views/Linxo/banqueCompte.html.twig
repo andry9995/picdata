@@ -1,0 +1,16 @@
+<option value="{{ 0|boost }}"></option>
+
+{% set i = 0 %}
+{% for banqueCompte in banqueComptes %}
+    {% if i == 0 or banqueCompte.dossier != banqueComptes[i - 1].dossier %}
+        <optgroup label="{{ banqueCompte.dossier.nom }}">
+    {% endif %}
+
+    <option value="{{ banqueCompte.id|boost }}" {{ (linxoDossier.banqueCompte == banqueCompte) ? 'selected' : '' }} >{{ banqueCompte.numcompte }}</option>
+
+    {% if i == banqueComptes|length - 1 or banqueCompte.dossier != banqueComptes[i + 1].dossier %}
+        </optgroup>
+    {% endif %}
+
+    {% set i = i + 1 %}
+{% endfor %}

@@ -1,0 +1,9 @@
+<table class="table">
+    <tbody>
+        {% for indicateurInfoPerdo in indicateurInfoPerdos %}
+            <tr class="pointer cl_tr_infoperdos" data-id="{{ indicateurInfoPerdo.id|boost }}">
+                <td>{{ indicateurInfoPerdo.header }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

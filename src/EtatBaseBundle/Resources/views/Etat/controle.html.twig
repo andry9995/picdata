@@ -1,0 +1,25 @@
+{% set resultats = controles.comptes %}
+{% set erreur = controles.debits %}
+<div class="scroller">
+    <table class="table table-condensed table-stripped table-hover">
+        <thead>
+            <tr class="active">
+                <th>ETAT</th>
+                <th class="text-right">RESULTAT</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for key, resultat in resultats %}
+            <tr>
+                <td>{{ key }}</td>
+                <td class="text-right">{{ (resultat != 0) ? resultat|abs|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                <td class="text-center {{ (resultat > 0) ? 'text-primary' : 'text-danger' }}">{{ (resultat > 0) ? 'B&eacute;n&eacute;fice'|raw : 'Perte' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center alert {{ (erreur) ? 'alert-danger' : 'alert-success' }}"><strong>{{ (erreur) ? 'RESULTATS&nbsp;DESEQUILIBRES' : 'RESULTATS&nbsp;EQUILIBRES' }}</strong></div>
+    </div>
+</div>

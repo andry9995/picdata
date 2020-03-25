@@ -1,0 +1,303 @@
+note_frais_test:
+    path: /test
+    defaults: { _controller: NoteFraisBundle:Default:test }
+    methods: [GET]
+
+note_frais:
+    path: /
+    defaults: { _controller: NoteFraisBundle:NoteFrais:index }
+    methods: [GET]
+
+note_frais_note:
+    path: /note
+    defaults: { _controller: NoteFraisBundle:NoteFrais:indexNote }
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_administration:
+    path: /administration
+    defaults: { _controller: NoteFraisBundle:NoteFrais:indexParametre}
+    methods: [POST]
+    options:
+      expose: true
+
+
+note_frais_categorie:
+    path: /categorie/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:indexCategorieV2, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_depense:
+    path: /depense-note/{noteId}
+    defaults: { _controller: NoteFraisBundle:NoteFrais:indexDepense, noteId: -1 }
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_frais_km:
+    path: /frais-km
+    defaults: { _controller: NoteFraisBundle:Administration:indexFraisKilometrique }
+    methods: [GET]
+    options:
+        expose: true
+
+
+note_frais_image:
+    path: /image-envoi
+    defaults: { _controller: NoteFraisBundle:NoteFrais:indexImage }
+    methods: [POST]
+    options:
+        expose: true
+
+
+
+note_frais_vehicule:
+    path: /vehicule
+    defaults: { _controller: NoteFraisBundle:Administration:indexVehicule }
+    methods: [GET]
+    options:
+      expose: true
+
+
+note_frais_admin_sous_categorie_status:
+    path: /administration/categorie/status
+    defaults: { _controller: NoteFraisBundle:Administration:sousCategorieStatus }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_admin_sous_categorie_edit:
+    path: /administration/sous-categorie/edit/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:sousCategorieEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_admin_pcc_edit:
+    path: /administration/pcc/edit/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:pccEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_combo_pcc:
+    path: /administration/combo-pcc
+    defaults: { _controller: NoteFraisBundle:Administration:comboPcc}
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_pcg:
+    path: /administration/pcg/{type}/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:pcg, type: 'pcg_charge',json: 0}
+    options:
+        expose: true
+
+
+note_frais_pcg_edit:
+    path: /administration/pcg-edit/{type}/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:pcgEdit, type: 'pcg_charge',json: 0}
+    options:
+        expose: true
+
+
+note_frais_pcg_delete:
+    path: /administration/pcg-delete/{type}
+    defaults: { _controller: NoteFraisBundle:Administration:pcgDelete, type: 'pcg_charge' }
+    options:
+        expose: true
+
+note_frais_utilisateur:
+    path: /utilisateur
+    defaults: { _controller: NoteFraisBundle:Administration:indexUtilisateur}
+    methods: [POST]
+    options:
+      expose: true
+
+
+note_frais_admin_utilisateur_edit:
+    path: /administration/utilisateur/edit/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:utilisateurEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_admin_utilisateur_status:
+    path: /administration/utilisateur/status
+    defaults: { _controller: NoteFraisBundle:Administration:utilisateurStatus }
+    methods: [POST]
+    options:
+      expose: true
+
+
+
+
+note_frais_admin_vehicule_edit:
+    path: /administration/vehicule/edit/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:vehiculeEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+
+note_frais_admin_frais_km_table:
+    path: /administration/frais-kilometrique-table
+    defaults: { _controller: NoteFraisBundle:Administration:fraisKilometriqueTable}
+    methods: [POST]
+    options:
+        expose: true
+
+#**************************DEPENSE**************************
+note_frais_table_vehicule:
+    path: /vehicule/table
+    defaults: { _controller: NoteFraisBundle:Administration:vehiculeTableau }
+    methods: [POST]
+    options:
+        expose: true
+
+
+note_frais_combo_vehicule:
+    path: /depense/combo-vehicule-km
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:comboVehicule}
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_tarification:
+    path: /depense/tarification
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseTarification }
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_table_depense:
+    path: /depense/table
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseTableau}
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_depense_edit:
+    path: /depense/edit/{json}
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+
+note_frais_depense_pj:
+    path: /depense/pj/{json}
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depensePj, json: 0 }
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_depense_filtre:
+    path: /depense/filtre/{json}
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseFiltre, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_depense_fk_edit:
+    path: /depense-fk/edit/{json}
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseFKEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_depense_dupliquer:
+    path: /depense/dupliquer
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseDupliquer }
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_depense_delete:
+    path: /depense/delete
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseDelete }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_devise:
+    path: /devise
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:devise}
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_tva_taux:
+    path: /tva-taux
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseTvaTaux }
+    options:
+        expose: true
+    methods: [POST]
+
+note_frais_depense_contact:
+    path: /depense/contact
+    defaults: { _controller: NoteFraisBundle:NoteFraisDepense:depenseContact }
+    options:
+        expose: true
+    methods: [POST]
+
+
+
+#**************************NOTE**************************
+note_frais_table_note:
+    path: /depense/note/{json}
+    defaults: { _controller: NoteFraisBundle:NoteFrais:depenseNoteTableau, json: 0 }
+    methods: [POST]
+    options:
+        expose: true
+
+note_frais_note_edit:
+    path: /note/edit/{json}
+    defaults: { _controller: NoteFraisBundle:NoteFraisNote:noteEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+
+note_frais_admin_contact_edit:
+    path: /administration/contact/edit/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:contactEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+note_frais_table_contact:
+    path: /contact/table
+    defaults: { _controller: NoteFraisBundle:Administration:contactTableau }
+    methods: [POST]
+    options:
+        expose: true
+
+
+
+note_frais_admin_affaire_edit:
+    path: /administration/affaire/edit/{json}
+    defaults: { _controller: NoteFraisBundle:Administration:affaireEdit, json: 0 }
+    methods: [POST]
+    options:
+      expose: true
+
+
+note_frais_table_affaire:
+    path: /affaire/table
+    defaults: { _controller: NoteFraisBundle:Administration:affaireTableau }
+    methods: [POST]
+    options:
+        expose: true
+
+
+
+note_frais_envoi:
+    path:   /envoi-piece
+    defaults:   { _controller: NoteFraisBundle:Piece:envoiPiece}
+    methods: [POST]
+    options:
+        expose: true

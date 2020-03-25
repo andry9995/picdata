@@ -1,0 +1,20 @@
+{% extends 'base-error.html.twig' %}
+
+
+{% block content %}
+    <div class="alert alert-info">
+        <h1>404</h1>
+
+        <h3 class="font-bold">Page ou Ressource Introuvable</h3>
+
+        <div class="error-desc">
+            La page ou Ressource que vous avez demandée n'existe pas ou a été déplacée.
+            {#<p>Message: <code>{{ status_text }}</code></p>#}
+            <div style="margin-top: 30px;">
+                <a class="btn btn-primary btn-block" href="{{ path('dashboard_homepage') }}">
+                    <i class="fa fa-arrow-circle-o-left"></i> Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+<div class="row">
+	<div class="col-lg-3">
+		<div class="row">
+			<div class="col-lg-12">
+				{{ render(controller('AppBundle:Commun:clients', { 'tous' : 1, 'attr_id': 'client-repartitions', 'label_col': 2, 'select_col': 10})) }}
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3">
+		<div class="row">
+			<div class="col-lg-12">
+				{{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'attr_id' : 'exercice-repartitions' , 'label_col':2, 'select_col':10, 'nbr': 8 } )) }}
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3">
+		        <div class="row">
+		            <div class="col-lg-12">
+		                <form class="form-horizontal">
+		                    <div class="form-group">
+		                        <label for="site-repartitions" class="control-label col-lg-3" style="text-align:left">
+		                            <span>Site</span>
+		                            <span class="label label-warning">0</span>
+		                        </label>
+		                        <div class="col-lg-9">
+		                            <select data-ref="" class="site form-control"
+		                                    id="site-repartitions"></select>
+		                        </div>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+
+	<div class="col-lg-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="btn-group" style="width: 250px;">
+                    <button id="btn-go-repartitions" class="btn btn-primary" style="width: 70%;">
+                        <i class="fa fa-arrow-circle-o-right"></i> Go
+                    </button>
+                    <div class="btn-group" style="width:30%">
+                        {{ include('GeneralBundle:General:export-highcharts.html.twig', {name: 'repartitions'})}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

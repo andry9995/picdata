@@ -1,0 +1,85 @@
+.niveau-1
+ {
+     font-size: 14px;
+     font-weight: bold;
+     color: #000000;
+ }
+.niveau-2
+{
+    font-size: 13px;
+    font-weight: bold;
+    color: #696969;
+    text-indent: 1em;
+}
+.niveau-3
+{
+    font-size: 13px;
+    text-indent: 2em;
+}
+.niveau-4
+{
+    text-indent: 3em;
+}
+.niveau-5
+{
+    text-indent: 4em;
+}
+
+.total
+{
+    text-indent: 3em;
+    font-weight: bold;
+    font-style: italic;
+    color: #2f4f4f;
+}
+.semi-transparent
+{
+    opacity: 0.3;
+    width: 60%;
+}
+.bg-marker
+{            
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.bg-marker span
+{
+    font-size: 4em;
+}
+.table-compressed td,.table-compressed tr
+{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+.table-no-border tr td
+{
+    border-bottom: none !important;
+    border-top: none !important;
+}
+
+.padding-top-4,.padding-top-4 td
+{
+    padding-top: 4px !important;
+}
+.padding-top-3, .padding-top-3 td
+{
+    padding-top: 3px !important;
+}
+.padding-top-2, .padding-top-2 td
+{
+    padding-top: 2px !important;
+}
+.padding-top-1, .padding-top-1 td
+{
+    padding-top: 1px !important;
+}
+.padding-top-0, .padding-top-0 td
+{
+    padding-top: 0px !important;
+}
+
+#js_ef_table tr td
+{
+    padding-left: 20px !important;
+}

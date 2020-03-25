@@ -1,0 +1,31 @@
+{#{% extends 'NoteFraisBundle:Default:index.html.twig' %}#}
+
+{#{% block javascripts %}#}
+
+    {#{{ parent() }}#}
+
+{#{% endblock %}#}
+
+{#{% block wrapper_content %}#}
+
+    {#{{ include('NoteFraisBundle:Default:navigation.html.twig') }}#}
+
+    <br/>
+
+    <div class="row" id="tab-image">
+
+        <div class="form-group">
+            <div class="col-lg-4">
+                {{ include('NoteFraisBundle:Default:exercice.html.twig') }}
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="tabs-container">
+                <input type="file" class="form-control" name="ndf_envoi[]" multiple id="js_ndf_envoi">
+        </div>
+    </div>
+
+{#{% endblock %}#}
+

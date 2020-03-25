@@ -1,0 +1,57 @@
+<div class="col-lg-12">
+    <div class="table-responsive">
+
+        <table class="table table-bordered">
+
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>#Compte</th>
+                <th>Intitulé</th>
+                <th style="width:80px;">Débit</th>
+                <th style="width:80px;">Crédit</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% set totalDebit = 0 %}
+            {% set totalCredit = 0 %}
+
+            {% for ecriture in  ecritures %}
+
+                {% set totalDebit = totalDebit + ecriture.debit %}
+                {% set totalCredit = totalCredit + ecriture.credit %}
+
+                {% set compte = '' %}
+                {% set intitule = '' %}
+                {% set trouve = false %}
+
+                {% if ecriture.tiers is not null %}
+                    {% set compte = ecriture.tiers.compteStr %}
+                    {% set intitule = ecriture.tiers.intitule %}
+                {% else %}
+                    {% if ecriture.pcc is not null %}
+                        {% set compte = ecriture.pcc.compte %}
+                        {% set intitule = ecriture.pcc.intitule %}
+                    {% endif %}
+                {% endif %}
+
+                <tr>
+                    <td>{{ ecriture.dateEcr|date('d/m/Y') }}</td>
+                    <td>{{ compte }}</td>
+                    <td>{{ intitule }}</td>
+                    <td align="right">{{ ecriture.debit|number_format(2, '.', ' ') }}</td>
+                    <td align="right">{{ ecriture.credit|number_format(2, '.', ' ') }}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td colspan="3"><i class="fa fa-book"></i></td>
+                <td align="right" style="font-weight: bold;">{{ totalDebit|number_format(2, '.', ' ') }}</td>
+                <td align="right" style="font-weight: bold;">{{ totalCredit|number_format(2, '.', ' ') }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

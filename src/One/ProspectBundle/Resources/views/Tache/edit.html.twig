@@ -1,0 +1,130 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListTache();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Tâche {{ tache.sujet }}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="tache-form" enctype="multipart/form-data">
+            <input type="hidden" class="form-control" id="id" name="id" value="{{ tache.id }}">
+            <div class="form-group">
+                <label for="sujet" class="col-md-4 control-label">Sujet</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="sujet" name="sujet" placeholder="sujet" value="{{ tache.sujet }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="memo" class="col-md-4 control-label">Mémo</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <textarea class="form-control" id="memo" name="memo" placeholder="mémo">{{ tache.memo }}</textarea>
+                </div>
+            </div>
+            <div class="text-center" style="margin-bottom: 20px;">
+                <div class="radio radio-inline">
+                    <input type="radio" id="status-a-faire" value="0" name="tache-status"
+                           {% if tache.status == 0 %}checked{% endif %}>
+                    <label for="status-a-faire">A faire</label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="status-fait" value="1" name="tache-status" {% if tache.status == 1 %}checked{% endif %}>
+                    <label for="status-fait">Fait</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cloture" class="col-md-4 control-label">Date d'échéance</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <div class="input-group date">
+                        <input type="text" class="form-control datepicker" id="echeance" name="echeance" placeholder="échéance" value="{{ tache.echeance|date('d/m/Y') }}">
+                        <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="client-prospect" class="col-md-4 control-label">Prospect ou Client</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="client-prospect" name="client-prospect" placeholder="" onchange="getListContacts(this.value);">
+                        <option value=""></option>
+                        {% for clientProspect in clientProspects %}
+                            <option value="{{ clientProspect.id }}" {% if tache.tiers and tache.tiers.id==clientProspect.id %}selected{% endif %}>{{ clientProspect.intitule }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact-client" class="col-md-4 control-label">Contact</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="contact-client" name="contact-client" placeholder="">
+                        <option value=""></option>
+                        {% for contact in contacts %}
+                            <option value="{{ contact.id }}" {% if tache.oneContactClient and contact.id == tache.oneContactClient.id %} selected="selected"{% endif %}>{% if contact.prenom != '' %}{{ contact.prenom ~' ' }}{% endif %}{{ contact.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="opportunite" class="col-md-4 control-label">Opportunité</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="opportunite" name="opportunite" placeholder="">
+                        <option value=""></option>
+                        {% for opportunite in opportunites %}
+                            <option value="{{ opportunite.id }}" {% if tache.opportunite and tache.opportunite.id==opportunite.id %}selected{% endif %}>{{ opportunite.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {#<div class="form-group">
+                <label for="projet" class="col-md-4 control-label">Projet</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="projet" name="projet">
+                        <option value=""></option>
+                        {% for projet in projets %}
+                            <option value="{{ projet.id }}" {% if tache.oneProjet and tache.oneProjet.id==projet.id %}selected{% endif %}>{{ projet.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>#}
+            <hr />
+            <div id="dropzone">
+                <h3 class="droptext">Faites glisser les fichiers à joindre</h3>
+                <span>ou parcourir vos fichier</span>
+                <input type="file" class="hidden" name="files" multiple />
+            </div>
+            <div id="dropzone-uploaded">
+                {% if fichiers|length > 0 %}
+                    {% for fichier in fichiers %}
+                        {% set uniqid_ext = fichier.nom|split('.') %}
+                        <div class="col-md-4" id="{{ uniqid_ext[0] }}">
+                            <div class="uploaded-content">
+                                <div class="content-image">
+                                    {% if uniqid_ext[1] == 'png' or uniqid_ext[1] == 'jpg' or uniqid_ext[1] == 'jpeg' %} 
+                                    <img src="{{ fichier.path }}{{ fichier.nom }}">
+                                    {% else %}
+                                    <img src="/bundles/oneprospect/img/default-file.png">
+                                    {% endif %}
+                                </div>
+                                <div class="content-footer">
+                                    <p>{{ fichier.nom }}</p>
+                                    <input type="hidden" name="uploaded-files[]" value="{{ fichier.path }}{{ fichier.nom }}" />
+                                </div>
+                            </div>
+                            <span onclick="deleteUploadedImage('{{ uniqid_ext[0] }}', '{{ fichier.nom }}')">x</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div id="dropzone-deleted"></div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListTache();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveTache();">Enregistrer</button>
+        </div>
+    </div>
+</div>

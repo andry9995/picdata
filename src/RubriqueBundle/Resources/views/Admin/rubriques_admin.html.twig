@@ -1,0 +1,52 @@
+<div class="panel-body">
+    <div class="row">
+        <div class="col-sm-2 js_div_resizable">
+            <div class="ibox ibox-shadow">
+                <div class="ibox-title pointer">
+                    <h5>Rubriques</h5>
+                    <div class="ibox-tools">
+                        <a class="fullscreen-link">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content hidden" style="padding: 5px!important;">
+                    {{ include('RubriqueBundle:Admin:rubrique_item.html.twig',
+                    {'type':0, 'class_add':class_add, 'class_remove':class_remove, rubriques:rubriques, rubriquesFormules:rubriquesFormules }) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 js_div_resizable">
+            <div class="ibox ibox-shadow">
+                <div class="ibox-title pointer">
+                    <h5>Super-Rubriques</h5>
+                    <div class="ibox-tools">
+                        <a class="fullscreen-link">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" style="padding: 5px!important;">
+                    {{ include('RubriqueBundle:Admin:rubrique_item.html.twig',
+                    {'type':1, 'class_add':class_add, 'class_remove':class_remove, rubriques:superRubriques, rubriquesFormules:superRubriquesFormules }) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 js_div_resizable">
+            <div class="ibox ibox-shadow">
+                <div class="ibox-title pointer">
+                    <h5>Hyper-rubriques</h5>
+                    <div class="ibox-tools">
+                        <a class="fullscreen-link">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content hidden" style="padding: 5px!important;">
+                    {{ include('RubriqueBundle:Admin:rubrique_item.html.twig',
+                    {'type':2, 'class_add':class_add, 'class_remove':class_remove, rubriques:hyperRubriques,rubriquesFormules:hyperRubriquesFormules }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

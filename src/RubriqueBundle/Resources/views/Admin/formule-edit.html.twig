@@ -1,0 +1,30 @@
+<div role="form" id="js_form_formule">
+    <div class="form-group">
+        <label>Nom&nbsp;de&nbsp;la&nbsp;formule</label>
+        <input type="text" id="js_formule_libelle" placeholder="Nom" class="form-control" value="{{ (rubrique is not null) ? rubrique.libelle : '' }}">
+    </div>
+    <div class="form-group" id="js_resizable">
+        <label>Formule</label>
+        <div id="js_formule" class="scroller js_formule" style="word-wrap: break-word!important;height: 80%; border: 1px solid #CCCCCC;background-color: #FFFFFF;padding: 4px!important;">
+            {% if rubrique is not null %}
+                {% set index = 0 %}
+                {% for ch in rubrique.formule|split('') %}
+                    {% if ch == '#' %}
+                        {% set r = rubriquesFilles[index] %}
+                        <span class="operateur operande label" style="margin-bottom: 5px!important;" data-id="{{ r.id }}">{{ r.libelle }}</span>
+                        {% set index = index + 1 %}
+                    {% else %}
+                        <span class="operateur">{{ ch }}</span>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <input type="text" id="js_formule_focus" style="height: 0!important;width: 0!important;">
+    </div>
+
+    <div>
+        <span class="btn btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary" id="js_valider_formule"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+        <input type="hidden" id="js_id_formule" value="{{ ((rubrique is not null) ? rubrique.id : 0)|boost }}">
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Libell&eacute;</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for image in images %}
+            <tr data-id="{{ image.id|boost }}">
+                <td class="pointer text-primary js_show_image_multiple">{{ image.n }}</td>
+                <td>{{ image.l }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

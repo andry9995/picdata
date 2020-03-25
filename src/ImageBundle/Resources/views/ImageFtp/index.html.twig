@@ -1,0 +1,22 @@
+{% extends 'DashboardBundle::dashboard.html.twig' %}
+
+{% block titre %}ENVOI IMAGES PAR FTP{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/image/css/envoi-ftp.css') }}">
+{% endblock %}
+
+{% block wrapper_content %}
+    <div id="img-content" class="row" style="margin-bottom: 10px !important;">
+        <div class="col-lg-12">
+            <table id="js_envoi_ftp" class="js-jqgrid-table"></table>
+            <div id="pager_envoi_ftp"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/image/js/envoi-ftp/envoi-ftp.js') }}"></script>
+{% endblock %}

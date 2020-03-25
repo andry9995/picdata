@@ -1,0 +1,3 @@
+chart_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ChartBundle:Default:index }

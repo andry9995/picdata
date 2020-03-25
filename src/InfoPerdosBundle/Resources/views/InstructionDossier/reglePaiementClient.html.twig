@@ -1,0 +1,161 @@
+<form class="form-horizontal" id ="js_form_instr_regle_paiement">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <div class="ibox border-bottom">
+                <div class="ibox-content">
+                    <h2>Fournisseur</h2>
+
+                    <div class="row">
+
+
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Date</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control instr_regle_paiement" name="cf_regle_paiement_date_" id="js_cf_regle_paiement_date"
+                                            data-field="TypeDate" data-id="0">
+                                        <option value=""></option>
+                                        <option value="0">Date Facture</option>
+                                        <option value="1">Date Livraison</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-8 control-label">Nombre de jours</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control instr_regle_paiement"
+                                           name="cf_regle_paiement_nbre_jour" id="js_cf_regle_paiement_nbre_jour"  data-field="NbreJour" data-id="0"
+                                           value="">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6">
+
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label instruction">Date le</label>
+                                <div class="col-sm-2">
+                                    <div class="checkbox checkbox-success checkbox-inline">
+                                        <input type="checkbox" class="checkbox-primary" id="js_cf_regle_paiement_date_le_active">
+                                        <label></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <select class="form-control instr_regle_paiement" name="cf_regle_paiement_date_le" id="js_cf_regle_paiement_date_le" data-field="DateLe" data-id="0">
+
+                                        <option value=""></option>
+                                        {% for i in 5..30 %}
+                                            {% if i is divisible by(5) %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="ibox border-bottom">
+
+                <div class="ibox-content">
+                    <h2>Client</h2>
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Date</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control instr_regle_paiement" name="cc_regle_paiement_date" id="js_cc_regle_paiement_date"
+                                            data-field="TypeDate" data-id="1">
+
+                                        <option value=""></option>
+                                        <option value="0">Date Facture</option>
+                                        <option value="1">Date Livraison</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-8 control-label">Nombre de jours</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control instr_regle_paiement"
+                                           name="cc_regle_paiement_nbre_jour" id="js_cc_regle_paiement_nbre_jour"  data-field="NbreJour" data-id="1"
+                                           value="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label instruction">Date le</label>
+                                <div class="col-sm-2">
+                                    <div class="checkbox checkbox-success checkbox-inline">
+                                        <input type="checkbox" class="checkbox-primary" id="js_cc_regle_paiement_date_le_active">
+                                        <label></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <select class="form-control instr_regle_paiement" name="cc_regle_paiement_date_le"
+                                            id="js_cc_regle_paiement_date_le" data-field="DateLe" data-id="1">
+
+                                        <option value=""></option>
+                                        {% for i in 5..30 %}
+                                            {% if i is divisible by(5) %}
+                                                <option value="{{ i }}">{{ i }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</form>

@@ -1,0 +1,4 @@
+services:
+#    pcg.example:
+#        class: PcgBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

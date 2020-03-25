@@ -1,0 +1,78 @@
+#js_form_client .border-bottom{
+
+    border-left: 3px solid #e7eaec;
+    border-right: 3px solid #e7eaec;
+}
+
+#js_site:hover
+{
+    background-color: #18a689;
+    border-color: #18a689;
+}
+
+.input-file-container {
+  position: relative;
+} 
+.js .input-file-trigger {
+  display: block;
+  /*padding: 14px 45px;*/
+  background: #39D2B4;
+  color: #fff;
+  font-size: 1.7em;
+  transition: all .4s;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 2px;
+}
+.js .input-file {
+  position: absolute;
+  top: 0; left: 0;
+  width: 225px;
+  opacity: 0;
+  padding: 14px 0;
+  cursor: pointer;
+}
+.js .input-file:hover + .input-file-trigger,
+.js .input-file:focus + .input-file-trigger,
+.js .input-file-trigger:hover,
+.js .input-file-trigger:focus {
+  background: #34495E;
+  color: #39D2B4;
+}
+
+.file-return {
+  margin: 0;
+}
+.file-return:not(:empty) {
+  margin: 1em 0;
+}
+.js .file-return {
+  font-style: italic;
+  font-size: .9em;
+  font-weight: bold;
+}
+.js .file-return:not(:empty):before {
+  content: "Fichier choisi: ";
+  font-style: normal;
+  font-weight: normal;
+}
+
+.kv-fileinput-caption{
+  height: 54px !important;
+}
+
+.jconfirm.jconfirm-white .jconfirm-box .jconfirm-buttons button, .jconfirm.jconfirm-light .jconfirm-box .jconfirm-buttons button {
+  text-transform: unset !important;
+}
+
+.pastille-status {
+  font-size: 10px;
+}
+
+i.status-actif{
+  color: #19a689;
+}
+
+i.status-inactif{
+  color: #c0c0c0;
+}

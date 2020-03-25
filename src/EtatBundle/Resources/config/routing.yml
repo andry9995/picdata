@@ -1,0 +1,106 @@
+etat_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: EtatBundle:Default:index }
+etat_liste:
+    path:     /etat/liste
+    defaults: { _controller: EtatBundle:Admin:etats }
+    options:
+      expose: true
+    methods: [POST]
+etat_styles:
+    path:     /etat/styles
+    defaults: { _controller: EtatBundle:Admin:styles }
+    options:
+      expose: true
+    methods: [POST]
+etat_change_styles:
+    path:     /etat/styles/change
+    defaults: { _controller: EtatBundle:Admin:stylesChange }
+    options:
+      expose: true
+    methods: [POST]
+etat_periodes:
+    path:     /etat/periodes
+    defaults: { _controller: EtatBundle:Admin:periodes }
+    options:
+      expose: true
+    methods: [POST]
+etat_change_periodes:
+    path:     /etat/periodes/change
+    defaults: { _controller: EtatBundle:Admin:periodesChange }
+    options:
+      expose: true
+    methods: [POST]
+etat_show_control:
+    path:     /etat/control/show
+    defaults: { _controller: EtatBundle:Admin:showControl }
+    options:
+      expose: true
+    methods: [POST]
+
+#####################ADMIN WITH REGIME########################
+etat_etat_details:
+    path:     /etat/etat/details
+    defaults: { _controller: EtatBundle:Admin:etatDetails }
+    options:
+      expose: true
+    methods: [POST]
+
+##########################ADMIN###############################
+etat_admin_financier:
+    path:     /etat/admin/etat_financier
+    defaults: { _controller: EtatBundle:Admin:indexFinancier }
+etat_admin_gestion:
+    path:     /etat/admin/etat_gestion
+    defaults: { _controller: EtatBundle:Admin:indexGestion }
+
+##########################AFFICHAGE###########################
+etat_show_financier:
+    path:     /etat/etat_financier
+    defaults: { _controller: EtatBundle:Show:indexFinancier }
+etat_show_gestion:
+    path:     /etat/etat_gestion
+    defaults: { _controller: EtatBundle:Show:indexGestion }
+etat_periodes_get:
+    path:     /etat/periodes/get
+    defaults: { _controller: EtatBundle:Show:periodes }
+    options:
+      expose: true
+    methods: [POST]
+etat_status_etat:
+    path:     /etat/status
+    defaults: { _controller: EtatBundle:Show:etatsStatus }
+    options:
+      expose: true
+    methods: [POST]
+
+etat_commentaire:
+    path:     /etat/commentaire
+    defaults: { _controller: EtatBundle:Show:commentaire }
+    methods:  [POST]
+    options:
+      expose: true
+
+etat_commentaire_save:
+    path:     /etat/commentaire/save
+    defaults: { _controller: EtatBundle:Show:commentaireSave }
+    methods:  [POST]
+    options:
+      expose: true
+
+##########################CONTROL###########################
+etat_control:
+    path:     /etat/control
+    defaults: { _controller: EtatBundle:Control:index }
+etat_control_errors:
+    path:     /etat/control/errors
+    defaults: { _controller: EtatBundle:Control:errors }
+    methods: [POST]
+    options:
+      expose: true
+etat_control_test:
+    path:     /etat/control/test
+    defaults: { _controller: EtatBundle:Control:test }
+    methods: [POST]
+    options:
+      expose: true

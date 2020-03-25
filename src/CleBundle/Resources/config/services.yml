@@ -1,0 +1,4 @@
+services:
+#    cle.example:
+#        class: CleBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

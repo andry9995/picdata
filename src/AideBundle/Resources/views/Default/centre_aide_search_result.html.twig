@@ -1,0 +1,30 @@
+<div class="col-lg-12">
+
+    <div class="ibox">
+
+        <div class="ibox-content">
+
+            {% for aide3 in aide3s %}
+
+                {% set contenu = aide3.contenu %}
+
+                <div class="row">
+
+
+                    <div class="search-result">
+                        <h3><a href="{{ path('centre_aide_3', {'json': aide3.id}) }}">{{ aide3.titre }}</a></h3>
+                        <p>
+                           {{ contenu|raw|length > 400 ? contenu|striptags|raw|slice(0,400|escape ) ~ '...' : contenu|raw|striptags }}
+                        </p>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>

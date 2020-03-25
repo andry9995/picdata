@@ -1,0 +1,29 @@
+{% extends 'DashboardBundle::dashboard.html.twig' %}
+
+{% block titre %}CLES{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/qtip/jquery.qtip.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/cle/js/cle/cle_dossiers.js') }}"></script>
+    <script src="{{ asset('bundles/cle/js/cle/index.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5><small>Gestion&nbsp;des&nbsp;</small>Cl&eacute;s</h5>
+            <div class="ibox-tools">
+                <a><i class="fa fa-plus" aria-hidden="true"></i></a>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </div>
+        </div>
+        <div class="ibox-content" id="id_container_table"></div>
+        <input type="hidden" id="id_dossiers_ids" value="{{ dossiers }}">
+    </div>
+{% endblock %}

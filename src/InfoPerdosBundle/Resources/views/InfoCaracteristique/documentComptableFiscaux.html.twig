@@ -1,0 +1,153 @@
+<form class="form-horizontal" id="js_form_info_document_comptable_fiscaux">
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Mode&nbsp;d'obtention</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_document_comptable_fiscaux" name="compta_sur_serveur"  id="js_compta_sur_serveur"
+                    data-field="ComptaSurServeur">
+
+                        {% set comptaServeur = (dossier is null) ? -1 : (dossier.comptaSurServeur is null) ? -1 : dossier.comptaSurServeur%}
+
+                        <option {{ (comptaServeur == -1) ? 'selected' :''  }}></option>
+                        <option value="1" {{ (comptaServeur == 1) ? 'selected' :'' }}>Accès au serveur</option>
+                        <option value="4" {{ (comptaServeur == 4) ? 'selected' :'' }}>Accès au serveur, nouveau dossier à créer</option>
+                        <option value="5" {{ (comptaServeur == 5) ? 'selected' :'' }}>Création</option>
+                        <option value="3" {{ (comptaServeur == 3) ? 'selected' :'' }}>Dossier dejà traité</option>
+                        <option value="2" {{ (comptaServeur == 2) ? 'selected' :'' }}>Echange d'archives electroniques</option>
+                        <option value="0" {{ (comptaServeur == 0) ? 'selected' :'' }}>Envoi de documents excel ou PDF</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Balance&nbsp;N-1</label>
+                <div class="col-lg-6">
+                    <select class="form-control info-comptable-fiscal info_document_comptable_fiscaux" name="balance_n1"  id="js_balance_n1"
+                    data-field="BalanceN1">
+
+                        {% set balanceN1 = (dossier is null) ? -1 : (dossier.balanceN1 is null) ? -1 : dossier.balanceN1 %}
+
+                        <option {{ (balanceN1 == -1) ? 'selected' : '' }}></option>
+                        <option value="1" {{ ((balanceN1 == 3) or (balanceN1 == 1)) ? 'selected' : '' }} est-envoye = "{{ (balanceN1 == 3) ? 1 :' ' }}">A envoyer</option>
+                        <option value="0" {{ (balanceN1 == 0) ? 'selected' : '' }}>Ne pas envoyer</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Grand&nbsp;livre&nbsp;N-1</label>
+                <div class="col-lg-6">
+                    {#<div class="input-group">#}
+                        <select class="form-control info-comptable-fiscal info_document_comptable_fiscaux" name="grand_livre" id="js_grand_livre"
+                        data-field="GrandLivre">
+
+                            {% set grandLivre = (dossier is null) ? -1 : (dossier.grandLivre is null) ? -1 : dossier.grandLivre %}
+
+                            <option {{ (grandLivre == -1) ? 'selected' : '' }}></option>
+                            <option value="1" {{ ((grandLivre == 3) or (grandLivre == 1)) ? 'selected' : '' }} est-envoye = "{{ (grandLivre == 3) ? 1 :' ' }}">A envoyer</option>
+                            <option value="0" {{ (grandLivre == 0) ? 'selected' : '' }}>Ne pas envoyer</option>
+
+                        </select>
+                        {#<span class="input-group-addon"><i class="fa fa-paperclip"></i></span>#}
+                    {#</div>#}
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-4">
+
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Dernier&nbsp;rappro&nbsp;N&#150;1</label>
+                <div class="col-lg-6">
+
+                    <select class="form-control info-comptable-fiscal info_document_comptable_fiscaux"
+                            name="rapprochement_banque_n1" id="js_rapprochement_banque_n1" data-field="DernierRapprochementBanqueN1">
+
+                        {% set rapprochementBanque = (dossier is null) ? -1 : (dossier.dernierRapprochementBanqueN1 is null) ? -1 : dossier.dernierRapprochementBanqueN1 %}
+
+                        <option {{ (rapprochementBanque == -1) ? 'selected' : '' }}></option>
+                        <option value="1" {{ ((rapprochementBanque == 3) or (rapprochementBanque == 1)) ? 'selected' : '' }} est-envoye = "{{ (rapprochementBanque == 3) ? 1 : '' }}">A envoyer</option>
+                        <option value="0" {{ (rapprochementBanque == 0) ? 'selected' : '' }}>Ne pas envoyer</option>
+
+                    </select>
+
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Etat&nbsp;des&nbsp;immobilisations</label>
+                <div class="col-lg-6">
+                    {#<div class="input-group">#}
+                    <select class="form-control info-comptable-fiscal info_document_comptable_fiscaux"
+                            name="etat_immobilisation_n1" id="js_etat_immobilisation" data-field="EtatImmobilisationN1">
+
+                        {% set etatImmobilisation = (dossier is null) ? -1 : (dossier.etatImmobilisationN1 is null) ? -1 : dossier.etatImmobilisationN1 %}
+
+                        <option {{ (etatImmobilisation == -1) ? 'selected' : '' }}></option>
+                        <option value="1" {{ ((etatImmobilisation ==3) or (etatImmobilisation == 1)) ? 'selected' : '' }} est-envoye = "{{ (etatImmobilisation == 3) ? 1 : '' }}">A envoyer</option>
+                        <option value="0" {{ (etatImmobilisation == 0) ? 'selected' : '' }}>Ne pas envoyer</option>
+                    </select>
+                    {#<span class="input-group-addon"><i class="fa fa-paperclip"></i></span>#}
+                    {#</div>#}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Liasse&nbsp;fiscale&nbsp;N-1</label>
+                <div class="col-lg-6">
+                    {#<div class="input-group">#}
+                    <select class="form-control info-comptable-fiscal info_document_comptable_fiscaux"
+                            name="liasse_n1" id="js_liasse_n1" data-field="LiasseFiscaleN1">
+
+                        {% set liasseN1= (dossier is null) ? -1 : (dossier.liasseFiscaleN1 is null) ? -1 : dossier.liasseFiscaleN1 %}
+
+                        <option {{ (liasseN1 == -1) ? 'selected' : '' }}></option>
+                        <option value="1" {{ ((liasseN1 == 3) or (liasseN1 == 1)) ? 'selected' : '' }} est-envoye = "{{ (liasseN1 == 3) ? 1 : '' }}">A envoyer</option>
+                        <option value="0" {{ (liasseN1 == 0) ? 'selected' : '' }}>Ne pas envoyer</option>
+
+                    </select>
+                    {#<span class="input-group-addon"><i class="fa fa-paperclip"></i></span>#}
+                    {#</div>#}
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Dernière&nbsp;CA3</label>
+                <div class="col-lg-6">
+
+                    <select class="form-control info-comptable-fiscal info_document_comptable_fiscaux"
+                            name="tva_derniere_ca3" id="js_tva_derniere_ca3" data-field="TvaDerniereCa3">
+
+                        {% set tvaDerniereCa3 = (dossier is null) ? -1 : (dossier.tvaDerniereCa3 is null) ? -1 : dossier.tvaDerniereCa3 %}
+
+
+                        <option {{ (tvaDerniereCa3 == -1) ? 'selected' : '' }}></option>
+
+                        <option value="1" {{ ((tvaDerniereCa3 == 1) or (tvaDerniereCa3 ==3)) ? 'selected' : '' }} est-envoye = "{{ (tvaDerniereCa3 == 3) ? 1 :'' }}">A envoyer</option>
+                        <option value="0" {{ (tvaDerniereCa3 == 0) ? 'selected' : '' }}>Ne pas envoyer</option>
+
+                    </select>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>

@@ -1,0 +1,96 @@
+security:
+    encoders:
+        AppBundle\Entity\Utilisateur:
+            id: app.boost_password_encoder
+
+    providers:
+        main:
+            entity: { class: AppBundle\Entity\Utilisateur, property: email }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        login:
+            pattern: ^/
+            form_login:
+                login_path: login
+                check_path: login_check
+                default_target_path: dashboard_homepage
+                success_handler: security.authentication.success_handler
+            anonymous: true
+
+            logout:
+                path: /logout
+                target: dashboard_homepage
+            remember_me:
+                name: "%session.remember_me.name%"
+                secret: "%secret%"
+                lifetime: 2232000
+
+    access_control:
+        - { path: ^/app, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_SCRIPTURA_ADMIN }
+        - { path: ^/facturation, roles: ROLE_SCRIPTURA_RESP }
+        - { path: ^/dashboard, roles: ROLE_CLIENT_DIRECT }
+#        - { path: ^/balance, roles: ROLE_DOSSIER }
+        - { path: ^/etat_financier, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/etatFinancier, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/register, roles: ROLE_CLIENT_RESP }
+        - { path: ^/users/acces-level, roles: ROLE_CLIENT_RESP }
+        - { path: ^/users/acces-menu, roles: ROLE_CLIENT_RESP }
+        - { path: ^/consultation-piece, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/info_perdos, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/echanges, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/aide, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/banque, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/tpe, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/note, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/ndf, roles: ROLE_CLIENT_DIRECT }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_auto, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #, requires_channel: https
+
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: ROLE_ADMIN, ROLE_SCRIPTURA_RESP, ROLE_SCRIPTURA_ADMIN
+        ROLE_ADMIN:       ROLE_CLIENT, ROLE_SCRIPTURA_RESP
+
+        ROLE_SCRIPTURA_ADMIN: ROLE_ADMIN, ROLE_SCRIPTURA_RESP, ROLE_CLIENT, ROLE_CLIENT_RESP, ROLE_CLIENT_ADMIN, ROLE_CLIENT_SCAN
+        ROLE_SCRIPTURA_RESP:  ROLE_CLIENT, ROLE_CLIENT_RESP, ROLE_CLIENT_ADMIN, ROLE_CLIENT_SCAN, ROLE_CLIENT_DIRECT
+
+        ROLE_CLIENT_ADMIN:  ROLE_CLIENT, ROLE_SITE_RESP, ROLE_SITE_ADMIN, ROLE_SITE_SCAN
+        ROLE_CLIENT_RESP:   ROLE_CLIENT, ROLE_SITE_RESP, ROLE_SITE_ADMIN, ROLE_SITE_SCAN
+        ROLE_CLIENT_SCAN:   ROLE_CLIENT, ROLE_SITE_RESP, ROLE_SITE_ADMIN, ROLE_SITE_SCAN
+
+        ROLE_CLIENT:      ROLE_SITE
+        ROLE_SITE:        ROLE_DOSSIER
+        ROLE_DOSSIER:     ROLE_DOSSIER_RESP, ROLE_DOSSIER_ADMIN, ROLE_DOSSIER_SCAN
+
+        ROLE_SITE_ADMIN:    ROLE_SITE, ROLE_SITE_RESP, ROLE_SITE_SCAN, ROLE_DOSSIER_RESP, ROLE_DOSSIER_ADMIN, ROLE_DOSSIER_SCAN, ROLE_CLIENT_FINAL_RESP, ROLE_CLIENT_FINAL_ADMIN, ROLE_CLIENT_FINAL_SCAN
+        ROLE_SITE_RESP:     ROLE_SITE, ROLE_SITE_SCAN, ROLE_DOSSIER_RESP, ROLE_DOSSIER_ADMIN, ROLE_DOSSIER_SCAN, ROLE_CLIENT_FINAL_RESP, ROLE_CLIENT_FINAL_ADMIN, ROLE_CLIENT_FINAL_SCAN
+        ROLE_SITE_SCAN:     ROLE_SITE, ROLE_DOSSIER_RESP, ROLE_DOSSIER_ADMIN, ROLE_DOSSIER_SCAN, ROLE_CLIENT_FINAL_RESP, ROLE_CLIENT_FINAL_ADMIN, ROLE_CLIENT_FINAL_SCAN
+
+        ROLE_DOSSIER_ADMIN: ROLE_DOSSIER, ROLE_DOSSIER_RESP
+        ROLE_DOSSIER_RESP:  ROLE_DOSSIER, ROLE_DOSSIER_SCAN
+        ROLE_DOSSIER_SCAN:  ROLE_DOSSIER, ROLE_CLIENT_FINAL_ADMIN
+
+        ROLE_CLIENT_FINAL_ADMIN: ROLE_CLIENT_FINAL_RESP
+        ROLE_CLIENT_FINAL_RESP: ROLE_CLIENT_FINAL_SCAN
+        ROLE_CLIENT_FINAL_SCAN: ROLE_CLIENT_DIRECT
+
+#	6	ROLE_SCRIPTURA_RESP	Scriptura responsable
+#	7	ROLE_SCRIPTURA_ADMIN	Scriptura admin
+#	8	ROLE_CLIENT_RESP	Client responsable
+#	9	ROLE_CLIENT_ADMIN	Client admin
+#	10	ROLE_CLIENT_SCAN	Client scanneur
+#	11	ROLE_SITE_RESP	Site responsable
+#	12	ROLE_SITE_ADMIN	Site admin
+#	13	ROLE_SITE_SCAN	Site scanneur
+#	14	ROLE_DOSSIER_RESP	Dossier responsable
+#	15	ROLE_DOSSIER_ADMIN	Dossier admin
+#	16	ROLE_DOSSIER_SCAN	Dossier scanneur
+#	17	ROLE_CLIENT_FINAL_RESP	Client final responsable
+#	18	ROLE_CLIENT_FINAL_ADMIN	Client final admin
+#	19	ROLE_CLIENT_FINAL_SCAN	Client final scanneur
+#   20 ROLE_CLIENT_DIRECT

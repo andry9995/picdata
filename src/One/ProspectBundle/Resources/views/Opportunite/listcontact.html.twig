@@ -1,0 +1,4 @@
+<option value=""></option>
+{% for contact in contacts %}
+    <option value="{{ contact.id }}">{% if contact.prenom != '' %}{{ contact.prenom ~' ' }}{% endif %}{{ contact.nom }}</option>
+{% endfor %}

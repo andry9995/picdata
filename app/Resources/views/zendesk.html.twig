@@ -1,0 +1,67 @@
+{#<script>/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var e=this.createElement("script");n&&(this.domain=n),e.id="js-iframe-async",e.src="https://assets.zendesk.com/embeddable_framework/main.js",this.t=+new Date,this.zendeskHost="scriptura.zendesk.com",this.zEQueue=a,this.body.appendChild(e)},o.write('<body onload="document._l();">'),o.close()}();
+    /*]]>*/</script>#}
+
+<!-- Start of scriptura6903 Zendesk Widget script -->
+<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=590c45af-fda2-498f-8b53-05a84c6b0741"></script>
+<!-- End of scriptura6903 Zendesk Widget script -->
+
+{#{% set exeperts = false %}#}
+{#{% set name = '' %}#}
+{#{% set mail = '' %}#}
+{#{% set now = '' %}#}
+{#{% set utilisateurs = [1704,1708,1236,1244,1706] %}#}
+
+{#{% if app.user.getClient().getId() == 626 or app.user.getClient().getId() == 562 %}#}
+{#{% if app.user.getId() in utilisateurs %}#}
+    {# BEGIN INTERCOM #}
+    {#{% set name = app.user.getPrenom() ~ ' ' ~ app.user.getNom() %}#}
+    {#{% set mail = app.user.getEmail() %}#}
+    {#{% set now = 'now'|date('U') %}#}
+
+
+    {#<script>#}
+        {#window.intercomSettings = {#}
+            {#app_id: 'k9y4veez',#}
+            {#// app_id: 'q71ywsa1',#}
+            {#name: "{{ name }}",#}
+            {#email: "{{ mail }}",#}
+            {#created_at: {{ now }}#}
+        {#};#}
+    {#</script>#}
+    {#<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/APP_ID';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>#}
+    {# END INTERCOM #}
+
+{#{% else %}#}
+    {# BEGIN JIVOSITE CODE {literal} #}
+    {#<script type='text/javascript'>#}
+        {#(function()#}
+        {#{#}
+            {#var widget_id = 'Ihno5MByXY';var d=document;var w=window;function l(){#}
+            {#var s = document.createElement('script');#}
+            {#s.type = 'text/javascript';#}
+            {#s.async = true;#}
+            {#s.src = '//code.jivosite.com/script/widget/'+widget_id;#}
+            {#var ss = document.getElementsByTagName('script')[0];#}
+            {#ss.parentNode.insertBefore(s, ss);#}
+        {#}#}
+            {#if(d.readyState=='complete')#}
+            {#{#}
+                {#l();#}
+            {#}#}
+            {#else#}
+            {#{#}
+                {#if(w.attachEvent)#}
+                {#{#}
+                    {#w.attachEvent('onload',l);#}
+                {#}#}
+                {#else#}
+                {#{#}
+                    {#w.addEventListener('load',l,false);#}
+                {#}#}
+            {#}#}
+        {#})();#}
+    {#</script>#}
+    {# {/literal} END JIVOSITE CODE #}
+
+{#{% endif %}#}
+

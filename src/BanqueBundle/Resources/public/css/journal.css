@@ -1,0 +1,12 @@
+.popover
+{
+    z-index:10000!important
+}
+.tr-over
+{
+    background-color: #e0e0e0 !important;
+}
+.blink
+{
+    text-decoration: blink!important;
+}

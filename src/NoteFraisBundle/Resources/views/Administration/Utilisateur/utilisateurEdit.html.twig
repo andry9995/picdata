@@ -1,0 +1,66 @@
+<div class="form-horizontal">
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Nom</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Nom de l'utilisateur" class="form-control" id="js_utilisateur_nom" value="{{ (utilisateur is null) ? '' : utilisateur.nom }}">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Prénom</label>
+        <div class="col-lg-8">
+            <input type="text" placeholder="Prénom de l'utilisateur" class="form-control" id="js_utilisateur_prenom" value="{{ (utilisateur is null) ? '' : utilisateur.prenom }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Email</label>
+        <div class="col-lg-8">
+            <input type="email" placeholder="Email de l'utilisateur" class="form-control" id="js_utilisateur_mail" value="{{ (utilisateur is null) ? '' : utilisateur.mail }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Matricule</label>
+        <div class="col-lg-8">
+            <input type="email" placeholder="Matricule de l'utilisateur" class="form-control" id="js_utilisateur_matricule" value="{{ (utilisateur is null) ? '' : utilisateur.matricule }}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-4 control-label"></label>
+
+        <div class="col-lg-8">
+
+            <label class="control-label">
+
+                {% set admin = 0 %}
+                {%  set admin = (utilisateur is null) ? 0 : (utilisateur.isManager is null) ? 0 : utilisateur.isManager %}
+
+                <input type="checkbox" class="i-checks" id="js_utilisateur_admin" {{ (admin == 1) ? 'checked' : '' }}>
+               Administrateur
+            </label>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="col-lg-4 control-label">
+
+            {% set status = 0 %}
+            {%  set status = (utilisateur is null) ? 0 : (utilisateur.status is null) ? 0 : utilisateur.status %}
+
+            <input type="checkbox" class="i-checks" id="js_utilisateur_status" {{ (status == 1) ? 'checked' : '' }}>
+            Activer l'utilisateur
+        </label>
+
+        <div class="col-lg-8">
+
+            <button class="btn btn-sm btn-primary pull-right" id="js_save_utilsateur"><strong>Sauvegarder</strong></button>
+        </div>
+
+    </div>
+</div>

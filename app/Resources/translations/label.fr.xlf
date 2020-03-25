@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>label.nom_famille</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>label.prenom</source>
+                <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>label.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>label.telephone</source>
+                <target>Téléphone</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>label.skype</source>
+                <target>Skype</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>label.societe</source>
+                <target>Société</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>label.smtp</source>
+                <target>SMTP</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>label.smtp.port</source>
+                <target>Port</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>label.smtp.login</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>label.smtp.password</source>
+                <target>Mot de Passe</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>label.smtp.password.confirm</source>
+                <target>Confirmer</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>label.smtp.certificate</source>
+                <target>Certificat</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>label.smtp.ssl</source>
+                <target>SSL</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>label.smtp.tls</source>
+                <target>TLS</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>label.smtp.none</source>
+                <target>Aucun</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>label.smtp.copie</source>
+                <target>Copie</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

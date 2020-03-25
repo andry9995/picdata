@@ -1,0 +1,50 @@
+<div class="bloc-view">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div id="opportunities" class="row">
+            {% for stat in status %}
+                <div id="step-{{ stat.id }}" class="col-md-2">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>
+                                <span>{{ stat.nom }}</span>
+                                {#<i class="fa fa-trash-o pull-right" onclick="deleteOpportuniteStep({{ stat.id }});"></i>#}
+                                {#<i class="fa fa-pencil pull-right" onclick="loadEditOpportuniteStep({{ stat.id }});"></i>#}
+                                <div class="btn-group pull-right">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+                                        <i class="fa fa-cog"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#" onclick="loadEditOpportuniteStep({{ stat.id }});"><i class="fa fa-pencil"></i> Editier</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" onclick="deleteOpportuniteStep({{ stat.id }});"><i class="fa fa-trash-o"></i> Supprimer</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </h3>
+                            <ul class="sortable-list connectList agile-list" id="{{ stat.id }}">
+                                {% if opportunites|length > 0 %}
+                                    {% for opportunite in opportunites %}
+                                        {% if opportunite.oneStatusOpp.id == stat.id %}
+                                            <li class="info-element" id="opp-{{ opportunite.id }}">
+                                                <span class="agile-title" onclick="loadShowOpportunite({{ opportunite.id }});">{{ opportunite.nom|length > 20 ? opportunite.nom|slice(0, 20) ~ '...' : opportunite.nom  }}</span>
+                                                <span onclick="setSort('');loadShowProspect({{ opportunite.tiers.id }})">
+                                                    <a>{{ opportunite.tiers.intitule }}</a>
+                                                </span>
+                                                <div class="agile-detail">
+                                                    <i class="fa fa-trash-o pull-right" onclick="deleteOpportunite({{ opportunite.id }});"></i>
+                                                    <i class="fa fa-clock-o"></i> {{ opportunite.cloture|date('d/m/Y') }}
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

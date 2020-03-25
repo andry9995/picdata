@@ -1,0 +1,129 @@
+<div class="modal" id="filtre-date-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Dossier</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="dossier_date"  id="js_dossier_date"
+                                            data-field="dossierDate">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-6 control-label">
+                                    <span>Exercice</span>
+                                </label>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="filtre_exercice" id="js_filtre_exercice" >
+                                        <option></option>
+                                        {{ render(controller('ConsultationPieceBundle:ConsultationPiece:exercice')) }}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">
+                                    <span>Type date</span>
+                                </label>
+                                <div class="col-md-7">
+                                    <select class="form-control" name="js_filtre_d" id="js_filtre_d" >
+                                        <option></option>
+                                        <option value="1">Date Envoi</option>
+                                        <option value="2" selected>Date Pièce</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"><span>Date Envoi</span></label>
+                                <div class="col-md-9" style="max-height: 100px; overflow-y: auto">
+                                    {#<select class="form-control no-padding" name="js_filtre_date_scan" id="js_filtre_date_scan">#}
+
+                                    {#</select>#}
+                                    <ul class="list-group" id="js_filtre_date_scan">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="js_debut_periode"><span>Date du</span></label>
+
+                                <div class="col-md-9 input-daterange input-group" style="padding-left: 15px; padding-right: 15px;">
+                                    <input type="text" class="input form-control" name="debut" id="js_debut_periode" >
+                                    <span class="input-group-addon">Au</span>
+                                    <input type="text" class="input form-control" name="fin" id="js_fin_periode">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Catégorie</label>
+                                <div class="col-md-9">
+                                    <select class="form-control" name="categorie_date"  id="js_categorie_date"
+                                            data-field="CategorieDate">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal" style="width: 100px;">Annuler</button>
+                <button type="button" class="btn btn-sm btn-primary" id="btn-recherche-date" style="width: 100px;">GO</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hidden">
+    <form id="form-export" method="POST">
+
+
+        <input type="hidden" id="dossierId" name="dossierId">
+        <input type="hidden" id="categorieId" name="categorieId">
+        <input type="hidden" id="souscategorieId" name="souscategorieId">
+        <input type="hidden" id="soussouscategorieId" name="soussouscategorieId">
+        <input type="hidden" id="exercice" name="exercice">
+        <input type="hidden" id="clientId" name="clientId">
+        <input type="hidden" id="siteId" name="siteId">
+        <input type="hidden" id="utilisateurId" name="utilisateurId">
+        <input type="hidden" id="typeSearch" name="typeSearch">
+        <input type="hidden" id="numPiece" name="numPiece">
+        <input type="hidden" id="periodeSearch" name="periodeSearch">
+        <input type="hidden" id="dateScanSearch" name="dateScanSearch">
+        <input type="hidden" id="dateDebut" name="dateDebut">
+        <input type="hidden" id="dateFin" name="dateFin">
+        <input type="hidden" id="download" name="download">
+
+    </form>
+</div>

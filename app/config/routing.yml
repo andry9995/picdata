@@ -1,0 +1,200 @@
+journal:
+    resource: "@JournalBundle/Resources/config/routing.yml"
+    prefix:   /journal
+
+zendesk:
+    resource: "@ZendeskBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+general:
+    resource: "@GeneralBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+ajax_login:
+    resource: "@AjaxLoginBundle/Resources/config/routing.yml"
+    prefix:   /login_auto
+
+drt:
+    resource: "@DrtBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+drt_analyse:
+    resource: "@DrtBundle/Resources/config/drt_analyse_routing.yml"
+    prefix:   /app
+
+drt_ecriture:
+    resource: "@DrtBundle/Resources/config/drt_ecriture_routing.yml"
+    prefix:   /app/drt_ecriture
+
+import_export:
+    resource: "@DrtBundle/Resources/config/import_export_routing.yml"
+    prefix:   /app/import_export
+
+linxo:
+    resource: "@LinxoBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+one_achat:
+    resource: "@OneAchatBundle/Resources/config/routing.yml"
+    prefix:   /tpe
+
+note_frais:
+    resource: "@NoteFraisBundle/Resources/config/routing.yml"
+    prefix:   /ndf
+
+cle:
+    resource: "@CleBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+cle_new:
+    resource: "@BanqueBundle/Resources/config/routing-cle.yml"
+    prefix:   /app
+
+one_utilisateur:
+    resource: "@OneUtilisateurBundle/Resources/config/routing.yml"
+    prefix:   /tpe
+
+one_vente:
+    resource: "@OneVenteBundle/Resources/config/routing.yml"
+    prefix:   /tpe
+
+one_prospect:
+    resource: "@OneProspectBundle/Resources/config/routing.yml"
+    prefix:   /tpe
+
+aide:
+    resource: "@AideBundle/Resources/config/routing.yml"
+    prefix:   /
+
+banque:
+    resource: "@BanqueBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+banque_pm:
+    resource: "@BanqueBundle/Resources/config/routing_pm.yml"
+    prefix:   /app/pm
+
+banque_imputation:
+    resource: "@BanqueBundle/Resources/config/routing_imputation.yml"
+    prefix:   /app/banque/imputation
+
+pcg:
+    resource: "@PcgBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tableau_image:
+    resource: "@TableauImageBundle/Resources/config/routing.yml"
+    prefix:   /echanges/tableau-image
+
+etat:
+    resource: "@EtatBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+consultation_piece:
+    resource: "@ConsultationPieceBundle/Resources/config/routing.yml"
+    prefix:   /
+
+facturation:
+    resource: "@FacturationBundle/Resources/config/routing.yml"
+    prefix:   /facturation
+
+info_perdos:
+    resource: "@InfoPerdosBundle/Resources/config/routing.yml"
+    prefix:   /
+
+chart:
+    resource: "@ChartBundle/Resources/config/routing.yml"
+    prefix:   /
+
+code_analytique:
+    resource: "@CodeAnalytiqueBundle/Resources/config/routing.yml"
+    prefix:   /
+
+type_graphe:
+    resource: "@TypeGrapheBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+rubrique:
+    resource: "@RubriqueBundle/Resources/config/routing.yml"
+    prefix:   /
+
+indicateur:
+    resource: "@IndicateurBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+etat_base:
+    resource: "@EtatBaseBundle/Resources/config/routing.yml"
+    prefix:   /
+
+comptabilite:
+    resource: "@ComptabiliteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dossier:
+    resource: "@DossierBundle/Resources/config/routing.yml"
+    prefix:   /
+
+admin_user:
+    resource: "@AdminUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+etat_financier:
+    resource: "@EtatFinancierBundle/Resources/config/routing.yml"
+    prefix:   /
+
+image:
+    resource: "@ImageBundle/Resources/config/routing.yml"
+    prefix:   /app
+
+dashboard:
+    resource: "@DashboardBundle/Resources/config/routing.yml"
+    prefix:   /
+
+menu:
+    resource: "@MenuBundle/Resources/config/routing.yml"
+    prefix:   /
+
+model:
+    resource: "@ModelBundle/Resources/config/routing.yml"
+    prefix:   /
+
+utilisateur:
+    resource: "@UtilisateurBundle/Resources/config/routing.yml"
+
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"
+
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+
+tresorerie_yml:
+    resource: "@EtatBundle/Resources/config/tresorerieRouting.yml"
+    prefix:   /app/treso
+
+categorie:
+    resource: "@RubriqueBundle/Resources/config/routingCategorie.yml"
+    prefix:   /app/categorie
+
+notification:
+    resource: "@InfoPerdosBundle/Resources/config/notification_routing.yml"
+    prefix:   /app/notification
+
+production:
+    path: /banque2
+    defaults: { _controller: BanqueBundle:ReleveBanque2:index }
+
+journaux:
+    path:   /jnl_bq
+    defaults: { _controller: BanqueBundle:JournalBanque:index }
+
+tresorerie:
+    path: /ind/tb/scoring
+    defaults: { _controller: IndicateurBundle:Tb:indexScoring }
+
+gestion_dossier:
+    path: /info_perdos/activation-dossier
+    defaults: { _controller: InfoPerdosBundle:ActivationDossier:index }
+    methods: [GET]

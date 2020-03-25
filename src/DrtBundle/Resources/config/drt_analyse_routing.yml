@@ -1,0 +1,27 @@
+drt_analyse:
+    path:     /drt_analyse/analyser
+    defaults: { _controller: DrtBundle:Analyse:analyser }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_analyse_images_shows:
+    path:     /drt_analyse/images
+    defaults: { _controller: DrtBundle:Analyse:images }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_analyse_generate_xls:
+    path:     /drt_analyse/generate/xls
+    defaults: { _controller: DrtBundle:Analyse:generateXls }
+    methods:  [POST]
+    options:
+        expose: true
+
+drt_analyse_charger_reponse:
+    path:   /drt_analyse/show/reponses
+    defaults: { _controller: DrtBundle:Analyse:chargerReponse }
+    methods:  [POST]
+    options:
+        expose: true

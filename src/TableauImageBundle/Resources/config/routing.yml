@@ -1,0 +1,239 @@
+echange_tableau_image_homepage:
+    path:     /liste
+    defaults: { _controller: TableauImageBundle:Tableau:index }
+    methods: [GET]
+
+#Liste image pour jqGrid
+tableau_image_liste:
+    path:   /liste/image
+    defaults: { _controller: TableauImageBundle:Tableau:listeImage }
+    methods: [POST]
+    options:
+        expose: true
+
+#Liste categorie tous dossiers d'un client
+tableau_image_categorie:
+    path: /categorie/{client}/{site}/{exercice}
+    defaults: { _controller: TableauImageBundle:Tableau:categorie }
+    methods: [GET]
+    options:
+        expose: true
+
+#Mise à jour categorie par dossier
+tableau_image_categorie_edit:
+    path: /categorie/{dossier}
+    defaults: { _controller: TableauImageBundle:Tableau:categorieEdit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        dossier: \d+
+
+#Mise à jour categorie pour tous dossier
+tableau_image_categorie_edit_all:
+    path: /categorie-edit-all/{client}/{site}/{categorie}/{exercice}
+    defaults: { _controller: TableauImageBundle:Tableau:categorieEditAll }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        categorie: \d*
+
+#Liste periode tous dossiers d'un client
+tableau_image_periode:
+    path: /periode/{client}/{site}/{exercice}
+    defaults: { _controller: TableauImageBundle:Tableau:periode }
+    methods: [GET]
+    options:
+        expose: true
+
+tableau_image_periode_edit:
+    path: /periode/{dossier}
+    defaults: { _controller: TableauImageBundle:Tableau:periodeEdit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        dossier: \d+
+
+tableau_image_periode_edit_all:
+    path: /periode-edit-all/{client}/{site}/{exercice}
+    defaults: { _controller: TableauImageBundle:Tableau:periodeEditAll }
+    methods: [POST]
+    options:
+        expose: true
+
+tableau_detail_image:
+    path: /detail-image/{dossier}/{exercice}/{typedate}
+    defaults: { _controller: TableauImageBundle:Tableau:detailImage, typedate: 0 }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        dossier: \d+
+        exercice: \d{4}
+
+#Liste encours par exercice/dossier
+tableau_detail_encours:
+    path: /detail-encours/{dossier}/{exercice}
+    defaults: { _controller: TableauImageBundle:Tableau:imageEncours }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        dossier: \d+
+        exercice: \d{4}
+
+#Image Zero Edit
+tableau_image_zero_edit:
+    path:     /image-zero/{dossier}/{exercice}/{categorie}/{mois}
+    defaults: { _controller: TableauImageBundle:Tableau:imageZeroEdit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        dossier: \d+
+        exercice: \d{4}
+        categorie: \d+
+        mois: \d{4}-\d{2}-\d{2}
+
+tableau_image_dossier_status_edit:
+    path:     /dossier-status/{dossier}/{exercice}/{status}
+    defaults: { _controller: TableauImageBundle:Tableau:dossierStatusEdit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        dossier: \d+
+        exercice: \d{4}
+        status: \d*
+
+tableau_test:
+    path: /test
+    defaults: { _controller: TableauImageBundle:Tableau:test }
+
+tableau_export:
+    path: /export
+    defaults: { _controller: TableauImageBundle:Tableau:export }
+    methods: [POST]
+    options:
+      expose: true
+
+
+
+tableau_image_rappel_param:
+    path:   /rappel-param
+    defaults: { _controller: TableauImageBundle:RappelImage:rappelParam }
+    methods: [POST]
+    options:
+        expose: true
+
+
+tableau_image_rappel_historique:
+    path:   /rappel-historique
+    defaults: { _controller: TableauImageBundle:RappelImage:historique }
+    methods: [GET]
+    options:
+        expose: true
+
+tableau_image_rappel_param_edit:
+    path:   /rappel-param-edit
+    defaults: { _controller: TableauImageBundle:RappelImage:rappelParamEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+#PARAM SMTP
+param_smtp_client:
+    path: /smtp/{client}
+    defaults: { _controller: TableauImageBundle:Smtp:smtpClient }
+    methods: [GET]
+    options:
+        expose: true
+
+#UPDATE PARAM SMTP
+param_smtp_client_update:
+    path: /smtp/{client}
+    defaults: { _controller: TableauImageBundle:Smtp:smtpClientUpdate }
+    methods: [POST]
+    options:
+        expose: true
+
+# LISTE PARAM RAPPEL IMAGE DES DOSSIER D'UN CLIENT
+rappel_image_param_liste:
+    path: /rappel-image/param/{client}/{site}
+    defaults: { _controller: TableauImageBundle:RappelImage:listParametre }
+    methods: [GET]
+    options:
+        expose: true
+
+rappel_image_param_update:
+    path: /rappel-image/param/{notification}
+    defaults: { _controller: TableauImageBundle:RappelImage:updateParametre  }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        notification: \d+
+
+rappel_image_default_content:
+    path: /rappel-image/email/default-content
+    defaults: { _controller: TableauImageBundle:RappelImage:emailDefaultContent }
+    methods: [GET]
+    options:
+        expose: true
+
+rappel_image_email_content_edit:
+    path: /rappel-image/email/content/{tous}
+    defaults: { _controller: TableauImageBundle:RappelImage:editEmailContenu, tous: 0 }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        tous: 0|1
+
+rappel_image_param_edit_all:
+    path: /rappel-image/param-edit-all
+    defaults: { _controller: TableauImageBundle:RappelImage:updateParametreAll }
+    methods: [POST]
+    options:
+        expose: true
+
+rappel_image_destinataire_edit:
+    path: /rappel-image/destinataire/{notification}
+    defaults: { _controller: TableauImageBundle:RappelImage:updateDestinataire }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        notification: \d+
+
+rappel_image_status_envoi:
+    path: /rappel-image/status-envoi/{client}
+    defaults: { _controller: TableauImageBundle:RappelImage:envoiStatus }
+    methods: [GET]
+    options:
+        expose: true
+
+rappel_image_status_envoi_edit:
+    path: /rappel-image/status-envoi/{client}
+    defaults: { _controller: TableauImageBundle:RappelImage:envoiStatusEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+rappel_image_log:
+    path: /rappel-image/log/{client}/{site}/{dossier}
+    defaults: { _controller: TableauImageBundle:RappelImage:logEnvoi }
+    methods: [GET]
+    options:
+        expose: true
+
+rappel_image_email_envoye:
+    path: /rappel-image/email-envoye/{email}
+    defaults: { _controller: TableauImageBundle:RappelImage:emailEnvoye }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        email: \d+

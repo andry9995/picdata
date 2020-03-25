@@ -1,0 +1,55 @@
+notification:
+    path:     /
+    defaults: { _controller: InfoPerdosBundle:Notification:index }
+
+notification_show_add_notif_form:
+    path: notification/show_add_notif_form
+    defaults: { _controller: InfoPerdosBundle:Notification:addNotificationForm }
+    options:
+        expose: true
+    methods: [GET]
+
+notification_add:
+    path: notification/add
+    defaults: { _controller: InfoPerdosBundle:Notification:addNotification }
+    options:
+        expose: true
+    methods: [POST]
+
+notification_get_liste:
+    path: notification/liste
+    defaults: { _controller: InfoPerdosBundle:Notification:getListNotification }
+    options:
+        expose: true
+    methods: [POST]
+
+notification_delete:
+    path: notification/delete/{id}
+    defaults: { _controller: InfoPerdosBundle:Notification:deleteNotification }
+    options:
+        expose: true
+    methods: [GET]
+
+notification_edit:
+    path: notification/edit
+    defaults: { _controller: InfoPerdosBundle:Notification:editNotification }
+    options:
+        expose: true
+
+notification_responsable_titre:
+    path: notification/responsable-titre/{json}
+    defaults: { _controller: InfoPerdosBundle:Notification:responsableTitre, json:1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+notification_code_titre:
+    path: notification/code-titre/{json}
+    defaults: { _controller: InfoPerdosBundle:Notification:codeTitre, json:1}
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1

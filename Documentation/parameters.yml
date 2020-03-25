@@ -1,0 +1,20 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: localhost
+    database_port: 3306
+    database_name: dbboost
+    database_user: dbboost
+    database_password: Ricr1^42
+    mailer_transport: smtp
+    mailer_host: lesexperts.biz
+    mailer_user: support@lesexperts.biz
+    mailer_password: Tamatave*2018
+    secret: eb9041e73bdeb238db2388a22575596114b306f0
+    session.name: PICDATA_SESSION
+    session.remember_me.name: PICDATA_LONGSESSION
+    one_upload_url: /upload/
+    one_upload_dir: %kernel.root_dir%/../web/upload/
+    one_documents_dir: %kernel.root_dir%/../web/documents/
+    one_web_dir: %kernel.root_dir%/../web/
+    one_valid_extensions: [png,jpg,jpeg,pdf,txt,doc,docx,xls,xlsx]
+    one_max_filesize: 10000000

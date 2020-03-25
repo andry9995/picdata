@@ -1,0 +1,6 @@
+<select id="dossier" class="form-control">
+    <option value=""></option>
+    {% for dossier in dossiers %}
+        <option value="{{ dossier.id }}">{{ dossier.nom }}</option>
+    {% endfor %}
+</select>

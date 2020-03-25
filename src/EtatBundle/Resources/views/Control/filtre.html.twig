@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-sm-3">
+        {{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0, 'tous' : 0 })) }}
+    </div>
+    <div class="col-sm-2" id="js_conteneur_site">
+
+    </div>
+    <div class="col-sm-3" id="js_conteneur_dossier">
+
+    </div>
+    <div class="col-sm-3">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-lg-3" for="exercice">Exercice</label>
+                <div class="input-group col-lg-9">
+                    <select data-placeholder="Exercice..." class="form-control chosen-select" multiple id="exercice">
+                        {% for exercice in exercices %}
+                            <option value="{{ exercice }}">{{ exercice }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1">
+        <span class="btn btn-primary btn-sm btn-outline" id="js_test"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;Tester</span>
+    </div>
+</div>

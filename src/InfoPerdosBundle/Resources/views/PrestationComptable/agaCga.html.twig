@@ -1,0 +1,124 @@
+<form class="form-horizontal" id ="js_form_prest_aga_cga">
+
+    {% set adherantAga = -1 %}
+
+    {% if agaCga is not null %}
+        {% if agaCga.adherant is not null %}
+            {% set adherantAga = agaCga.adherant %}
+        {% endif %}
+    {% endif %}
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Adhérant AGA/CGA</label>
+                <div class="col-lg-6">
+                    <select class="form-control prest_aga_cga" name="aga_cga_adherant" id="js_aga_cga_adherant" data-field="Adherant">
+
+                        <option {{ (adherantAga == -1) ? 'selected' : '' }}></option>
+                        <option value="1" {{ (adherantAga == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (adherantAga == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Nom AGA/CGA</label>
+                <div class="col-lg-6">
+
+                    <input type="text" placeholder="Nom AGA/CGA" class="form-control prest_aga_cga" name="aga_cga_nom"
+                           id="js_aga_cga_nom" data-field="NomAgaCga" value="{{ (agaCga is null) ? '' : (agaCga.nom) }}"
+                            {{ (adherantAga != 1) ? 'disabled' : '' }}>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Siren AGA</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Siren AGA" class="form-control prest_aga_cga" name="aga_cga_siren"
+                           id="js_aga_cga_siren" data-field="SirenAgaCga" value="{{ (agaCga is null) ? '' : (agaCga.siren is null)? '' : (agaCga.siren)  }}"
+                            {{ (adherantAga != 1) ? 'disabled' : '' }}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Numero&nbsp;adhésion</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Numero adhérant" class="form-control prest_aga_cga"
+                           name="aga_cga_num_adhesion" id="js_aga_cga_num_adhesion"  data-field="NumAgaCga"
+                           value="{{ (agaCga is null) ? '' : (agaCga.numeroAdhesion is null) ? '' : agaCga.numeroAdhesion }}"
+                            {{ (adherantAga != 1) ? 'disabled' : '' }}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Date d'adhésion</label>
+                <div class="col-lg-6" >
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" class="form-control prest_aga_cga" name="aga_cga_date_adhesion"
+                               id="js_aga_cga_date_adhesion" data-field="DebutAdhesion"
+                               value="{{ (agaCga is null) ? '' : (agaCga.dateAdhesion is null) ? '' :  agaCga.dateAdhesion|date('d/m/Y') }}"
+                                {{ (adherantAga != 1) ? 'disabled' : '' }}>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Num et rue</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Num et rue" class="form-control prest_aga_cga"
+                           name="aga_cga_num_rue" id="js_aga_cga_num_rue" data-field="NumRue"
+                           value="{{ (agaCga is null) ? '' : (agaCga.numRue is null) ? '' : agaCga.numRue }}"
+                            {{ (adherantAga != 1) ? 'disabled' : '' }}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Code postal</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Code postal" class="form-control prest_aga_cga"
+                           name="aga_cga_code_postal" id="js_aga_cga_code_postal" data-field="CodePostal"
+                           value="{{ (agaCga is null) ? '' : (agaCga.codePostal is null) ? '' : agaCga.codePostal }}"
+                            {{ (adherantAga != 1) ? 'disabled' : '' }}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Ville</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Ville" class="form-control prest_aga_cga"
+                           name="aga_cga_ville" id="js_aga_cga_ville" data-field="Ville"
+                           value="{{ (agaCga is null) ? '' : (agaCga.ville is null) ? '' : agaCga.ville }}"
+                            {{ (adherantAga != 1) ? 'disabled' : '' }}>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Pays</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Pays" class="form-control prest_aga_cga"
+                           name="aga_cga_pays" id="js_aga_cga_pays" data-field="Pays"
+                           value="{{ (agaCga is null) ? '' : (agaCga.pays is null) ? '' : agaCga.pays }}"
+                            {{ (adherantAga != 1) ? 'disabled' : '' }}>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-sm-4">
+
+        </div>
+
+    </div>
+
+</form>

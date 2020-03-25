@@ -1,0 +1,39 @@
+{% extends 'user-email.html.twig' %}
+
+{% block title %}
+    Création de votre compte
+{% endblock %}
+{% block salutation %}
+    Madame, Monsieur,
+{% endblock %}
+
+{% block message %}
+    <p>Nous vous avons envoyé un email pour créer votre connexion à notre espace collaboratif.
+        <br>
+        Nous vous précisons que pour y accéder, il faut aller sur notre site <a style="color:#1ab394;text-decoration:none;" href="http://www.esseca.com">www.esseca.com</a>,
+        cliquer sur le menu <span style="color:#1ab394;">Espace Client</span> et entrer votre code d'accès sur l'écran suivant.
+    </p>
+    <br>
+    <p>Nous vous souhaitons une bonne journée.</p>
+    <br>
+    <br>
+    <i>ESSECA.</i>
+{% endblock %}
+
+{% block connexion %}
+    <td>
+        <table style="text-align:center;width:100%;">
+            <tr style="text-align:center;">
+                <td style="width:33%;"></td>
+                <td align="center" style="width:33%;background-color: #1ab394;border-color: #4c5764;border: 2px solid #45b7af;padding: 10px;text-align: center;">
+                    <a style="display: block;color: #ffffff;font-size: 12px;text-decoration: none;text-transform: uppercase;font-family:Arial,Helvetica,sans-serif;"
+                       href="http://www.esseca.com">
+                        CONNEXION
+                    </a>
+                </td>
+                <td style="width:33%;"></td>
+            </tr>
+        </table>
+        <div style="height:25px;"></div>
+    </td>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}InfoPerdos{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/validate/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker-fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/infoPerdos-function.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/instructionDossier/instruction-dossier.js') }}v=2.2.1"></script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/infoperdos.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/instruction-dossier.css') }}">
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            {{ include('InfoPerdosBundle:Default:filtre.html.twig')}}
+        </div>
+    </div>
+
+
+    <br/>
+
+    {{ include('InfoPerdosBundle:InstructionDossier:contenu.html.twig',{
+        'methodeSuiviCheques':methodeSuiviCheques, 'gestionDateEcritures':gestionDateEcritures,'instructionDossier':instructionDossier,
+        'logiciels':logiciels
+    }) }}
+
+{% endblock %}

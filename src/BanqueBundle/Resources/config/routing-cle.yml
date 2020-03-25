@@ -1,0 +1,64 @@
+cle_new_show_edit:
+    path:     /new_cle/show/edit
+    defaults: { _controller: BanqueBundle:CleNew:showEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+cle_new_cle_dossier_ext_param:
+    path:   /new_cle/cle_dossier_ext/params
+    defaults: { _controller: BanqueBundle:CleNew:cleDossierExtParams }
+    methods: [POST]
+    options:
+        expose: true
+
+cle_new_cle_save:
+    path:   /new_cle/cle/save
+    defaults: { _controller: BanqueBundle:CleNew:saveCle }
+    methods: [POST]
+    options:
+        expose: true
+
+cle_new_props:
+    path:   /new_cle/props
+    defaults: { _controller: BanqueBundle:CleNew:cleProps }
+    methods: [POST]
+    options:
+        expose: true
+
+cle_dossier_exts:
+    path:   /new_cle/cle_dossier_exts
+    defaults: { _controller: BanqueBundle:CleNew:cleDossierExts }
+    methods: [POST]
+    options:
+        expose: true
+
+cle_dossier_annuler_imputation:
+    path:   /new_cle/releve_ext/annuler/lettrage
+    defaults: { _controller: BanqueBundle:CleNew:annulerImputationReleveExt }
+    methods: [POST]
+    options:
+        expose: true
+
+
+################ non lettrable
+non_lettrable_show:
+    path:   /non_lettrable/show
+    defaults: { _controller: BanqueBundle:NonLettrable:show }
+    methods: [POST]
+    options:
+        expose: true
+
+non_lettrable_liste:
+    path:   /non_lettrable/liste
+    defaults: { _controller: BanqueBundle:NonLettrable:liste }
+    methods: [POST]
+    options:
+        expose: true
+
+non_lettrage_annuler:
+    path:   /non_lettrable/annuler
+    defaults: { _controller: BanqueBundle:NonLettrable:annuler }
+    methods: [POST]
+    options:
+        expose: true

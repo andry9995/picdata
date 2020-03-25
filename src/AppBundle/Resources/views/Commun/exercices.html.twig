@@ -1,0 +1,44 @@
+{% if in_form == false %}
+    <label class="control-label col-lg-{{- label_col -}}" style="text-align:left">Exercice</label>
+
+    <div class="col-lg-{{- select_col -}}">
+        <select class="form-control" id="{{ attr_id }}">
+            {% if tous == 1 %}
+                <option value="0" selected="selected">Tous</option>
+            {% elseif tous != 2 %}
+                <option value="0" selected="selected">&nbsp;</option>
+            {% endif %}
+            {% for exercice in exercices %}
+                 {% if "now"|date("Y") == exercice %}
+                    <option value="{{ exercice }}" selected="selected" >{{ exercice }}</option>
+                {% else %}
+                    <option value="{{ exercice }}">{{ exercice }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+{% else %}
+    
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-lg-{{- label_col -}}">Exercice</label>
+
+            <div class="col-lg-{{- select_col -}}">
+                <select class="form-control" id="{{ attr_id }}">
+                    {% if tous == 1 %}
+                        <option value="0" selected="selected">Tous</option>
+                    {% elseif tous != 2 %}
+                        <option value="0" selected="selected">&nbsp;</option>
+                    {% endif %}
+                    {% for exercice in exercices %}
+                         {% if "now"|date("Y") == exercice %}
+                            <option value="{{ exercice }}" selected="selected" >{{ exercice }}</option>
+                        {% else %}
+                            <option value="{{ exercice }}">{{ exercice }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </form>
+{% endif %}

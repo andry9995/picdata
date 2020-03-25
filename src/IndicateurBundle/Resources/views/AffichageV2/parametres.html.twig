@@ -1,0 +1,33 @@
+<div class="widget yellow-bg p-lg text-center">
+    <div class="m-b-md">
+        <i class="fa fa-warning fa-5x"></i>
+        <h1 class="m-xs">Le&nbsp;dossier&nbsp;{{ dossier.nom }}&nbsp;n'a&nbsp;pas&nbsp;encore&nbsp;de&nbsp;groupe&nbsp;d'indicateurs&nbsp;affect&eacute;</h1>
+        {#<h3 class="font-bold"><a href="{{ path('ind_classement') }}">Affecter&nbsp;le&nbsp;dossier</a></h3>#}
+
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-3">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="id_group_indicateur">Groupe</label>
+                        <div class="col-lg-10">
+                            <select id="id_group_indicateur" class="form-control" style="color: #4d4d4d">
+                                <option value="{{ 0|boost }}"></option>
+                                {% for indicateurGroup in indicateurGroups %}
+                                    <option value="{{ indicateurGroup.id|boost }}">{{ indicateurGroup.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <span class="btn btn-sm btn-white" id="id_parametrer"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

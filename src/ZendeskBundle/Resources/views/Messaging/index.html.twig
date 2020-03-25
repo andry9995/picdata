@@ -1,0 +1,59 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}
+    Picdata - Messageries
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/zendesk/css/zendesk.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/zendesk/css/messaging.css') }}">
+    <style type="text/css">
+    	.page {
+		  display: none;
+		}
+		.page-active {
+		  display: block;
+		}
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/zendesk/js/messaging.js') }}"></script>
+    <script src="{{ asset('bundles/zendesk/js/pagination.min.js') }}"></script>
+    
+{% endblock %}
+
+{% block wrapper_content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ibox-shadow">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            {{ render(controller('AppBundle:Commun:clients', { 'tous': 2, 'attr_id': 'msg-client', 'label_col': 2, 'select_col': 10})) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <button id="btn-refresh" class="icon btn btn-outline btn-default">
+                                        <i class="icon-refresh fa fa-refresh"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div id="messaging-list">
+	</div>
+{% endblock %}

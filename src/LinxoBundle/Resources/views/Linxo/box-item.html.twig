@@ -1,0 +1,53 @@
+<div class="row">
+
+    <div class="col-lg-4">
+        <div class="widget style1 widget-hover pointer cl_edit_linxo" data-valide="0" data-add="1" data-id="{{ 0|boost }}" style="height: 100px!important;">
+            <div class="row">
+                <div class="col-xs-4">
+                    <i class="fa fa-plus fa-3x" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <h4>Connecter un nouveau compte à l espace LINXO</h4>
+                    {#<h5 class="font-bold">Nouveau</h5>#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% set i = 1 %}
+    {% for linxo in linxos %}
+        {#{% if (i == 1 or i % 3 == 1) %}
+            <div class="row">
+            {% endif %}
+        {% endif %}#}
+
+        {% if linxo.jsonCode != '' %}
+            {% set status = 'Validé' %}
+        {% else %}
+            {% set status = 'à valider' %}
+        {% endif %}
+
+        <div class="col-lg-4">
+            <div class="widget style1 widget-hover pointer cl_edit_linxo" data-add="0" data-valide="{{ (linxo.jsonCode != '') ? 1 :0 }}" data-id="{{ linxo.id|boost }}" style="height: 100px!important;">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <i class="fa fa-3x {{ (linxo.jsonCode != '') ? 'fa-check' : 'fa-university'  }}" aria-hidden="true"></i>
+                        {% if linxo.dossier is not null %}
+                            <br>
+                            <h3>{{ linxo.dossier.nom }}</h3>
+                        {% endif %}
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <h4>{{ linxo.login }}</h4>
+                        <h5 class="font-bold">Compte&nbsp;{{ status }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#{% if (i == linxos|length or i % 3 == 0) %}
+            </div>
+        {% endif %}#}
+        {% set i = i + 1 %}
+    {% endfor %}
+
+</div>

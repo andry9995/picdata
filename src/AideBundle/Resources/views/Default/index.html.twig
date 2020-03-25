@@ -1,0 +1,58 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Centre d'aide PicData{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block wrapper_content %}
+
+    <div class="row" id="js_recherche_aide">
+        <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+
+                    <div>
+                        <h1>Que pouvons-nous faire ?</h1>
+
+                        <div class="input-group">
+                            <input type="text" placeholder="Saisir le mot à rechercher" name="search" class="form-control input-lg js_search_text">
+                            <div class="input-group-btn">
+                                <button class="btn btn-lg btn-success js_aide_search"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-12" id="js_navigation">
+        {% block navigation %}
+
+        {% endblock %}
+        </div>
+
+    </div>
+
+    <br/>
+
+    <div class="row" id="js_contenu_aide">
+        {% block contenu_aide%}
+            {{ include('AideBundle:Default:centre_aide_1.html.twig') }}
+        {% endblock %}
+    </div>
+
+{% endblock %}

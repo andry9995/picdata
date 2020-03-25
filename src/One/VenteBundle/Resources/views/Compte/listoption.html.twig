@@ -1,0 +1,5 @@
+{#{% for compte in comptes %}#}
+{% for pcc in pccs %}
+    {#<option value="{{ compte.id }}">{{ compte.compte~' - '~compte.libelle }}</option>#}
+    <option value="{{ pcc.id }}">{{ pcc.compte~' - '~pcc.intitule }}</option>
+{% endfor %}

@@ -1,0 +1,189 @@
+##################  Envoi2 ########################
+img_envoi:
+    path:   /img/envoi
+    defaults:   { _controller: ImageBundle:Envoi2:index }
+    options:
+        expose: true
+
+img_dossier:
+    path:   /img/dossier
+    defaults: { _controller: ImageBundle:Envoi2:dossiers }
+    options:
+        expose: true
+
+img_sender:
+    path:   /img/sender
+    defaults: { _controller: ImageBundle:Envoi2:sender }
+    options:
+        expose: true
+    methods: [POST]
+
+img_sender_test:
+    path:   /img/send_test
+    defaults: { _controller: ImageBundle:Envoi2:sendTest }
+    options:
+        expose: true
+    methods: [POST]
+
+img_send:
+    path:   /img/send
+    defaults: { _controller: ImageBundle:Envoi2:send }
+    methods: [POST]
+    options:
+        expose: true
+
+###################################### Envoi image par FTP ######################################
+#Index Envoi FTP
+img_envoi_ftp:
+    path: /img/ftp
+    defaults: { _controller: ImageBundle:ImageFtp:index }
+    methods: [GET]
+
+#Liste images dans FTP
+img_envoi_ftp_liste:
+    path: /img/ftp/liste/{init}
+    defaults: { _controller: ImageBundle:ImageFtp:liste, init: 0 }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        init: 0|1
+
+# Edit infos image
+img_envoi_ftp_edit:
+    path: /img/ftp
+    defaults: { _controller: ImageBundle:ImageFtp:edit }
+    methods: [POST]
+    options:
+        expose: true
+
+#liste dossier d'un cabinet
+img_envoi_ftp_liste_dossier:
+    path: /img/ftp/liste-dossier
+    defaults: { _controller: ImageBundle:ImageFtp:listeDossier }
+    methods: [GET]
+    options:
+        expose: true
+
+#Numéroter image ftp
+img_envoi_ftp_numeroter:
+    path: /img/ftp/numeroter
+    defaults: { _controller: ImageBundle:ImageFtp:numeroter }
+    methods: [POST]
+    options:
+        expose: true
+
+###################################### HISTORIQUE D ENVOI ######################################
+img_historique:
+    path: /img/histo
+    defaults: { _controller: ImageBundle:Historique:index }
+img_historique_users:
+    path: /img/histo/users
+    defaults: { _controller: ImageBundle:Historique:users }
+    methods: [POST]
+    options:
+        expose: true
+img_historique_tree:
+    path: /img/histo/tree
+    defaults: { _controller: ImageBundle:Historique:tree }
+    methods: [POST]
+    options:
+        expose: true
+img_historique_apercus:
+    path: /img/histo/aprecu
+    defaults: { _controller: ImageBundle:Historique:apercu }
+    methods: [POST]
+    options:
+        expose: true
+img_historique_show_move:
+    path: /img/histo/show_move
+    defaults: { _controller: ImageBundle:Historique:showMove }
+    methods: [POST]
+    options:
+        expose: true
+img_historique_move:
+    path: /img/histo/move
+    defaults: { _controller: ImageBundle:Historique:move }
+    methods: [POST]
+    options:
+        expose: true
+img_historique_remove:
+    path: /img/histo/remove
+    defaults: { _controller: ImageBundle:Historique:remove }
+    methods: [POST]
+    options:
+        expose: true
+
+###################################### IMAGE DATA #####################################
+img_show_image_data:
+    path: /img/show_image_data
+    defaults: { _controller: ImageBundle:ImageShow:dataImageShow }
+    methods: [POST]
+    options:
+        expose: true
+img_show_details_compte:
+    path: /eb/compte/details
+    defaults: { _controller: ImageBundle:ImageShow:detailsCompte }
+    methods:  [POST]
+    options:
+        expose: true
+
+###################################### CORRESPONDANCE #####################################
+img_correspondance:
+    path: /img/correspondance
+    defaults: { _controller: ImageBundle:Correspondance:index }
+img_imgs:
+    path: /img/imgs
+    defaults: { _controller: ImageBundle:Correspondance:images }
+    methods:  [POST]
+    options:
+        expose: true
+
+###################################### DROPBOX
+
+img_envoi_dropbox:
+    path: /img/dropbox
+    defaults: { _controller: ImageBundle:DropBox:index }
+    methods: [GET]
+
+#Liste images dans FTP
+img_envoi_dropbox_liste:
+    path: /img/dropbox/liste/{init}
+    defaults: { _controller: ImageBundle:DropBox:list, init: 0 }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        init: 0|1
+
+# Edit infos image
+img_envoi_dropbox_edit:
+    path: /img/dropbox
+    defaults: { _controller: ImageBundle:DropBox:edit }
+    methods: [POST]
+    options:
+        expose: true
+
+
+#Numéroter image dropbox
+img_envoi_dropbox_numeroter:
+    path: /img/dropbox/numeroter
+    defaults: { _controller: ImageBundle:DropBox:numeroter }
+    methods: [POST]
+    options:
+        expose: true
+
+###################################### COMMENTAIRE DOSSIER #####################################
+commentaire_dossier_liste:
+    path: /commentaire_dossier/liste
+    defaults: { _controller: ImageBundle:Commentaire:liste }
+    methods: [POST]
+    options:
+        expose: true
+
+commentaire_dossier_edit:
+    path: /commentaire_dossier/edit
+    defaults: { _controller: ImageBundle:Commentaire:edit }
+    methods: [POST]
+    options:
+        expose: true

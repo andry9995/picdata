@@ -1,0 +1,38 @@
+############################# CLE
+cle_index:
+    path: /cle
+    defaults: { _controller: CleBundle:Cle:index }
+
+cle_liste:
+    path: /cle/liste
+    defaults: { _controller: CleBundle:Cle:liste }
+    methods: [POST]
+    options:
+      expose: true
+
+cle_dossiers_edit:
+    path: /cle/edit/cle_dossiers
+    defaults: { _controller: CleBundle:Cle:cleDossiersEdit }
+    methods: [POST]
+    options:
+      expose: true
+
+
+##cle_cles:
+##    path: /cles
+##    defaults: { _controller: CleBundle:Cle:cles }
+##    methods:  [POST]
+##    options:
+##      expose: true
+##cle_libelle:
+##    path: /cle/libelle
+##    defaults: { _controller: CleBundle:Cle:cleLibelle }
+##    methods:  [POST]
+##    options:
+##      expose: true
+##cle_detail:
+##    path: /cle/detail
+##    defaults: { _controller: CleBundle:Cle:cleDetail }
+##    methods:  [POST]
+##    options:
+##      expose: true

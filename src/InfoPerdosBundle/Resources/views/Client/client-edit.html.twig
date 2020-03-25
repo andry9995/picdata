@@ -1,0 +1,1046 @@
+<form class="form-horizontal scroller" id ="js_form_client" enctype="multipart/form-data">
+    <div class="row">
+
+        <div class="col-sm-6">
+
+            <div class="ibox border-bottom">
+                <div class="ibox-content">
+                    <h2>
+                        Client
+                    </h2>
+
+                     <div class="form-group">
+                        <label class="col-lg-6 control-label">Actif</label>
+                        <div class="col-lg-6">
+                            <input name="status_client" id="js_status" type="checkbox" class="js-switch" {% if client.status is defined and client.status == 1 %}checked{% endif %}>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Nom</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Nom client" class="form-control"
+                                   name="nom_client" id="js_nom"  data-field="Nom"  value="{{ (client is null) ? '' : client.nom }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Type</label>
+                        <div class="col-lg-6">
+                            <select class="form-control" data-field="TypeClient" id="js_type_client">
+                                {% set typeClient = -1 %}
+
+                                {% if client is not null %}
+                                    {% if client.typeClient is not null %}
+                                        {% set typeClient = client.typeClient %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <option value="-1"></option>
+                                <option value="0" {{ (typeClient == 0) ? 'selected': '' }}>Expert Comptable</option>
+                                <option value="1" {{ (typeClient == 1) ? 'selected': '' }}>Client Direct</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">SIREN</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="SIREN" class="form-control"
+                                   name="siren_siret" id="js_siren"  data-field="Siren" value="{{ (client is null) ? '' : client.siren  }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Raison Sociale</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Raison sociale" class="form-control"
+                                   name="rs" id="js_raison_social"  data-field="RaisonSociale" value="{{ (client is null) ? '' : client.rsSte }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Forme Juridique</label>
+                        <div class="col-lg-6">
+                            <select class="form-control"  name="forme_juridique"
+                                    id="js_forme_juridique" data-field="FormeJuridique">
+
+                                {% set formeJuridiqueId = (client is null) ? -1 : (client.formeJuridique is null) ? -1 : (client.formeJuridique.id) %}
+                                <option value="" ></option>
+                                {% for formeJuridique in formeJuridiques%}
+                                    <option value="{{ formeJuridique.id }}" {{ (formeJuridique.id == formeJuridiqueId) ? 'selected' : '' }}>{{ formeJuridique.libelle }}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+
+                    {# Date de signature #}
+                    <div class="form-group" >
+                        <label class="col-lg-6 control-label">Date de signature</label>
+                        <div class="col-lg-6">
+                            <div class="input-group date" id="date_signature">
+                                {% set now = "now"|date("d/m/Y") %}
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input id="signature" name="signature" type="text" class="form-control" value='{{ (client is null) ? '' : (client.signature is null) ? '' : client.signature }}'>
+                            </div>
+                        </div>
+                    </div>
+                    {# End Date de signature #}
+
+                    {# Contrat #}
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Contrat</label>
+                        <div class="col-lg-6">
+
+                            {% if client is null or client.contrat is null or client.contrat == '' %}
+                                
+                                {# upload #}
+                                <div class="row" id="upload-container-create"> 
+                                     <button class="btn btn-primary btn-upload-contrat-create" id="" style="width:100%">
+                                        <i class="fa fa-upload"></i>
+                                    </button>
+                                    {{ include('InfoPerdosBundle:Client:modal-upload-contrat.html.twig') }}
+                                </div>
+
+                                {# display pdf #}
+                                <div class="row hidden" id="show-container-create">
+                                    <div class="col-lg-6">
+                                         <button class="btn btn-primary btn-view-contrat-create" id="" style="width:100%">
+                                            <i class="fa fa-file-pdf-o"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <button class="btn btn-danger btn-delete-contrat-create" id="" style="width:100%">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+
+                                    {% set asset = asset('CLIENTS/') %}
+
+                                    <script type="text/javascript">
+                                        var asset = '{{ asset }}';
+                                    </script>
+                                    
+                                    {{ include('InfoPerdosBundle:Client:modal-display-contrat.html.twig') }}
+
+                                </div>
+
+                            {% else %}
+                                <div class="row" id="show-container">
+                                    <div class="col-lg-6">
+                                         <button class="btn btn-primary btn-view-contrat" id="" style="width:100%">
+                                            <i class="fa fa-file-pdf-o"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <button data-filename="{{ client.contrat }}" class="btn btn-danger btn-delete-contrat" id="" style="width:100%">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    {% set path = asset('CLIENTS/' ~ client.contrat ~ '.pdf') %}
+
+                                    {{ include('InfoPerdosBundle:Client:modal-view-contrat.html.twig',{path: path}) }}
+
+                                </div>
+
+                                <div class="row hidden" id="upload-container"> 
+                                     <button class="btn btn-primary btn-upload-contrat" id="" style="width:100%">
+                                        <i class="fa fa-upload"></i>
+                                    </button>
+                                    {{ include('InfoPerdosBundle:Client:modal-upload-contrat.html.twig') }}
+                                </div>
+
+                                {# display pdf #}
+                                <div class="row hidden" id="show-container-edit">
+                                    <div class="col-lg-6">
+                                         <button class="btn btn-primary btn-view-contrat-create" id="" style="width:100%">
+                                            <i class="fa fa-file-pdf-o"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <button class="btn btn-danger btn-delete-contrat-edit" id="" style="width:100%">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+
+                                    {% set asset = asset('CLIENTS/') %}
+
+                                    <script type="text/javascript">
+                                        var asset = '{{ asset }}';
+                                    </script>
+                                    
+                                    {{ include('InfoPerdosBundle:Client:modal-display-contrat.html.twig') }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    {# End Contrat #}
+
+                    <input type="hidden" name="file-path" id="file-path" value="{{ (client is null) ? '' : (client.contrat is null or client == '') ? '' : client.contrat }}">
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Num et Rue</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Num et rue" class="form-control"
+                                   name="tel" id="js_num_rue"  data-field="NumRue" value="{{ (client is null) ? '' : (client.numRue is null) ? '' : client.numRue }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Code postal</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Code postal" class="form-control"
+                                   name="tel" id="js_code_postal"  data-field="CodePostal" value="{{ (client is null) ? '' : (client.codePostal is null) ? '' : client.codePostal }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Ville</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Ville" class="form-control"
+                                   name="tel" id="js_ville"  data-field="Ville" value="{{ (client is null) ? '' : (client.ville is null) ? '' : client.ville }}">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Pays</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Pays" class="form-control"
+                                   name="tel" id="js_pays"  data-field="Pays" value="{{ (client is null) ? '' : (client.pays is null) ? '' : client.pays }}">
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Tel. Fixe</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Tel. fixe" class="form-control"
+                                   name="tel" id="js_tel"  data-field="TelFixe" value="{{ (client is null) ? '' : client.telFixe }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Site web</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Site web" class="form-control"
+                                   name="site_web" id="js_site_web"  data-field="SiteWeb" value="{{ (client is null) ? '' : client.siteWeb }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Nb&nbsp;Caractère</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Nb Carractère" class="form-control"
+                                   name="nb_carractere" id="js_nb_carractere" data-field="NbCaractere"  value="{{ (client is null) ? '' : client.nbCaractere }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Code</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Code" class="form-control"
+                                   name="code" id="js_code" data-field="Code" value="{{ (client is null) ? '' : client.code }}">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Sites</label>
+                        <div class="col-lg-6">
+                            {% set listeSites = '' %}
+                            {% for site in sites %}
+                                {% if listeSites == '' %}
+                                    {% set listeSites = site.nom %}
+                                {% else %}
+                                    {% set listeSites = listeSites ~ ';' ~ site.nom %}
+                                {% endif %}
+                            {% endfor %}
+                            <input type="text" placeholder="Sites" class="form-control first-load" name="site" id="js_site" data-field="Site" value="{{ listeSites }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ibox border-bottom">
+                <div class="ibox-content">
+                    <h2>Support Informatique Client</h2>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Société</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Société" class="form-control" name="societe"
+                                   id="js_societe" value="{{ (clientSupport is null) ? '' : (clientSupport.societe is null) ? '' : clientSupport.societe }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Nom; Prénom</label>
+                        <div class="col-lg-6">
+                            {% set nomPrenom = '' %}
+                            {% set nom = (clientSupport is null) ? '' : (clientSupport.nom is null) ? '' : clientSupport.nom   %}
+                            {% set prenom = (clientSupport is null) ? '' : (clientSupport.prenom is null) ? '' : clientSupport.prenom   %}
+                            {% if nom != '' %}
+                                {% set nomPrenom = nom ~ ' ; ' ~ prenom %}
+                            {% endif %}
+                            <input type="text" placeholder="Nom;Prénom" class="form-control" name="nom_support"
+                                   id="js_nom_support" value="{{ nomPrenom }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Telephone</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Tel. portable" class="form-control" name="tel_support"
+                                   id="js_tel_support" value="{{ (clientSupport is null) ? '' : (clientSupport.telephone is null) ? '' : clientSupport.telephone}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Mail</label>
+                        <div class="col-lg-6">
+                            <input type="email" placeholder="Mail" class="form-control" name="mail_support"
+                                   id="js_mail_support" value="{{ (clientSupport is null) ? '' : (clientSupport.email is null) ? '' : clientSupport.email }}">
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-6">
+
+
+            <div class="ibox border-bottom">
+                <div class="ibox-content">
+                    <h2>Mandataire</h2>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Mandataire</label>
+                        <div class="col-lg-6">
+                            <select class="form-control"  name="type_mandataire" id="js_type_mandataire">
+
+                                {% set mandataireId = (mandataire is null) ? -1 : (mandataire.mandataire is null) ? -1 : mandataire.mandataire.id %}
+
+                                <option value=""></option>
+                                {% for mandataire in mandataires %}
+                                    <option value="{{ mandataire.id }}" {{ (mandataireId == mandataire.id) ? 'selected': '' }}>{{ mandataire.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Nom; Prénom</label>
+                        <div class="col-lg-6">
+                            {% set nomPrenom = '' %}
+                            {% set nom = (mandataire is null) ? '' : (mandataire.nom is null) ? '' : mandataire.nom   %}
+                            {% set prenom = (mandataire is null) ? '' : (mandataire.prenom is null) ? '' : mandataire.prenom   %}
+                            {% if nom != '' %}
+                                {% set nomPrenom = nom ~ ' ; ' ~ prenom %}
+                            {% endif %}
+                            <input type="text" placeholder="Nom;Prénom" class="form-control" name="nom_mandataire"
+                                   id="js_nom_mandataire" value="{{ nomPrenom }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Tel. portable</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Tel. portable" class="form-control" name="tel_mandataire"
+                                   id="js_tel_mandataire" value="{{ (mandataire is null) ? '' : (mandataire.telPortable is null) ? '' : mandataire.telPortable }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Mail</label>
+                        <div class="col-lg-6">
+                            <input type="email" placeholder="Mail" class="form-control" name="mail_mandataire"
+                                   id="js_mail_mandataire" value="{{ (mandataire is null) ? '' : (mandataire.email is null) ? '' : mandataire.email }}">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Skype</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Skype" class="form-control" name="skype_mandataire"
+                                   id="js_skype_mandataire" value="{{ (mandataire is null) ? '' : (mandataire.skype is null) ? '' : mandataire.skype }}">
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+            </div>
+
+            <div class="ibox border-bottom">
+                <div class="ibox-content">
+                    <h2>Commentaires</h2>
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <textarea class="form-control" id="comment" name="comment">
+                               {{ (client is null) ? '' : (client.comment is null) ? '' : client.comment|e('html') }}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ibox border-bottom">
+                <div class="ibox-content">
+                    <h2>Secretaire</h2>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Nom; Prénom</label>
+                        <div class="col-lg-6">
+                            {% set nomPrenom = '' %}
+                            {% set nom = (secretaire is null) ? '' : (secretaire.nom is null) ? '' : secretaire.nom   %}
+                            {% set prenom = (secretaire is null) ? '' : (secretaire.prenom is null) ? '' : secretaire.prenom   %}
+                            {% if nom != '' %}
+                                {% set nomPrenom = nom ~ ' ; ' ~ prenom %}
+                            {% endif %}
+                            <input type="text" placeholder="Nom;Prénom" class="form-control" name="nom_secretaire"
+                                   id="js_nom_sercretaire" value="{{ nomPrenom }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Tel. portable</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Tel. portable" class="form-control" name="tel_secretaire"
+                                   id="js_tel_secretaire" value="{{ (secretaire is null) ? '' : (secretaire.telPortable is null) ? '' : secretaire.telPortable }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Mail</label>
+                        <div class="col-lg-6">
+                            <input type="email" placeholder="Mail" class="form-control" name="mail_secretaire"
+                                   id="js_mail_secretaire" value="{{ (secretaire is null) ? '' : (secretaire.email is null) ? '' : secretaire.email }}">
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="ibox border-bottom">
+                <div class="ibox-content">
+                    <h2>Logiciel utilisé</h2>
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Logiciel</label>
+                        <div class="col-lg-6">
+
+                            {% set logicielId  = (clientLogiciel is null) ? -1 : (clientLogiciel.logiciel is null) ? -1 : clientLogiciel.logiciel.id %}
+
+
+                            <select class="form-control" id="js_logiciel">
+                                <option value=""></option>
+                                {% for logiciel in logiciels %}
+                                    <option value="{{ logiciel.id }}" {{ (logiciel.id == logicielId) ? 'selected' : '' }}>{{ logiciel.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Mode de travail</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Mode de travail" class="form-control"
+                                   name="mode_travail" id="js_mode_travail"  data-field="ModeTravail" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.modeTravail is null) ? '' : clientLogiciel.modeTravail }}">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Adresse IP</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Adresse IP" class="form-control"
+                                   name="adresse_ip" id="js_adresse_ip"  data-field="Ip" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.ip is null) ? '' : clientLogiciel.ip }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Implantation</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Implantation" class="form-control"
+                                   name="implantation" id="js_implantation"  data-field="Implantation" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.implantation is null) ? '' : clientLogiciel.implantation }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Login</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Login" class="form-control"
+                                   name="login" id="js_login" data-field="Login" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.login is null) ? '' : clientLogiciel.login }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-6 control-label">Mot de passe</label>
+                        <div class="col-lg-6">
+                            <input type="text" placeholder="Mot de passe" class="form-control"
+                                   name="password" id="js_password" data-field="Password" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.password is null) ? '' : clientLogiciel.password }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            {#<div class="form-group">#}
+                {#<label class="col-lg-6 control-label">Separateur FTP</label>#}
+                {#<div class="col-lg-6">#}
+                    {#<input type="text" placeholder="." class="form-control"#}
+                           {#name="separateur_ftp" id="js_separateur_ftp"  data-field="SeparateurFtp" value="{{ (client is null) ? '' : client.imageFtpSeparator }}">#}
+                {#</div>#}
+            {#</div>#}
+
+
+            {#<div class="form-group">#}
+                {#<label class="col-lg-6 control-label">Instruction</label>#}
+                {#<div class="col-lg-6">#}
+                    {#<input type="text" placeholder="Instruction" class="form-control"#}
+                           {#name="instruction" id="js_instruction"  data-field="Instruction" value="{{ (client is null) ? '' : client.instruction }}">#}
+                {#</div>#}
+            {#</div>#}
+
+            {#<div class="form-group">#}
+                {#<label class="col-lg-6 control-label">Commentaire</label>#}
+                {#<div class="col-lg-6">#}
+                    {#<input type="text" placeholder="Commenataire" class="form-control"#}
+                           {#name="commentaire" id="js_commentaire"  data-field="Commenataire" value="{{ (client is null) ? '' : client.commentaire }}">#}
+                {#</div>#}
+            {#</div>#}
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        {#<div class="col-sm-6">#}
+
+            {#<div class="ibox border-bottom">#}
+                {#<div class="ibox-content">#}
+                    {#<h2>Logiciel utilisé</h2>#}
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Logiciel</label>#}
+                        {#<div class="col-lg-6">#}
+
+                            {#{% set logicielId  = (clientLogiciel is null) ? -1 : (clientLogiciel.logiciel is null) ? -1 : clientLogiciel.logiciel.id %}#}
+
+
+                           {#<select class="form-control" id="js_logiciel">#}
+                               {#<option value=""></option>#}
+                               {#{% for logiciel in logiciels %}#}
+                                    {#<option value="{{ logiciel.id }}" {{ (logiciel.id == logicielId) ? 'selected' : '' }}>{{ logiciel.libelle }}</option>#}
+                               {#{% endfor %}#}
+                           {#</select>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Mode de travail</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Mode de travail" class="form-control"#}
+                                   {#name="mode_travail" id="js_mode_travail"  data-field="ModeTravail" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.modeTravail is null) ? '' : clientLogiciel.modeTravail }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Adresse IP</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Adresse IP" class="form-control"#}
+                                   {#name="adresse_ip" id="js_adresse_ip"  data-field="Ip" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.ip is null) ? '' : clientLogiciel.ip }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Implantation</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Implantation" class="form-control"#}
+                                   {#name="implantation" id="js_implantation"  data-field="Implantation" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.implantation is null) ? '' : clientLogiciel.implantation }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Login</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Login" class="form-control"#}
+                                   {#name="login" id="js_login" data-field="Login" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.login is null) ? '' : clientLogiciel.login }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Mot de passe</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Mot de passe" class="form-control"#}
+                                   {#name="password" id="js_password" data-field="Password" value="{{ (clientLogiciel is null) ? '' : (clientLogiciel.password is null) ? '' : clientLogiciel.password }}">#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+
+        <div class="col-sm-6">
+
+
+            {#<div class="ibox border-bottom">#}
+                {#<div class="ibox-content">#}
+                    {#<h2>Support Informatique Client</h2>#}
+
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Société</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Société" class="form-control" name="societe"#}
+                                   {#id="js_societe" value="{{ (clientSupport is null) ? '' : (clientSupport.societe is null) ? '' : clientSupport.societe }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Nom; Prénom</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#{% set nomPrenom = '' %}#}
+                            {#{% set nom = (clientSupport is null) ? '' : (clientSupport.nom is null) ? '' : clientSupport.nom   %}#}
+                            {#{% set prenom = (clientSupport is null) ? '' : (clientSupport.prenom is null) ? '' : clientSupport.prenom   %}#}
+                            {#{% if nom != '' %}#}
+                                {#{% set nomPrenom = nom ~ ' ; ' ~ prenom %}#}
+                            {#{% endif %}#}
+                            {#<input type="text" placeholder="Nom;Prénom" class="form-control" name="nom_support"#}
+                                   {#id="js_nom_support" value="{{ nomPrenom }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Telephone</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Tel. portable" class="form-control" name="tel_support"#}
+                                   {#id="js_tel_support" value="{{ (clientSupport is null) ? '' : (clientSupport.telephone is null) ? '' : clientSupport.telephone}}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Mail</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="email" placeholder="Mail" class="form-control" name="mail_support"#}
+                                   {#id="js_mail_support" value="{{ (clientSupport is null) ? '' : (clientSupport.email is null) ? '' : clientSupport.email }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                {#</div>#}
+
+
+            {#</div>#}
+
+
+            {#<div class="ibox border-bottom">#}
+                {#<div class="ibox-content">#}
+                    {#<h2>Secretaire</h2>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Nom; Prénom</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#{% set nomPrenom = '' %}#}
+                            {#{% set nom = (secretaire is null) ? '' : (secretaire.nom is null) ? '' : secretaire.nom   %}#}
+                            {#{% set prenom = (secretaire is null) ? '' : (secretaire.prenom is null) ? '' : secretaire.prenom   %}#}
+                            {#{% if nom != '' %}#}
+                                {#{% set nomPrenom = nom ~ ' ; ' ~ prenom %}#}
+                            {#{% endif %}#}
+                            {#<input type="text" placeholder="Nom;Prénom" class="form-control" name="nom_secretaire"#}
+                                   {#id="js_nom_sercretaire" value="{{ nomPrenom }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Tel. portable</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Tel. portable" class="form-control" name="tel_secretaire"#}
+                                   {#id="js_tel_secretaire" value="{{ (secretaire is null) ? '' : (secretaire.telPortable is null) ? '' : secretaire.telPortable }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Mail</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="email" placeholder="Mail" class="form-control" name="mail_secretaire"#}
+                                   {#id="js_mail_secretaire" value="{{ (secretaire is null) ? '' : (secretaire.email is null) ? '' : secretaire.email }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+
+                {#</div>#}
+
+            {#</div>#}
+
+
+            {#<div class="form-group">#}
+            {#<label class="col-lg-6 control-label">Separateur FTP</label>#}
+            {#<div class="col-lg-6">#}
+            {#<input type="text" placeholder="." class="form-control"#}
+            {#name="separateur_ftp" id="js_separateur_ftp"  data-field="SeparateurFtp" value="{{ (client is null) ? '' : client.imageFtpSeparator }}">#}
+            {#</div>#}
+            {#</div>#}
+
+
+            {#<div class="form-group">#}
+            {#<label class="col-lg-6 control-label">Instruction</label>#}
+            {#<div class="col-lg-6">#}
+            {#<input type="text" placeholder="Instruction" class="form-control"#}
+            {#name="instruction" id="js_instruction"  data-field="Instruction" value="{{ (client is null) ? '' : client.instruction }}">#}
+            {#</div>#}
+            {#</div>#}
+
+            {#<div class="form-group">#}
+            {#<label class="col-lg-6 control-label">Commentaire</label>#}
+            {#<div class="col-lg-6">#}
+            {#<input type="text" placeholder="Commenataire" class="form-control"#}
+            {#name="commentaire" id="js_commentaire"  data-field="Commenataire" value="{{ (client is null) ? '' : client.commentaire }}">#}
+            {#</div>#}
+            {#</div>#}
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox border-bottom">
+                <div class="ibox-content">
+                    <h2>Direction</h2>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-6 control-label">Nom; Prénom</label>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="Nom;prénom" class="form-control manager"
+                                           name="nom_direction_1" id="js_nom_direction_1"  data-field="Nom"  value="Castellan; Philippe">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-6 control-label">Mail</label>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="Mail Direction" class="form-control manager"
+                                           name="mail_direction_1" id="js_mail_direction_1"  data-field="Mail"  value="philcastellan@gmail.com">
+                                </div>
+                            </div>
+
+                            {#<div class="form-group">#}
+                                {#<label class="col-lg-6 control-label instruction">Envoi mail</label>#}
+                                {#<div class="col-lg-6">#}
+                                    {#<div class="checkbox checkbox-success checkbox-inline">#}
+                                        {#<input type="checkbox" checked class="checkbox-primary manager" id="js_envoi_mail_manager_1">#}
+                                        {#<label></label>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-lg-6 control-label">Nom; Prénom</label>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="Nom;prénom" class="form-control manager"
+                                           name="nom_direction_2" id="js_nom_direction_2"  data-field="Nom"  value="Manuela Garcia Ballesteros">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-6 control-label">Mail</label>
+                                <div class="col-lg-6">
+                                    <input type="text" placeholder="Mail Direction" class="form-control manager"
+                                           name="mail_direction_2" id="js_mail_direction_2"  data-field="Mail"  value="mgarciaballesteros@gmail.com">
+                                </div>
+                            </div>
+
+                            {#<div class="form-group">#}
+                                {#<label class="col-lg-6 control-label instruction">Envoi mail</label>#}
+                                {#<div class="col-lg-6">#}
+                                    {#<div class="checkbox checkbox-success checkbox-inline">#}
+                                        {#<input type="checkbox" checked class="checkbox-primary manager" id="js_envoi_mail_manager_2">#}
+                                        {#<label></label>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+
+        <div class="col-lg-6">
+            <div class="ibox border-bottom">
+
+                <div class="ibox-content">
+                    <h2>Manager Client</h2>
+
+
+                    <table id="js_manager_client_liste" class="js-jqgrid-table"></table>
+                    <div id="js_manager_client_pager"></div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="ibox border-bottom">
+
+                <div class="ibox-content">
+                    <h2>Manager Scriptura</h2>
+
+                    <table id="js_manager_scriptura_liste" class="js-jqgrid-table"></table>
+                    <div id="js_manager_scriptura_pager"></div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        {#<div class="col-sm-6">#}
+
+            {#<div class="ibox border-bottom">#}
+                {#<div class="ibox-content">#}
+                    {#<h2>Manager</h2>#}
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Nom; Prénom</label>#}
+                        {#<div class="col-lg-6">#}
+
+                            {#{% set nomPrenomManager = '' %}#}
+                            {#{% set nomManager = (manager is null) ? '' : (manager.nom is null) ? '' : manager.nom   %}#}
+                            {#{% set prenomManager = (receptionImage is null) ? '' : (manager.prenom is null) ? '' : manager.prenom   %}#}
+                            {#{% if nomManager != '' %}#}
+                                {#{% set nomPrenomManager = nomManager ~ ' ; ' ~ prenomManager%}#}
+                            {#{% endif %}#}
+
+                            {#<input type="text" placeholder="Nom;prénom" class="form-control"#}
+                                   {#name="nom_manager" id="js_nom_manager"  data-field="Nom"  value="{{ nomPrenomManager  }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Mail</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Mail Manager" class="form-control"#}
+                                   {#name="mail_manager" id="js_mail_manager"  data-field="Mail"  value="{{ (manager is null) ? '': manager.email }}">#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+
+
+        {#<div class="col-sm-6">#}
+
+            {#<div class="ibox border-bottom">#}
+                {#<div class="ibox-content">#}
+                    {#<h2>Chef de mission</h2>#}
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Nom; Prénom</label>#}
+                        {#<div class="col-lg-6">#}
+
+
+                            {#{% set nomPrenomChefMission = '' %}#}
+                            {#{% set nomChefMission = (chefMission is null) ? '' : (chefMission.nom is null) ? '' : chefMission.nom   %}#}
+                            {#{% set prenomChefMission = (chefMission is null) ? '' : (chefMission.prenom is null) ? '' : chefMission.prenom   %}#}
+                            {#{% if nomChefMission != '' %}#}
+                                {#{% set nomPrenomChefMission = nomChefMission ~ ' ; ' ~ prenomChefMission %}#}
+                            {#{% endif %}#}
+
+
+
+                            {#<input type="text" placeholder="Nom;prénom" class="form-control"#}
+                                   {#name="nom_chef_mission" id="js_nom_chef_mission"  data-field="Nom"  value="{{ nomPrenomChefMission  }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Mail</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Mail chef de mission" class="form-control"#}
+                                   {#name="mail_chef_mission" id="js_mail_chef_mission"  data-field="Mail"  value="{{ (chefMission is null) ? '': chefMission.email }}">#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+
+
+        {#</div>#}
+
+
+    </div>
+
+
+
+    <div class="row">
+
+
+        <div class="col-lg-6">
+            <div class="ibox border-bottom">
+
+                <div class="ibox-content">
+                    <h2>Chef de mission Client</h2>
+
+
+                    <table id="js_chef_mission_client_liste" class="js-jqgrid-table"></table>
+                    <div id="js_chef_mission_client_pager"></div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="ibox border-bottom">
+
+                <div class="ibox-content">
+                    <h2>Chef de mission Scriptura</h2>
+
+                    <table id="js_chef_mission_scriptura_liste" class="js-jqgrid-table"></table>
+                    <div id="js_chef_mission_scriptura_pager"></div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    {#<div class="row">#}
+        {#<div class="col-sm-6">#}
+
+            {#<div class="ibox border-bottom">#}
+                {#<div class="ibox-content">#}
+                    {#<h2>Service Reception d'images</h2>#}
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Nom; Prénom</label>#}
+                        {#<div class="col-lg-6">#}
+
+                            {#{% set nomPrenomReceptionImage = '' %}#}
+                            {#{% set nomReceptionImage = (receptionImage is null) ? '' : (receptionImage.nom is null) ? '' : receptionImage.nom   %}#}
+                            {#{% set prenomReceptionImage = (receptionImage is null) ? '' : (receptionImage.prenom is null) ? '' : receptionImage.prenom   %}#}
+                            {#{% if nomReceptionImage != '' %}#}
+                                {#{% set nomPrenomReceptionImage = nomReceptionImage ~ ' ; ' ~ prenomReceptionImage%}#}
+                            {#{% endif %}#}
+
+
+
+
+                            {#<input type="text" placeholder="Nom;prénom" class="form-control"#}
+                                   {#name="nom_reception_image" id="js_nom_reception_image"  data-field="Nom"  value="{{ nomPrenomReceptionImage  }}">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Mail</label>#}
+                        {#<div class="col-lg-6">#}
+                            {#<input type="text" placeholder="Mail Reception Image" class="form-control"#}
+                                   {#name="mail_reception_image" id="js_mail_reception_image"  data-field="Mail"  value="{{ (receptionImage is null) ? '': receptionImage.email }}">#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+
+
+
+
+        {#<div class="col-sm-6">#}
+
+            {#<div class="ibox border-bottom">#}
+                {#<div class="ibox-content">#}
+                    {#<h2>Logiciels utilisés</h2>#}
+                    {#<div class="form-group">#}
+                        {#<label class="col-lg-6 control-label">Logiciel</label>#}
+                        {#<div class="col-lg-6">#}
+
+                            {#<input type="text" placeholder="Nom;prénom" class="form-control"#}
+                                   {#name="nom_reception_image" id="js_nom_reception_image"  data-field="Nom"  value="">#}
+                        {#</div>#}
+                    {#</div>#}
+
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+
+
+
+
+
+
+
+
+
+
+
+    {#</div>#}
+</form>
+
+{% if client is not null %}
+    <script type="text/javascript">
+        $('#date_signature').datepicker({
+            dateFormat: 'dd/mm/yyyy',
+            language: 'fr',
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+    </script>
+{% endif %}

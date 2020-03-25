@@ -1,0 +1,14 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% block titre %}DOSSIERS | ADMINISTRATIONS{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block wrapper_content %}
+	<div class="col-sm-12">
+        <div class="row">
+            {{ include('DrtBundle:Drt:filtre.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

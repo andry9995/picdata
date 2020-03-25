@@ -1,0 +1,203 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/facturation/css/param-import.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/zendesk/css/bootstrap-tagsinput.css') }}">
+
+    <style type="text/css">
+
+        .bootstrap-tagsinput .tag {
+            background-color: #e4e4e4;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            cursor: default;
+            float: left;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding: 0 5px;
+            color: #5d5d5d !important;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .cursor-default {
+            cursor: default;
+        }
+    </style>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/facturation/js/param-import.js') }}"></script>
+    <script src="{{ asset('bundles/zendesk/js/bootstrap-tagsinput.js') }}"></script>
+    <script src="{{ asset('bundles/facturation/js/etat-compta.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="col-lg-12">
+        <div class="tabs-container jqgrid-tabs">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#etat-compta">Etat Compta</a>
+                </li>
+                <li id="journal-type-li"><a data-toggle="tab" href="#journal-type">Journal Type</a></li>
+                <li ><a data-toggle="tab" href="#journal-dossier">Journal Dossier</a></li>
+                <li ><a data-toggle="tab" href="#param-ecriture">Paramètres écritures</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="param-ecriture" class="tab-pane ">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-10">
+                                {{ render(controller('AppBundle:Commun:clients',{'conteneur': 0, 'tous': 0})) }}
+                            </div>
+                            <div class="col-xs-1">
+                                <i class="fa fa-spinner fa-pulse fa-2x fa-fw" id="loader"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6" id="prestation-container">
+                                <h4 class="bg-info padding-6">Prestations</h4>
+                                <div id="prestation-list" style="overflow-y: scroll;">
+                                    <ul class="list-group">
+                                        {#<li data-id="0" class="list-group-item">#}
+                                        {#<span class="label label-default">120</span> Prestation#}
+                                        {#</li>#}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="param-container">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="etat-compta" class="tab-pane active">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-10">
+                                {{ render(controller('AppBundle:Commun:clients',{'conteneur': 0, 'tous': 0, 'attr_id' : 'etat-compta-client'})) }}
+                            </div>
+                            <div class="col-lg-4">
+                                {{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'attr_id' : 'etat-compta-exercice' , 'label_col':2, 'select_col':10, 'nbr': 8 } )) }}
+                            </div>
+                            <div class="col-lg-4">
+                                <button class="btn btn-primary etat-compta-go">
+                                    Go
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-8 grid-container">
+                                <table id="etat-compta-grid"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="journal-type" class="tab-pane">
+                    <div class="panel-body">
+
+                       {#  <div class="row">
+                            <div class="col-lg-12">
+                                <button class="btn btn-primary btn-outline" id="add-row-journal">
+                                    <i class="fa fa-plus"></i>
+                                    Ajouter
+                                </button>
+                            </div>
+                        </div>
+                        <br> #}
+                        <div class="row">
+                           <div class="col-lg-12">
+                                
+                                <table id="journal-type-grid">
+                                </table>
+                           </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+                <div id="journal-dossier" class="tab-pane">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                {{ render(controller('AppBundle:Commun:clients',{'conteneur': 0, 'tous': 0, 'attr_id' : 'journal-dossier-client'})) }}
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="radio radio-inline">
+                                            <input type="radio" name="show-filter-item" id="show-item-tous" value="0" checked="">
+                                            <label for="show-item-tous">
+                                                Tous
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <span class="label label-default" id="nb-tous" ></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="radio radio-success radio-inline">
+                                            <input type="radio" name="show-filter-item" id="show-item-param" value="1">
+                                            <label for="show-item-param" class="text-fini" style="color:#27c74d">
+                                                Paramètrés
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="label label-primary" id="nb-param" ></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="radio radio-danger radio-inline">
+                                            <input type="radio" name="show-filter-item" id="show-item-non-param" value="2">
+                                            <label for="show-item-non-param" class="texte-non-traitable" style="color:#d9534f">
+                                                Non Paramètrés
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="label label-danger" id="nb-inconnus" ></span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-1">
+                                <button class="btn btn-primary journal-dossier-go" style="width:100%">
+                                    Go
+                                    <i class="fa fa-angle-rigth"></i>
+                                </button>
+                            </div>
+                            <div class="col-lg-1">
+                                <button class="btn btn-default sync-journal-model" style="width:100%">
+                                    <i class="fa fa-refresh"></i>
+                                    Sync.
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 grid-container">
+                                <table id="journal-dossier-grid">
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

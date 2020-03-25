@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button class="btn btn-primary" data-toggle="modal" onclick="loadNewModele();">Nouveau</button>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table">
+            <tr>
+                <th>Nom</th>
+                <th>Note</th>
+                <th></th>
+            </tr>
+            {% for modele in modeles %}
+                <tr>
+                    <td>{{ modele.modeleName }}</td>
+                    <td>{{ modele.modeleDescription }}</td>
+                    <td>
+                        <div class="pull-right">
+                            {% if modele.id > 1 %}
+                                <button type="button" class="btn btn-default" onclick="loadEditModele({{ modele.id }}, 0);">Editer</button>
+                                <button type="button" class="btn btn-danger" onclick="deleteModele({{ modele.id }});"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            {% else %}
+                                <button type="button" class="btn btn-default" onclick="loadEditModele({{ modele.id }}, 1);">Afficher</button>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+{#{% extends "AdminBundle:Default:index.html.twig" %}#}
+
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+    {#<link id="css-prospect" rel="stylesheet" href="{{ asset('css/plugins/colorpicker/bootstrap-colorpicker.min.css') }}?1"/>#}
+    {#<link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/onevente/css/default.css') }}?1"/>#}
+{#{% endblock %}#}
+
+{#{% block javascripts %}#}
+    {#{{ parent() }}#}
+    {#<script src="{{ asset('js/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>#}
+    {#<script src="{{ asset('bundles/onevente/js/modele.js') }}"></script>#}
+{#{% endblock %}#}
+
+{#{% block wrapper_content %}#}
+    {#<div class="row" id="parameters-page">#}
+        {#<div class="col-lg-12">#}
+            {#<h3 class="pull-left">Modèles de Document</h3>#}
+            {#<a href="{{ path('one_modele_add') }}" class="btn btn-primary pull-right">Nouveau</a>#}
+            {#<div class="clearfix"></div>#}
+            {#<hr />#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="row">#}
+        {#<div class="col-lg-12">#}
+            {#<table class="table">#}
+                {#<tr>#}
+                    {#<th>Nom</th>#}
+                    {#<th>Note</th>#}
+                    {#<th></th>#}
+                {#</tr>#}
+                {#{% for modele in modeles %}#}
+                {#<tr>#}
+                    {#<td>{{ modele.modeleName }}</td>#}
+                    {#<td>{{ modele.modeleDescription }}</td>#}
+                    {#<td>#}
+                        {#<div class="pull-right">#}
+                            {#<button type="button" class="btn btn-default" onclick="editModele({{ modele.id }});">Editer</button>#}
+                            {#{% if modele.id > 1 %}#}
+                            {#<button type="button" class="btn btn-danger" onclick="deleteModele({{ modele.id }});"><i class="fa fa-trash" aria-hidden="true"></i></button>#}
+                            {#{% endif %}#}
+                        {#</div>#}
+                    {#</td>#}
+                {#</tr>#}
+                {#{% endfor %}#}
+            {#</table>#}
+        {#</div>#}
+    {#</div>#}
+{#{% endblock %}#}

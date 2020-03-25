@@ -1,0 +1,167 @@
+<div class="row js_cl_indicateur_detail_container scroller" data-id="{{ indicateurTb.id|boost }}">
+    <div class="col-sm-6">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Nom</label>
+                <div class="col-lg-9">
+                    <input type="text" placeholder="Nom" class="form-control" id="js_id_tb_lib" value="{{ indicateurTb.libelle }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Ponderation</label>
+                <div class="col-lg-9">
+                    <input type="text" placeholder="Nom" class="form-control js_cl_indicateur_ponderation" id="js_id_tb_pond" value="{{ indicateurTb.ponderation }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Norme</label>
+                <div class="col-lg-9">
+                    <input type="text" placeholder="Norme" class="form-control" id="js_id_tb_norme" value="{{ indicateurTb.norme }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Description</label>
+                <div class="col-lg-9">
+                    <input type="text" placeholder="Description" class="form-control js_cl_indicateur_ponderation" id="js_id_tb_description" value="{{ indicateurTb.description }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-4">
+                    <div class="checkbox checkbox-primary checkbox-inline">
+                        <input id="js_id_tb_unite" type="checkbox" {{ (indicateurTb.unite == 1) ? 'checked' : '' }}>
+                        <label for="js_id_tb_unite">Pourcentage</label>
+                    </div>
+                    <div class="checkbox checkbox-primary checkbox-inline">
+                        <input id="js_id_tb_decimal" type="checkbox" {{ (indicateurTb.nbDecimal != 0) ? 'checked' : '' }}>
+                        <label for="js_id_tb_decimal">Avec&nbsp;D&eacute;cimal</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-4">
+                    <div class="radio radio-info radio-inline">
+                        <input type="radio" id="radio_type_0" value="0" name="radio_type" {{ (indicateurTb.type == 0) ? 'checked' : '' }}>
+                        <label for="radio_type_0">Variation</label>
+                    </div>
+                    <div class="radio radio-info radio-inline">
+                        <input type="radio" id="radio_type_1" value="1" name="radio_type" {{ (indicateurTb.type == 1) ? 'checked' : '' }}>
+                        <label for="radio_type_1">Valeur</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-3">Formule</div>
+                    <div class="col-lg-9">
+                        {# variation #}
+                        <select class="form-control-inspinia js_variation_cell" style="margin-bottom: 5px!important;">
+                            {% for i in -4..4 %}
+                                {% if i < 0 %}
+                                    {% set v = i %}
+                                {% elseif i > 0 %}
+                                    {% set v = '+' ~ i %}
+                                {% else %}
+                                    {% set v = '' %}
+                                {% endif %}
+                                <option value="{{ i }}" {{ (i == 0) ? 'selected' : '' }}>N{{ v }}</option>
+                            {% endfor %}
+                        </select>
+                        {# rubriques #}
+                        <div class="btn-group">
+                            {% set rb = '' %}
+                            {% if typeRubrique == 1 %}
+                                {% set rb = 'Super-' %}
+                            {% elseif typeRubrique == 2 %}
+                                {% set rb = 'Hyper-' %}
+                            {% endif %}
+                            {% set rb = rb ~ 'Rubriques' %}
+
+                            <a class="btn btn-white btn-outline text-gray btn-xs dropdown-toggle" data-toggle="dropdown" href="#">{{ rb }}</a>
+                            <ul class="dropdown-menu dropdown-user js_rubrique_sel_ul">
+                                <li class="js_rubrique_sel js_rubrique_sel_0 {{ (typeRubrique == 0) ? 'active' : '' }}" data-type="0"><a href="#">Rubriques</a></li>
+                                <li class="js_rubrique_sel js_rubrique_sel_1 {{ (typeRubrique == 1) ? 'active' : '' }}" data-type="1"><a href="#">Super-rubriques</a></li>
+                                <li class="js_rubrique_sel js_rubrique_sel_2 {{ (typeRubrique == 2) ? 'active' : '' }}" data-type="2"><a href="#">Hyper-rubriques</a></li>
+                            </ul>
+                        </div>
+                        {# save btn #}
+                        <span class="btn btn-xs btn-primary" id="js_id_save_formule"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="padding: 0!important;">
+                <div class="js_cell_indicateur scroller" id="js_id_formule" style="word-wrap: break-word!important; padding: 5px !important;height: 180px;width: 100%!important;">
+                    {% set index = 0 %}
+                    {% for ch in indicateurTb.formule|split('') %}
+                        {% if ch == '#' %}
+                            {% set operande = indicateurOperandes[index] %}
+                            {% set variation = operande.variationN %}
+
+                            {% if variation > 0 %}
+                                {% set text_v = '+' ~ variation %}
+                            {% elseif variation < 0 %}
+                                {% set text_v = variation  %}
+                            {% else %}
+                                {% set text_v = ''  %}
+                            {% endif %}
+
+                            <span class="operateur operande label label-default" data-type="{{ operande.rubrique.type }}" data-id="{{ operande.rubrique.id }}" data-variation="{{ operande.variationN }}" style="padding: 5px!important;">
+                                    <small>
+                                        <strong>{{ operande.rubrique.libelle }}</strong>&nbsp;&nbsp;
+                                        <i class="badge badge-danger" style="margin-bottom: 3px!important;"><small>N{{ text_v }}</small></i>
+                                    </small>
+                                </span>
+
+                            {#<span class="label label-{{ class_r }} operateur operande" data-variation="{{ operande.variationN }}" data-type="{{ operande.rubrique.type }}" data-id="{{ operande.rubrique.id }}">{{ operande.rubrique.libelle }}</span>#}
+                            {% set index = index + 1 %}
+                        {% else %}
+                            {% if ch|trim == '' %}
+                                {% set ch = '&nbsp;' %}
+                            {% endif %}
+                            <span class="operateur" style="margin: 0!important;">{{ ch|raw }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="30%">Condition</th>
+                <th width="40%">Commentaire</th>
+                <th width="10%"></th>
+                <th width="10%">Point</th>
+                <th width="10%"><i class="fa fa-plus" id="js_id_add_tb_decision" aria-hidden="true"></i></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set icons = { 0:'fa fa-arrow-up text-info', 1:'fa fa-arrow-right text-warning', 2:'fa fa-arrow-down text-danger', 3:'NA' } %}
+            {% for indicateurTbDecision in indicateurTbDecisions %}
+                <tr data-id="{{ indicateurTbDecision.id|boost }}">
+                    <td><input type="text" class="form-control js_cl_tb_decision_input js_cl_condition" value="{{ indicateurTbDecision.conditionTb }}"></td>
+                    <td><input type="text" class="form-control js_cl_tb_decision_input js_cl_commentaire" value="{{ indicateurTbDecision.commentaire }}"></td>
+                    <td>
+                        <div class="btn-group btn-group-xs">
+                            <span data-toggle="dropdown" class="btn btn-white dropdown-toggle" aria-expanded="false"><i class="js_cl_i_icon {{ (indicateurTbDecision.icon != 'NA') ? 'fa-2x' : '' }} {{ indicateurTbDecision.icon }}">{{ (indicateurTbDecision.icon != 'NA') ? '' : 'NA' }}</i></span>
+                            <ul class="dropdown-menu">
+                                {% for icon in icons %}
+                                    <li data-icon="{{ icon }}" class="js_cl_icon {{ (icon == indicateurTbDecision.icon) ? 'active' : '' }}"><a href="#"><i class="{{ icon }} fa-2x"></i>{{ (icon == 'NA') ? '<span class="label label-warning">NA</span>' : '' }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
+                    <td><input type="text" class="form-control js_cl_tb_decision_input js_cl_point" value="{{ indicateurTbDecision.point }}"></td>
+                    <td><i class="fa fa-trash js_cl_delete_tb_decision" aria-hidden="true"></i></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+{% extends 'AideBundle:Default:miniature.html.twig' %}
+
+{% block titre %}
+
+    <p>
+        <button class="btn btn-sm btn-principale btn-outline">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        {{ (contenuAide is null) ? '' : contenuAide.titre }}
+    </p>
+
+{% endblock %}
+
+
+{% block contenu %}
+
+    {#{{ (contenuAide is null) ? '' : contenuAide.contenu|raw }}#}
+
+    {{ (aide3Contenu is not defined) ? '' : (aide3Contenu is null) ? '' : aide3Contenu.contenu|raw }}
+
+    {#<a class="article-originale href3" data-id="{{ contenuAide.id }}">Afficher l'article originale</a>#}
+
+{% endblock %}
+
+
+{% block boutton %}
+
+    {% if contenuAide is defined %}
+        <a class="article-originale href3" data-id="{{ contenuAide.id }}">Afficher l'article originale</a>
+    {% endif %}
+
+{% endblock %}

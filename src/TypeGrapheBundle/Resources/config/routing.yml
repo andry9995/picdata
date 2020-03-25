@@ -1,0 +1,3 @@
+type_graphe_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: TypeGrapheBundle:Default:index }

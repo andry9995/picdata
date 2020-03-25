@@ -1,0 +1,59 @@
+<div class="btn-group btn-group-xs">
+    <div class="btn-group btn-group-xs">
+        <span data-toggle="dropdown" class="btn btn-white dropdown-toggle">
+            <i class="fa fa-font" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
+        </span>
+        <ul class="dropdown-menu">
+            <li class="js_font_family" data-class=""><a href="#">Par&nbsp;D&eacute;faut</a></li>
+            <li class="js_font_family" data-class="serif"><a href="#">Serif</a></li>
+            <li class="js_font_family" data-class='"Century Gothic"'><a href="#">Century gothic</a></li>
+            <li class="js_font_family" data-class="sans-serif"><a href="#">Sans</a></li>
+            <li class="js_font_family" data-class='"Arial"'><a href="#">Arial</a></li>
+            <li class="js_font_family" data-class='"Times New Roman"'><a href="#">Times</a></li>
+            <li class="js_font_family" data-class="Tahoma"><a href="#">Tahoma</a></li>
+        </ul>
+    </div>
+    <span class="btn btn-white js_font_bold"><i class="fa fa-bold js_font_bold" aria-hidden="true"></i></span>
+    <span class="btn btn-white js_font_italic"><i class="fa fa-italic" aria-hidden="true"></i></span>
+
+    <div class="btn-group btn-group-xs">
+        <span data-toggle="dropdown" class="btn btn-white dropdown-toggle">
+            <i class="fa fa-columns" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
+        </span>
+        <ul class="dropdown-menu">
+            <li class="js_border" data-border="0"><a href="#"><span class="cell_border_summer_0">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+            <li class="js_border" data-border="1"><a href="#"><span class="cell_border_summer_1">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+            <li class="js_border" data-border="2"><a href="#"><span class="cell_border_summer_2">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+            <li class="js_border" data-border="3"><a href="#"><span class="cell_border_summer_3">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+            <li class="js_border" data-border="4"><a href="#"><span class="cell_border_summer_4">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+            <li class="js_border" data-border="5"><a href="#"><span class="cell_border_summer_5">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+            <li class="js_border" data-border="6"><a href="#"><span class="cell_border_summer_6">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+            <li class="js_border" data-border="7"><a href="#"><span class="cell_border_summer_7">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></li>
+        </ul>
+    </div>
+
+    <div class="btn-group btn-group-xs">
+        <span data-toggle="dropdown" class="btn btn-white text-primary dropdown-toggle"><i class="fa fa-font" aria-hidden="true"></i>&nbsp;<span class="caret"></span></span>
+        <div class="dropdown-menu" data-type="0">
+            {{ include('AppBundle:Commun:table-color-picker.html.twig') }}
+        </div>
+    </div>
+    <div class="btn-group btn-group-xs">
+        <span data-toggle="dropdown" class="btn btn-white dropdown-toggle"><i class="fa fa-adn" aria-hidden="true"></i><span class="caret"></span></span>
+        <div class="dropdown-menu" data-type="1">
+            {{ include('AppBundle:Commun:table-color-picker.html.twig') }}
+        </div>
+    </div>
+    <div class="btn-group btn-group-xs">
+        <span data-toggle="dropdown" class="btn btn-white dropdown-toggle">
+            <i class="fa fa-align-center" aria-hidden="true"></i>&nbsp;<span class="caret"></span>
+        </span>
+        <ul class="dropdown-menu">
+            <li class="js_align" data-align="center"><a href="#"><i class="fa fa-align-center" aria-hidden="true"></i>&nbsp;&nbsp;Centrer</a></li>
+            <li class="js_align" data-align="left"><a href="#"><i class="fa fa-align-left" aria-hidden="true"></i>&nbsp;&nbsp;Gauche</a></li>
+            <li class="js_align" data-align="right"><a href="#"><i class="fa fa-align-right" aria-hidden="true"></i>&nbsp;&nbsp;Droite</a></li>
+        </ul>
+    </div>
+    <span class="btn btn-white js_indent" data-value="20"><i class="fa fa-indent" aria-hidden="true"></i></span>
+    <span class="btn btn-white js_indent" data-value="-20"><i class="fa fa-outdent" aria-hidden="true"></i></span>
+</div>

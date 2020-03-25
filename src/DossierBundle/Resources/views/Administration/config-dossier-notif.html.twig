@@ -1,0 +1,25 @@
+<h3 id="dossier-nom">Dossier: {{dossier.nom}}</h3>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id="list-notif">
+            {% for notif in notifications %}
+                {% set checked = '' %}
+                {% for l in listeNotif %}
+                    {% if l.notification.id == notif.id %}
+                        {% set checked = 'checked="checked"' %}
+                    {% endif %}
+                {% endfor %}
+                <div class="col-sm-3">
+                    <div class="checkbox checkbox-inline">
+                        <input type="checkbox" id="chk-{{notif.code}}" name="status-value" class="notif-item" data-id="{{notif.id}}" {{checked}}>
+                        <label for="chk-{{notif.code}}">{{notif.libelle}}</label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="form-group text-right">
+    <span class="btn btn-sm btn-warning js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Fermer</span>
+    <span class="btn btn-sm btn-primary btn_save_config_notif_mail" data-id={{dossier.id}}><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+</div>

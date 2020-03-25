@@ -1,0 +1,38 @@
+<option value="{{ 0|boost }}">Tous</option>
+{% for journalDossier in journalDossiers %}
+    {% set bold = '' %}
+    {% set sharp ='' %}
+    {% set star ='' %}
+    {% for journalActif in journalPicdocActifs %}
+        {% if journalActif.id == journalDossier.id %}
+            {% set bold = true %}
+            {% set sharp = '#' %}
+        {% endif %}
+    {% endfor %}
+    {% for journalActif in journalComptaActifs %}
+        {% if journalActif.id == journalDossier.id %}
+            {% set bold = true %}
+            {% set star = '*' %}
+        {% endif %}
+    {% endfor %}
+
+    {% set info = '' %}
+    {% if sharp != '' %}
+        {% set info = sharp %}
+    {% endif %}
+
+    {% if star != '' %}
+        {% if info == '' %}
+            {% set info =  star %}
+        {% else %}
+            {% set info = info ~ ' ' ~ star %}
+        {% endif %}
+    {% endif %}
+
+    {% if bold == false %}
+        <option value="{{ journalDossier.id|boost }}">{{ journalDossier.codeStr ~ ' ' ~ info ~ ' ' ~ journalDossier.libelle  }}</option>
+    {% else %}
+        <option value="{{ journalDossier.id|boost }}" style="font-weight: bold !important;">{{ journalDossier.codeStr ~ ' ' ~ info ~ ' ' ~ journalDossier.libelle }}</option>
+    {% endif %}
+
+{% endfor %}

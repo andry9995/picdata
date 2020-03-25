@@ -1,0 +1,35 @@
+<div class="row" id="id_row_tables">
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Banque</h5>
+                <div class="ibox-tools"></div>
+            </div>
+            <div class="ibox-content" style="overflow: auto">
+                <table class="table" id="id_table_banque">
+                    <tbody>
+                        {% set index = 0 %}
+                        {% for banque in banques %}
+                            <tr data-id="{{ banque.id|boost }}" class="pointer {{ (index == 0) ? 'active' : '' }}"><td>{{ banque.nom }}</td></tr>
+                            {% set index = index + 1 %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Cfonb</h5>
+                <div class="ibox-tools"></div>
+            </div>
+            <div class="ibox-content" id="id_cfonb" style="overflow: auto"></div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Fermer</span>
+        <span class="btn btn-primary btn-sm" id="id_save_cfonb_banque"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>

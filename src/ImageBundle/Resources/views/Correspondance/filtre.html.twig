@@ -1,0 +1,56 @@
+<div class="ibox">
+    <div class="ibox-title">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="js_filtre">RECHERCHER&nbsp;PAR</label>
+                <div class="col-lg-8">
+                    <select class="form-control" id="js_filtre">
+                        <option value="0">Dossier/Date</option>
+                        <option value="1">Pi&egrave;ce</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ibox-content">
+        <div class="js_cl_container_fitre" data-val="0">
+            <div>
+                {{ render(controller('AppBundle:Commun:clients' , {'conteneur' : 0})) }}
+            </div>
+            <div id="js_conteneur_site">
+
+            </div>
+            <div id="js_conteneur_dossier">
+
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-1 input-daterange input-group" id="js_date_range">
+                        <label class="input-group-addon control-label" for="js_start">Envois&nbsp;DU</label>
+                        <input type="text" class="input-sm form-control" id="js_start" name="start" value="{{ 'now'|date('d/m/Y') }}"/>
+                        <label class="input-group-addon control-label" for="js_end">AU</label>
+                        <input type="text" class="input-sm form-control" id="js_end" name="end" value="{{ 'now'|date('d/m/Y') }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="js_cl_container_fitre hidden" data-val="1">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label" for="js_id_num_picdata">Num&eacute;ro&nbsp;PICDATA</label>
+                    <input class="col-lg-8 form-control js_cl_num_piece" id="js_id_num_picdata" data-contre="js_id_originale">
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label" for="js_id_originale">Nom&nbsp;ORIGINAL</label>
+                    <input class="col-lg-8 form-control js_cl_num_piece" id="js_id_originale" data-contre="js_id_num_picdata">
+                </div>
+            </div>
+        </div>
+        <div class="text-right">
+            <span class="btn btn-primary btn-sm btn-outline" id="js_go"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;RECHERCHER</span>
+        </div>
+    </div>
+</div>

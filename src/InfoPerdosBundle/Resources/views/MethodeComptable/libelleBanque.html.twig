@@ -1,0 +1,60 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Choisir parmis les elements suivants et faites un glisser/déposer vers Libellé Ecriture Banque
+    </div>
+    <div class="panel-body">
+        <div id="libelle-modele-banque" class="row connectedSortable" style="height: 150px;">
+            {% for libelleModeleBanque in libelleModeleBanques %}
+                <div class="col-sm-2">
+                    <div class="ibox libelle-box">
+                        <div class="ibox-content">
+                            <div class="form-group" data-id="{{ libelleModeleBanque.libelleItem.id }}">
+                                <label>{{ libelleModeleBanque.libelleItem.intitule }}</label>
+                                <input type="number" placeholder="nbre caractere" class="form-control"
+                                       value="{{ (libelleModeleBanque.libelleItem.nbCaractere is null) ? '' : libelleModeleBanque.libelleItem.nbCaractere }}"
+                                        {{ (libelleModeleBanque.libelleItem.id == 5 or libelleModeleBanque.libelleItem.id == 7) ? 'disabled' : '' }}
+                                >
+                                <select class="form-control">
+                                    <option value="0" selected>Début</option>
+                                    <option value="1">Fin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Libellé Ecritrure Banque
+    </div>
+    <div class="panel-body">
+        <div id="libelle-banque" class="row connectedSortable libelle" style="height: 150px;">
+            {% for libelleBanque in libelleBanques %}
+                <div class="col-sm-2">
+                    <div class="ibox libelle-box">
+                        <div class="ibox-content">
+                            <div class="form-group" data-id="{{ libelleBanque.libelleItem.id }}">
+                                <label>{{ libelleBanque.libelleItem.intitule }}</label>
+                                <input type="number" placeholder="nbre caractere" class="form-control"
+                                       value="{{(libelleBanque.nbCaractere is not null) ? libelleBanque.nbCaractere :
+                                       (libelleBanque.libelleItem.nbCaractere is not null) ? libelleBanque.libelleItem.nbCaractere : '' }}"
+                                        {{ (libelleBanque.libelleItem.id == 5 or libelleBanque.libelleItem.id == 7) ? 'disabled' : '' }}
+                                >
+                                <select class="form-control">
+                                    {% set position  = (libelleBanque.position is null) ? -1 : libelleBanque.position  %}
+                                    <option value="0" {{ (position == 0) ? 'selected' : '' }}>Début</option>
+                                    <option value="1" {{ (position == 1) ? 'selected' : '' }}>Fin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

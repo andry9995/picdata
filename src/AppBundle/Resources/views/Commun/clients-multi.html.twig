@@ -1,0 +1,12 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-lg-{{- label_col  -}}">Client(s)</label>
+        <div class="col-lg-{{- select_col -}}">
+            <select id="client-multi" class="form-control chosen-select" multiple="multiple" data-placeholder="---">
+                {% for client in clients %}
+                    <option value="{{ client.id }}">{{ client.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

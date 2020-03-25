@@ -1,0 +1,148 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}
+    Zendesk - Tickets
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/general/css/custom-jqgrid.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/zendesk/css/zendesk.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/zendesk/js/zendesk.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+	{% set hidden = '' %}
+	{% if not is_granted('ROLE_DOSSIER_SCAN') %}
+	    {% set hidden = 'hidden' %}
+	{% endif %}
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox ibox-shadow">
+				<div class="ibox-content">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="row">
+								<div class="col-lg-3">
+			                    	<div class="row">
+			                    		<div class="col-lg-12">
+			                    			<form class="form-horizontal">
+			                                    <div class="form-group" style="margin-bottom: 10px;">
+			                                        <label for="ticket-status" class="control-label col-lg-3">
+			                                            <span>Statut</span>
+			                                        </label>
+			                                        <div class="col-lg-9">
+			                                            <select class="status form-control" id="ticket-status">
+			                                            	<option value="all">Tous</option>
+			                                            	<option value="new">Nouveau</option>
+			                                            	<option value="open">Ouvert</option>
+			                                            	<option value="pending">En attente</option>
+			                                            	<option value="solved">Résolu</option>
+			                                            </select>
+			                                        </div>
+			                                    </div>
+			                                </form>
+			                    		</div>
+			                    	</div>
+			                    </div>
+			                    <div class="col-lg-3">
+			                    	<div class="row">
+			                    		<div class="col-lg-12">
+			                    			<form class="form-horizontal">
+			                                    <div class="form-group" style="margin-bottom: 10px;">
+			                                        <label for="filter-priority" class="control-label col-lg-3">
+			                                            <span>Priorité</span>
+			                                        </label>
+			                                        <div class="col-lg-9">
+			                                            <div class="row">
+			                                            	<div class="col-md-6">
+						                                        <div class="radio radio-priority-all radio-inline">
+						                                            <input type="radio" name="filter-priority" id="filter-priority-all" value="all" checked="">
+						                                            <label for="filter-priority-all">
+						                                                Tous
+						                                            </label>
+						                                        </div>
+						                                    </div>
+						                                    <div class="col-md-6">
+						                                        <div class="radio radio-priority-none radio-inline">
+						                                            <input type="radio" name="filter-priority" id="filter-priority-none" value="none">
+						                                            <label for="filter-priority-none" class="none">
+						                                                Aucune
+						                                            </label>
+						                                        </div>
+						                                    </div>
+			                                            </div>
+			                                            <div class="row">
+						                                    <div class="col-md-6">
+						                                        <div class="radio radio-priority-urgent radio-inline">
+						                                            <input type="radio" name="filter-priority" id="filter-priority-urgent" value="urgent">
+						                                            <label for="filter-priority-urgen" class="urgent">
+						                                                Urgente
+						                                            </label>
+						                                        </div>
+						                                    </div>
+						                                    <div class="col-md-6">
+						                                        <div class="radio radio-priority-high radio-inline">
+						                                            <input type="radio" name="filter-priority" id="filter-priority-high" value="high">
+						                                            <label for="filter-priority-high" class="high">
+						                                                Elevée
+						                                            </label>
+						                                        </div>
+						                                    </div>
+			                                            </div>
+			                                            <div class="row">
+						                                    <div class="col-md-6">
+						                                        <div class="radio radio-priority-normal radio-inline">
+						                                            <input type="radio" name="filter-priority" id="filter-priority-normal" value="normal">
+						                                            <label for="filter-priority-normal" class="normal">
+						                                                Normale
+						                                            </label>
+						                                        </div>
+						                                    </div>
+						                                    <div class="col-md-6">
+						                                        <div class="radio radio-priority-low radio-inline">
+						                                            <input type="radio" name="filter-priority" id="filter-priority-low" value="low">
+						                                            <label for="filter-priority-low" class="low">
+						                                                Basse
+						                                            </label>
+						                                        </div>
+						                                    </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                </form>
+			                    		</div>
+			                    	</div>
+			                    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+        <div class="col-lg-12">
+        	<div class="ibox ibox-shadow">
+				<div class="ibox-content">
+					<div class="row">
+						<div class="col-lg-12">
+							<div id="tickets_list_container" style="width:100%; margin-bottom: 25px">
+			                    <table id="tickets_list"></table>
+			                </div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+	</div>
+
+
+{% endblock %}

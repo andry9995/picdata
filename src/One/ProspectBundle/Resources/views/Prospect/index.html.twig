@@ -1,0 +1,110 @@
+{% extends "AdminBundle:Default:index.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/default.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/datefilter.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/prospect.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/contactclient.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/opportunite.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/tache.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/appel.css') }}?1.1"/>
+    <link id="css-prospect" rel="stylesheet" href="{{ asset('bundles/oneprospect/css/upload.css') }}?1.1"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="{{ asset('js/jquery.ui.touch-punch.min.js') }}"></script>#}
+    <script src="{{ asset('bundles/oneprospect/js/default.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/datefilter.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/Sortable.min.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/prospect.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/contactclient.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/devis.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/opportunite.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/tache.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/upload.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/oneprospect/js/appels.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/article.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/pdf.js') }}?1.1"></script>
+    <script src="{{ asset('bundles/onevente/js/email.js')}}?1.1"> </script>
+
+    <script src="{{ asset('bundles/notefrais/js/communTpe.js') }}?1.1"></script>
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    {{ include('NoteFraisBundle:Default:filtre.html.twig') }}
+
+    <div class="col-lg-12">
+        <div class="tabs-container">
+            <ul id="tab-prospects" class="nav nav-tabs">
+                <li class="active" id="onglet-prospects"><a data-toggle="tab" href="#tab-prospect">Prospects</a></li>
+                <li class="" id="onglet-opportunites"><a data-toggle="tab" href="#tab-opportunite">Opportunités</a></li>
+                <li class="" id="onglet-taches"><a data-toggle="tab" href="#tab-tache">Tâches</a></li>
+                <li class="" id="onglet-appel"><a data-toggle="tab" href="#tab-appel">Actions</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-prospect" class="tab-pane active">
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+                <div id="tab-opportunite" class="tab-pane">
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+                <div id="tab-tache" class="tab-pane">
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+                <div id="tab-appel" class="tab-pane">
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="primary-modal" tabindex="-1" role="dialog" aria-labelledby="primary-modal-title">
+        <div class="modal-dialog modal-lg modal-content" role="document"></div>
+    </div>
+
+    <div class="modal fade" id="secondary-modal" tabindex="-1" role="dialog" aria-labelledby="secondary-modal-title">
+        <div class="modal-dialog modal-md modal-content" role="document"></div>
+    </div>
+
+    <!--<input type="text" id="view" name="view" value="bloc">view<br />
+    <input type="text" id="type" name="type" value="all">type<br />
+    <input type="text" id="q" name="q" value="">q<br />
+    <input type="text" id="sort" name="sort" value="">sort<br />
+    <input type="text" id="sortorder" name="sortorder" value="ASC">sortorder<br />
+    <input type="text" id="parent" name="parent" value="">parent<br />
+    <input type="text" id="parentid" name="parentid" value="">parentid<br />
+    <input type="text" id="parent2" name="parent2" value="">parent2<br />
+    <input type="text" id="parentid2" name="parentid2" value="">parentid2<br />
+    <input type="text" id="period" name="period" value="all">period<br />
+    <input type="text" id="startdate" name="startdate" value="">startdate<br />
+    <input type="text" id="enddate" name="enddate" value="">enddate-->
+
+    <input type="hidden" id="view" name="view" value="bloc"><br />
+    <input type="hidden" id="type" name="type" value="all"><br />
+    <input type="hidden" id="stat" name="stat" value="all"><br />
+    <input type="hidden" id="q" name="q" value=""><br />
+    <input type="hidden" id="sort" name="sort" value=""><br />
+    <input type="hidden" id="sortorder" name="sortorder" value="ASC"><br />
+    <input type="hidden" id="parent" name="parent" value=""><br />
+    <input type="hidden" id="parentid" name="parentid" value=""><br />
+    <input type="hidden" id="parent2" name="parent2" value=""><br />
+    <input type="hidden" id="parentid2" name="parentid2" value=""><br />
+    <input type="hidden" id="period" name="period" value="all"><br />
+    <input type="hidden" id="startdate" name="startdate" value=""><br />
+    <input type="hidden" id="enddate" name="enddate" value=""><br/>
+    <input type="hidden" id="activity" name="activity" value=""><br/>
+    <input type="hidden" id="archive" name="archive" value="">
+
+{% endblock %}

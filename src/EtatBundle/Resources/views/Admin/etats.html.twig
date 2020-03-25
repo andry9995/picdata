@@ -1,0 +1,18 @@
+<div class="tabs-container">
+    <ul class="nav nav-tabs">
+        {% for key, etat in etats %}
+            <li class="{{ (key == 0) ? 'active' : '' }}"><a data-toggle="tab" href="#tab-{{ key }}">{{ etat.etat.libelle }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="tab-content">
+        {% for key, etat in etats %}
+            <div id="tab-{{ key }}" class="js_cl_tab_etat tab-pane {{ (key == 0) ? 'active' : '' }}" data-id="{{ etat.etat.id|boost }}">
+                <div class="panel-body">
+                    {% for keyRegime, etatRegime in etat.etatsRegimeFiscals %}
+                        {{ include('EtatBundle:Admin:etat-regime.html.twig',{keyRegime:keyRegime, etatRegime:etatRegime, keyEtat:key, dStyles:etat.dStyles}) }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

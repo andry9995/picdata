@@ -1,0 +1,48 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Import-Export{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/banque/css/journal.css') }}">
+    <style type="text/css">
+        td.dnp-dossier {
+            /*color: transparent !important;*/
+            /*border-left: transparent !important;*/
+            padding-left: 20px !important;
+        }
+    </style>
+{% endblock %}
+
+{% block contenu_droite %}
+    {{ include('DrtBundle:ImportExport:filtre.html.twig') }}
+    <div class="tabs-container" id="id_tabs">
+        <ul class="nav nav-tabs">
+            <li class="cl_tab active"><a data-toggle="tab" href="#tab-export" aria-expanded="false">Import / Export</a></li>
+            <li class="cl_tab "><a data-toggle="tab" href="#tab-param" aria-expanded="true">Paramètrage</a></li>
+            <li class="cl_tab "><a data-toggle="tab" href="#tab-recap" aria-expanded="true">R&eacute;capitulatif</a></li>
+        </ul>
+        <div class="tab-content" id="id_tabs_content">
+            <div id="tab-export" class="tab-pane active" data-type="0">
+                <div class="panel-body"></div>
+            </div>
+            <div id="tab-param" class="tab-pane" data-type="2">
+                <div class="panel-body"></div>
+            </div>
+            <div id="tab-recap" class="tab-pane" data-type="1">
+                <div class="panel-body"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/import_export/import.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/import_export/export.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/import_export/parametre.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/import_export/recap.js') }}"></script>
+    <script src="{{ asset('bundles/drt/js/import_export/index.js') }}"></script>
+{% endblock %}

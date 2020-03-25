@@ -1,0 +1,25 @@
+<form class="centre_aide_1">
+    <div class="form-group">
+        <label>Titre</label>
+        <input type="text" placeholder="Titre" class="form-control js_titre" value="{{ (aide1 is null) ? '' : (aide1.titre is null) ? '' : (aide1.titre) }}">
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control js_contenu" style="height: 100px;">{{ (aide1 is null) ? '' : (aide1.contenu is null) ? '' : (aide1.contenu) }}</textarea>
+    </div>
+
+    <div>
+        <div class="btn btn-sm btn-success pull-right m-t-n-xs js_save_aide_1" data-type="{{ type }}">
+            <strong>Enregistrer</strong>
+        </div>
+        <input class="js_aide_1_id" type="hidden" value="{{ (aide1 is null) ? 0 : (aide1.id) }}" >
+    </div>
+</form>
+
+
+
+
+
+
+

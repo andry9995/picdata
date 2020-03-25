@@ -1,0 +1,158 @@
+<div class="col-lg-12">
+      <div class="table-responsive">
+          {% set listeTva = [] %}
+          {% set listeRes = [] %}
+          {% set listeTiers = [] %}
+          <table class="table table-bordered">
+              {% set montantTiers = 0 %}
+              {% set montantTva = 0 %}
+              {% set pccTiers = '' %}
+              {% set typePiece = 0 %}
+
+              <thead>
+              <tr>
+                  <th>Date</th>
+                  <th>#Compte</th>
+                  <th>Intitulé</th>
+                  <th style="width:80px;">Débit</th>
+                  <th style="width:80px;">Crédit</th>
+              </tr>
+              </thead>
+              <tbody>
+
+                  {% for tvaG in tvaSaisie %}
+                      {% set tva = tvaG[0] %}
+                      {# Atao Facture izy raha fournisseur: A verifier #}
+                     {% if saisie.typePiece is null %}
+                          {% set typePiece = 2 %}
+                      {% else %}
+                          {% set typePiece = saisie.typePiece.id %}
+                      {% endif %}
+
+                  {% endfor %}
+
+
+                  {% set totalTiers = 0 %}
+                  {% set totalRes = 0 %}
+                  {% set totalTvaf = 0 %}
+
+                  {% if ((typePiece == 1 and categorie.code == 'CODE_CLIENT')
+                      or (typePiece == 2 and categorie.code == 'CODE_FRNS')
+                      or (typePiece == 2 and categorie.code == 'CODE_NDF')) %}
+
+
+                      {% for tiers in listeTiersFinal %}
+                          {% if tiers.compte is defined %}
+                              {% set totalTiers = totalTiers + tiers.montant %}
+                              <tr>
+                                  <td>{{ (saisie is null)? '' : saisie.dateFacture|date('d/m/Y') }}</td>
+                                  <td>{{ (tiers.compte is null)? '' : (tiers.compte.compteStr is null) ? '' : tiers.compte.compteStr }}</td>
+                                  <td>{{ (tiers.compte is null)? '' : (tiers.compte.intitule is null) ? '' : tiers.compte.intitule }}</td>
+                                  <td align="right"></td>
+                                  <td align="right">{{ (tiers.montant)|number_format(2, '.', ' ')  }}</td>
+                              </tr>
+                          {% endif %}
+                      {% endfor %}
+
+                      {% for res in listeResFinal %}
+                          {% if res.compte is defined %}
+                              {% set totalRes = totalRes + res.montant %}
+                              <tr>
+                                  <td>{{ (saisie is null)? '' : saisie.dateFacture|date('d/m/Y') }}</td>
+                                  <td>{{ (res.compte is null) ? '' : (res.compte.compte is null) ? '' : res.compte.compte }}</td>
+                                  <td>{{ (res.compte is null) ? '' : (res.compte.intitule is null) ? '' : res.compte.intitule }}</td>
+                                  <td align="right">{{ res.montant|number_format(2, '.', ' ') }}</td>
+                                  <td align="right"></td>
+                              </tr>
+                          {% endif %}
+                      {% endfor %}
+
+                      {% for tvaf in listeTvaFinal %}
+                          {% if tvaf.compte is defined %}
+                              {% set totalTvaf = totalTvaf + tvaf.montant %}
+                              {% if tvaf.montant != 0 %}
+                                   <tr>
+                                       <td>{{ (saisie is null)? '' : saisie.dateFacture|date('d/m/Y') }}</td>
+                                       <td>{{ (tvaf.compte is null) ? '' : (tvaf.compte.compte is null)? '' : tvaf.compte.compte}}</td>
+                                       <td>{{ (tvaf.compte is null) ? '' : (tvaf.compte.intitule is null)? '' : tvaf.compte.intitule }}</td>
+                                       <td align="right">{{ tvaf.montant|number_format(2, '.', ' ') }}</td>
+                                       <td align="right"></td>
+                                   </tr>
+                              {% endif %}
+                          {% endif %}
+                      {% endfor %}
+
+                      {% set debit = totalRes + totalTvaf %}
+                      <td colspan="3">
+                          <span>
+                              {% if typeEcriture == 0 %}
+                                  <i class="fa fa-pencil"></i>
+                              {% else %}
+                                  <i class="fa fa-ban"></i>
+                              {% endif %}
+                          </span>
+
+                      </td>
+                      <td align="right" style="font-weight: bold;">{{ debit|number_format(2, '.', ' ') }}</span></td>
+                      <td align="right" style="font-weight: bold;">{{ totalTiers|number_format(2, '.', ' ') }}</td>
+
+                  {% elseif (typePiece == 2 and categorie.code == 'CODE_CLIENT') or (typePiece == 1 and categorie.code == 'CODE_FRNS') %}
+
+                      {% for tiers in listeTiersFinal %}
+                          {% if tiers.compte is defined %}
+                              {% set totalTiers = totalTiers + tiers.montant %}
+                              <tr>
+                                  <td>{{ (saisie is null)? '' : saisie.dateFacture|date('d/m/Y') }}</td>
+                                  <td>{{ (tiers.compte is null)? '' : (tiers.compte.compteStr is null) ? '' : tiers.compte.compteStr }}</td>
+                                  <td>{{ (tiers.compte is null)? '': (tiers.compte.intitule is null) ? '' : tiers.compte.intitule }}</td>
+                                  <td align="right">{{ (tiers.montant)|number_format(2, '.', ' ')  }}</td>
+                                  <td align="right"></td>
+                              </tr>
+                          {% endif %}
+                      {% endfor %}
+                      {% for res in listeResFinal %}
+                          {% if res.compte is defined %}
+                              {% set totalRes = totalRes + res.montant %}
+                              <tr>
+                                  <td>{{ (saisie is null)? '' : saisie.dateFacture|date('d/m/Y') }}</td>
+                                  <td>{{ (res.compte is null) ? '' : (res.compte.compte is null) ? '' : res.compte.compte }}</td>
+                                  <td>{{ (res.compte is null) ? '' : (res.compte.intitule is null) ? '' : res.compte.intitule }}</td>
+                                  <td align="right"></td>
+                                  <td align="right">{{ res.montant|number_format(2, '.', ' ') }}</td>
+                              </tr>
+                          {% endif %}
+                      {% endfor %}
+                      {% for tvaf in listeTvaFinal %}
+                          {% if tvaf.compte is defined %}
+                              {% set totalTvaf = totalTvaf + tvaf.montant %}
+                              {% if tvaf.montant != 0 %}
+                                  <tr>
+                                      <td>{{ (saisie is null)? '' : saisie.dateFacture|date('d/m/Y') }}</td>
+                                      <td>{{ (tvaf.compte is null)? '' : (tvaf.compte.compte is null)? '' : tvaf.compte.compte}}</td>
+                                      <td>{{ (tvaf.compte is null)? '' : (tvaf.compte.intitule is null)? '' : tvaf.compte.intitule }}</td>
+                                      <td align="right"></td>
+                                      <td align="right">{{ tvaf.montant|number_format(2, '.', ' ') }}</td>
+                                  </tr>
+                              {% endif %}
+                          {% endif %}
+                      {% endfor %}
+                      {% set debit = totalRes + totalTvaf %}
+
+                      <td colspan="3">
+                          <span>
+                              {% if typeEcriture == 0 %}
+                                  <i class="fa fa-pencil"></i>
+                              {% else %}
+                                  <i class="fa fa-pencil-square-o"></i>
+                              {% endif %}
+                          </span>
+                      </td>
+                      <td align="right" style="font-weight: bold;">{{ totalTiers|number_format(2, '.', ' ') }}</td>
+                      <td align="right" style="font-weight: bold;">{{ debit|number_format(2, '.', ' ') }}</td>
+
+                  {% endif %}
+              </tbody>
+          </table>
+
+      </div>
+</div>

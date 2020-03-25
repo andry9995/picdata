@@ -1,0 +1,92 @@
+<div class="ibox-content">
+    <div class="row">
+            <form class="form-horizontal">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Catégorie</label>
+                                <div class="col-md-7">
+
+                                    <input type="text" class="form-control" id="js_categorie" value="{{ (categorie is null) ? 'Encours' : categorie.libelleNew }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Sous Catégorie</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" id="js_sous_categorie" value="{{ (souscategorie is null) ? '' : souscategorie.libelleNew }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Organisme</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" id="js_organisme" value="{{ (saisie is null) ? '' : (saisie.organisme is null) ? '' :  (saisie.organisme.libelle) }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Exercice</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" id="js_exercice" value="{{ (img is null)? '' : (img.exercice) }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Avancement</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" id="js_avancement" value="{{ etape }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Date Pièce</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" id="js_date_piece" value="{{ (saisie is null)? '' : (saisie.dateFacture is null) ? '' : saisie.dateFacture|date('d/m/Y') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Echéance</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" id="js_date_echeance" value="{{ (saisie is null)? '' : (saisie.dateEcheance is null) ? '' : saisie.dateEcheance|date('d/m/Y') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <br/>
+
+        <div class="row ecriture">
+            {% if utilisateur.accesUtilisateur.type < 6 %}
+                {{ include('ConsultationPieceBundle:Default:ecriture.html.twig') }}
+            {% endif %}
+        </div>
+</div>

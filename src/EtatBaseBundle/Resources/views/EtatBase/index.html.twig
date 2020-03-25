@@ -1,0 +1,36 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Etats Comptables{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/etatbase/css/menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/etatbase/css/grand_livre.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/datePickerPopOverV2.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/anciennete.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/datePickerPopOverV2.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/cloture_exercice.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/details_compte.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/export.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/exporter.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/filtre.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/index.js') }}"></script>
+{% endblock %}
+
+{% block contenu_droite %}
+    <div class="row">
+        {{ include('EtatBaseBundle:EtatBase:filtre.html.twig') }}
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            {{ include('EtatBaseBundle:EtatBase:etats.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

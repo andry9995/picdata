@@ -1,0 +1,15 @@
+{% extends 'BanqueBundle:Default:index.html.twig' %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/banque/js/releve.js') }}"></script>
+{% endblock %}
+
+{% block contenu_banque %}
+
+    <div class="row scroller" id="js_releve_banque">
+        <table id="js_releve_liste"></table>
+        <div id="js_releve_pager"></div>
+    </div>
+{% endblock %}

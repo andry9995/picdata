@@ -1,0 +1,119 @@
+CREATE DEFINER=`dbboost`@`%` TRIGGER `image_before_insert` BEFORE INSERT ON `dbboost`.`image` 
+	FOR EACH ROW 
+BEGIN
+
+	DECLARE id_client int(11);
+    DECLARE id_site int(11);
+    DECLARE id_dernier_num int(11);
+    DECLARE last_num int(11);
+	DECLARE last_num_local int(11);
+	DECLARE last_num_old int(11);
+	DECLARE last_num_local_old int(11);
+    DECLARE code_p varchar(2);
+    DECLARE code_z varchar(1);
+    DECLARE nb_caractere int(2);
+    DECLARE code_site varchar(2);
+    
+	DECLARE nom1 varchar(20);
+	DECLARE dernier_z varchar(20);
+	DECLARE caractere_z varchar(1);
+	DECLARE nom_cree varchar(20);    
+    DECLARE i int(2);
+    
+	IF NEW.nom IS NULL OR NEW.nom = NULL OR TRIM(NEW.nom) = '' THEN
+		-- get id_client,id_site,code_site,nb_caractere,code_p,code_z
+		SELECT 	c.id,s.id,s.code,
+			CASE WHEN s.code <> '' AND s.code IS NOT NULL THEN s.nb_caractere - length(s.code) ELSE c.nb_caractere - length(c.code) END,
+			CASE WHEN s.code <> '' AND s.code IS NOT NULL THEN s.code ELSE c.code END,
+			CASE WHEN s.code <> '' AND s.code IS NOT NULL THEN s.code_local ELSE c.code_local END,
+			CASE WHEN s.code <> '' AND s.code IS NOT NULL THEN s.dernier_num ELSE c.dernier_num END,
+			CASE WHEN s.code <> '' AND s.code IS NOT NULL THEN s.dernier_num_local ELSE c.dernier_num_local END
+		INTO 	id_client,id_site,code_site,
+				nb_caractere,
+				code_p,
+				code_z,
+                last_num_old,
+                last_num_local_old
+		FROM dbboost.lot l 
+		JOIN dbboost.dossier d 
+			ON(l.dossier_id = d.id)
+		JOIN dbboost.site s
+			ON(d.site_id = s.id)
+		JOIN dbboost.client c
+			ON(s.client_id = c.id)
+		WHERE l.id = NEW.lot_id;		
+        
+        -- get dernier num
+        IF code_site <> '' AND code_site IS NOT NULL THEN
+			SELECT id,dernier_num,dernier_num_local 
+            INTO id_dernier_num,last_num,last_num_local
+            FROM dbboost.dernier_num
+            WHERE site_id = id_site;
+            
+            IF id_dernier_num IS NULL THEN
+				SET last_num = last_num_old;
+                SET last_num_local = last_num_local_old;     
+                INSERT INTO dbboost.dernier_num(site_id,dernier_num,dernier_num_local) VALUES (id_site,last_num,last_num_local);
+                
+				SELECT MAX(id)
+				INTO id_dernier_num
+				FROM dbboost.dernier_num
+                WHERE site_id = id_site;                
+            END IF;
+        ELSE     
+			SELECT id,dernier_num,dernier_num_local 
+            INTO id_dernier_num,last_num,last_num_local
+            FROM dbboost.dernier_num
+            WHERE client_id = id_client;
+            
+            IF id_dernier_num IS NULL THEN
+				SET last_num = last_num_old;
+                SET last_num_local = last_num_local_old;     
+                INSERT INTO dbboost.dernier_num(client_id,dernier_num,dernier_num_local) VALUES (id_client,last_num,last_num_local);
+                
+				SELECT MAX(id)
+				INTO id_dernier_num
+				FROM dbboost.dernier_num
+                WHERE client_id = id_client;                
+            END IF;
+        END IF;
+        
+        -- numerotation
+        IF NEW.numerotation_local = 1 OR NEW.numerotation_local = '1' THEN 
+			SET last_num_local = last_num_local + 1;
+			WHILE i < nb_caractere - 1 DO
+				SET dernier_z = concat(dernier_z,'V');
+				SET i = i + 1;
+			END WHILE;
+			SET nom_cree = LPAD(CONV(last_num_local,10,32),nb_caractere - 1,0);
+			SET nom1 = CONCAT(code_p,code_z,nom_cree);	
+
+			IF CONV(dernier_z,32,10)  < last_num_local  THEN                 
+				SET nom_cree = LPAD(CONV(1,10,32),nb_caractere - 1,0);
+				IF code_z = 'Z' THEN 
+					SET code_z = 'X';
+					SET nom1 = CONCAT(code_p,code_z,nom_cree);
+				ELSEIF code_z = 'X' THEN
+					SET code_z = 'Y';
+					SET nom1 = CONCAT(code_p,code_z,nom_cree);
+				ELSE 
+					SET code_z = 'W';
+					SET nom1 = CONCAT(code_p,code_z,nom_cree);
+				END IF;
+                
+				IF code_site <> '' AND code_site IS NOT NULL THEN UPDATE dbboost.site SET code_local = code_z WHERE id = id_site;
+				ELSE UPDATE dbboost.client SET code_local = code_z WHERE id = id_client;
+				END IF;            
+                
+                SET last_num_local = 1;
+			END IF;
+        ELSE 
+			SET last_num = last_num + 1;
+			SET nom1 = CONCAT(code_p,LPAD(CONV(last_num,10,32),nb_caractere,0));
+		END IF;
+        
+        -- maj dernier num et nom 
+        UPDATE dbboost.dernier_num SET dernier_num = last_num, dernier_num_local = last_num_local WHERE id = id_dernier_num;
+        SET NEW.nom = nom1;
+    END IF;
+END

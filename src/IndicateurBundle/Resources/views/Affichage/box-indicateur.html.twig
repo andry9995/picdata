@@ -1,0 +1,59 @@
+{% set class_btn_group = 'btn-group btn-group-sm' %}
+{% set class_btn = 'btn btn-sm' %}
+
+<div class="ibox float-e-margins js_indicateur_item" data-id="{{ packItem.id|boost }}">
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="{{ class_btn_group }}">
+                    <button class="{{ class_btn }} btn-white active js_libelle_indicateur"><strong>{{ packItem.indIndicateurItem.libelle }}</strong></button>
+                    <button class="{{ class_btn }} btn-white js_periode" type="button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ datepicker }}">
+                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                        <span>&nbsp;&nbsp;Periode</span>
+                    </button>
+
+                    <div class="{{ class_btn_group }} js_ul_analyse">
+                        <button data-toggle="dropdown" class="{{ class_btn }} btn-white dropdown-toggle">
+                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                            <span>&nbsp;&nbsp;Analyse</span>
+                        </button>
+                        <ul class="dropdown-menu js_ul_analyse">
+                            <li class="js_analyse active" data-type="0"><a href="#">Evolution</a></li>
+                            <li class="js_analyse" data-type="1"><a href="#">Comparaison</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="{{ class_btn_group }} js_ul_graphe">
+                        {% set graphes_each = (packItem.graphes|length != 0) ? packItem.graphes : graphes %}
+                        <button data-toggle="dropdown" class="{{ class_btn }} btn-white dropdown-toggle">
+                            <i class="fa {{ graphes_each[0].icon }} js_graphe_icon" aria-hidden="true"></i>
+                            <span>&nbsp;&nbsp;Graphe</span>
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            {% set index_graphe = 0 %}
+                            {% for graphe in graphes_each %}
+                                <li class="js_graphe {{ (index_graphe == 0) ? 'active' : '' }}" data-fa="{{ graphe.icon }}" data-code="{{ graphe.code }}">
+                                    <a href="#"><i class="fa {{ graphe.icon }}" aria-hidden="true"></i>&nbsp;{{ graphe.libelle }}</a>
+                                </li>
+                                {% set index_graphe = index_graphe + 1 %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <button class="{{ class_btn }} btn-white {{ (packItem.indIndicateurItem.typeOperation == 2) ? '' : 'hidden' }} js_anciennete" data-anciennetes="30;60;90" data-date_anciennete="{{ date_anciennete|date("Y-m-d") }}"
+                            type="button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ include('IndicateurBundle:Affichage:date-anciennete.html.twig',{'date_anciennete':date_anciennete})|e }}">Anciennete</button>
+
+                    <input type="hidden" class="js_default_html_anciennete" value="{{ include('IndicateurBundle:Affichage:date-anciennete.html.twig',{'date_anciennete':date_anciennete})|e }}">
+                    <input type="hidden" class="js_default_date_anciennete" value="{{ date_anciennete|date("Y-m-d") }}">
+                    <input type="hidden" class="js_default_anciennete" value="30;60;90">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="js_chart scroller" style="height: 400px!important;"></div>
+        </div>
+        <div class="hidden js_date_picker_hidden">
+            {{ datepicker|raw }}
+        </div>
+    </div>
+</div>

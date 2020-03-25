@@ -1,0 +1,36 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Etat de base{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/etatbase/css/menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/etatbase/css/grand_livre.css') }}">
+{% endblock %}
+
+{% block contenu_droite %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include 'EtatFinancierBundle:Affichage:filtre.html.twig' %}
+        </div>
+    </div>
+    <div class="row">
+        {#<div class="col-sm-3">
+            {% include 'EtatBaseBundle:Default:menu.html.twig' %}
+        </div>#}
+        <div class="col-sm-12 gray-bg" id="js_eb_a_exporter">
+            {% include 'EtatBaseBundle:Default:content.html.twig' %}
+        </div>
+    </div>
+
+    <input type="hidden" id="js_etat" value="{{ etat }}"/>
+    <input type="hidden" id="js_id_journal" value="0"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/etatfinancier/js/affichage_filtre.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/menu.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat_base.js') }}"></script>
+{% endblock %}

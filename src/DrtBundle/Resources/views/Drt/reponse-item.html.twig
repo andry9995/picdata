@@ -1,0 +1,9 @@
+<div class="item {{ (index_slide == 0) ? 'active' : '' }}">
+    <div class="text-center">
+        {% set chm = (image ? ('IMAGES/' ~ image.lot.dateScan|date('Ymd') ~ '/' ~ image.nom ~ '.' ~ ext) : ('echange/' ~ echangeReponse.nomFichier)) %}
+        {{ include('DrtBundle:Drt:affichage.html.twig',{ 'chemin': chm }) }}
+    </div>
+    <div class="carousel-caption">
+        <h1>{{ image ? image.nom : echangeReponse.nomFichier }}</h1>
+    </div>
+</div>

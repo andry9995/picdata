@@ -1,0 +1,20 @@
+<table class="table" id="id_table_cfonb">
+    <tbody>
+        {% for key, cfonbCode in cfonbCodes %}
+            {% set cfonbBanque = null %}
+            {% if cfonbCode.id in cfonbBanques|keys %}
+                {% set cfonbBanque = cfonbBanques[cfonbCode.id] %}
+            {% endif %}
+            <tr data-id="{{ cfonbCode.id|boost }}" data-id_cfond_banque="{{ (cfonbBanque ? cfonbBanque.id : 0)|boost }}">
+                <td>
+                    <div class="checkbox checkbox-success checkbox-inline">
+                        <input type="checkbox" id="chk_{{ key }}" {{ (cfonbCode.id in cfonbBanques|keys) ? 'checked' : '' }} class="cl_chk_cfon_code">
+                        <label for="chk_{{ key }}"></label>
+                    </div>
+                </td>
+                <td>{{ cfonbCode.code }}</td>
+                <td>{{ cfonbCode.libelle }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

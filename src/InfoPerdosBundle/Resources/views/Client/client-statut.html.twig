@@ -1,0 +1,22 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}{{ parent() }} - Statut des  clients{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/infoperdos/js/client/client-status.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/jqGrid/jqGrid.bootstrap.css') }}?v=1.0">
+{% endblock %}
+
+{% block wrapper_content %}
+<div class="row">
+    <div class="col-sm-12">
+        <table id="js_status_client" class="js-jqgrid-table"></table>
+        <div id="pager_status_client"></div>
+    </div>
+</div>
+{% endblock %}

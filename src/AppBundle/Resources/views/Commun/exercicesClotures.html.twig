@@ -1,0 +1,9 @@
+{% for exercice, cloture in clotures %}
+    {% if cloture is not null %}
+        {% set class = (cloture.cloture == 1) ? 'default':'default' %}
+        {% set text = (cloture.cloture) ? 'Clos&nbsp;' : 'Projet&nbsp;' ~ cloture.dateVerification|date("d/m/Y") %}
+        {% set resultat = 'R&eacute;s.&nbsp;' ~ cloture.resultat|number_format(2, ',', '&nbsp;') %}
+        {#{% set resultat = ((cloture.resultat > 0) ? 'B&eacute;n&eacute;fice' : 'Perte')  ~ '&nbsp;=&nbsp;' ~ cloture.resultat|abs|number_format(2, ',', '&nbsp;') %}#}
+        <span class="label label-{{ class }}"><strong>{{ exercice }}&nbsp;:&nbsp;{{ text|raw }}&nbsp;;&nbsp;{{ resultat|raw }}&nbsp;</strong></span>
+    {% endif %}
+{% endfor %}

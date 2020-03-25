@@ -1,0 +1,24 @@
+<table id="js_liste_commentaires" class="table table-hover">
+    <thead>
+    <tr>
+        <th>Code</th>
+        <th>Commentaire</th>
+        <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td width="20%"><input type="text" class="form-control input-sm" id="js_code_commentaire"></td>
+        <td width="70%"><input type="text" class="form-control input-sm" id="js_libelle_commentaire"></td>
+        <td width="10%" class="text-center"><span class="btn btn-white btn-sm" id="js_add_commentaire"><i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;&nbsp;Ajouter</span></td>
+    </tr>
+    {% for commentaire in commentaires %}
+        <tr data-id="{{ commentaire.id|boost }}">
+            <td><input type="text" class="input-in-jqgrid input-sm form-control js_input_comment js_code_commentaire" value="{{ commentaire.code }}"></td>
+            <td><input type="text" class="input-in-jqgrid input-sm form-control js_input_comment js_libelle_commentaire" value="{{ commentaire.commentaire }}"></td>
+            <td class="text-center"><span class="btn btn-danger btn-sm js_remove_commentaire"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

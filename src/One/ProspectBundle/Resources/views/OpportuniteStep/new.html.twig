@@ -1,0 +1,37 @@
+<div class="modal-content">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-horizontal" id="opportunite-step-form">
+                    <input type="hidden" name="dossier-id" id="dossier-id">
+                    <div class="form-group">
+                        <label for="nom" class="col-md-4 control-label">Nom de l'étape*</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="nom" name="nom" placeholder="nom étape">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Etape terminée</label>
+                        <div class="col-md-6">
+                            <input type="checkbox" class="switch" id="status" name="status" onchange="showHelp(this);"/>
+                            <p class="help-block hidden">Status 'terminé' pour les opportunités qui sont dans cette étape</p>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default btn-back" onclick="closeSecondModal();">Annuler</button>
+                    <button type="button" class="btn btn-primary btn-save" onclick="saveOpportuniteStep();">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

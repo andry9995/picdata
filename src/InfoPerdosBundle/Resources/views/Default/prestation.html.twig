@@ -1,0 +1,14 @@
+<div class="col-lg-4 prestation">
+    <label class="col-lg-3 control-label">Prestations</label>
+
+    <div class="col-lg-8">
+        <select class="form-control select-prestation">
+            {% set typePrestation = (dossier is null)? -1 : (dossier.typePrestation is null)?-1 : dossier.typePrestation %}
+            <option></option>
+            <option value="0" {{ (typePrestation == 0) ? 'selected' : ''}}>Tenue "propre"</option>
+            <option value="1" {{ (typePrestation == 1) ? 'selected' : '' }}>Bilan</option>
+            <option value="2" {{ (typePrestation == 2) ? 'selected' : '' }}>Autres</option>
+        </select>
+    </div>
+
+</div>

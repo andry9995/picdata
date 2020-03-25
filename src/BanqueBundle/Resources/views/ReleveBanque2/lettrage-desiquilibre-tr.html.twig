@@ -1,0 +1,13 @@
+<tr class="cl_image_sel_{{ result.i.id }}" data-id="{{ result.id|boost }}" data-image_id="{{ result.i.id }}" data-type="{{ result.t }}">
+    <td class="cl_td_btn">
+        <span class="btn btn-white btn-xs cl_action_in_desiquilibre" data-action="{{ action }}">
+            <i class="fa {{ (action == 1) ? 'fa-arrow-up' : 'fa-trash-o' }}" aria-hidden="true"></i>
+        </span>
+    </td>
+    <td>{{ result.d|date('d/m/Y') }}</td>
+    <td class="js_show_image text-primary pointer" data-id_image="{{ result.i.id|boost }}">{{ result.i.n }}</td>
+    <td>{{ result.l }}</td>
+    <td class="cl_debit" data-m="{{ result.db }}">{{ (result.db == 0) ? '' : result.db|number_format(2, ',', '&nbsp;')|raw  }}</td>
+    <td class="cl_credit text-danger" data-m="{{ result.cr }}">{{ (result.cr == 0) ? '' : result.cr|number_format(2, ',', '&nbsp;')|raw  }}</td>
+    <td>{{ result.let == 1 ? 'Lettré' : '' }}</td>
+</tr>

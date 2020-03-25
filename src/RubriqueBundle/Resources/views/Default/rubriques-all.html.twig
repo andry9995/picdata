@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-sm-4">
+        <ul>
+            {% for r in rubriques %}
+                <li>{{ r.libelle }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-sm-4">
+        <ul>
+            {% for r in super_rubriques %}
+                <li>{{ r.libelle }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-sm-4">
+        <ul>
+            {% for r in hyper_rubriques %}
+                <li>{{ r.libelle }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

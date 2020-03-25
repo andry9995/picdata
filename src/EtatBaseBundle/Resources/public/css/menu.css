@@ -1,0 +1,22 @@
+.eb_menu_active
+{
+    padding-left: 4% !important;
+    background: #1ab394;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+.eb_menu_active .fa-chevron-circle-right
+{
+    color: #ffffff !important;
+}
+
+.padding-2
+{
+    padding-left: 4%;
+}
+
+.modal-dialog
+{
+    width: 70%;
+    padding: 0;
+}

@@ -1,0 +1,86 @@
+{% if type == 1 %}
+    {% set label = 'Super-' %}
+{% elseif type == 2 %}
+    {% set label = 'Hyper-' %}
+{% else %}
+    {% set label = '' %}
+{% endif %}
+{% set label = label ~ 'rubriques' %}
+
+<div class="scroller js_conteneur_rubrique">
+    <table class="table table-hover table-condensed table-no-padding js_table_rubrique" data-type="{{ type }}">
+        <thead>
+            <tr data-id="{{ '0'|boost }}">
+                <th><input type="text" class="form-control input-sm font_awesome js_libelle_add js_libelle js_add" placeholder="libellé"></th>
+                <th>
+                    <select class="form-control js_solde input-sm">
+                        <option value="3">D&eacute;bit</option>
+                        <option value="4">Cr&eacute;dit</option>
+                        <option value="1">Solde&nbsp;D&eacute;bit</option>
+                        <option value="2">Solde&nbsp;Cr&eacute;dit</option>
+                        <option value="0" selected>Solde</option>
+                    </select>
+                </th>
+                <th>
+                    <select class="form-control js_type_compte input-sm">
+                        <option value="0"></option>
+                        <option value="1">Auxilliaire</option>
+                        <option value="2">F.non&nbsp;pay&eacute;e</option>
+                    </select>
+                </th>
+                <th class="text-center"><span class="btn btn-white btn-sm js_edit js_add"><i class="fa {{ class_add }}" aria-hidden="true"></i></span></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for r in rubriques %}
+            <tr data-id="{{ r.id|boost }}">
+                <td><input class="form-control input-sm font_awesome js_libelle js_libelle_edit input-in-jqgrid" value="{{ r.libelle }}"></td>
+                <td>
+                    <select class="form-control input-sm js_libelle_edit input-in-jqgrid js_solde">
+                        <option value="3" {{ (r.solde == 3) ? 'selected' : '' }}>D&eacute;bit</option>
+                        <option value="4" {{ (r.solde == 4) ? 'selected' : '' }}>Cr&eacute;dit</option>
+                        <option value="1" {{ (r.solde == 1) ? 'selected' : '' }}>Solde&nbsp;D&eacute;bit</option>
+                        <option value="2" {{ (r.solde == 2) ? 'selected' : '' }}>Solde&nbsp;Cr&eacute;dit</option>
+                        <option value="0" {{ (r.solde == 0) ? 'selected' : '' }}>Solde</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control input-sm input-in-jqgrid js_libelle_edit js_type_compte">
+                        <option value="0" {{ (r.typeCompte == 0) ? 'selected' : '' }}></option>
+                        <option value="1" {{ (r.typeCompte == 1) ? 'selected' : '' }}>Auxilliaire</option>
+                        <option value="2" {{ (r.typeCompte == 2) ? 'selected' : '' }}>F.non&nbsp;pay&eacute;e</option>
+                    </select>
+                </td>
+                <td class="text-center"><span class="btn btn-danger btn-sm js_edit btn-xs"><i class="fa {{ class_remove }}" aria-hidden="true"></i></span></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="panel panel-default" style="margin-top: 5px!important;" data-type="{{ type }}">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-sm-8">
+                <i class="fa fa-info-circle"></i>
+                <span>{{ label }}&nbsp;calcul&eacute;s</span>
+            </div>
+            <div class="col-sm-4 text-right">
+                <span class="btn btn-primary btn-xs js_edit_formule js_add"><i class="fa {{ class_add }}" aria-hidden="true"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body scroller js_conteneur_rubrique_calcule" style="padding:5px!important;">
+        <table class="table table-hover table-condensed table-no-padding">
+            <tbody>
+                {% for rubriqueFormule in rubriquesFormules %}
+                    <tr>
+                        <td class="pointer js_edit_formule" data-id="{{ rubriqueFormule.id|boost }}">{{ rubriqueFormule.libelle }}</td>
+                        <td class="text-right" style="padding-right: 25px!important;"><span class="btn btn-danger btn-xs js_delete_formule"><i class="fa {{ class_remove }}" aria-hidden="true"></i></span></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="carousel slide" id="carousel_{{ index }}">
+    <ol class="carousel-indicators">
+        {% set index_slide = 0 %}
+        {% for res in results %}
+            <li data-slide-to="{{ index_slide }}" data-target="#carousel_{{ index }}" class="{{ (index_slide == 0) ? 'active' : '' }}"></li>
+            {% set index_slide = index_slide + 1 %}
+            {% for image in res.images %}
+                <li data-slide-to="{{ index_slide }}" data-target="#carousel_{{ index }}"></li>
+                {% set index_slide = index_slide + 1 %}
+            {% endfor %}
+        {% endfor %}
+    </ol>
+
+    <div class="carousel-inner">
+        {% set index_slide = 0 %}
+        {% for res in results %}
+            {{ include('DrtBundle:Drt:reponse-item.html.twig', { 'ext': res.ext|lower, 'index_slide':index_slide, 'image' : null, 'echangeReponse' : res.echangeReponse }) }}
+            {% set index_slide = index_slide + 1 %}
+            {% for image in res.images %}
+                {{ include('DrtBundle:Drt:reponse-item.html.twig', { 'ext':image.extImage|lower, 'index_slide':index_slide, 'image' : image, 'echangeReponse' : null }) }}
+                {% set index_slide = index_slide + 1 %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <a data-slide="prev" href="#carousel_{{ index }}" class="left carousel-control">
+        <span class="icon-prev"></span>
+    </a>
+    <a data-slide="next" href="#carousel_{{ index }}" class="right carousel-control">
+        <span class="icon-next"></span>
+    </a>
+</div>

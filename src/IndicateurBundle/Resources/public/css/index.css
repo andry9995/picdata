@@ -1,0 +1,110 @@
+.table-no-bordered tr,.table-no-bordered tr td
+{
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    border-right: none;
+}
+
+#id_groups_contener .js_cellule_edited
+{
+    border: 2px solid #16987e!important;
+}
+.js_chart_conteneur table.ui-jqgrid-btable tr td
+{
+    cursor: pointer;
+}
+#id_groups_contener .js_border_top_bottom
+{
+    border-top: 2px solid #16987e!important;
+    border-bottom: 2px solid #16987e!important;
+}
+
+#id_groups_contener .js_border_left_right
+{
+    border-left: 2px solid #16987e!important;
+    border-right: 2px solid #16987e!important;
+}
+
+.operateur
+{
+    margin-right: 1px!important;
+    margin-bottom: 1px!important;
+}
+
+.context-menu-list,.context-menu-list li,.context-menu-list li a
+{
+    font-size: 10px !important;
+}
+
+.ui-jqgrid-btable,.ui-jqgrid-btable tr td
+{
+    font-size: 13px;
+}
+
+.form-group-small-margin
+{
+    margin-bottom: 4px!important;
+}
+
+.tr-error
+{
+    color: #ed5565!important;
+}
+
+.btn-white
+{
+    color: #000000!important;
+}
+
+#js_dossier_table tr
+{
+    cursor: pointer;
+}
+
+.js_theme
+{
+    padding: 2px!important;
+}
+
+.graphe-image
+{
+    height: 60px!important;
+    width: 100px!important;
+    margin-bottom: 5px!important;
+    cursor: pointer;
+}
+
+.graphe-selected
+{
+    border: 2px solid #00AA00;
+}
+
+.ibox-content-small-padding
+{
+    padding-top: 2px!important;
+    padding-bottom: 2px!important;
+}
+
+.popover,.dropdown-menu
+{
+    z-index: 100000000!important;
+}
+
+.ui-jqgrid-btable tr:not(.jqgfirstrow), .ui-jqgrid-btable tr:not(.jqgfirstrow) td
+{
+    padding-top: 2px!important;
+    padding-bottom: 2px!important;
+}
+
+.js_td_to_chart
+{
+    max-width: 4%!important;
+    background-image: url('../../../img/charts/line.png');
+    background-size: 100% 100%;
+}
+
+.error-formule
+{
+    border: 2px solid #ee1e2d!important;
+}

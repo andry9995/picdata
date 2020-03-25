@@ -1,0 +1,437 @@
+indicateur_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: IndicateurBundle:Default:index }
+
+indicateur_admin:
+    path: /indicateur/admin
+    defaults: { _controller: IndicateurBundle:Admin:index }
+
+
+##################      group indicateur      ########################
+indicateur_group_liste:
+    path: /indicateur_group/liste
+    defaults: { _controller: IndicateurBundle:GroupIndicateur:groupIndicateurs }
+
+indicateur_group_edit:
+    path: /indicateur/group/edit
+    defaults: { _controller: IndicateurBundle:GroupIndicateur:editGroup }
+    options:
+        expose: true
+    methods: [POST]
+
+
+##################      indicateur      ########################
+indicateur_liste:
+    path: /indicateur/liste
+    defaults: { _controller: IndicateurBundle:Indicateur:indicateurs }
+
+indicateur_edit:
+    path: /indicateur/edit
+    defaults: { _controller: IndicateurBundle:Indicateur:editIndicateur }
+    options:
+        expose: true
+    methods: [POST]
+
+indicateur_add_cell:
+    path: /indicateur/addCell
+    defaults: { _controller: IndicateurBundle:Indicateur:addCell }
+    options:
+        expose: true
+    methods: [POST]
+
+indicateur_listes:
+    path: /indicateur/listes
+    defaults: { _controller: IndicateurBundle:Indicateur:groupItemsAjax }
+    options:
+        expose: true
+    methods: [POST]
+
+
+##################      indicateur item      ########################
+indicateur_item_liste:
+    path: /indicateur_item/liste
+    defaults: { _controller: IndicateurBundle:IndicateurItem:indicateurItems }
+
+indicateur_item_listes:
+    path: /indicateur_item/listes
+    defaults: { _controller: IndicateurBundle:IndicateurItem:indicateurItemsAjax }
+    options:
+        expose: true
+    methods: [POST]
+
+indicateur_item_edit:
+    path: /indicateur_item/edit
+    defaults: { _controller: IndicateurBundle:IndicateurItem:indicateurItemEdit }
+    options:
+        expose: true
+    methods: [POST]
+
+##################        pack        ########################
+indicateur_pack:
+    path: /indicateur/pack
+    defaults: { _controller: IndicateurBundle:AdminPack:index }
+
+indicateur_packs:
+    path: /indicateur/pack/liste
+    defaults: { _controller: IndicateurBundle:AdminPack:packs }
+    options:
+        expose: true
+    methods: [POST]
+
+indicateur_pack_edit:
+    path: /indicateur/pack/edit
+    defaults: { _controller: IndicateurBundle:AdminPack:editPack }
+    options:
+        expose: true
+    methods: [POST]
+
+indicateur_pack_item_edit:
+    path: /indicateur/pack_item/edit
+    defaults: { _controller: IndicateurBundle:AdminPack:editPackItem }
+    options:
+        expose: true
+    methods: [POST]
+
+indicateur_pack_check:
+    path: /indicateur/pack/check
+    defaults: { _controller: IndicateurBundle:AdminPack:packCheck }
+    options:
+        expose: true
+    methods: [POST]
+
+indicateur_pack_items:
+    path: /indicateur/pack_item/liste
+    defaults: { _controller: IndicateurBundle:AdminPack:packItems }
+    options:
+        expose: true
+    methods: [POST]
+
+##################      affichage      ########################
+indicateur_affichage:
+    path: /indicateur/show
+    defaults: { _controller: IndicateurBundle:Affichage:index }
+
+indicateur_affichage_pack:
+    path: /indicateur/show/packs
+    defaults: { _controller: IndicateurBundle:Affichage:packs }
+    options:
+        expose: true
+    methods: [POST]
+
+indicateur_affichage_indicateur:
+    path: /indicateur/show/indicateur
+    defaults: { _controller: IndicateurBundle:Affichage:indicateur }
+    options:
+        expose: true
+    methods: [POST]
+
+#################       admin V2      ##########################
+ind_admin:
+    path: /ind/admin
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:index }
+ind_pack:
+    path: /ind/packs
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:packs }
+    options:
+        expose: true
+    methods: [POST]
+ind_pack_edit:
+    path: /ind/pack/edit
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:editPack }
+    options:
+        expose: true
+    methods: [POST]
+ind_change_enabled:
+    path: /ind/check
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:changeCheck }
+    options:
+        expose: true
+    methods: [POST]
+ind_indicateur_edit:
+    path: /ind/indicateur/edit
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:editIndicateur }
+    options:
+        expose: true
+    methods: [POST]
+ind_pack_reload:
+    path: /ind/pack/reload
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:reloadPack }
+    options:
+        expose: true
+    methods: [POST]
+ind_cell_edit:
+    path: /ind/cell/edit
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:editCell }
+    options:
+        expose: true
+    methods: [POST]
+ind_row_col_edit:
+    path: /ind/row_col/edit
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:editRowCol }
+    options:
+        expose: true
+    methods: [POST]
+ind_col_format:
+    path: /ind/col/format
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:changeFormatCol }
+    options:
+        expose: true
+    methods: [POST]
+ind_rang:
+    path: /ind/rang
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:changeRangPacks }
+    options:
+        expose: true
+    methods: [POST]
+ind_groups:
+    path: /ind/groups
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:groups }
+    options:
+        expose: true
+    methods: [POST]
+ind_group_edit:
+    path: /ind/groups/edit
+    defaults: {  _controller: IndicateurBundle:IndicateurAdmin:editGroup }
+    options:
+        expose: true
+    methods:  [POST]
+ind_group_reload:
+    path: /ind/group/reload
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:reloadGroup }
+    options:
+        expose: true
+    methods:  [POST]
+ind_dupliquer:
+    path: /ind/dupliquer
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:dupliquer }
+    options:
+        expose: true
+    methods:  [POST]
+ind_td_to_table:
+    path: /ind/td_to_table
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:changeTdToGraphe }
+    options:
+        expose: true
+    methods:  [POST]
+ind_valider:
+    path: /ind/valider
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:validerIndicateur }
+    options:
+        expose: true
+    methods:  [POST]
+ind_valider_pack:
+    path: /ind/valider/pack
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:validerIndicateurPack }
+    options:
+        expose: true
+    methods: [POST]
+ind_exos:
+    path: /ind/exos
+    defaults: { _controller: IndicateurBundle:IndicateurAdmin:exercicesCloseds }
+    methods: [POST]
+    options:
+        expose: true
+
+##################      affichage V2      ########################
+ind_affichage:
+    path: /ind/show
+    defaults: { _controller: IndicateurBundle:AffichageV2:index }
+ind_affichage_pack:
+    path: /ind/show/packs
+    defaults: { _controller: IndicateurBundle:AffichageV2:packs }
+    options:
+        expose: true
+    methods: [POST]
+ind_affiche:
+    path: /ind/indicateur/show
+    defaults: { _controller: IndicateurBundle:AffichageV2:indicateur }
+    options:
+        expose: true
+    methods: [POST]
+ind_details:
+    path: /ind/indicateur/details
+    defaults: { _controller: IndicateurBundle:AffichageV2:details }
+    options:
+        expose: true
+    methods: [POST]
+ind_commentaire:
+    path: /ind/commentaire
+    defaults: { _controller: IndicateurBundle:AffichageV2:indicateurCommentaire }
+    methods: [POST]
+    options:
+        expose: true
+ind_commentaire_change:
+    path: /ind/commentaire/change
+    defaults: { _controller: IndicateurBundle:AffichageV2:indicateurCommentaireChange }
+    methods: [POST]
+    options:
+        expose: true
+ind_exercice_status:
+    path: /ind/exercice/status
+    defaults: { _controller: IndicateurBundle:AffichageV2:exerciceStatus }
+    methods: [POST]
+    options:
+        expose: true
+
+ind_export_tb:
+    path: /ind/tb/export
+    defaults: { _controller: IndicateurBundle:AffichageV2:export }
+    methods:  [POST]
+    options:
+        expose: true
+
+##################      classement dossier      ########################
+ind_classement:
+    path: /ind/indicateur/dossier
+    defaults: { _controller: IndicateurBundle:ClassementDossier:index }
+ind_classement_dossier_indicateur:
+    path: /ind/classement_dossier
+    defaults: { _controller: IndicateurBundle:ClassementDossier:dossiersIndicateur }
+    options:
+        expose: true
+    methods: [POST]
+ind_classement_groups:
+    path: /ind/classement/group
+    defaults: { _controller: IndicateurBundle:ClassementDossier:groupsDossiers }
+    options:
+        expose: true
+    methods: [POST]
+
+##################      tableau de bord      ########################
+###admin
+ind_tb_scorin_admin:
+    path: /ind/tb/admin/scoring
+    defaults: { _controller: IndicateurBundle:TbAdmin:indexScorin }
+ind_tb_admin:
+    path: /ind/tb/admin
+    defaults: { _controller: IndicateurBundle:TbAdmin:index }
+ind_tb_admin_indicateurs:
+    path: /ind/tb/indicateurs
+    defaults: { _controller: IndicateurBundle:TbAdmin:indicateurs }
+    methods: [POST]
+    options:
+        expose: true
+ind_tb_add_indicateur:
+    path: /ind/tb/indicateur/add
+    defaults: { _controller: IndicateurBundle:TbAdmin:addIndicateur }
+    methods: [POST]
+    options:
+        expose: true
+ind_tb_edit_indicateur:
+    path: /ind/tb/indicateur/edit
+    defaults: { _controller: IndicateurBundle:TbAdmin:editIndicateur }
+    methods: [POST]
+    options:
+        expose: true
+ind_tb_edit_decision:
+    path: /ind/tb/decision/add
+    defaults: { _controller: IndicateurBundle:TbAdmin:editDecision }
+    methods: [POST]
+    options:
+        expose: true
+ind_tb_sort_indicateurs:
+    path: /ind/tb/sorts
+    defaults: { _controller: IndicateurBundle:TbAdmin:sorts }
+    methods: [POST]
+    options:
+        expose: true
+ind_tb_show_add_in_infoperdos:
+    path: /ind/tb/show_add_in_infoperdos
+    defaults: { _controller: IndicateurBundle:TbAdmin:showAddInfoperdos }
+    methods: [POST]
+    options:
+        expose: true
+ind_tb_add_indicateur_tb_infoperdos:
+    path: /ind/tb/infoperdos/add
+    defaults: { _controller: IndicateurBundle:TbAdmin:addIndicateurInfoperdos }
+    methods: [POST]
+    options:
+          expose: true
+
+ind_tb_domaine_show:
+    path: /ind/tb/domaine/list
+    defaults: { _controller: IndicateurBundle:TbAdmin:indicateurTbDomaine }
+    methods: [POST]
+    options:
+          expose: true
+
+ind_tb_domaine_edit:
+    path: /ind/tb/domaine/edit
+    defaults: { _controller: IndicateurBundle:TbAdmin:editIndicateurDomaine }
+    methods: [POST]
+    options:
+          expose: true
+
+ind_tb_transfert:
+    path: /ind/tb/indicateur_tb/transfert
+    defaults: { _controller: IndicateurBundle:TbAdmin:indicateurTranfert }
+    methods: [POST]
+    options:
+          expose: true
+
+ind_tb_transferer:
+    path: /ind/tb/indicateur_tb/tranferer
+    defaults: { _controller: IndicateurBundle:TbAdmin:indicateurTranferer }
+    methods: [POST]
+    options:
+          expose: true
+
+###Show
+ind_tb:
+    path: /ind/tb
+    defaults: { _controller: IndicateurBundle:Tb:index }
+
+ind_tb_scoring:
+    path: /ind/tb/scoring
+    defaults: { _controller: IndicateurBundle:Tb:indexScoring }
+
+ind_tb_dossiers:
+    path: /ind/tb/dossiers
+    defaults: { _controller: IndicateurBundle:Tb:dossiers }
+    methods:  [POST]
+    options:
+        expose: true
+
+ind_tb_all_dossiers:
+    path: /ind/tb/all_dossiers
+    defaults: { _controller: IndicateurBundle:Tb:allDossiers }
+    methods:  [POST]
+    options:
+        expose: true
+
+ind_parametre:
+    path: /ind/parametre
+    defaults: { _controller: IndicateurBundle:AffichageV2:parametre }
+    methods:  [POST]
+    options:
+        expose: true
+
+ind_tb_export:
+    path: /ind/tb/export
+    defaults: { _controller: IndicateurBundle:Tb:export }
+    methods:  [POST]
+    options:
+        expose: true
+
+#########Cle
+ind_cles:
+    path: /ind/cles
+    defaults: { _controller: IndicateurBundle:AffichageV2:cles }
+    options:
+        expose: true
+
+ind_cle_save:
+    path: /ind/cle/save
+    defaults: { _controller: IndicateurBundle:AffichageV2:cleSave }
+    methods:  [POST]
+    options:
+        expose: true
+
+ind_cle_occurence_details:
+    path: /ind/occurence/details
+    defaults: { _controller: IndicateurBundle:AffichageV2:occurenceDetails }
+    methods:  [POST]
+    options:
+        expose: true
+
+

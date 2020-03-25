@@ -1,0 +1,18 @@
+{% set exercice = "now"|date("Y") %}
+
+<div class="row">
+    <div class="col-lg-6 js_cl_interval_start_container">
+        <span class="label label-primary">Premi&egrave;re&nbsp;P&eacute;riode</span>
+        {{ include('IndicateurBundle:Tb:periode-item.html.twig', {exercices:exercices, exercice:exercice - 1}) }}
+    </div>
+    <div class="col-lg-6 js_cl_interval_end_container">
+        <span class="label label-warning">Seconde&nbsp;P&eacute;riode</span>
+        {{ include('IndicateurBundle:Tb:periode-item.html.twig', {exercices:exercices, exercice:exercice}) }}
+    </div>
+</div>
+<div class="row" style="margin-top:10px!important">
+    <div class="col-sm-12 text-right">
+        <span class="btn btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary js_dpk_valider"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+    </div>
+</div>

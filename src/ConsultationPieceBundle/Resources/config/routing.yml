@@ -1,0 +1,190 @@
+consultation_piece:
+    path: /consultation-piece
+    defaults: { _controller: ConsultationPieceBundle:Default:index }
+
+consultation_piece_categorie_tree:
+   path: /consultation-piece/tree
+   defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:dossierCategorieTree}
+   options:
+       expose: true
+   methods: [POST]
+
+consultation_piece_tiers_tree:
+   path: /consultation-piece/tiers
+   defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:dossierTiersTree}
+   options:
+       expose: true
+   methods: [POST]
+
+consultation_piece_utilisateur_tree:
+   path: /consultation-piece/utilisateur
+   defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:utilisateurDossierTree}
+   options:
+       expose: true
+   methods: [POST]
+
+
+consultation_piece_categorie_grid:
+    path: /consultation-piece/dossier
+    defaults: {  _controller: ConsultationPieceBundle:ConsultationPiece:tableauCategorie}
+    options:
+        expose: true
+    methods: [POST]
+
+consultation_piece_tiers_grid:
+    path: /consultation-piece/dossier-tiers
+    defaults: {  _controller: ConsultationPieceBundle:ConsultationPiece:tableauTiers}
+    options:
+        expose: true
+    methods: [POST]
+
+
+consultation_categorie_num_piece:
+    path: /consultation-piece/categorie-num-piece
+    defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:getCategorieNumPiece }
+    options:
+        expose: true
+    methods: [POST]
+
+consultation_piece_num_piece:
+    path: /consultation-piece/num-piece
+    defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:tableauNumPiece}
+    options:
+        expose: true
+    methods: [POST]
+
+consultation_piece_avancement:
+    path: /consultation-piece/avancement
+    defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:tableauAvancement}
+    options:
+        expose: true
+    methods: [POST]
+
+consultation_piece_date_scan:
+    path: /consultation-piece/date-scan
+    defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:tableauDateScan}
+    options:
+        expose: true
+    methods: [POST]
+
+
+consultation_piece_image:
+  path: /consultation-piece/image
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:image }
+  options:
+    expose: true
+  methods: [POST]
+
+
+consultation_piece_data_image:
+  path: /consultation-piece/data-image
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:dataImageShow }
+  options:
+      expose: true
+
+consultation_piece_regle_paiement:
+  path: /consultation-piece/regle-paiement
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:reglePaiement }
+  options:
+      expose: true
+
+consultation_piece_ecriture_cegj:
+    path: /consultation-piece/ecriture-cegj
+    defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:ecritureCEGJ }
+    options:
+      expose: true
+
+consultation_piece_test:
+  path: /consultation-piece/test
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:test}
+  options:
+      expose: true
+
+
+consultation_piece_recherche_date:
+  path: /consultation-piece/recherche-date
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:showDateModal }
+  options:
+      expose: true
+
+
+consultation_piece_edit:
+  path: /consultation-piece/edit
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:dataSave }
+  options:
+      expose: true
+  methods: [POST]
+
+consultation_banque_compte:
+  path: /consultation-piece/banque-compte
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:banqueCompte }
+  options:
+      expose: true
+  methods: [GET]
+
+consultation_piece_banque_edit:
+  path: /consultation-piece/banque-edit
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:dataBanqueSave }
+  options:
+      expose: true
+  methods: [POST]
+
+consultation_piece_echeance_edit:
+  path: /consultation-piece/echeance-edit
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:echeanceSave }
+  options:
+      expose: true
+  methods: [POST]
+
+
+consultation_piece_echeance_calcul:
+  path: /consultation-piece/echeance-calcul
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:echeanceCalcul }
+  options:
+      expose: true
+  methods: [POST]
+
+
+consultation_piece_souscategorie_init:
+  path: /consultation-piece/scat-init
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:initSousCategorieCombo}
+  options:
+      expose: true
+  methods: [POST]
+
+
+
+consultation_piece_soussouscategorie_init:
+  path: /consultation-piece/sscat-init
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:initSousSouscategorieCombo}
+  options:
+      expose: true
+  methods: [POST]
+
+
+consultation_piece_cegj_save:
+  path: /consultation-piece/cegj-save
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:cegjSave }
+  options:
+      expose: true
+  methods: [POST]
+
+
+consultation_piece_save_categorie:
+  path: /consultation-piece/categorie-save
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:categorieSave }
+  options:
+      expose: true
+  methods: [POST]
+
+
+consultation_piece_date_scan_list:
+  path: /consultation-piece/date-scan
+  defaults: { _controller: ConsultationPieceBundle:ConsultationPiece:dateScan }
+  options:
+      expose: true
+  methods: [GET]
+
+decompte_image:
+    path:     /consultation-piece/decompte
+    defaults: { _controller: ConsultationPieceBundle:DecompteImage:index }

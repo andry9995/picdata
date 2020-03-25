@@ -1,0 +1,90 @@
+{% extends 'base-simple.html.twig' %}
+
+{% block title %}Asistance{% endblock %}
+{% block body_class %}white-bg{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body { background: #2d2d37; }
+        a { color: white; text-decoration: none; }
+
+        .arrow {
+            text-align: center;
+            margin: 8% 0;
+        }
+        .fixed-bottom {
+            position: fixed;
+            bottom: 0;
+            right: 160px;
+        }
+        .bounce {
+            -moz-animation: bounce 2s infinite;
+            -webkit-animation: bounce 2s infinite;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row" style="margin-top: 60px;">
+            <div class="col-sm-12 text-center">
+                <div id="help-icon" style="font-size: 72px;">
+                    <i class="fa fa-question-circle-o"></i>
+                </div>
+                <h1>Avez-vous besoin d'aide ?</h1>
+                <h2>Tchatter en direct avec notre équipe support.</h2>
+            </div>
+        </div>
+        <div class="arrow bounce fixed-bottom">
+            <i class="fa fa-arrow-down fa-3x"></i>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {#BEGIN JIVOSITE CODE {literal}#}
+    <script type='text/javascript'>
+        (function () {
+            var widget_id = 'Ihno5MByXY';
+            var d = document;
+            var w = window;
+
+            function l() {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = '//code.jivosite.com/script/widget/' + widget_id;
+                var ss = document.getElementsByTagName('script')[0];
+                ss.parentNode.insertBefore(s, ss);
+            }
+
+            if (d.readyState == 'complete') {
+                l();
+            }
+            else {
+                if (w.attachEvent) {
+                    w.attachEvent('onload', l);
+                }
+                else {
+                    w.addEventListener('load', l, false);
+                }
+            }
+        })();
+    </script>
+    {#{/literal} END JIVOSITE CODE#}
+{% endblock %}

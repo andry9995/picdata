@@ -1,0 +1,74 @@
+{% if opportunites|length >= 0 or period != 'all' %}
+    <div class="mesure-view hidden">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Mesures <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="pl-5 pr-5"><input type="checkbox" id="revenu" checked> <label for="revenu">Revenu espéré</label></li>
+                            <li class="pl-5 pr-5"><input type="checkbox" id="cloture"> <label for="cloture">Jours avant clôture</label></li>
+                            <li class="pl-5 pr-5"><input type="checkbox" id="probabilite"> <label for="probabilite">Probabilité</label></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="pl-5 pr-5"><input type="checkbox" id="comptage" checked> <label for="comptage">Comptage</label></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td class="revenu">Revenu espéré</td>
+                                            <td class="comptage">Comptage</td>
+                                            <td class="cloture hidden">Jours avant clôture</td>
+                                            <td class="probabilite hidden">Probabilité</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Total</b></td>
+                                            <td class="text-right revenu"><b>{{ mesureDatasTotal['revenu']|number_format(2, '.', ' ') }}</b></td>
+                                            <td class="text-right comptage"><b>{{ mesureDatasTotal['comptage'] }}</b></td>
+                                            <td class="text-right cloture hidden"><b>{{ mesureDatasTotal['cloture']|number_format(2, '.', ' ') }}</b></td>
+                                            <td class="text-right probabilite hidden"><b>{{ mesureDatasTotal['probabilite']|number_format(2, '.', ' ') }}</b></td>
+                                        </tr>
+                                        {% for stat in status %}
+                                            {% if mesureDatas['comptage'][stat.id] is defined and mesureDatas['comptage'][stat.id] > 0 %}
+                                                <tr>
+                                                    <td>{{ stat.nom }}</td>
+                                                    <td class="text-right revenu">{{ mesureDatas['revenu'][stat.id]|number_format(2, '.', ' ') }}</td>
+                                                    <td class="text-right comptage">{{ mesureDatas['comptage'][stat.id] }}</td>
+                                                    <td class="text-right cloture hidden">{{ mesureDatas['cloture'][stat.id]|number_format(2, '.', ' ') }}</td>
+                                                    <td class="text-right probabilite hidden">{{ mesureDatas['probabilite'][stat.id]|number_format(2, '.', ' ') }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $('input[type="checkbox"]').click(function () {
+                var classname = $(this).attr('id');
+                if ($(this).prop('checked')) {
+                    $('td.'+classname).removeClass('hidden');
+                } else {
+                    $('td.'+classname).addClass('hidden');
+                }
+            });
+        });
+    </script>
+{% endif %}

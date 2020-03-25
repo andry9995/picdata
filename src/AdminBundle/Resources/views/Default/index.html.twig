@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block titre %}Espace client{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% if clientTheme.getCssTheme() is not null %}
+        <link id="css-theme" rel="stylesheet" href="{{ asset('css/themes/' ~ clientTheme.getCssTheme()) }}?1.1"/>
+    {% else %}
+        <link id="css-theme" rel="stylesheet" href="{{ asset('css/themes/scriptura.css') }}?1.1"/>
+    {% endif %}
+    <link rel="stylesheet" href="{{ asset('css/communs.css') }}"/>
+{% endblock %}
+
+{% block menu_left %}
+    {{ render(controller('MenuBundle:Menu:menuLeft')) }}
+{% endblock %}
+{% block menu_top %}
+    {{ render(controller('MenuBundle:Menu:menuTop')) }}
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="principale-scroll" style="overflow: hidden;">
+        {% block contenu_droite %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }} "></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    {#<script src="{{ asset('/bundles/admin/js/index.js') }} "></script>
+    <script src="{{ asset('/bundles/menu/js/menu.js') }}"></script>
+    <script src="{{ asset('/bundles/admin/js/clients.js') }}"></script>
+    <script src="{{ asset('/bundles/admin/js/utilisateurs.js') }}"></script>
+    <script src="{{ asset('/bundles/admin/js/menus.js') }}"></script>#}
+{% endblock %}

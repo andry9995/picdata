@@ -1,0 +1,179 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/accent-fold/accent-fold.js') }}?v=1.2"></script>
+    <script src="{{ asset('bundles/utilisateur/js/utilisateur-fonctions.js') }}?v=1.2"></script>
+    <script src="{{ asset('bundles/utilisateur/js/acces-menu.js') }}?v=1.2"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/utilisateur/css/gestion.css') }}?v=1.2">
+{% endblock %}
+{% block wrapper_content %}
+    <div class="col-lg-12">
+        <div class="tabs-container jqgrid-tabs">
+            <ul class="nav nav-tabs">
+                {% if is_granted('ROLE_SCRIPTURA_ADMIN') %}
+                    <li class="active"><a data-toggle="tab" href="#acces-role">Accès par rôle</a></li>
+                    <li class=""><a data-toggle="tab" href="#acces-user">Accès par utilisateur</a></li>
+                {% else %}
+                    <li class="active"><a data-toggle="tab" href="#acces-user">Accès par utilisateur</a></li>
+                {% endif %}
+            </ul>
+
+            <div class="tab-content" id="tab-container">
+                {% if is_granted('ROLE_SCRIPTURA_ADMIN') %}
+                    <div id="acces-role" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <h4 class="bg-info padding-6">Listes des rôles</h4>
+                                    <div id="role-list" style="overflow-y: scroll;">
+                                        <ul class="list-group">
+                                            {% for role in roles %}
+                                                <li data-id="{{ role.id }}" class="list-group-item">
+                                                    <span class="badge role">{{ role.groupe|upper }}</span>
+                                                    {{ role.libelle }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <h4 class="bg-info padding-6">
+                                        Liste des menus
+                                        <div class="btn-group pull-right" role="group" aria-label="..."
+                                             style="margin-top: -3px;">
+                                            <button id="btn-save-menu-role" type="button" class="btn btn-xs btn-info">
+                                                <i class="fa fa-save"></i> Enregistrer
+                                            </button>
+                                            <button type="button" data-action="expand-all" data-target="#menu-list-role"
+                                                    class="btn-collapse-list-menu btn btn-xs btn-white">
+                                                <i class="fa fa-expand" title="Ouvrir tout"></i>
+                                            </button>
+                                            <button type="button" data-action="collapse-all"
+                                                    data-target="#menu-list-role"
+                                                    class="btn-collapse-list-menu btn btn-xs btn-white">
+                                                <i class="fa fa-compress" title="Réduire tout"></i>
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <div id="menu-list-role" class="hidden" style="overflow-y: auto;">
+                                        {#{{ render(controller('MenuBundle:Menu:listeMenu')) }}#}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="acces-user" class="tab-pane">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    {% if is_granted('ROLE_SCRIPTURA_ADMIN') %}
+                                        {{ render(controller('AppBundle:Commun:clients', {'conteneur': '0', 'tous': '0', 'attr_id': 'client-user', 'label_col': 4, 'select_col': 8})) }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <h4 class="bg-info padding-6">Listes des utilisateurs</h4>
+                                    <div style="width:100%; display: flex;flex-direction: row-reverse; padding: 0 5px 5px;">
+                                        <input id="user-search" type="search" placeholder="Chercher" style="width: 250px" class="form-control">
+                                    </div>
+                                    <div id="user-list" style="overflow-y: scroll;">
+                                        <ul class="list-group">
+                                            {#<li class="list-group-item active">#}
+                                            {#<span class="badge user-role">Client admin</span>#}
+                                            {#Utilisateur Test#}
+                                            {#</li>#}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <h4 class="bg-info padding-6">
+                                        Liste des menus
+                                        <div class="btn-group pull-right" role="group" aria-label="..."
+                                             style="margin-top: -3px;">
+                                            <button id="btn-save-menu-user" type="button" class="btn btn-xs btn-info">
+                                                <i class="fa fa-save"></i> Enregistrer
+                                            </button>
+                                            <button id="btn-override-menu-user" type="button"
+                                                    class="btn btn-xs btn-white" title="Utiliser les paramètres du rôle">
+                                                <i class="fa fa-refresh"></i> Par défaut
+                                            </button>
+                                            <button type="button" data-action="expand-all" data-target="#menu-list-user"
+                                                    class="btn-collapse-list-menu btn btn-xs btn-white">
+                                                <i class="fa fa-expand" title="Ouvrir tout"></i>
+                                            </button>
+                                            <button type="button" data-action="collapse-all"
+                                                    data-target="#menu-list-user"
+                                                    class="btn-collapse-list-menu btn btn-xs btn-white">
+                                                <i class="fa fa-compress" title="Réduire tout"></i>
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <div id="menu-list-user" class="hidden" style="overflow-y: auto;">
+                                        {#{{ render(controller('MenuBundle:Menu:listeMenu')) }}#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div id="acces-user" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <h4 class="bg-info padding-6">Listes des utilisateurs</h4>
+                                    <div id="user-list" style="overflow-y: scroll;">
+                                        <ul class="list-group">
+                                            {% for user in users %}
+                                                {% set user_status = '<i class="fa fa-check-circle-o text-primary" title="Cet utilisateur est actif"></i>' %}
+                                                {% if user[0].supprimer == 1 %}
+                                                    {% set user_status = '<i class="fa fa-times-circle text-danger" title="Cet utilisateur est desactivé"></i>' %};
+                                                {% endif %}
+                                                <li data-id="{{ user[0].idCrypter }}" class="list-group-item">
+                                                    <span class="badge user-role">user[0].accesUtilisateur.libelle</span>
+                                                    {{ user_status ~ ' ' ~ user[0].nomComplet }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <h4 class="bg-info padding-6">
+                                        Liste des menus
+                                        <div class="btn-group pull-right" role="group" aria-label="..."
+                                             style="margin-top: -3px;">
+                                            <button id="btn-save-menu-user" type="button" class="btn btn-xs btn-info">
+                                                <i class="fa fa-save"></i> Enregistrer
+                                            </button>
+                                            <button id="btn-override-menu-user" type="button"
+                                                    class="btn btn-xs btn-white" title="Utiliser les paramètres du rôle">
+                                                <i class="fa fa-refresh"></i> Par défaut
+                                            </button>
+                                            <button type="button" data-action="expand-all" data-target="#menu-list-user"
+                                                    class="btn-collapse-list-menu btn btn-xs btn-white">
+                                                <i class="fa fa-expand" title="Ouvrir tout"></i>
+                                            </button>
+                                            <button type="button" data-action="collapse-all"
+                                                    data-target="#menu-list-user"
+                                                    class="btn-collapse-list-menu btn btn-xs btn-white">
+                                                <i class="fa fa-compress" title="Réduire tout"></i>
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <div id="menu-list-user" class="hidden" style="overflow-y: auto;">
+                                        {#{{ render(controller('MenuBundle:Menu:listeMenu')) }}#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

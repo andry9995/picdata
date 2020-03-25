@@ -1,0 +1,339 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListFacture();"></span>
+    </div>
+    <div class="col-md-8">
+
+        {% if achat is not null %}
+            {% set first = 'Facture Fournisseur: ' %}
+            {% set second = achat.code %}
+            {% set title = first~second %}
+        {% else %}
+            {% set title = 'Nouvelle Facture Fournisseur' %}
+        {% endif %}
+
+        <h2 class="heading">{{ title }}</h2>
+    </div>
+</div>
+<div class="row first-page">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="facture-form" enctype="multipart/form-data">
+            <input type="hidden" id="id-dossier"  name="id-dossier">
+            <input type="hidden" value="{{ (achat is null) ? 0 : achat.id }}" name="id">
+            <div class="form-group">
+                <label for="fournisseur" class="col-md-2 col-sm-3 col-xs-12 control-label">Fournisseur*</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    {% set fournisseurId = (achat is null) ? '' : (achat.oneFournisseur is null) ? '' : achat.oneFournisseur.id %}
+                    <select class="form-control" id="fournisseur" name="fournisseur" onchange="getListContacts(this.value);
+                    updateAddressAchat();" {{ (parent == 'fournisseur') ? 'readonly' ? '' }}>
+                        <option></option>
+                        {% for fournisseur in fournisseurs %}
+                            <option value="{{ fournisseur.id }}" {{ (fournisseur.id == fournisseurId) ? 'selected' : '' }}>
+                                {{ fournisseur.nomVisible }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <label for="ref-fournisseur" class="col-md-2 col-sm-3 col-xs-12 control-label">Réf. fournisseur</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control" id="ref-fournisseur" name="ref-fournissuer"
+                           value="{{ (achat is null) ? '' : achat.refFournisseur }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="adresse-expedition" class="col-md-2 col-sm-3 col-xs-12 control-label">Adresse Expédition</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <textarea class="form-control" id="adresse-expedition" name="adresse-expedition" readonly></textarea>
+                </div>
+
+                <label for="date-facture" class="col-md-2 col-sm-3 col-xs-12 control-label">Date</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <div class="input-group date">
+                        <input type="text" class="form-control datepicker" id="date-facture" name="date-facture"
+                               value="{{ (achat is null) ? '' :  (achat.dateFacture is null) ? '' : (achat.dateFacture|date('d/m/Y')) }}">
+                        <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-fournisseur" class="col-md-2 col-sm-3 col-xs-12 control-label">Contact</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <select class="form-control" id="contact-fournisseur" name="contact-fournisseur" onchange="updateAddressAchat();">
+                        {% set contactId = (achat is null) ? -1 : (achat.contact is null) ? -1 : achat.contact.id  %}
+                        <option value=""></option>
+                        {% if contacts|length > 0 %}
+                            {% for contact in contacts %}
+                                <option value="{{ contact.id }}" {{ (contact.id == contactId) ? 'selected' : '' }}>{{ contact.prenomNom }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <label for="reglement" class="col-md-2 col-sm-3 col-xs-12 control-label">Règlement</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <select class="form-control" id="reglement" name="reglement">
+                        {% set reglementId = (achat is null) ? -1 : (achat.oneReglement is null) ? -1 : achat.oneReglement.id %}
+                        <option value=""></option>
+                        {% for reglement in reglements %}
+                            <option value="{{ reglement.id }}" {{ (reglement.id == reglementId) ? 'selected' : ''  }}>{{ reglement.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label class="col-md-2 col-sm-3 col-xs-12 control-label"></label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <div class="radio radio-inline">
+                        <input type="radio" id="status-a-payer" value="0" name="status" checked>
+                        <label for="status-a-payer">A payer</label>
+                    </div>
+                    <div class="radio radio-inline">
+                        <input type="radio" id="status-payee" value="1" name="status">
+                        <label for="status-payee">Payée</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="items">
+                <br />
+
+
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-produit-service"> Produits et services</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab-depense"> Dépenses</a>
+                        </li>
+                    </ul>
+
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-produit-service">
+                            <table class="table table-hover article-list">
+                                <thead>
+                                <tr>
+                                    <th style="width: 25%;">Article</th>
+                                    <th style="width: 25%;">Description</th>
+                                    <th style="width: 10%;">Qté</th>
+                                    <th style="width: 10%;">Prix HT</th>
+                                    <th style="width: 10%;">Rem.%</th>
+                                    <th style="width: 10%;">Total HT</th>
+                                    <th style="width: 10%;">TVA%</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% if articles|length > 0 %}
+                                    {% for article in articles %}
+                                        <tr id="{{ article.id~'-'~'now'|date('U') }}" class="{{ article.id }}" onclick="selectToRemove(this);">
+                                            <td style="vertical-align:middle;">
+                                                <input type="hidden" class="form-control artventeid" value="{{ article.id }}">
+                                                <input type="hidden" class="form-control artid" value="{{ article.oneArticle.id }}">
+                                                {{ article.oneArticle.code ~' '~ article.oneArticle.nom }}
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                <textarea class="form-control description" onblur="updateAmountTTC();">{{ article.description }}</textarea>
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                <input type="number" class="form-control quantite" value="{{ article.quantite }}" onblur="updateAmountTTC();" />
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                <input type="text" class="form-control price number" value="{{ article.prix|number_format(0, '.', ' ') }}" onblur="updateAmountTTC();" />
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                <input type="number" class="form-control remise" value="{{ article.remise }}" onblur="updateAmountTTC();" />
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                <span class="item-amount">0</span>
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                <select class="form-control tva" onchange="updateAmountTTC();">
+                                                    {% for tva in taxes %}
+                                                        <option value="{{ tva.taux }}" {% if article.tvaTaux.taux == tva.taux %}selected="selected"{% endif %}>{{ tva.taux~'%' }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <input type="hidden" class="form-control serialized" name="articles[]" value="id={{ article.id }}&article-id={{ article.oneArticle.id }}&description={{ article.description }}&quantite={{ article.quantite }}&price={{ article.prix }}&remise={{ article.remise }}&tva={{ article.tvaTaux.taux }}">
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-default new-article" onclick="loadListArticleModal('achat');">Produit et Service</button>
+                            <button type="button" class="btn btn-default new-article" onclick="removeArticleVente();">Suppression</button>
+                            <input type="hidden" id="article-to-remove" value="" />
+                        </div>
+
+                        <div class="tab-pane" id="tab-depense">
+
+                            <table class="table table-hover depense-list">
+                                <thead>
+                                <tr>
+                                    <th style="width: 45%;">Compte Comptable</th>
+                                    <th style="width: 25%;">Montant HT</th>
+                                    <th style="width: 10%;">Rem.%</th>
+                                    <th style="width: 10%;">TVA%</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% if depenses|length > 0 %}
+                                    {% for depense in depenses %}
+                                        <tr id="{{ depense.id~'-'~'now'|date('U') }}" class="{{ depense.id }}" onclick="selectToRemoveDepense(this);">
+                                            <td style="vertical-align:middle;">
+                                                <input type="hidden" class="form-control iddep" value="{{ depense.id }}">
+                                                {% set pccId = (depense.pcc is null) ? -1 : depense.pcc.id %}
+                                                <select class="form-control pccdep">
+                                                    {% for pcc in pccs %}
+                                                        <option value="{{ pcc.id }}" {{ (pcc.id == pccId) ? 'selected' : '' }}>{{ pcc.compte ~ ' '~ pcc.intitule }}</option>
+                                                    {% endfor %}
+                                                </select>
+
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                <input type="text" class="form-control pricedep number item-amount" value="{{ depense.prix|number_format(0, '.', ' ') }}" onblur="updateAmountTTC();" />
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                <input type="number" class="form-control remisedep" value="{{ depense.remise }}" onblur="updateAmountTTC();" />
+                                            </td>
+                                            <td style="vertical-align:middle;">
+                                                {% set tvaId = (depense.tvaTaux is null) ? '' : depense.tvaTaux.id %}
+                                                <select class="form-control tvadep" onchange="updateAmountTTC();">
+
+                                                    {% for tva in taxes %}
+                                                        <option value="{{ tva.id }}" {{ (tva.id == tvaId) ? 'selected' : '' }}>{{ tva.taux~'%' }}</option>
+                                                    {% endfor %}
+                                                </select>
+
+                                                <input type="hidden" class="form-control serializeddep" name="depenses[]" value="id={{ depense.id }}&pcc-id={{ depense.pcc.id }}&price={{ depense.prix }}&remise={{ depense.remise }}&tva={{ tvaId }}">
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-default new-article" onclick="addDepenseLine();">Dépense</button>
+                            <button type="button" class="btn btn-default new-article" onclick="removeDepense();">Suppression</button>
+                            <input type="hidden" id="depense-to-remove" value="" />
+
+                       </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="articles-deleted"></div>
+            <div id="depenses-deleted"></div>
+            <br />
+            <br />
+            <div class="form-group">
+                <label for="note" class="col-md-2 col-sm-3 col-xs-12 control-label">Note imprimée</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <textarea class="form-control" id="note" name="note">{{ (achat is null) ? '' : achat.note }}</textarea>
+                </div>
+                <label for="montant-ht" class="col-md-2 col-sm-3 col-xs-12 control-label">Total HT</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-ht" name="montant-ht" value="0" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="remise-ht" class="col-md-2 col-sm-3 col-xs-12 control-label">Remise (%)</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="number" class="form-control" id="remise-ht" name="remise-ht"
+                           value="{{ (achat is null) ? 0 : achat.remise }}" onchange="updateAmountTTC();">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="montant-remise" class="col-md-2 col-sm-3 col-xs-12 control-label">Remise (montant)</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-remise" name="montant-remise" value="0" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="montant-tva" class="col-md-2 col-sm-3 col-xs-12 control-label">TVA</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-tva" name="montant-tva"
+                           value="{{ (achatDetails is not null) ? achatDetails['tva'] : '' }}" readonly>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12"></div>
+                <label for="montant-ttc" class="col-md-2 col-sm-3 col-xs-12 control-label">Total TTC</label>
+                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                    <input type="text" class="form-control number" id="montant-ttc" name="montant-ttc"
+                           value="{{ (achatDetails is not null) ? achatDetails['ttc'] : '' }}" readonly>
+                </div>
+            </div>
+            <hr />
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Avancé</span>
+            <div class="advanced-group hidden">
+                <div class="form-group">
+                    <label for="date-livraison" class="col-md-4 control-label">Date livraison</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <div class="input-group date">
+                            <input type="text" class="form-control datepicker" id="date-facture" name="date-livraison"
+                                   value="{{ (achat is null) ? '' : (achat.dateLivraison is null) ? '' : achat.dateLivraison|date('d/m/Y')}}">
+                            <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="type-debiteur" class="col-md-4 control-label">Type de débiteur</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <select class="form-control" name="type-debiteur" id="type-debiteur">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="adresse-livraison" class="col-md-4 control-label">Adresse Livraison</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <textarea class="form-control" id="adresse-livraison" name="adresse-livraison" readonly></textarea>
+                    </div>
+                </div>
+                <hr />
+
+            </div>
+
+            <hr />
+            <div id="dropzone">
+                <h3 class="droptext">Faites glisser les fichiers à joindre</h3>
+                <span>ou parcourir vos fichier</span>
+                <input type="file" class="hidden" name="files" multiple />
+            </div>
+            <div id="dropzone-uploaded"></div>
+            <div id="dropzone-deleted"></div>
+        </form>
+    </div>
+</div>
+
+
+<input type="hidden" id="facture-selected" value="0">
+<input type="hidden" id="paiement-selected" value="">
+<input type="hidden" id="fournisseurid" value="">
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListFacture();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveFacture();">Enregistrer</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-4 control-label">Régime fiscal</label>
+        <div class="col-lg-8">
+            <select class="form-control" id="regime_fiscal">
+                {% if tous == 1 %}
+                    <option value="{{ 0|boost }}">Tous</option>
+                    {#{% else %}
+                    <option value="{{ 0|boost }}">&nbsp;</option>#}
+                {% endif %}
+                {% for regimeFiscal in regimeFiscals %}
+                    <option value="{{ regimeFiscal.id|boost }}">{{ (regimeFiscal.libelle != '') ? regimeFiscal.libelle : ' ' }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</form>

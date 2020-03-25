@@ -1,0 +1,57 @@
+{# {{ dump(indicateurItems) }} #}
+
+{% set oldindicateurItem = null %}
+
+{% if indicateurItems|length > 0 %}
+    <div id="js_conteneur_indicateur_tree" class="scroller">
+        <div id="js_indicateur_tree">
+            <ul>
+                {% for i in 0..(indicateurItems|length - 1) %}
+                    {% set indicateurItem = indicateurItems[i] %}
+                    {% set class_open = (indPackItem is not null and indPackItem == indIndicateurItem) ? 'jstree-open' : '' %}
+                    {# group #}
+                    {% if oldindicateurItem is null or indicateurItem.indIndicateur.indGroupIndicateur != oldindicateurItem.indIndicateur.indGroupIndicateur %}
+                        <li class="{{ class_open }}">
+                            <span>{{ indicateurItem.indIndicateur.indGroupIndicateur.libelle }}</span>
+                            <ul>
+                    {% endif %}
+
+                                {# indicateur #}
+                                {% if oldindicateurItem is null or indicateurItem.indIndicateur != oldindicateurItem.indIndicateur %}
+                                    <li class="{{ class_open }}">
+                                        <span>{{ indicateurItem.indIndicateur.libelle }}</span>
+                                        <ul>
+                                {% endif %}
+
+                    {% set newindicateur = (i != (indicateurItems|length - 1)) ? indicateurItems[i + 1] : null %}
+
+                                            {# indicateur item #}
+                                            <li class="js_indicateur_item_select" data-id="{{ indicateurItem.id|boost }}">{{ indicateurItem.libelle }}</li>
+                                            {# indicateur item end #}
+
+                                {# indicateur end #}
+                                {% if newindicateur is null or indicateurItem.indIndicateur != newindicateur.indIndicateur %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+
+                    {# group end #}
+                    {% if newindicateur is null or indicateurItem.indIndicateur.indGroupIndicateur != newindicateur.indIndicateur.indGroupIndicateur %}
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                    {% set oldindicateurItem = indicateurItem %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <span class="btn btn-sm btn-primary" id="js_select_indicateur_item"><i class="fa fa-eyedropper" aria-hidden="true"></i>&nbsp;SELECTIONNER</span>
+            <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;ANNULER</span>
+        </div>
+    </div>
+
+    <input type="hidden" id="js_id_pack_item" value="{{ ((indPackItem is null) ? 0 : indPackItem.id)|boost }}">
+{% endif %}

@@ -1,0 +1,155 @@
+{#{{ dump(cles) }}#}
+{% set margin = 15 %}
+
+{{ include('BanqueBundle:ReleveBanque:releve-line.html.twig', { 'releve': releve }) }}
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12">
+        <div class="radio radio-inline {{ (methode == 2) ? 'hidden' : '' }}">
+            <input type="radio" id="js_id_engagement" value="0" {{ (methode == 0) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_engagement">Engagement</label>
+        </div>
+        <div class="radio radio-inline {{ (methode == 2) ? 'hidden' : '' }}">
+            <input type="radio" id="js_id_tresorerie" value="1" {{ (methode == 1) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_tresorerie">Tr&eacute;sorerie&nbsp;sans&nbsp;pi&egrave;ces</label>
+        </div>
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_tresorerie_avec_piece" value="2" {{ (methode == 2) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_tresorerie_avec_piece">Tr&eacute;sorerie&nbsp;avec&nbsp;pi&egrave;ces</label>
+        </div>
+    </div>
+</div>
+
+<div class="row bande white-bg js_cl_prop_cle_container" style="margin-bottom: {{ margin }}px!important;" id="js_id_prop_cle">
+    <table class="table" style="margin-bottom: 1px!important;">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Cl&eacute;</th>
+                <th>Bilan</th>
+                <th>Resultat</th>
+                <th>Tva</th>
+                <th>Occurence</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set index = 0 %}
+            {% for cle in cles %}
+                <tr data-id="{{ cle.id }}" data-niveau="{{ cle.n }}">
+                    <td>
+                        <input type="checkbox" class="js_check_cle" id="chek_cle_{{ index }}" {{ (index == 0) ? 'checked' : '' }}>
+                    </td>
+                    <td>{{ cle.c }}</td>
+                    <td>
+                        {% if cle.bs|length > 0 %}
+                            <select class="js_imputation_bilan" style="border: none;height: 18px;width: 100%!important;">
+                                {% if cle.n != 2 %}
+                                    <option value="{{ 0|boost }}" data-type="0"></option>
+                                {% endif %}
+                                {% for b in cle.bs %}
+                                    <option value="{{ b.id }}" data-type="{{ b.t }}" {{ (cle.bs|length == 1 and methode == 0) ? 'selected' : '' }}>{{ b.c ~ ' - ' ~ b.i }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if cle.rs|length > 0 %}
+                            <select class="js_imputation_resultat" style="border: none;height: 18px;width: 100%!important;">
+                                {% if cle.n != 2 %}
+                                    <option value="{{ 0|boost }}" data-type="0"></option>
+                                {% endif %}
+                                {% for b in cle.rs %}
+                                    <option value="{{ b.id }}" data-type="{{ b.t }}" {{ (cle.rs|length == 1 and methode == 1) ? 'selected' : '' }}>{{ b.c ~ ' - ' ~ b.i }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if cle.rs|length > 0 %}
+                            <select class="js_imputation_tva" style="border: none;height: 18px;width: 100%!important;">
+                                {% if cle.n != 2 %}
+                                    <option value="{{ 0|boost }}" data-type="0"></option>
+                                {% endif %}
+                                {% for b in cle.ts %}
+                                    <option value="{{ b.id }}" data-type="{{ b.t }}"{{ (cle.ts|length == 1 and methode == 1) ? 'selected' : '' }}>{{ b.c ~ ' - ' ~ b.i }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                    </td>
+                    <td>{{ cle.o }}</td>
+                    <td>
+                        {% if cle.n == 0 %}
+                            {% set niveau = 'PCG' %}
+                        {% elseif cle.n == 1 %}
+                            {% set niveau = 'PCC' %}
+                        {% elseif cle.n %}
+                            {% set niveau = 'Ecriture' %}
+                        {% else %}
+                            {% set niveau = '' %}
+                        {% endif %}
+                        {{ niveau }}
+                    </td>
+                </tr>
+
+                {% set index = index + 1 %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="row bande white-bg js_cl_container_image_affecter" style="margin-bottom: {{ margin }}px!important;">
+    {# variation #}
+    <div class="col-lg-6">
+        <label>Exercice:&nbsp;</label>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n_1" value="-1">
+            <label for="js_id_n_1">N-1</label>
+        </div>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n" value="0" checked>
+            <label for="js_id_n">N</label>
+        </div>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n_p_1" value="1">
+            <label for="js_id_n_p_1">N+1</label>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        {# sens #}
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="js_id_sens">
+            <label for="js_id_sens">Sens&nbsp;-</label>
+        </div>
+
+        {# flagguer #}
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="js_id_flagguer">
+            <label for="js_id_flagguer">Pi&egrave;ces&nbsp;Flaggu&eacute;es</label>
+        </div>
+    </div>
+</div>
+
+<div class="row bande white-bg js_cl_container_image_affecter" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12 js_container_tb" data-datas="{{ occurences }}">
+        <table id="js_cl_tb_affecter"></table>
+    </div>
+</div>
+<div class="row bande white-bg js_cl_container_image_affecter" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12 js_container_tb">
+        <table id="js_cl_tb_ecriture"></table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3">
+        <label>Non&nbsp;Pris:&nbsp;</label>
+        <span class="label js_ecart">&nbsp;</span>
+    </div>
+    <div class="col-lg-9 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-sm btn-white js_id_pas_piece" data-type="2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Pi&egrave;ce&nbsp;Manquante</span>
+        <span class="btn btn-sm btn-white js_save_imputation_cle"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>

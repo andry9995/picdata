@@ -1,0 +1,67 @@
+<div id="js_contenu_tabs">
+    {#Commentaire#}
+        <div class="tabs-container">
+        <ul class="nav nav-tabs">
+            <li class="tab-a-instruction-dossier active" data-toggle="tooltip" data-placement="bottom" title="Onglet à renseigner en priorité.
+Les instructions s'appliquent à TOUS les dossiers"><a data-toggle="tab" href="#tab-instruction-dossier"><span class="badge badge-danger">1</span>&nbsp;Tous&nbsp;dossiers</a></li>
+            <li class="tab-a-information-dossier"><a data-toggle="tab" href="#tab-info-generales"><span class="badge badge-danger">2</span>&nbsp;Informations&nbsp;dossier</a></li>
+            <li class="tab-a-methode-comptable"><a data-toggle="tab" href="#tab-methodes-comptables"><span class="badge badge-danger">3</span>&nbsp;Méthodes&nbsp;comptables</a></li>
+            <li class="tab-a-prestations-demandes"><a data-toggle="tab" href="#tab-prestations-demandes"><span class="badge badge-danger">4</span>&nbsp;Prestations&nbsp;demandées</a></li>
+            <li class="tab-a-piece-envoyer"><a data-toggle="tab" href="#tab-piece-a-envoyer" class="tab-a-piece-envoyer"><span class="badge badge-danger">5</span>&nbsp;Pièces&nbsp;à&nbsp;envoyer</a></li>
+            <li class="tab-a-recap"><a data-toggle="tab" href="#tab-recap" class="tab-a-recap">Recap&nbsp;info&nbsp;par&nbsp;dossier</a></li>
+            {% if isAdmin %}
+                {# <li class="tab-a-scriptura"><a data-toggle="tab" href="#tab-scriptura" class="tab-a-scriptura">Recapitulation</a></li> #}
+            {% endif %}
+        </ul>
+        <div class="tab-content">
+
+            <div id="tab-instruction-dossier" class="tab-pane active">
+                <div class="panel-body">
+                    {{ include('InfoPerdosBundle:InstructionDossier:contenu.html.twig')}}
+                </div>
+            </div>
+
+            <div id="tab-info-generales" class="tab-pane">
+                <div class="panel-body">
+                    {{ include('InfoPerdosBundle:InfoCaracteristique:index.html.twig')}}
+                    {#{{ include('InfoPerdosBundle:PrestationComptable:index.html.twig')}}#}
+                </div>
+            </div>
+
+            <div id="tab-methodes-comptables" class="tab-pane">
+                <div class="panel-body">
+                    {{ include('InfoPerdosBundle:MethodeComptable:index.html.twig')}}
+                </div>
+            </div>
+
+            <div id="tab-prestations-demandes" class="tab-pane">
+                <div class="panel-body">
+                    {{ include('InfoPerdosBundle:PrestationComptable:index.html.twig')}}
+                    {#{{ include('InfoPerdosBundle:InfoCaracteristique:index.html.twig')}}#}
+                </div>
+            </div>
+
+            <div id="tab-piece-a-envoyer" class="tab-pane">
+                <div class="panel-body">
+                    {{ include('InfoPerdosBundle:PieceAEnvoyer:index.html.twig')}}
+                </div>
+
+            </div>
+
+            <div id="tab-recap" class="tab-pane">
+                <div class="panel-body">
+                    {{ include('InfoPerdosBundle:Recap:index.html.twig') }}
+                </div>
+            </div>
+
+            {% if isAdmin %}
+                <div id="tab-scriptura" class="tab-pane">
+                    <div class="panel-body">
+                        {{ include('InfoPerdosBundle:Recap:recapScriptura.html.twig') }}
+                    </div>
+                </div>
+            {% endif %}
+            
+        </div>
+    </div>
+</div>

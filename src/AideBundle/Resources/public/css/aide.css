@@ -1,0 +1,128 @@
+.small-chat-box{
+    width: 300px;
+    right: 30px;
+    bottom: 0;
+    border-radius: 0 30px 0 0;
+}
+
+.small-chat-box .heading{
+    background: #002b7f;
+    border-radius: 30px 0 0 0;
+    border: 0;
+}
+
+/*#btn-aide-search, #js_laisser_message{*/
+    /*background: #002b7f;*/
+/*}*/
+
+.aide-min-header{
+    cursor: pointer;
+    margin-left: 2px;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    color: rgb(240, 241, 241);
+}
+
+
+#js_aide .content img{
+    cursor: zoom-in;
+}
+
+#js_laisser_message{
+    float: right;
+}
+
+#js_aide button{
+    /*background-color: #002b7f;*/
+}
+
+
+.grid .ibox {
+    margin-bottom: 0;
+}
+
+.grid-item {
+    margin-bottom: 25px;
+    width: 280px;
+}
+
+.product-box {
+    height: 120px;
+}
+
+.breadcrumb{
+    background-color: transparent;
+}
+
+#js_contenu_aide div.ibox-title a.btn{
+    color: #FFFFFF;
+}
+
+.breadcrumb li a, ul a, .product-name:hover, .file-list li a:hover, #js_edit_menu_aide_3, #js_edit_mot_cle_aide_3, #js_edit_texte_aide_3, #js_save_texte_aide_3, #js_edit_aide_3_associe{
+    color: #002b7f;
+}
+
+
+
+.product-name{
+    text-align: center;
+}
+
+.product-box > div > div{
+    text-align: center;
+}
+
+
+/*.aide2-ul {*/
+    /*-moz-column-count: 2;*/
+    /*-moz-column-gap: 20px;*/
+    /*-webkit-column-count: 2;*/
+    /*-webkit-column-gap: 20px;*/
+    /*column-count: 2;*/
+    /*column-gap: 20px;*/
+/*}*/
+
+#js_aide > div.slimScrollDiv > div.content > p.MsoNormal,
+#js_aide > div.slimScrollDiv > div.content > p > span {
+    line-height: 1.8 !important;
+}
+
+#js_aide > div.slimScrollDiv > div.content > h1,
+#js_aide > div.slimScrollDiv > div.content > h2,
+#js_aide > div.slimScrollDiv > div.content > h3,
+#js_aide > div.slimScrollDiv > div.content > h4,
+#js_aide > div.slimScrollDiv > div.content > h5,
+#js_aide > div.slimScrollDiv > div.content > h6
+{
+    font-family: verdana, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+
+#js_aide > div.slimScrollDiv > div.content > h1 {
+    font-size: 32px;
+}
+#js_aide > div.slimScrollDiv > div.content > h2 {
+    font-size: 26px;
+}
+#js_aide > div.slimScrollDiv > div.content > h3 {
+    font-size: 22px;
+}
+#js_aide > div.slimScrollDiv > div.content > h4 {
+    font-size: 18px;
+    font-style: italic;
+}
+#js_aide > div.slimScrollDiv > div.content > h5 {
+    font-size: 14px;
+    font-style: italic;
+}
+#js_aide > div.slimScrollDiv > div.content > h6 {
+    font-size: 12px;
+}
+
+#js_aide > div.slimScrollDiv > div.content > p {
+    font-size: 12px;
+}

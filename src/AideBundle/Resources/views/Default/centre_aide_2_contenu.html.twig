@@ -1,0 +1,125 @@
+{% for aide2 in aide2s %}
+
+    <div class="col-lg-12">
+        <div class="row">
+           <div class="col-lg-12">
+                <div class="ibox">
+
+                    {% if isAdmin %}
+                        <div class="ibox-title">
+                            <div class="ibox-tools">
+                                <a class="btn btn-xs btn-danger js_delete_aide_2" data-id-2="{{ aide2.id }}"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-xs btn-success js_edit_aide_2" data-id-2="{{ aide2.id }}"><i class="fa fa-edit"></i></a>
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    {% set array = [] %}
+                    {% set nbAide3 = 0 %}
+                    {% for aide3 in aide3s %}
+                        {% if aide3.aide2 == aide2 %}
+                            {% set array = array|merge([aide3]) %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if array|length > 0 %}
+
+
+                    <div class="ibox-content">
+
+                        <h2>{{ aide2.titre }}</h2>
+                        {% set array = [] %}
+                        {% set nbAide3 = 0 %}
+                        {% for aide3 in aide3s %}
+                            {% if aide3.aide2 == aide2 %}
+                                {% set array = array|merge([aide3]) %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {#Zaraina 2 colonnes ny liste an'ilay aide 3 #}
+
+                        {% set mid = ((array|length)/2)|round(0, 'ceil') %}
+
+                        {% if mid == 1 %}
+                            <div class="row">
+
+                                {% if array|length == 1 %}
+                                    {#Raha 1 ny isan'ny aide 3#}
+                                    <div class="col-sm-12">
+                                        <ul class="todo-list m-t ui-sortable">
+                                            <li>
+                                                <a class="href3" data-id="{{ array[0].id }}" href="{{ path('centre_aide_3', {'json': array[0].id, 'type': type}) }}">
+                                                    <i class="fa fa-list-alt text-success"></i>&nbsp;&nbsp;{{ array[0].titre }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    {#Raha 2 ny isan'ny aide 3#}
+                                    {% else %}
+                                        {% for i in 0..(array|length)-1 %}
+                                            <div class="col-sm-6">
+                                                <ul class="todo-list m-t ui-sortable">
+
+                                                        <li>
+                                                            <a class="href3" data-id="{{ array[i].id }}" href="{{ path('centre_aide_3', {'json': array[i].id, 'type': type}) }}">
+                                                                <i class="fa fa-list-alt text-success"></i>&nbsp;&nbsp;{{ array[i].titre }}
+                                                            </a>
+                                                        </li>
+
+                                                </ul>
+                                            </div>
+                                        {% endfor %}
+                                {% endif %}
+
+
+                            </div>
+
+
+                        {% else %}
+
+                            {% if mid > 1  %}
+                                <div class="row">
+
+                                    <div class="col-sm-6">
+                                        <ul class="todo-list m-t ui-sortable">
+                                            {% for i in 0..(mid-1) %}
+                                                <li>
+                                                    <a class="href3" data-id="{{ array[i].id }}" href="{{ path('centre_aide_3', {'json': array[i].id, 'type':type}) }}">
+                                                        <i class="fa fa-list-alt text-success"></i>&nbsp;&nbsp;{{ array[i].titre }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        {% if (array|length) > mid  %}
+                                            <ul class="todo-list m-t ui-sortable">
+                                                {% for i in (mid)..(array|length -1) %}
+                                                    <li>
+                                                        <a class="href3" data-id="{{ array[i].id }}" href="{{ path('centre_aide_3', {'json': array[i].id, 'type': type}) }}">
+                                                            <i class="fa fa-list-alt text-success"></i>&nbsp;&nbsp;{{ array[i].titre }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+                        {% endif %}
+
+
+                    </div>
+
+                    {% endif %}
+                </div>
+           </div>
+        </div>
+    </div>
+
+{% endfor %}

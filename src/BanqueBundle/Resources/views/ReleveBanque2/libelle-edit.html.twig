@@ -1,0 +1,13 @@
+{{ include('BanqueBundle:ReleveBanque:releve-line.html.twig', { 'releve': releve }) }}
+
+<div>
+    <div class="form-group">
+        <label>Libell&eacute;</label>
+        <input type="text" placeholder="Libellé" class="form-control" id="id_libelle-rel" value="{{ releve.libelle }}">
+    </div>
+
+    <div class="form-group text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-sm btn-primary" id="id_save_libelle"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>

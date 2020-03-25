@@ -1,0 +1,54 @@
+<div class="tabs-container">
+
+    {% set index = 0 %}
+    <ul class="nav nav-tabs">
+        {% for pack in packs %}
+            <li class="{{ (index == 0) ? 'active' : '' }} js_tabe_pack"><a data-toggle="tab" href="#pack_{{ index }}">{{ pack.libelle }}</a></li>
+            {% set index = index + 1 %}
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content scroller" style="height: {{ height }}px !important;" id="js_div_packs">
+        {% set index = 0 %}
+        {% set col_max = count_column %}
+        {% for pack in packs %}
+            <div id="pack_{{ index }}" class="tab-pane js_tab_pack {{ (index == 0) ? 'active' : '' }}">
+                <div class="panel-body">
+                    {% set nbr_indicateur = pack.indicateurs|length %}
+                    {% set row_reste = nbr_indicateur % col_max %}
+                    {% set row_complet = (nbr_indicateur - row_reste) / col_max %}
+                    {% set row_number = row_reste + row_complet %}
+                    {% set row_index = 0 %}
+                    {% for indicateur in pack.indicateurs %}
+                        {% if row_index == 0 or row_index % col_max == 0 %}
+                            <div class="row">
+                        {% endif %}
+                                <div class="col-sm-{{ 12 / col_max }} js_indicateur_box">
+                                    {{ include('IndicateurBundle:AffichageV2:ibox-indicateur.html.twig',{'indicateur':indicateur , 'datepicker':datepicker , 'graphes':graphes , 'date_anciennete':date_anciennete }) }}
+                                </div>
+                        {% if row_index == pack.indicateurs|length - 1 or (row_index + 1) % col_max == 0 %}
+                            </div>
+                        {% endif %}
+                        {% set row_index = row_index + 1 %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% set index = index + 1 %}
+        {% endfor %}
+    </div>
+</div>
+
+<div id="js_anciennete_pop_up" class="hidden">
+    <div class="form-group js_date_picker_anciennete">
+        <label class="font-noraml">Date&nbsp;anciennet&eacute;</label>
+        <div class="input-group date">
+            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control js_date_picker_anciennete_input" value="03/04/2014">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <span class="btn btn-primary btn-sm">Valider</span>
+            <span class="btn btn-white btn-sm js_close_modal">Annuler</span>
+        </div>
+    </div>
+</div>

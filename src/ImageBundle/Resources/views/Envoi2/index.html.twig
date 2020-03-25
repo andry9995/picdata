@@ -1,0 +1,84 @@
+{% extends 'DashboardBundle::dashboard.html.twig' %}
+
+{% block titre %}ENVOI IMAGES{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {#<link href="{{ asset('css/plugins/dropzone/basic.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/dropzone/dropzone.css') }}" rel="stylesheet">#}
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link href="{{ asset('bundles/image/css/index.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block wrapper_content %}
+    {{ include('ImageBundle:Envoi2:filtre.html.twig') }}
+
+    {#<div class="row" style="margin-bottom: 10px !important;">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-4">
+                    <button class="btn btn-primary" id="js_upload_click"><i class="fa fa-arrow-circle-right"></i>&nbsp;Envoyer</button>
+                    <button class="btn btn-warning" id="js_remove_all"><i class="fa fa-trash-o"></i>&nbsp;Vider la liste</button>
+                </div>
+                <div class="col-sm-4">
+                    <span class="checkbox checkbox-default">
+                        <input id="js_is_analytique" type="checkbox">
+                        <label for="js_is_analytique">Avec&nbsp;analytique&nbsp;<span class="label label-default hidden" id="js_is_analytique_nom_dossier"></span></label>
+                    </span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="btn btn-white" id="js_analytiques"><i class="fa fa-bookmark" aria-hidden="true"></i>&nbsp;&nbsp;Analytiques</span>
+                </div>
+            </div>
+        </div>
+    </div>#}
+    <div id="image_test"></div>
+
+    <div id="div-input-image">
+        <input type="file" class="form-control" name="js_id_input_image[]" multiple id="js_id_input_image">
+        <input type="hidden" name="js_dossier_upl" id="js_dossier_upl" value="" >
+        <input type="hidden" name="js_exercice_upl" id="js_exercice_upl" value="" >
+        <input type="hidden" name="js_comment_urgent_upl" id="js_comment_urgent_upl" value="" >
+        <input type="hidden" name="js_urgents_upl" id="js_urgents_upl" value="">
+        <input type="hidden" name="js_urgent_stat_upl" id="js_urgent_stat_upl" value="0">
+        <input type="hidden" name="js_analytiques_upl" id="js_analytiques_upl" value="" >
+        <input type="hidden" name="js_commentraires_upl" id="js_commentraires_upl" value="" >
+        <input type="hidden" name="js_mps_upl" id="js_mps_upl" value="" >
+    </div>
+
+    {#<div id="image-dropzone-area" style="overflow: scroll !important;" class="white-bg">
+        <form id="my-awesome-dropzone" class="dropzone white-bg" action="{{ path('img_envoi') }}" method="post">
+            <button id="btn-upload" type="submit" class="btn btn-primary pull-right hidden">
+                Envoyer <span class="fa fa-arrow-circle-right"></span>
+            </button>
+            <div class="fallback">
+                <input name="file" type="file" multiple >
+            </div>
+            <input type="hidden" name="js_dossier_upl" id="js_dossier_upl" value="" >
+            <input type="hidden" name="js_exercice_upl" id="js_exercice_upl" value="" >
+            <input type="hidden" name="js_comment_urgent_upl" id="js_comment_urgent_upl" value="" >
+            <input type="hidden" name="js_urgents_upl" id="js_urgents_upl" value="">
+            <input type="hidden" name="js_urgent_stat_upl" id="js_urgent_stat_upl" value="0">
+            <input type="hidden" name="js_analytiques_upl" id="js_analytiques_upl" value="" >
+            <input type="hidden" name="js_mps_upl" id="js_mps_upl" value="" >
+        </form>
+    </div>#}
+    {#{{ include('ImageBundle:Historique:small-chart.html.twig') }}#}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/codeanalytique/js/edit.js') }}"></script>
+
+    <script src="{{ asset('bundles/image/js/commentaire/edit.js') }}"></script>
+
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+
+    <script src="{{ asset('bundles/image/js/index2.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/send2.js') }}"></script>
+    {#<script src="{{ asset('bundles/image/js/signer.js') }}"></script>#}
+    {#<script src="{{ asset('bundles/image/js/sender2.js') }}"></script>#}
+{% endblock %}

@@ -1,0 +1,648 @@
+banque_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: BanqueBundle:Default:index }
+
+#******************RELEVE BANQUE****************
+banque_analyse:
+    path:     /banque/analyse
+    defaults: { _controller: BanqueBundle:ReleveBanque:analyse }
+    methods: [POST]
+    options:
+        expose: true
+banque_details_releve:
+    path:     /banque/details/releve
+    defaults: { _controller: BanqueBundle:ReleveBanque:releveDetails }
+    methods: [POST]
+    options:
+        expose: true
+banque_pas_image:
+    path:     /banque/image/pas
+    defaults: { _controller: BanqueBundle:ReleveBanque:imagePas }
+    methods:  [POST]
+    options:
+        expose: true
+banque_dossier:
+    path:     /banque/dossier
+    defaults: { _controller: BanqueBundle:ReleveBanque:banques }
+    methods: [POST]
+    options:
+        expose: true
+banque_compte_dossier:
+    path:     /banque/compte/dossier
+    defaults: { _controller:  BanqueBundle:ReleveBanque:banqueComptes }
+    methods:  [POST]
+    options:
+        expose: true
+banque_rapprochement_manuel:
+    path:   /banque/rapprochement
+    defaults: { _controller: BanqueBundle:ReleveBanque:rapprochementManuel }
+    methods:  [POST]
+    options:
+        expose: true
+banque_parcourir_pm:
+    path:     /banque/pm/parcourir
+    defaults: { _controller:  BanqueBundle:Pm:pmShow }
+    methods:  [POST]
+    options:
+        expose: true
+banque_liste_images:
+    path:     /banque/images/liste
+    defaults: { _controller: BanqueBundle:ReleveBanque:imagesListe }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_cle_pcg:
+    path:   /banque/cle/pcgs
+    defaults: { _controller:  BanqueBundle:ReleveBanque:pcgs }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_save_imputation_cle:
+    path: /banque/cle/imputer
+    defaults: { _controller:  BanqueBundle:ReleveBanque:saveImputationCle }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_cle_pcc:
+    path:   /banque/cle/pcc
+    defaults: { _controller:  BanqueBundle:ReleveBanque:pccs }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_save_new_compte:
+    path:   /banque/save/new_compte
+    defaults: { _controller:  BanqueBundle:ReleveBanque:saveNewCompte }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_envoi_pm:
+    path: /banque/pm/envoi
+    defaults: { _controller: BanqueBundle:Pm:pmEnvoi }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_grid_combo:
+    path: /banque/tiers-combo/{json}/{did}/{nid}
+    defaults: { _controller: BanqueBundle:ReleveBanque:gridCombo, nid: 0}
+    options:
+        expose: true
+
+banque_releve_edit:
+    path: /banque/releve-edit
+    defaults: { _controller: BanqueBundle:ReleveBanque:releveEdit}
+    options:
+        expose: true
+
+banque_releve_tiers_edit:
+    path: /banque/releve-tiers-edit
+    defaults: { _controller: BanqueBundle:ReleveBanque:tiersEdit}
+    methods: [POST]
+    options:
+        expose: true
+
+banque_grid_tiers_cpte_str:
+    path: /banque/compte-tiers-str/{tid}
+    defaults: { _controller: BanqueBundle:ReleveBanque:tiersCompteStr, tid: 0}
+    options:
+        expose: true
+
+#******************CONTROLE RELEVE****************
+banque_controle_releve_grid:
+    path: /banque/controle-releve-grid
+    defaults: {  _controller: BanqueBundle:ControleReleve:tableauReleve}
+    options:
+        expose: true
+
+banque_releve_banque_dossier:
+  path: /banque/banque-dossier
+  defaults: { _controller: BanqueBundle:ControleReleve:BanqueDossier}
+  options:
+      expose: true
+
+
+banque_releve_doublon:
+  path: /banque/releve-doublon
+  defaults: { _controller: BanqueBundle:ControleReleve:banqueDoublon }
+  options:
+    expose: true
+  methods: [POST]
+
+
+banque_releve_num_compte:
+  path: /banque/releve-num-compte
+  defaults: { _controller: BanqueBundle:ControleReleve:numCompteBanque }
+  options:
+    expose: true
+  methods: [POST]
+
+
+
+#************************GESTION BANQUE************************
+banque_gestion_banque_grid:
+    path: /banque/banque_compte
+    defaults: { _controller: BanqueBundle:GestionBanque:gestion }
+    methods: [POST]
+    options:
+        expose: true
+
+banque_journal:
+    path: /banque/journal
+    defaults: { _controller: BanqueBundle:GestionBanque:journal}
+    options:
+        expose: true
+
+banque_compte_comptable:
+    path: /banque/compte_comptable/{json}
+    defaults: { _controller: BanqueBundle:GestionBanque:compteComptable, json: 0}
+    options:
+        expose: true
+
+banque_compte_edit:
+    path: /banque/banque-compte-edit/{dossierId}
+    defaults: { _controller: BanqueBundle:GestionBanque:banqueCompteEdit, dossierId: 0}
+    options:
+        expose: true
+
+banque_compte_remove:
+    path: /banque/banque-compte-delete
+    defaults: { _controller: BanqueBundle:GestionBanque:banqueCompteRemove}
+    options:
+        expose: true
+
+
+#************************MENU BANQUE************************
+banque_pilote:
+    path:     /banque/pilote
+    defaults: { _controller: BanqueBundle:Default:pilote}
+
+banque_gestion_banque:
+    path:     /banque/gestion-banque
+    defaults: { _controller: BanqueBundle:Default:gestionBanque}
+
+
+banque_controle_releve:
+    path:     /banque/controle-releve
+    defaults: { _controller: BanqueBundle:Default:controleReleve}
+
+
+banque_releve_banque:
+    path:   /banque/releve-banque
+    defaults: { _controller: BanqueBundle:Default:releveBanque }
+
+banque_piece_manquante:
+    path:     /banque/piece-manquante
+    defaults: { _controller: BanqueBundle:Default:pieceManquante}
+
+banque_preparation_tva:
+    path:   /banque/preparation-tva
+    defaults: { _controller: BanqueBundle:Default:preparationTva }
+
+
+######################CONTROL######################
+banque_test:
+    path: /banque/test
+    defaults: { _controller: BanqueBundle:ReleveBanque:test}
+    options:
+        expose: true
+
+
+####################Journal banque
+jnl_bq:
+    path:   /jnl_bq
+    defaults: { _controller: BanqueBundle:JournalBanque:index }
+
+jnl_bq_periode:
+    path:   /jnl_bq/periode
+    defaults: { _controller: BanqueBundle:JournalBanque:getPeriodePopOver }
+    methods: [POST]
+    options:
+        expose: true
+
+jnl_bq_analyse:
+    path:   /jnl_banque/analyse
+    defaults: { _controller: BanqueBundle:JournalBanque:analyse }
+    methods:  [POST]
+    options:
+        expose: true
+
+jnl_bq_compte_comptable:
+    path:   /jnl_banque/compte_comptable
+    defaults: { _controller: BanqueBundle:JournalBanque:banqueComptePcc }
+    methods:  [POST]
+    options:
+        expose: true
+
+jnl_bq_compte_comptable_edit:
+    path:   /jnl_banque/compte_comptable_edit
+    defaults: { _controller: BanqueBundle:JournalBanque:pccBanqueCompteChange }
+    methods:  [POST]
+    options:
+        expose: true
+
+jnl_bq_journal_dossier_edit:
+    path:   /jnl_banque/journal_dossier_edit
+    defaults: { _controller: BanqueBundle:JournalBanque:journalDossierBanqueCompteChange }
+    methods:  [POST]
+    options:
+        expose: true
+
+jnb_bq_export:
+    path: /jnl_banque/export
+    defaults: { _controller: BanqueBundle:JournalBanque:export }
+    methods:  [POST]
+    options:
+        expose: true
+
+jnl_bq_filtre_date:
+    path: /jnl_banque/filtre_date
+    defaults: { _controller: BanqueBundle:JournalBanque:filtreDate }
+    methods:  [POST]
+    options:
+        expose: true
+
+jnl_bq_params:
+    path: /jnl_banque/params
+    defaults: { _controller: BanqueBundle:JournalBanque:params }
+    methods:  [POST]
+    options:
+        expose: true
+
+
+####################   Banque 2
+banque_2:
+    path: /banque2
+    defaults: { _controller: BanqueBundle:ReleveBanque2:index }
+
+banque2_analyse:
+    path: /banque2/analyse
+    defaults: { _controller: BanqueBundle:ReleveBanque2:analyse }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_imputation_items:
+    path: /banque2/imputation/items
+    defaults: { _controller: BanqueBundle:ReleveBanque2:imputationItems }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_sous_categorie_autres_details:
+    path: /banque2/imputations/sous_categorie_autres
+    defaults: { _controller: BanqueBundle:ReleveBanque2:imputationSousCategorieAutres }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_images_view:
+    path:     /banque2/images/view
+    defaults: { _controller: BanqueBundle:ReleveBanque2:imagesView }
+    methods: [POST]
+    options:
+        expose: true
+
+banque2_images_a_affecter:
+    path:     /banque2/images/affecter
+    defaults: { _controller: BanqueBundle:ReleveBanque2:imagesAAffecter }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_tr_updated:
+    path: /banque2/tr/updated
+    defaults: { _controller: BanqueBundle:ReleveBanque2:trUpdated }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_save_imputation_piece:
+    path:     /banque2/image/imputer
+    defaults: { _controller: BanqueBundle:ReleveBanque2:saveImputationPiece }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_show_add_cle:
+    path:   /banque2/cle/add
+    defaults: { _controller: BanqueBundle:ReleveBanque2:addCle }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_cle_save:
+    path: /banque/cle/save
+    defaults: { _controller: BanqueBundle:ReleveBanque2:saveCle }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_cle_propositions:
+    path: /banque/cle/propositions
+    defaults: { _controller: BanqueBundle:ReleveBanque2:clesPropositions }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_cle_desactiver:
+    path: /banque/cle/desactiver
+    defaults: { _controller: BanqueBundle:ReleveBanque2:desactiverCle }
+    methods:  [POST]
+    options:
+        expose: true
+
+
+banque2_cle_props:
+    path: /banque/cle/props
+    defaults: { _controller: BanqueBundle:ReleveBanque2:cleProperties }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_pccs_in_banque_type:
+    path: /banque/pccs/in_banque_type
+    defaults: { _controller: BanqueBundle:ReleveBanque2:pccsInBanqueType }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_save_cle_dossier:
+    path: /banque/save/cle_dossier
+    defaults: { _controller: BanqueBundle:ReleveBanque2:saveCleDossier }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_annuler_imputation:
+    path:   /banque/annuler/imputation
+    defaults: { _controller:  BanqueBundle:ReleveBanque2:annulerImputation }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_refresh:
+    path: /banque/refresh
+    defaults: { _controller: BanqueBundle:ReleveBanque2:refresh }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_images_by_cle:
+    path: /banque/images/by_cle
+    defaults: { _controller: BanqueBundle:ReleveBanque2:getImagesByCle }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_pas_piece:
+    path: /banque/pas_piece
+    defaults: { _controller: BanqueBundle:ReleveBanque2:pasCle }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_show_search:
+    path:   /banque/search/show
+    defaults: { _controller: BanqueBundle:ReleveBanque2:showSearch }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_rapprochers:
+    path:   /banque/rapprochers
+    defaults: { _controller: BanqueBundle:ReleveBanque2:rapprochers }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_show_edit_releve_compte:
+    path:   /banque/edit/releve_compte
+    defaults: { _controller: BanqueBundle:ReleveBanque2:showEditReleveCompte }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_methode_comptable:
+    path:   /banque/methode_comptable
+    defaults: { _controller: BanqueBundle:ReleveBanque2:methode }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_pcc_tier:
+    path:   /banque/pcc_tiers
+    defaults: { _controller:  BanqueBundle:ReleveBanque2:pccTiers }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_releve_compte_save:
+    path:   /banque/releve/save/compte
+    defaults: { _controller:  BanqueBundle:ReleveBanque2:saveReleveCompte }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_ecriture_banque_categorie_autre:
+    path:  /banque/banque_categorie_autre/ecritures
+    defaults: { _controller:  BanqueBundle:ReleveBanque2:ecritureCategoriesAutres }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_lettra_autre_show:
+    path: /banque/lettrage_autres
+    defaults: { _controller:  BanqueBundle:ReleveBanque2:lettragesAutres }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_banque_autre_tr_updated:
+    path: /banque2/tr/updated/banque/autres
+    defaults: { _controller: BanqueBundle:ReleveBanque2:trBanqueAutreUpdated }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_banque_autre_annuler_lettrage:
+    path: /banque2/banque_autre/annuler/lettrage
+    defaults: { _controller: BanqueBundle:ReleveBanque2:AnnulerLettrageBanqueAutre }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_banque_autre_lettrage_compta:
+    path: /banque2/banque_autre/lettrage_compta
+    defaults: { _controller: BanqueBundle:ReleveBanque2:lettrageCompta }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_banque_autre_compta_a_lettre:
+    path: /banque2/banque_autre/compta_a_lettrer
+    defaults: { _controller: BanqueBundle:ReleveBanque2:comptaALettrer }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_show_lettrage_desequilibre:
+    path: /banque2/lettrage_desiquilibre/show
+    defaults: { _controller: BanqueBundle:LettrageDesiquilibre:show }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_lettrage_search_by_image_montant:
+    path: /banque2/lettrage_desiquilibre/search
+    defaults: { _controller: BanqueBundle:LettrageDesiquilibre:search }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_lettrage_equilibrer:
+    path: /banque2/lettrage/equilibrer
+    defaults: { _controller: BanqueBundle:LettrageDesiquilibre:equilibrer }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque2_libelle_show_edit:
+    path: /banque2/libelle/edit
+    defaults: { _controller: BanqueBundle:ReleveBanque2:libelleEdit }
+    methods:  [POST]
+    options:
+        expose: true
+
+######################CONTROL 2######################
+banque2_control:
+    path:  /banque/control
+    defaults: { _controller: BanqueBundle:ReleveBanque2:control }
+    methods: [POST]
+    options:
+        expose: true
+
+####################CFONB##########################
+banque_cfonb:
+    path:  /banque/cfonb
+    defaults: { _controller: BanqueBundle:Cfonb:index }
+    methods: [GET]
+
+banque_cfonb_get_list:
+    path:   /banque/cfonb/list
+    defaults: { _controller:  BanqueBundle:Cfonb:getList }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_cfonb_regle:
+    path:   /banque/cfonb/regle
+    defaults: { _controller:  BanqueBundle:Cfonb:getRegle }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_cfonb_add_regle:
+    path:   /banque/cfonb/add/regle
+    defaults: { _controller:  BanqueBundle:Cfonb:addRegle }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_cfonb_activation:
+    path:   /banque/cfonb/activation
+    defaults: { _controller:  BanqueBundle:Cfonb:activation }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_cfonb_get_replace_list:
+    path:   /banque/cfonb/list-replace
+    defaults: { _controller:  BanqueBundle:Cfonb:replaceList }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_cfonb_add_replace:
+    path:   /banque/cfonb/add-replace
+    defaults: { _controller:  BanqueBundle:Cfonb:addReplace }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_cfonb_remove_replace:
+    path:   /banque/cfonb/remove-replace/{id}
+    defaults: { _controller:  BanqueBundle:Cfonb:removeReplace }
+    methods:  [GET]
+    options:
+        expose: true
+
+## infos complementaires
+banque_info_compl_params:
+    path:   /banque/info_compl/params
+    defaults:   { _controller:  BanqueBundle:InfoComplementaire:params }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_info_compl_cfonb:
+    path:   /banque/info_compl/cfonb
+    defaults:   { _controller:  BanqueBundle:InfoComplementaire:cfonb }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_cfonb_releve_save:
+    path:   /banque/cfonb/save
+    defaults:   { _controller: BanqueBundle:InfoComplementaire:cfonbReleveSave }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_import_param_show:
+    path:   /banque/mode_import_param/show
+    defaults:   { _controller: BanqueBundle:InfoComplementaire:modeImportShow }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_import_param_bc:
+    path:   /banque/banque_compte/params
+    defaults:   { _controller: BanqueBundle:InfoComplementaire:banqueCompteParams }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_import_param_save:
+    path:   /banque/banque_compte/param/save
+    defaults:   { _controller: BanqueBundle:InfoComplementaire:banqueCompteParamSave }
+    methods:  [POST]
+    options:
+        expose: true
+
+banque_import_param_save_bc:
+    path:   /banque_compte/param/save
+    defaults:   { _controller: BanqueBundle:InfoComplementaire:banqueCompteAdd }
+    methods:  [POST]
+    options:
+        expose: true
+
+##production##
+
+production_gestion_tache:
+    path:   /banque/gestion_tache
+    defaults:   { _controller: BanqueBundle:GestionTache:index }
+    methods:  [GET]
+    options:
+        expose: true
+
+production_gestion_bilan_list:
+    path:   /banque/gestion_tache/liste
+    defaults:   { _controller: BanqueBundle:GestionTache:getList }
+    methods:  [POST]
+    options:
+        expose: true

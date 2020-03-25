@@ -1,0 +1,66 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-new-prospect-title">Nouveau Contact</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="contact-fournisseur-form" accept-charset="UTF-8">
+            <div class="form-group">
+                <label for="prenom" class="col-md-2 control-label">Prénom</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="prenom" name="prenom" placeholder="prénom">
+                </div>
+
+                <label for="nom" class="col-md-2 control-label">Nom*</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="nom">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="col-md-2 control-label">Email</label>
+                <div class="col-md-4">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="email">
+                </div>
+                <label for="tel-portable" class="col-md-2 control-label">Tél portable</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="tel-portable" name="tel-portable" placeholder="téléphone portable">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="adresse" class="col-md-2 control-label">Adresse</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="adresse" name="adresse" placeholder="adresse">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="code-postal" class="col-md-2 control-label">Code postal</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="code-postal" name="code-postal" placeholder="code postal">
+                </div>
+                <label for="ville" class="col-md-2 control-label">Ville</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="ville" name="ville" placeholder="ville">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pays" class="col-md-2 control-label">Pays</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="pays" id="pays">
+                        <option></option>
+                        {% for pays in payss %}
+                            <option value="{{ pays.id }}">{{ pays.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" onclick="addContactFournisseur();">Enregistrer</button>
+    </div>
+</div>

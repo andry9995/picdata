@@ -1,0 +1,3 @@
+{% for journal in journaux %}
+    <option value="{{ journal.id|boost }}">{{ journal.libelle }}</option>
+{% endfor %}

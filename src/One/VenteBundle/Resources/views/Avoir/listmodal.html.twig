@@ -1,0 +1,46 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-new-client-title">Utiliser un avoir</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Code</th>
+                            <th>Date</th>
+                            <th>Montant Echéance</th>
+                            <th>Montant Restant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for avoir in avoirs %}
+                            {% set avodate = avoir.dateFacture|date('d/m/Y') %}
+                            {% set avomontant = avoirLeftAmounts[avoir.id] %}
+                            {% set itemval = avoir.id~';'~avodate~';'~avomontant~';'~avoir.code %}
+                        <tr>
+                            <td><input type="checkbox" class="avo-item" value="{{ itemval }}"></td>
+                            <td>{{ avoir.code }}</td>          
+                            <td>{{ avoir.dateFacture|date('d/m/Y') }}</td>
+                            <td>{{ avoirAmounts[avoir.id]|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                            <td>{{ avoirLeftAmounts[avoir.id]|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        {% if avoirModal == 0 %}
+            <button type="button" class="btn btn-primary" onclick="selectAvoirPaiement();">Sélectionner</button>
+        {% else %}
+            <button type="button" class="btn btn-primary" onclick="selectAvoirPaiement(true);">Sélectionner</button>
+        {% endif %}
+    </div>
+</div>

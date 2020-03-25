@@ -1,0 +1,15 @@
+<div class="col-lg-12">
+    <div class="row">
+        {{ include('NoteFraisBundle:Administration/Vehicule:vehiculeAction.html.twig') }}
+    </div>
+
+    <div class="ibox-content">
+        <div class="row vehicule-table">
+            {#<div class="table-responsive">#}
+            {{ include('NoteFraisBundle:Administration/Vehicule:vehiculeTable.html.twig') }}
+            {#</div>#}
+        </div>
+    </div>
+</div>
+
+{{ include('NoteFraisBundle:Administration/Vehicule:vehiculeModal.html.twig') }}

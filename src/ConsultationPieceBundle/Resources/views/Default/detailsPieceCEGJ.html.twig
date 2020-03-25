@@ -1,0 +1,226 @@
+<div class="ibox-content">
+    <div class="row">
+            <form class="form-horizontal">
+                <div class="col-lg-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h5>Informations générales</h5>
+                        </div>
+                        <div class="panel-body">
+
+                            <input type="hidden" class="image-id" name="image-id" value="{{ img.id }}">
+
+                            <input type="hidden" class="souscategorie-id" name="souscategorie-id"
+                                   value="{{ (souscategorie is null) ? -1 : souscategorie.id }}">
+
+                            <input type="hidden" class="soussouscategorie-id" name="soussouscategorie-id"
+                                   value="{{ (soussouscategorie is null) ? -1 : soussouscategorie.id }}">
+
+                            <input type="hidden" name="etape-id" value="{{ etapeId }}">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Catégorie</label>
+                                        <div class="col-md-8">
+                                            {% set categorieId = (categorie is null) ? -1 : categorie.id %}
+                                            <select class="form-control categorie" name="categorie" {{ (isAdmin) ? '' : 'disabled' }}>
+                                                <option value="-1"></option>
+                                                {% for cat in categories %}
+                                                    <option value="{{ cat.id }}" {{ (cat.id == categorieId) ? 'selected' }}>{{ cat.libelleNew|upper }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Ss Catégorie</label>
+                                        <div class="col-md-8">
+                                            {% set souscategorieId = (souscategorie is null) ? -1 : souscategorie.id %}
+                                            <select class="form-control souscategorie" name="souscategorie" {{ (isAdmin) ? '' : 'disabled' }}>
+                                                <option value="-1"></option>
+                                                {% for sCatJ in souscategories %}
+                                                    <option value="{{ sCatJ.id }}" {{ (sCatJ.id == souscategorieId) ? 'selected' }}>{{ sCatJ.libelleNew|upper }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Ss Ss Catégorie</label>
+                                        <div class="col-md-8">
+                                            {% set soussouscategorieId = (soussouscategorie is null) ? -1 : soussouscategorie.id %}
+                                            <select class="form-control soussouscategorie" name="soussouscategorie" {{ (isAdmin) ? '' : 'disabled' }}>
+                                                <option value="-1"></option>
+                                                {% for ssCat in soussouscategories %}
+                                                    <option value="{{ ssCat.id }}" {{ (ssCat.id == soussouscategorieId) ? 'selected' }}>{{ ssCat.libelleNew|upper }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Déscription</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control description" name="description"
+                                                   value="{{ (cegjSaisie is null) ? '' : cegjSaisie.description }}" {{ (isAdmin) ? '' : 'disabled' }}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Date</label>
+                                        <div class="col-md-8">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control date-piece" name="date-piece"
+                                                       value="{{ (cegjSaisie is null) ? '' : (cegjSaisie.datePiece is null) ? '' : cegjSaisie.datePiece|date('d/m/Y') }}" {{ (isAdmin) ? '' : 'disabled' }}>
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Periode du</label>
+                                        <div class="col-md-8">
+                                            <div class="input-daterange input-group date">
+                                                <input type="text" class="input-sm form-control" name="periode-debut"
+                                                       value="{{ (cegjSaisie is null) ? '' : (cegjSaisie.periodeDebut is null) ? '' : cegjSaisie.periodeDebut|date('d/m/Y') }}" {{ (isAdmin) ? '' : 'disabled' }}>
+                                                <span class="input-group-addon">Au</span>
+                                                <input type="text" class="input-sm form-control" name="periode-fin"
+                                                       value="{{ (cegjSaisie is null) ? '' : (cegjSaisie.periodeFin is null) ? '' : cegjSaisie.periodeFin|date('d/m/Y') }}" {{ (isAdmin) ? '' : 'disabled' }}>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Entité concerné 1</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control entite-concerne1" name="entite-concerne1"
+                                                   value="{{ (cegjSaisie is null) ? '' : cegjSaisie.entite1 }}" {{ (isAdmin) ? '' : 'disabled' }}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Entité concerné 2</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control entite-concerne2" name="entite-concerne2"
+                                                   value="{{ (cegjSaisie is null) ? '' : cegjSaisie.entite2 }}" {{ (isAdmin) ? '' : 'disabled' }}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {#<div class="row">#}
+                                {#<div class="col-lg-12">#}
+                                    {#<div class="form-group">#}
+                                        {#<label class="col-md-4 control-label">Entité concerné 3</label>#}
+                                        {#<div class="col-md-8">#}
+                                            {#<input type="text" class="form-control entite-concerne3" name="entite-concerne3"#}
+                                                   {#value="{{ (cegjSaisie is null) ? '' : cegjSaisie.entite3 }}" {{ (isAdmin) ? '' : 'disabled' }}>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Commentaire</label>
+                                        <div class="col-md-8">
+                                            <textarea  class="form-control" id="commentaire" name="commentaire" style="height: 120px;">{{ (cegjSaisie is null) ? '' : cegjSaisie.commentaire }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Avancement</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="avancement" name="avancement" value="{{ etape }}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="pull-right">
+                                {% if isAdmin %}
+                                    <div type="button" class="btn btn-primary save-cegj">Enregistrer</div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {#<div class="panel panel-default">#}
+                        {#<div class="panel-heading">#}
+                            {#<h5>Commentaires&nbsp;&nbsp;#}
+                               {#{% if isAdmin %}#}
+                                    {#<i class="fa fa-2x fa-edit edit-commentaire pointer"></i>&nbsp;&nbsp;#}
+                                    {#<i class="fa fa-2x fa-save save-commentaire hidden pointer"></i>&nbsp;&nbsp;#}
+                                {#{% endif %}#}
+                            {#</h5>#}
+                        {#</div>#}
+                        {#<div class="panel-body">#}
+
+                            {#<div class="row">#}
+                                {#<div class="col-lg-12">#}
+                                    {#<div class="scroller" style="height: 200px;">#}
+
+                                        {#<div class="wrapper p-md commentaire">#}
+                                           {#{{ (cegjSaisie is null) ? '' : cegjSaisie.commentaire|raw }}"#}
+                                        {#</div>#}
+
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+
+                </div>
+            </form>
+        </div>
+
+        <br/>
+
+    {#<div class="row">#}
+        {#<div class="col-lg-12">#}
+            {#<div type="button" class="btn btn-primary add-row pull-right"><span><i class="fa fa-plus"></i></span></div>#}
+        {#</div>#}
+    {#</div>#}
+
+        {#<div class="col-lg-12 ecriture">#}
+          {#{{ include('ConsultationPieceBundle:Default:ecritureCEGJ.html.twig') }}#}
+        {#</div>#}
+</div>

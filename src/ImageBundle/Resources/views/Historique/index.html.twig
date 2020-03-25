@@ -1,0 +1,41 @@
+{% extends 'DashboardBundle::dashboard.html.twig' %}
+
+{% block titre %}Mes envois{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/sweetalert/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/image/css/histo.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src=""{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}></script>
+    <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/historique/index.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/historique/action.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    {{ include('ImageBundle:Historique:filtre.html.twig') }}
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-lg-3 scroller" id="js_container_div_tree">
+                </div>
+                <div class="col-lg-9">
+                    <div class="hidden" id="js_container_btn_ctrl">
+                        <span class="btn btn-primary btn-outline btn-sm" id="js_show_move"><i class="fa fa-scissors" aria-hidden="true"></i>&nbsp;DEPLACER</span>
+                        <span class="btn btn-primary btn-outline btn-sm" id="js_remove"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;SUPPRIMER</span>
+                    </div>
+                    <div id="js_container_previews" class="scroller"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

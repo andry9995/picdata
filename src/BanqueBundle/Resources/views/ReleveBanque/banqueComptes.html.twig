@@ -1,0 +1,19 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="js_banque_compte">
+            <span>N&deg;&nbsp;Cpt</span>
+            <span class="label label-warning">{{ banqueComptes|length }}</span>
+        </label>
+        <div class="col-lg-10">
+            <select class="form-control" id="js_banque_compte">
+                {% if banqueComptes|length != 1 %}
+                    <option value="{{ 0|boost }}">{{ (tous ? 'Tous' : '') }}</option>
+                {% endif %}
+
+                {% for banqueCompte in banqueComptes %}
+                    <option value="{{ banqueCompte.id|boost }}">{{ banqueCompte.numcompte }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>

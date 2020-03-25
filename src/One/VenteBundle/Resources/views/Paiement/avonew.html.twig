@@ -1,0 +1,62 @@
+{% if page == 'paiement' %}
+<tr id="{{ '0-'~'now'|date('U') }}" class="item-selectable {{ facid }}" onclick="selectItem(this); getSelectedPaiement(this);">
+    <td>
+        <div class="input-group date">
+            <input type="text" class="form-control datepicker date-paiement" value="{{ avodate }}" onchange="updatePaiement(this);">
+            <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+    </td>
+    <td>
+        <input type="integer" class="form-control montant-paiement" value="{{ avomontant }}" onchange="updatePaiement(this);">
+    </td>
+    <td>
+        <select class="form-control moyen-paiement" onchange="updateValidPaiement(this);">
+            {% for moyenpaiement in moyenpaiements %}
+                <option value="{{ moyenpaiement.id }}" {% if moyenpaiement.id == 2 %}selected{% endif %}>{{ moyenpaiement.nom }}</option>
+            {% endfor %}
+        </select>
+    </td>
+    <td><input type="text" class="form-control ref-bancaire-paiement" value="{{ avocode }}" onchange="updatePaiement(this);"></td>
+    <td>
+        <input type="integer" class="form-control retard-paiement" value="0" onchange="updatePaiement(this);">
+        <input type="hidden" class="form-control compte-paiement" value="">
+        <input type="hidden" class="form-control encid" value="0">
+        <input type="hidden" class="form-control avoid" value="{{ avoid }}">
+        <input type="hidden" class="form-control paiement" name="paiement[]" value="{{ facid~';0;'~avodate~';'~avomontant~';2;'~avocode~';0;;0;'~avoid }}">
+    </td>
+</tr>
+{% elseif page == 'facture' %}
+<tr id="{{ '0-'~'now'|date('U') }}" class="item-selectable {{ facid }}" onclick="selectItem(this); getSelectedPaiement(this);">
+    <td>
+        <div class="input-group date">
+            <input type="text" class="form-control datepicker date-paiement" value="{{ avodate }}" onchange="updatePaiement(this);">
+            <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+    </td>
+    <td>
+        <select class="form-control moyen-paiement" onchange="updatePaiement(this);">
+            {% for moyenpaiement in moyenpaiements %}
+                <option value="{{ moyenpaiement.id }}" {% if moyenpaiement.id == 2 %}selected{% endif %}>{{ moyenpaiement.nom }}</option>
+            {% endfor %}
+        </select>
+    </td>
+    <td>
+        <input type="integer" class="form-control montant-paiement" value="{{ avomontant }}" onchange="updatePaiement(this);">
+    </td>
+    <td><input type="text" class="form-control ref-bancaire-paiement" value="{{ avocode }}" onchange="updatePaiement(this);"></td>
+    <td>
+        <input type="integer" class="form-control retard-paiement" value="0" onchange="updatePaiement(this);">
+    </td>
+    <td>
+        <select class="form-control compte-paiement" onchange="updatePaiement(this);">
+            <option value=""></option>
+            {% for banquecompte in banquecomptes %}
+                <option value="{{ banquecompte.id }}">{{ banquecompte.numcompte }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" class="form-control encid" value="0">
+        <input type="hidden" class="form-control avoid" value="{{ avoid }}">
+        <input type="hidden" class="form-control paiement" name="paiement[]" value="{{ facid~';0;'~avodate~';'~avomontant~';2;'~avocode~';0;;0;'~avoid }}">
+    </td>
+</tr>
+{% endif %}

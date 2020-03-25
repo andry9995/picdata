@@ -1,0 +1,36 @@
+{#{% extends 'NoteFraisBundle:Default:index.html.twig' %}#}
+
+{#{% block javascripts %}#}
+
+    {#{{ parent() }}#}
+
+{#{% endblock %}#}
+
+{#{% block wrapper_content %}#}
+
+    {#{{ include('NoteFraisBundle:Default:navigation.html.twig') }}#}
+
+    <br/>
+
+    <div class="row" id="tab-depense">
+
+        <div class="col-lg-12">
+            <div class="row">
+                {{ include('NoteFraisBundle:Depense:depenseFiltre.html.twig') }}
+            </div>
+
+            <div class="row">
+                {{ include('NoteFraisBundle:Depense:depenseAction.html.twig') }}
+            </div>
+
+            <div class="ibox-content">
+                <div class="row contenu-depense">
+                    {{ include('NoteFraisBundle:Depense:depenseTable.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+ {#{{ include('NoteFraisBundle:Default:modal.html.twig') }}#}
+
+{#{% endblock %}#}

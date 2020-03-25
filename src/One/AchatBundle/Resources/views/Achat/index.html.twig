@@ -1,0 +1,92 @@
+{% extends "AdminBundle:Default:index.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/onevente/css/default.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/onevente/css/client.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/oneprospect/css/contactclient.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/oneprospect/css/datefilter.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/notefrais/js/communTpe.js') }}"></script>
+
+    <script src="{{ asset('bundles/onevente/js/article.js') }}"></script>
+    <script src="{{ asset('bundles/oneprospect/js/datefilter.js') }}"></script>
+    <script src="{{ asset('bundles/oneachat/js/default.js') }}"></script>
+    <script src="{{ asset('bundles/oneachat/js/fournisseur.js') }}"></script>
+    <script src="{{ asset('bundles/oneachat/js/contactfournisseur.js') }}"></script>
+    <script src="{{ asset('bundles/oneachat/js/facture.js') }}"></script>
+    <script src="{{ asset('bundles/oneachat/js/depense.js') }}"></script>
+    <script src="{{ asset('bundles/oneachat/js/commande.js') }}"></script>
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    {{ include('NoteFraisBundle:Default:filtre.html.twig') }}
+
+    <div class="col-lg-12">
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active" id="onglet-fournisseur"><a data-toggle="tab" href="#tab-fournisseur">Fournisseurs</a></li>
+                <li class="" id="onglet-facture"><a data-toggle="tab" href="#tab-facture">Factures Fournisseur</a></li>
+                <li>
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                        Plus <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" id="collapsed">
+                        <li class="tab-plus" id="onglet-commande"><a data-toggle="tab" href="#tab-commande">Commandes Fournisseur</a></li>
+                        <li class="tab-plus" id="onglet-paiement"><a data-toggle="tab" href="#tab-paiement">Paiements Fournisseur</a></li>
+                        <li class="tab-plus" id="onglet-avoir"><a data-toggle="tab" href="#tab-avoir">Avoirs Fournisseur</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-fournisseur" class="tab-pane active">
+                    <div class="panel-body">
+                    </div>
+                </div>
+                <div id="tab-facture" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Factures Fournisseur</h3>
+                    </div>
+                </div>
+                <div id="tab-commande" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Commandes Fournisseur</h3>
+                    </div>
+                </div>
+                <div id="tab-paiement" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Paiements Fournisseur</h3>
+                    </div>
+                </div>
+                <div id="tab-avoir" class="tab-pane">
+                    <div class="panel-body">
+                        <h3>Avoirs Fournisseur</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="primary-modal" tabindex="-1" role="dialog" aria-labelledby="primary-modal-title">
+        <div class="modal-dialog modal-lg modal-content" role="document"></div>
+    </div>
+
+    <input type="hidden" id="view" name="view" value="bloc"><br />
+    <input type="hidden" id="type" name="type" value="all"><br />
+    <input type="hidden" id="stat" name="stat" value="all"><br />
+    <input type="hidden" id="q" name="q" value=""><br />
+    <input type="hidden" id="sort" name="sort" value=""><br />
+    <input type="hidden" id="sortorder" name="sortorder" value="ASC"><br />
+    <input type="hidden" id="parent" name="parent" value=""><br />
+    <input type="hidden" id="parentid" name="parentid" value=""><br />
+    <input type="hidden" id="parent2" name="parent2" value=""><br />
+    <input type="hidden" id="parentid2" name="parentid2" value=""><br />
+    <input type="hidden" id="period" name="period" value="all"><br />
+    <input type="hidden" id="startdate" name="startdate" value=""><br />
+    <input type="hidden" id="enddate" name="enddate" value="">
+{% endblock %}

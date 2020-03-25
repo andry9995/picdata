@@ -1,0 +1,28 @@
+treso_index:
+    path:   /
+    defaults: { _controller: EtatBundle:Tresorerie:index }
+
+treso_tresorerie:
+    path:   /tresorerie
+    defaults: { _controller: EtatBundle:Tresorerie:tresorerie }
+    methods:  [POST]
+    options:
+        expose: true
+
+treso_mois:
+    path:   /tresorerie/mois
+    defaults: { _controller: EtatBundle:Tresorerie:moisDossier }
+    methods:  [POST]
+    options:
+        expose: true
+
+
+
+
+################################## details
+treso_detail:
+    path:   /tresorerie/detail
+    defaults: { _controller: EtatBundle:Detail:detail }
+    methods:  [POST]
+    options:
+        expose: true

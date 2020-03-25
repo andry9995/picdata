@@ -1,0 +1,351 @@
+{% if modele.fontSize == 10 %}
+    {% set em1_1 = '11px' %}
+    {% set em1_2 = '12px' %}
+    {% set em1_3 = '13px' %}
+    {% set em1_5 = '15px' %}
+    {% set em1_7 = '17px' %}
+    {% set em2 = 20 %}
+{% elseif modele.fontSize == 13 %}
+    {% set em1_1 = '14.3px' %}
+    {% set em1_2 = '15.6px' %}
+    {% set em1_3 = '16.9px' %}
+    {% set em1_5 = '19.5px' %}
+    {% set em1_7 = '22px' %}
+    {% set em2 = 26 %}
+{% elseif modele.fontSize == 16 %}
+    {% set em1_1 = '17.6px' %}
+    {% set em1_2 = '19.2px' %}
+    {% set em1_3 = '20.8px' %}
+    {% set em1_5 = '24px' %}
+    {% set em1_7 = '27.2px' %}
+    {% set em2 = '32px' %}
+{% endif %}
+<style type="text/css">
+    table { 
+        border-collapse: collapse;
+        width: 100%; 
+    }
+    th {
+        border-collapse: collapse;
+    }
+    .col-1 { width: 8.33333333%; }
+    .col-2 { width: 16.66666667%; }
+    .col-3 { width: 25%; }
+    .col-4 { width: 33.33333333%; }
+    .col-5 { width: 41.66666667%; }
+    .col-6 { width: 50%; }
+    .pos-right { text-align: right; }
+    .pos-top { vertical-align: top; }
+    .padding-tb { padding: 15px 5px; }
+    .company-name {
+        font-weight: bold;
+        font-size: {{ em1_7 }};
+    }
+    .document-type {
+        font-weight: bold;
+        font-size: {{ em2 }};
+        text-transform: uppercase;
+    }
+    .document-code { 
+        font-size: {{ em1_2 }};
+        text-transform: uppercase;
+    }
+    .document-reglement { font-weight: bold; }
+    .shipping-address, .billing-address { padding-bottom: 10px; }
+    .shipping-customer-contact { font-weight: bold; }
+    .billing-customer-contact { font-weight: bold; }
+    .article-code, .article-name {
+        font-size: {{ em1_1 }};
+        font-weight: bold;
+    }
+    .article-description {
+        padding-left: 10px;
+    }
+    .ht-label, .ht-value {
+        font-size: {{ em1_3 }};
+        font-weight: bold;
+    }
+    .ttc-label, .ttc-value {
+        font-size: {{ em1_5 }};
+        font-weight: bold;
+    }
+    .list th, .list td {
+        border-bottom: 1px solid #DDDDDD;
+    }
+    .list th {
+        padding: 15px 5px;
+    }
+    .list td {
+        padding: 5px;
+    }
+</style>
+<page style="color: {{ modele.fontColor }}; font-family: {{ modele.fontFamily }}; font-size: {{ modele.fontSize }}px;">
+    <table>
+        <tr>
+            <td class="col-6 pos-top">
+                <span class="company-name" {% if modele.showCompanyName == 0 %}style="display: none;"{% endif %}>{{ params.companyNom }}<br></span>
+                <span class="company-address">{{ params.companyAdresse }}<br></span>
+                <span class="company-country">{{ params.companyPays.nom }} </span><span class="company-postal-code">{{ params.companyCodePostal }}<br></span>
+                <span class="company-email">{{ params.companyMail }}<br></span>
+                <span class="company-tel">{{ params.companyTel }}<br></span>
+                <span class="company-siteweb">{{ params.companySiteweb }}<br></span>
+            </td>
+            <td class="col-6 pos-right pos-top">
+                {% if type == 'devis' %}
+                    {% set dateDocument = document.dateDevis %}
+                    {% set finDocument = document.finValidite %}
+                {% elseif type == 'facture' or type == 'commande' or type == 'avoir' or type == 'livraison' %}
+                    {% set dateDocument = document.dateFacture %}
+                    {% set finDocument = document.dateFacture %}
+                {% elseif type == 'encaissement' %}
+                    {% set dateDocument = document.dateEncaissement %}
+                    {% set finDocument = document.dateEncaissement %}
+                {% elseif type == 'paiement' %}
+                    {% set dateDocument = document.dateReception %}
+                    {% set finDocument = document.dateReception %}
+                {% endif %}
+                {% if type == 'devis' or type == 'facture' or type == 'commande' or type == 'avoir' %}
+                    <span class="document-type">{{ type|upper }}<br/></span>
+                {% elseif type == 'livraison' %}
+                    <span class="document-type">BON DE<br/>LIVRAISON<br/></span>
+                {% elseif type == 'encaissement' %}
+                    {% if document.oneTypeEncaissement.id == 1 %}
+                        <span class="document-type">FACTURE<br/>D'ACOMPTE<br/></span>
+                        {% elseif document.oneTypeEncaissement.id == 2 %}
+                        <span class="document-type">FACTURE<br/>D'ENCAISSEMENT<br/></span>
+                        {% elseif document.oneTypeEncaissement.id > 2 %}
+                        <span class="document-type">FACTURE<br/>DE SAISIE DE VENTE<br/></span>
+                    {% endif %}
+                {% elseif type == 'paiement' %}
+                    <span class="document-type">Reçu de<br/>paiement<br/></span>
+                {% endif %}
+                <span class="document-code">N° {{ document.code }}<br/></span>
+                <span class="document-date">{{ dateDocument|date("d/m/Y") }}<br/></span>
+                {% if type == 'devis' or type == 'facture' or type == 'commande' or type == 'avoir' %}
+                {#<span class="doc-expiration">Expire le {{ finDocument|date("d/m/Y") }}</span><br/>#}
+                <span class="document-reglement" {% if modele.showReglement == 0 %}style="display: none;"{% endif %}>{{ document.oneReglement.nom }}</span>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    {% if modele.showNumClient == 1 and type != 'paiement' %}
+    <br/>
+    <table>
+        <tr>
+            <td class="col-6"><span class="customer-num"><b>Client {{ document.tiers.numeroClient }}</b></span></td>
+        </tr>
+    </table>
+    {% endif %}
+    <table>
+        <tr>
+            <td class="col-6 pos-top">
+            {% if type == 'devis' or type == 'facture' or type == 'commande' or type == 'avoir' or type == 'livraison' %}
+                <p class="shipping-address" {% if modele.showShippingAddress == 0 %}style="display: none;"{% endif %}>
+                    <span class="shipping-address-label"><u>{{ modele.shippingAddressLabel }}</u></span><br/>
+                    <span class="shipping-customer-contact">{{ document.tiers.intitule }}</span><br/>
+                    {% if document.tiers.adresseLivraison1 %}
+                    <span class="shipping-customer-address">{{ document.tiers.adresseLivraison1 }}</span><br/>
+                    {% endif %}
+                    {% set paysLivraison = (document.tiers.paysLivraison is null) ? '' : document.tiers.paysLivraison.nom  %}
+                    {% if document.tiers.codePostalLivraison %}
+                        <span class="shipping-customer-country">{{ paysLivraison~' '~document.tiers.codePostalLivraison }}</span><br/>
+                    {% else %}
+                        <span class="shipping-customer-country">{{ paysLivraison }}</span><br/>
+                    {% endif %}
+                    {% if document.tiers.email %}
+                    <span class="shipping-customer-email">Email : {{ document.tiers.email }}</span><br/>
+                    {% endif %}
+                    {% if document.tiers.telephone %}
+                    <span class="shipping-customer-tel" {% if modele.showTelClient == 0 %}style="display: none;"{% endif %}>Tel : {{ document.tiers.telephone }}</span><br/>
+                    {% endif %}
+                    {% if document.tiers.siteWeb %}
+                    <span class="shipping-customer-website">Site web : {{ document.tiers.siteWeb }}</span>
+                    {% endif %}
+                </p>
+            {% endif %}
+            </td>
+            <td class="col-6 pos-top">
+            {% if type == 'paiement' %}
+                <p class="billing-address" {% if modele.billingAddressRight == 0 %}style="display: none;"{% endif %}>
+                    <span class="billing-address-label"><u>{{ modele.billingAddressLabel }}</u></span><br/>
+                    <span class="billing-customer-contact">{{ document.oneVente.tiers.intitule }}</span><br/>
+                    {% if document.oneVente.tiers.adresseFacturation1 %}
+                    <span class="sbilling-customer-address">{{ document.oneVente.tiers.adresseFacturation1 }}</span><br/>
+                    {% endif %}
+                    {% set paysFacturation = (document.oneVente.tiers.paysFacturation is null) ? '' : document.oneVente.tiers.paysFacturation.nom %}
+                    {% if document.oneVente.tiers.codePostalFacturation %}
+                    <span class="billing-customer-country">{{ paysFacturation~' '~document.oneVente.tiers.codePostalFacturation }}</span><br/>
+                    {% else %}
+                    <span class="billing-customer-country">{{ paysFacturation }}</span><br/>
+                    {% endif %}
+                    {% if document.oneVente.tiers.email %}
+                    <span class="billing-customer-email">Email : {{ document.oneVente.tiers.email }}</span><br/>
+                    {% endif %}
+                    {% if document.oneVente.tiers.telephone %}
+                    <span class="billing-customer-tel" {% if modele.showTelClient == 0 %}style="display: none;"{% endif %}>Tel : {{ document.oneVente.tiers.telephone }}</span><br/>
+                    {% endif %}
+                    {% if document.oneVente.tiers.siteWeb %}
+                    <span class="billing-customer-website">Site web : {{ document.oneVente.tiers.siteWeb }}</span>
+                    {% endif %}
+                </p>
+            {% else %}
+                <p class="billing-address" {% if modele.billingAddressRight == 0 %}style="display: none;"{% endif %}>
+                    <span class="billing-address-label"><u>{{ modele.billingAddressLabel }}</u></span><br/>
+                    <span class="billing-customer-contact">{{ document.tiers.intitule }}</span><br/>
+                    {% if document.tiers.adresseFacturation1 %}
+                    <span class="billing-customer-address">{{ document.tiers.adresseFacturation1 }}</span><br/>
+                    {% endif %}
+                    {% set paysFacturation = (document.tiers.paysFacturation is null) ? '' : document.tiers.paysFacturation.nom %}
+                    {% if document.tiers.codePostalFacturation %}
+                        <span class="billing-customer-country">{{ paysFacturation~' '~document.tiers.codePostalFacturation }}</span><br/>
+                    {% else %}
+                        <span class="billing-customer-country">{{ paysFacturation }}</span><br/>
+                    {% endif %}
+                    {% if document.tiers.email %}
+                    <span class="billing-customer-email">Email : {{ document.tiers.email }}</span><br/>
+                    {% endif %}
+                    {% if document.tiers.telephone %}
+                    <span class="billing-customer-tel" {% if modele.showTelClient == 0 %}style="display: none;"{% endif %}>Tel : {{ document.tiers.telephone }}</span><br/>
+                    {% endif %}
+                    {% if document.tiers.siteWeb %}
+                    <span class="billing-customer-website">Site web : {{ document.tiers.siteWeb }}</span><br/>
+                    <span class="company-tva-intracom" {% if modele.showTvaIntracom == 0 %}style="display: none;"{% endif %}>TVA Intracommunautaire : {{ params.companyTvaIntracom }}<br></span>
+                    {% endif %}
+                </p>
+            {% endif %}
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <br/>
+    <br/>
+    <table class="list">
+        <tr style="background-color: {{ modele.headColor }}">
+        {% if type == 'devis' or type == 'facture' or type == 'commande' or type == 'avoir' or type == 'livraison' %}
+            <th class="col-4">{{ modele.designationLabel }}</th>
+            <th class="col-1">TVA</th>
+            {% if modele.showQuantity == 1 %}
+            <th class="col-1 pos-right">{{ modele.quantityLabel }}</th>
+            {% endif %}
+            {% if modele.showPrice == 1 %}
+            <th class="col-3 pos-right">{{ modele.priceLabel }}</th>
+            {% endif %}
+            <th class="col-3 pos-right">Montant HT</th>
+        {% elseif type == 'encaissement' %}
+            <th class="col-3">Date réception</th>
+            <th class="col-3">Mode paiement</th>
+            <th class="col-3">Référence Bancaire</th>
+            <th class="col-3 pos-right">Montant HT</th>
+        {% elseif type == 'paiement' %}
+            <th class="col-2">Date réception</th>
+            <th class="col-2">Mode paiement</th>
+            <th class="col-3">Référence Bancaire</th>
+            <th class="col-2">Facture N°</th>
+            <th class="col-3 pos-right">Montant HT</th>
+        {% endif %}
+        </tr>
+        {% set totalHT = 0 %}
+        {% if type == 'paiement' %}
+            <tr>
+                <td class="col-2">{{ dateDocument|date("d/m/Y") }}</td>
+                <td class="col-2">{{ document.oneMoyenPaiement.nom }}</td>
+                <td class="col-3">{{ document.refBanque }}</td>
+                <td class="col-2">{{ document.oneVente.code }}</td>
+                <td class="col-3 pos-right">{{ document.montant|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</td>
+            </tr>
+        {% else %}
+            {% for article in articles %}
+            <tr>
+            {% if type == 'devis' or type == 'facture' or type == 'commande' or type == 'avoir' or type == 'livraison' %}
+                <td class="col-4">
+                    <span {% if modele.showProductCode == 0 %}style="display: none;"{% endif %}><b>PS-001 </b></span><span><b>{{ article.oneArticle.nom }}</b></span><br/>
+                    <span class="article-description">{{ article.description|nl2br }}</span>
+                </td>     
+                <td class="col-1">
+                    {% if article.tvaTaux.taux > 0 %}
+                    <span>{{ article.tvaTaux.taux }}%</span>
+                    {% endif %}
+                </td>    
+                {% if modele.showQuantity == 1 %}
+                <td class="col-1 pos-right"><span>{{ article.quantite }}</span></td> 
+                {% endif %}
+                {% if modele.showPrice == 1 %}
+                <td class="col-3 pos-right"><span>{{ article.prix|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span><span class="article-unit" {% if modele.showUnit == 0 %}style="display: none;"{% endif %}> /{{ article.oneArticle.oneUniteArticle.nom }}</span></td>  
+                {% endif %}
+                <td class="col-3 pos-right"><span>{{ (article.quantite * article.prix)|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>
+            {% elseif type == 'encaissement' %}
+                <td class="col-3">{{ dateDocument|date("d/m/Y") }}</td>
+                <td class="col-3">{{ document.oneMoyenPaiement.nom }}</td>
+                <td class="col-3"></td>
+                <td class="col-3 pos-right">{{ article.montant|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</td>
+            {% elseif type == 'paiement' %}
+                <td class="col-2">{{ dateDocument|date("d/m/Y") }}</td>
+                <td class="col-2">{{ document.oneMoyenPaiement.nom }}</td>
+                <td class="col-3">{{ document.refBanque }}</td>
+                <td class="col-2">{{ document.oneVente.code }}</td>
+                <td class="col-3 pos-right">{{ document.montant|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</td>
+            {% endif %}
+            </tr>
+            {% if type == 'devis' or type == 'facture' or type == 'commande' or type == 'avoir' or type == 'livraison' %}
+                {% set totalHT = totalHT + (article.quantite * article.prix) %}
+            {% elseif type == 'encaissement' %}
+                {% set totalHT = totalHT + article.montant %}
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+    </table>
+    {% if type == 'devis' or type == 'facture' or type == 'commande' or type == 'avoir' or type == 'livraison' or type == 'encaissement' %}
+    <table>
+        <tr>
+            <td class="col-6"></td>
+            <td class="col-6">
+                <table>
+                    {% if documentDetails is not null %}
+                        <tr>
+                            <td class="col-6 padding-tb"><span class="ht-label">Total HT</span></td>
+                            <td class="col-6 pos-right padding-tb"><span class="ht-value">{{ documentDetails['ht']|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>
+                        </tr>
+
+                        {% if documentDetails['remise'] > 0 %}
+                        <tr>
+                            <td class="col-6 padding-tb"><span>Remise</span></td>
+                            <td class="col-6 pos-right padding-tb"><span>{{ documentDetails['remise']|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>
+                        </tr>
+                        {% endif %}
+                        {% if documentDetails['tva'] > 0 %}
+                        <tr>
+                            <td class="col-6 padding-tb"><span>TVA</span></td>
+                            <td class="col-6 pos-right padding-tb"><span>{{ documentDetails['tva']|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>
+                        </tr>
+                        {% endif %}
+                        <tr class="total-ttc" style="background-color: #F0F0F0;">
+                            <td class="col-6 padding-tb"><span class="ttc-label">Total TTC</span></td>
+                            <td class="col-6 pos-right padding-tb"><span class="ttc-label">{{ documentDetails['ttc']|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </td>
+        </tr>
+    </table>
+    {% endif %}
+    <br/>
+    <br/>
+    <br/>
+    <div class="line" {% if modele.showPaymentInfo == 0 %}style="display: none;"{% endif %}>
+        {% if type == 'devis' or type == 'facture' or type == 'commande' or type == 'avoir' or type == 'livraison' or type == 'encaissement' %}
+        <div class="col-6">
+            <p>{{ modele.paymentInfoLabel }}</p>
+            <p>{{ document.note|nl2br }}</p>
+        </div>
+        {% elseif type == 'paiement' %}
+        <table>
+            <tr>
+                <tr>
+                    <td class="col-6"></td>               
+                    <td class="col-6 has-background"><span>Encaissement de la facture {{ document.oneVente.code }}</span></td>               
+                </tr>
+            </tr>
+        </table>
+        {% endif %}
+    </div>
+</page>

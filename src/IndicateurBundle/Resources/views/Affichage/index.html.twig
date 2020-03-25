@@ -1,0 +1,34 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Indicateurs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block contenu_droite %}
+    <div class="row">
+        {{ include('IndicateurBundle:Affichage:filtre.html.twig') }}
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="js_conteneur_pack"></div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {# ChartJS #}
+    {# <script src="{{ asset('js/plugins/chartJs/Chart.min.js') }}"></script> #}
+
+    {# HICHART #}
+    {#<script src="https://code.highcharts.com/highcharts.js"></script>#}
+    <script src="{{ asset('js/plugins/highchart/highcharts.js') }}"></script>
+    <script src="{{ asset('js/plugins/highchart/exporting.js') }}"></script>
+
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+
+    <script src="{{ asset('js/charts.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/affichage/index.js') }}"></script>
+{% endblock %}

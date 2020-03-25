@@ -1,0 +1,181 @@
+<form class="form-horizontal" id="js_form_prest_fiscal">
+    <div class="row">
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">TVA</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="tva" id="js_tva" data-field="Tva">
+                        {% set tva = (prestationFiscale is null) ? -1 : (prestationFiscale.tva is null) ? -1 : prestationFiscale.tva %}
+                        <option value=""></option>
+                        <option value="1" {{ (tva == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (tva == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Liasse&nbsp;Fiscale</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="liasse_fiscale" id="js_liasse_fiscale" data-field="Liasse">
+                        {% set liasseFiscale = (prestationFiscale is null) ? -1 : (prestationFiscale.liasse is null) ? -1 : prestationFiscale.liasse%}
+                        <option value=""></option>
+                        <option value="1" {{ (liasseFiscale == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (liasseFiscale == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Accomptes&nbsp;IS&nbsp;et&nbsp;solde</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="accomptes_is_solde" id="js_accomptes_is_solde" data-field="AcompteIs">
+                        {% set accompteIsSolde = (prestationFiscale is null) ? -1 : (prestationFiscale.acompteIs is null) ? -1 : prestationFiscale.acompteIs %}
+                        <option value=""></option>
+                        <option value="1" {{ (accompteIsSolde == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (accompteIsSolde == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">CICE</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="cice" id="js_cice" data-field="Cice">
+                        {% set cice = (prestationFiscale is null) ? -1 : (prestationFiscale.cice is null) ? -1 : prestationFiscale.cice %}
+                        <option value=""></option>
+                        <option value="1" {{ (cice == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (cice == 0) ? 'selected' : '' }}>Non</option>
+                        <option value="2" {{ (cice == 2) ? 'selected' : '' }}>Si nécessaire</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">DEB</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="deb" id="js_deb" data-field="Dbe">
+                        {% set dbe = (prestationFiscale is null) ? 0 : (prestationFiscale.deb is null) ? 0 : prestationFiscale.deb %}
+                        <option value="1" {{ (dbe == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (dbe == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">CVAE</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="cvae" id="js_cvae" data-field="Cvae">
+                        {% set cvae = (prestationFiscale is null) ? -1 : (prestationFiscale.cvae is null) ? -1 : prestationFiscale.cvae %}
+                        <option value=""></option>
+                        <option value="1" {{ (cvae== 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (cvae== 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">TVTS</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="tvts" id="js_tvts" data-field="Tvts">
+                        {% set tvts = (prestationFiscale is null) ? -1 : (prestationFiscale.tvts is null) ? -1 : prestationFiscale.tvts %}
+                        <option value=""></option>
+                        <option value="1" {{ (tvts== 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (tvts== 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">DAS&nbsp;2</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="das2" id="js_das2" data-field="Das2">
+                        {% set das2 = (prestationFiscale is null) ? -1 : (prestationFiscale.das2 is null) ? -1 : prestationFiscale.das2 %}
+                        <option value=""></option>
+                        <option value="1" {{ (das2== 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (das2== 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">CFE</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="cfe" id="js_cfe" data-field="Cfe">
+                        {% set cfe= (prestationFiscale is null) ? -1 : (prestationFiscale.cfe is null) ? -1 : prestationFiscale.cfe %}
+                        <option value=""></option>
+                        <option value="1" {{ (cfe == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (cfe == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">DECLOYER</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="dej" id="js_dej" data-field="Dej">
+                        {% set dej= (prestationFiscale is null) ? 0 : (prestationFiscale.dej is null) ? 0 : prestationFiscale.dej %}
+                        <option value="1" {{ (dej == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (dej == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Dividendes</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="dividendes" id="js_dividendes" data-field="Dividende">
+                        {% set dividende= (prestationFiscale is null) ? -1 : (prestationFiscale.dividende is null) ? -1 : prestationFiscale.dividende %}
+                        <option value=""></option>
+                        <option value="1" {{ (dividende == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (dividende == 0) ? 'selected' : '' }}>Non</option>
+                        <option value="2" {{ (dividende == 2) ? 'selected' : '' }}>Si nécessaire</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Télédéclarations liasse</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="teledeclaration_liasse" id="js_teledeclaration_liasse" data-field="TeledeclarationLiasse">
+                        {% set teledeclarationliasse= (prestationFiscale is null) ? -1 : (prestationFiscale.teledeclarationLiasse is null) ? -1 : prestationFiscale.teledeclarationLiasse%}
+                        <option value=""></option>
+                        <option value="1" {{ (teledeclarationliasse == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (teledeclarationliasse == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Télédéclarations autres</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_fiscal" name="teledeclaration_autres" id="js_teledeclaration_autres" data-field="TeledeclarationAutre">
+                        {% set teledeclarationautre= (prestationFiscale is null) ? -1 : (prestationFiscale.teledeclarationAutre is null) ? -1 : prestationFiscale.teledeclarationAutre %}
+                        <option value=""></option>
+                        <option value="1" {{ (teledeclarationautre == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (teledeclarationautre == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Autres</label>
+                <div class="col-lg-5">
+                    <input type="text" class="form-control prest_fiscal" name="prestation_fiscal_autre" id="js_prestation_fiscal_autre"
+                           data-field="Autres" value="{{ (prestationFiscale is null)? '' : prestationFiscale.autres }}">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</form>

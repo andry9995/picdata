@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+                <h5><span class="label label-default" id="id_controle_solde"></span></h5>
+            </div>
+            <div class="ibox-content" style="padding: 0!important">
+                <table id="id-table-desiquilibre" class="table">
+                    {#<thead>
+                    <tr>
+                        <th></th>
+                        <th>Image</th>
+                        <th>Date</th>
+                        <th>Libell&eacute;</th>
+                        <th>D&eacute;bit</th>
+                        <th>Cr&eacute;dit</th>
+                    </tr>
+                    </thead>#}
+                    <tbody>
+                    {% for result in results %}
+                        {{ include('BanqueBundle:ReleveBanque2:lettrage-desiquilibre-tr.html.twig', { result: result, action: 0 }) }}
+
+                        {#<tr class="cl_image_sel_{{ ecr.ims.id_nc }}" data-type="{{ ecr.ent.t }}" data-id="{{ ecr.ent.id }}" data-image_id="{{ ecr.ims.id_nc }}">
+                            <td>
+                                <div class="btn-group">
+                                    <span data-toggle="dropdown" class="btn btn-warning btn-xs dropdown-toggle"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                    <ul class="dropdown-menu" id="id_delete_action">
+                                        <li class="cl_delete_action_item" data-type="1"><a href="#">Image</a></li>
+                                        <li class="cl_delete_action_item" data-type="0"><a href="#">Ligne</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td class="js_show_image text-primary pointer" data-id_image="{{ ecr.ims.id }}">{{ ecr.ims.n }}</td>
+                            <td>{{ ecr.d }}</td>
+                            <td>{{ ecr.l }}</td>
+                            <td align="right" class="cl_debit" data-m="{{ ecr.db }}">{{ (ecr.db == 0) ? '' : ecr.db|number_format(2, ',', '&nbsp;')|raw  }}</td>
+                            <td align="right" class="text-danger cl_credit" data-m="{{ ecr.cr }}">{{ (ecr.cr == 0) ? '' : ecr.cr|number_format(2, ',', '&nbsp;')|raw  }}</td>
+                        </tr>#}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-content">
+                <div class="row">
+                    {# Type Piece #}
+                    <div class="col-sm-4">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="id_recherche_type">Cat&eacute;gorie</label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="id_recherche_type">
+                                        <option value="0">PICDOC</option>
+                                        <option value="1">Relev&eacute;</option>
+                                        <option value="2">Banque&nbsp;Autre</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Nom Piece #}
+                    <div class="col-sm-3">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="id_recherche_piece">Image</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" id="id_recherche_piece" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Montant #}
+                    <div class="col-sm-3">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label" for="id_recherche_montant">Montant</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" id="id_recherche_montant" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <span class="btn btn-sn btn-white" id="id_lanch_search"><i class="fa fa-search" aria-hidden="true"></i></span>
+                        <span class="btn btn-sn btn-white"><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
+                    </div>
+
+                    <div class="col-sm-12" id="id_container_table_desiquilibre_new">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-white btn-sm btn-primary" id="id_equilibre_lettrage"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Enregister</span>
+    </div>
+
+    <input type="hidden" id="id-image_flague" data-releve="{{ releve.id|boost }}" value="{{ (releve.imageFlague ? releve.imageFlague.id : 0)|boost }}">
+</div>
+
+<div id="test_search"></div>

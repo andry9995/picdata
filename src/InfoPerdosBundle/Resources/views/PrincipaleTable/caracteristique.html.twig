@@ -1,0 +1,53 @@
+<div class="panel-body">
+
+    <div class="tabs-containers jqgrid-tabs"  style="background-color: #f3f3f4">
+
+        <ul class="nav nav-tabs" style="height: 100px">
+            <li class="active"><a data-toggle="tab" href="#tab-regime-fiscal" id="js-regime-fiscal-tab"> Regime ficscal</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-regime-imposition">Regime d'imposition</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-profession-liberale">Profession libérale</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-activite-commerciale">Activité commerciale</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-type-activite">Type d'activité</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-type-vente">Type de vente</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-tva-regime">Regime TVA</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-type-gestion">Type de gestion de frais</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="tab-regime-fiscal" class="tab-pane active">
+                    {{ include('InfoPerdosBundle:Caracteristique:regimeFiscal.html.twig') }}
+            </div>
+
+            <div id="tab-regime-imposition" class="tab-pane">
+                {{ include('InfoPerdosBundle:Caracteristique:regimeImposition.html.twig') }}
+            </div>
+
+            <div id="tab-profession-liberale" class="tab-pane">
+                <table id="js_professionLiberale_liste" class="js-jqgrid-table"></table>
+                <div id="pager_professionLiberale_liste"></div>
+            </div>
+
+            <div id="tab-activite-commerciale" class="tab-pane">
+
+            </div>
+
+            <div id="tab-type-activite" class="tab-pane">
+                {{ include('InfoPerdosBundle:Caracteristique:typeActivite.html.twig') }}
+            </div>
+
+            <div id="tab-type-vente" class="tab-pane">
+                {{ include('InfoPerdosBundle:Caracteristique:typeVente.html.twig') }}
+            </div>
+
+            <div id="tab-tva-regime" class="tab-pane">
+                {{ include('InfoPerdosBundle:Caracteristique:regimeTva.html.twig') }}
+            </div>
+
+            <div id="tab-type-gestion" class="tab-pane">
+                {{ include('InfoPerdosBundle:Caracteristique:typeGestionFrais.html.twig') }}
+            </div>
+
+        </div>
+    </div>
+</div>

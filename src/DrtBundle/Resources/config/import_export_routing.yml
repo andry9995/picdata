@@ -1,0 +1,56 @@
+import_export:
+    path:     /
+    defaults: { _controller: DrtBundle:ImportExport:index }
+
+############# PARAMETRES
+import_export_params:
+    path:     /params
+    defaults: { _controller: DrtBundle:ImportExport:params }
+    methods:  [POST]
+    options:
+        expose:  true
+
+import_export_param_edit:
+    path:     /param/edit
+    defaults: { _controller: DrtBundle:ImportExport:editParam }
+    methods:  [POST]
+    options:
+        expose:  true
+
+
+############# EXPORT
+import_export_exports:
+    path:     /exports
+    defaults: { _controller: DrtBundle:Export:exports }
+    methods:  [POST]
+    options:
+        expose:   true
+
+############# RECAP
+import_export_recaps:
+    path:     /recaps
+    defaults: { _controller: DrtBundle:Export:recaps }
+    methods:  [POST]
+    options:
+        expose:   true
+
+import_export_recaps_details:
+    path:     /recaps/details
+    defaults: { _controller: DrtBundle:Export:recapsDetails }
+    methods:  [POST]
+    options:
+        expose:   true
+
+import_export_recaps_cloturer:
+    path:     /recaps/cloturer
+    defaults: { _controller: DrtBundle:Export:cloturer }
+    methods:  [POST]
+    options:
+        expose:   true
+
+dnp_edit:
+    path:    /dnp-edit
+    defaults: { _controller: DrtBundle:Export:dnpEdit }
+    options:
+        expose: true
+    methods: [POST]

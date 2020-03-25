@@ -1,0 +1,70 @@
+<table id="js_liste_analityques" class="table table-hover">
+    <thead>
+        <tr>
+            <th colspan="2">Code</th>
+            <th>Libell&eacute;</th>
+            <th colspan="3">Section</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td colspan="2"><input type="text" class="form-control input-sm" id="js_code_a"></td>
+            <td><input type="text" class="form-control input-sm" id="js_libelle_a"></td>
+            <td>
+                <div class="checkbox checkbox-inline">
+                    <input type="checkbox" id="id_is_section">
+                    <label for="id_is_section"></label>
+                </div>
+            </td>
+            <td>
+                <select class="form-control input-sm" id="js_type_add" data-section_val="{{ (-1)|boost }}">
+                    <option value="{{ 0|boost }}"></option>
+                    {% if analytiquesGroupeds|length > 1 %}
+                        {% for group in analytiquesGroupeds if group.s %}
+                            <option value="{{ group.s.id|boost }}">{{ group.s.libelle }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </td>
+            <td class="text-right"><span class="btn btn-white btn-sm" id="js_add_a"><i class="fa fa-plus" aria-hidden="true"></i></span></td>
+        </tr>
+
+        {% for analytiquesGrouped in analytiquesGroupeds %}
+            <tr data-id_="{{ (analytiquesGrouped.s ? analytiquesGrouped.s.id : 0) }}" data-id="{{ (analytiquesGrouped.s ? analytiquesGrouped.s.id : 0)|boost }}" data-type="0">
+                {% if analytiquesGrouped.s %}
+                    <td colspan="2"><input type="text" class="input-in-jqgrid input-sm form-control js_input_a js_code_a" value="{{ analytiquesGrouped.s.code }}"></td>
+                    <td colspan="3"><input type="text" class="input-in-jqgrid input-sm form-control js_input_a js_libelle_a" value="{{ analytiquesGrouped.s.libelle }}"></td>
+                    <td class="text-right"><span class="btn btn-danger btn-sm js_remove_a"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
+                {% else %}
+                    <td colspan="5">&nbsp;</td>
+                {% endif %}
+            </tr>
+
+            {% for analytique in analytiquesGrouped.cas %}
+                <tr data-id="{{ analytique.id|boost }}" data-type="1">
+                    <td></td>
+                    <td><input type="text" class="input-in-jqgrid input-sm form-control js_input_a js_code_a" value="{{ analytique.code }}"></td>
+                    <td colspan="3">
+                        <input type="text" class="input-in-jqgrid input-sm form-control js_input_a js_libelle_a" value="{{ analytique.libelle }}">
+                        <select class="input-in-jqgrid input-sm form-control js_input_a js_code_section hidden">
+                            <option value="{{ 0|boost }}"></option>
+                            {% for group in analytiquesGroupeds if group.s %}
+                                <option value="{{ group.s.id|boost }}" {{ (analytique.codeAnalytiqueSection and analytique.codeAnalytiqueSection.id == group.s.id) ? 'selected' : '' }}>{{ group.s.libelle }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="text-right"><span class="btn btn-danger btn-sm js_remove_a"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        <tr class="">
+            <th width="5%"></th>
+            <th width="20%"></th>
+            <th width="35%"></th>
+            <th width="17%"></th>
+            <th width="18%"></th>
+            <th width="5%"></th>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,129 @@
+<table class="MsoNormalTable" border=1 cellpadding=7.5pt 0 0 0 width=600 style="width:450.0pt;mso-cellspacing:1.5pt;border:dotted #0E6AAD 1.0pt;mso-yfti-tbllook:1184;mso-padding-alt:0 0 0 0;">
+    <tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;">
+        <td style="border:solid #0E6AAD 1.0pt;background:white;padding:7.5pt 7.5pt 7.5pt 7.5pt;">
+            <table class="MsoNormalTable" border=0 cellspacing=0 cellpadding=0 width=600 style="width:450.0pt;border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0 0 0 0;">
+                <tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;">
+                    <td style='border:solid #0E6AAD 1.0pt;background:#F9F9F9;padding:7.5pt 7.5pt 7.5pt 7.5pt'>
+                        <p class="MsoNormal" align="center" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;text-align:center;">
+                            <b>Madame, Monsieur</b>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+
+
+            <table class="MsoNormalTable" border=0 cellspacing=0 cellpadding=0 width=600 style="width:450.0pt;border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm;">
+                <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+                    <td style='border:solid #0E6AAD 1.0pt;background:#F9F9F9;padding:7.5pt 7.5pt 7.5pt 7.5pt;background-position-x:0%;background-position-y:0%'>
+
+                        <p class="MsoNormal" align=center style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;text-align:center;">
+                            <b>Le dossier {{ dossier.nom }} est en création.</b>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+
+
+            <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+
+            <table class="MsoNormalTable" border=0 cellspacing=0 cellpadding=0 width=600
+                   style="width:450.0pt;border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0 0 0 0;">
+                <tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;">
+                    <td style="border:solid #0E6AAD 1.0pt;background:#F9F9F9;padding:7.5pt 7.5pt 7.5pt 7.5pt;background-position-x:0%;background-position-y:0%;">
+                        {% set site = dossier.site %}
+                        {{ client.nom }}<br/>
+                        {{ site.nom }} <br/>
+
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">
+                            Vous venez de créer le dossier {{ dossier.nom }}.
+                        </p>
+
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+
+                            Cependant, les zones obligatoires:
+
+                        <ul>
+
+                            {% if instruction|length > 0 %}
+                                <li>
+                                    <strong>Tous dossiers</strong>
+                                    <ul>
+                                        {% for instr in instruction %}
+                                            <li>{{ instr }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {% if information|length > 0 %}
+                                <li>
+                                    <strong>Informations Dossiers</strong>
+                                    <ul>
+                                        {% for info in information %}
+                                            <li>{{ info }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {% if methodes|length > 0 %}
+                                <li>
+                                    <strong>Méthodes comptables</strong>
+                                    <ul>
+                                        {% for methode in methodes %}
+                                            {% if methode != '' %}
+                                                <li>{{ methode }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                            {% if prestation|length > 0 %}
+                                <li>
+                                    <strong>Prestations demandées</strong>
+                                    <ul>
+                                        {% for prest in prestation %}
+                                            {% if prest != '' %}
+                                                <li>{{ prest }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+
+                        </ul>
+                            ne sont pas renseignées donc la création ne peut être validée.
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+                            En conséquence, vous ne pouvez pas encore envoyer d'images sur le site.
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+                            Les saisies déjà faites ne sont pas perdues et vous pourrez compléter le dossier ultérieurement.
+                        <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>
+                            Un mail de rappel vous sera envoyé dans 15 jours si le dossier n'est pas toujours complété.<br/>
+
+
+                        <p style="float: right">Bonne journée</p>
+
+                    </td>
+                </tr>
+            </table>
+
+            {#<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;">&nbsp;</p>#}
+
+            {#<img src=" {{ app.request.getSchemeAndHttpHost() ~ asset('img/scriptura/logo.png') }}" height="50" width="50" />#}
+
+            {#<img src=" {{ absolute_url(asset('img/scriptura/logo.png')) }}" height="100" width="100" style="float:right"/>#}
+
+
+            {#{% if client.id != 559 %}#}
+                {#<img src="{{ embed }}" height="100" width="100" style="float:right">#}
+            {#{% endif %}#}
+
+        </td>
+    </tr>
+</table>

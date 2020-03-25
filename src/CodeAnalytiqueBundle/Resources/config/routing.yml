@@ -1,0 +1,36 @@
+code_analytique_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CodeAnalytiqueBundle:Default:index }
+
+code_analytiques:
+    path: /code_analytiques
+    defaults: { _controller: CodeAnalytiqueBundle:Default:codeAnalytiques }
+    options:
+        expose: true
+    methods: [POST]
+code_analytiques_json:
+    path: /code_analytiques/json
+    defaults: { _controller: CodeAnalytiqueBundle:Default:liste }
+    options:
+        expose: true
+    methods: [POST]
+
+##############    gestion code analytique   ################
+code_analytique:
+    path: /code_analytique
+    defaults: { _controller: CodeAnalytiqueBundle:Edit:index }
+    options:
+        expose: true
+    methods: [POST]
+code_analytiques_liste:
+    path: /code_analytique/liste
+    defaults: { _controller: CodeAnalytiqueBundle:Edit:liste }
+    options:
+        expose: true
+    methods: [POST]
+code_analytique_edit:
+    path: /code_analytique/edit
+    defaults: { _controller: CodeAnalytiqueBundle:Edit:edit }
+    options:
+        expose: true
+    methods: [POST]

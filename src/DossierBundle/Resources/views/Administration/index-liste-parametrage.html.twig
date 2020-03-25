@@ -1,0 +1,548 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% block titre %}
+    {{ parent() }} - Log
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/dossier/css/tableau.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/utils/Draggable.min.js"></script> 
+    <script src="{{ asset('bundles/tableauimage/js/tb-image-functions.js') }}?v=3.7"></script>
+    <script src="{{ asset('bundles/facturation/js/facturation-functions.js') }}?v=3.4"></script>
+    <script src="{{ asset('bundles/tableauimage/js/tableau.js') }}?v=3.5"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/dossier/js/config.js') }}"></script>
+    <script src="{{ asset('bundles/dossier/js/config-client.js') }}"></script>
+    <script src="{{ asset('bundles/dossier/js/config-dossier.js') }}"></script> 
+    <script src="{{ asset('bundles/dossier/js/rappel-image.js') }}"></script>
+    <script src="{{ asset('bundles/dossier/js/rappel-pm.js') }}"></script> 
+    <script src="{{ asset('bundles/dossier/js/autres-pm.js') }}"></script> 
+    <script src="{{ asset('bundles/dossier/js/drag-drop-critere.js') }}"></script> 
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ render(controller('AppBundle:Commun:clients', {'conteneur': '0', 'tous': '0', 'attr_id': 'client-config', 'label_col': 4, 'select_col': 8})) }}
+                </div>
+                <div class="col-sm-4">
+                    <form class="form-horizontal">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label for="site-config" class="control-label col-lg-4">
+                                <span>Site</span>
+                                <span class="label label-warning" style="display:inline-block">0</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <select data-ref="" class="site form-control" id="site-config"></select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="tabs-container" id="id_config_tabs">
+                    <ul class="nav nav-tabs">
+                        {% for key,tab in tabs %}
+                            <li class="config_tab_li {{ key == 0 ? 'active' : '' }}"><a data-toggle="tab" href="#config_tab_{{ key }}" aria-expanded="{{ key == 0 ? 'true' : 'false' }}">{{ tab|raw }}&nbsp;<span class="badge badge-primary cl_nb hidden">0</span></a></li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="tab-content">
+                        {% for key,tab in tabs %}
+                            <div id="config_tab_{{ key }}" class="tab-pane {{ key == 0 ? 'active' : '' }}" data-type="{{ key }}">
+                                <div class="panel-body"></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="show-config-mailpm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content animated fadeInRight">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-titl">Configuration envoie email</h4>
+                    </div>
+                    <div class="modal-body" style="height: 100px;">
+                        <div class="col-sm-12">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-warning btn-outline" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-config-mail">
+                            Enregistrer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#Modal Destinataires Rappel Image  #}
+    <div class="modal" id="rappel-img-dest-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-img-dest-modal-title">Destinataires</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;">
+                    <form role="form" class="form-horizontal">
+                        <input type="hidden" id="notification-dest-id" name="notification-dest-id">
+
+                        <div class="form-group" id="group-nom-contact">
+                            <div class="col-sm-4">
+                                <label for="titre-contact">Titre</label>
+                                <select class="form-control" name="titre-contact" id="titre-contact">
+                                    <option value="1">Monsieur</option>
+                                    <option value="2">Madame</option>
+                                    <option value="3">Mademoiselle</option>
+                                    <option value="4">Madame, Monsieur</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-8">
+                                <label for="nom-contact">Nom</label>
+                                <input class="form-control" name="nom-contact" id="nom-contact" placeholder="Nom du contact">
+                            </div>
+                        </div>
+                        <div class="form-group" id="group-destinataire" style="margin-top: 15px;">
+                            <div class="col-sm-12">
+                                <label for="list-destinataire">Destinataire(s)</label>&nbsp;&nbsp;&nbsp;<span class="small label label-default"> Séparer les adresses email par un point virgule </span>
+                                <input class="form-control" name="list-destinataire" id="list-destinataire">
+                            </div>
+                        </div>
+                        <div class="form-group" id="group-destinataire" style="margin-top: 15px;">
+                            <div class="col-sm-12">
+                                <label for="list-copie">Copie(s)</label>&nbsp;&nbsp;&nbsp;<span class="small label label-default"> Séparer les adresses email par un point virgule </span>
+                                <input class="form-control" name="list-copie" id="list-copie">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-save-rappel-img-destinataire" class="btn btn-sm btn-primary" style="width:100px;">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#Modal Destinataires Rappel Pm  #}
+    <div class="modal" id="rappel-pm-dest-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-pm-dest-modal-title">Destinataires</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;">
+                    <form role="form" class="form-horizontal">
+                        <input type="hidden" id="notification-pm-dest-id" name="notification-dest-id">
+
+                        <div class="form-group" id="group-nom-contact">
+                            <div class="col-sm-4">
+                                <label for="titre-contact-pm">Titre</label>
+                                <select class="form-control" name="titre-contact-pm" id="titre-contact-pm">
+                                    <option value="1">Monsieur</option>
+                                    <option value="2">Madame</option>
+                                    <option value="3">Mademoiselle</option>
+                                    <option value="4">Madame, Monsieur</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-8">
+                                <label for="nom-contact-pm">Nom</label>
+                                <input class="form-control" name="nom-contact-pm" id="nom-contact-pm" placeholder="Nom du contact">
+                            </div>
+                        </div>
+                        <div class="form-group" id="group-destinataire" style="margin-top: 15px;">
+                            <div class="col-sm-12">
+                                <label for="list-destinataire-pm">Destinataire(s)</label>&nbsp;&nbsp;&nbsp;<span class="small label label-default"> Séparer les adresses email par un point virgule </span>
+                                <input class="form-control" name="list-destinataire-pm" id="list-destinataire-pm">
+                            </div>
+                        </div>
+                        <div class="form-group" id="group-destinataire" style="margin-top: 15px;">
+                            <div class="col-sm-12">
+                                <label for="list-copie-pm">Copie(s)</label>&nbsp;&nbsp;&nbsp;<span class="small label label-default"> Séparer les adresses email par un point virgule </span>
+                                <input class="form-control" name="list-copie-pm" id="list-copie-pm">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-save-rappel-pm-destinataire" class="btn btn-sm btn-primary" style="width:100px;">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#Modal Destinataires Autres Pm  #}
+    <div class="modal" id="autres-pm-dest-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="autres-pm-dest-modal-title">Destinataires</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;">
+                    <form role="form" class="form-horizontal">
+                        <input type="hidden" id="notification-autres-pm-dest-id" name="notification-dest-id">
+
+                        <div class="form-group" id="group-nom-contact">
+                            <div class="col-sm-4">
+                                <label for="titre-contact-autres-pm">Titre</label>
+                                <select class="form-control" name="titre-contact-autres-pm" id="titre-contact-autres-pm">
+                                    <option value="1">Monsieur</option>
+                                    <option value="2">Madame</option>
+                                    <option value="3">Mademoiselle</option>
+                                    <option value="4">Madame, Monsieur</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-8">
+                                <label for="nom-contact-autres-pm">Nom</label>
+                                <input class="form-control" name="nom-contact-autres-pm" id="nom-contact-autres-pm" placeholder="Nom du contact">
+                            </div>
+                        </div>
+                        <div class="form-group" id="group-destinataire" style="margin-top: 15px;">
+                            <div class="col-sm-12">
+                                <label for="list-destinataire-autres-pm">Destinataire(s)</label>&nbsp;&nbsp;&nbsp;<span class="small label label-default"> Séparer les adresses email par un point virgule </span>
+                                <input class="form-control" name="list-destinataire-autres-pm" id="list-destinataire-autres-pm">
+                            </div>
+                        </div>
+                        <div class="form-group" id="group-destinataire" style="margin-top: 15px;">
+                            <div class="col-sm-12">
+                                <label for="list-copie-autres-pm">Copie(s)</label>&nbsp;&nbsp;&nbsp;<span class="small label label-default"> Séparer les adresses email par un point virgule </span>
+                                <input class="form-control" name="list-copie-autres-pm" id="list-copie-autres-pm">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-save-autres-pm-destinataire" class="btn btn-sm btn-primary" style="width:100px;">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#Modal show notification dossier#}
+    <div class="modal" id="event-show-notification-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" style="text-align: center;">Configurations Notifications</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <h3 id="dossier-nom">Dossier</h3>
+                        <input id="dossier-id" type="hidden">
+                        <hr>
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" id="chk-rappel-image" value="1" name="status-value">
+                            <label for="chk-rappel-image">Rappel image</label>
+                        </div>
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" id="chk-rappel-pm" value="2" name="status-value">
+                            <label for="chk-rappel-pm">Pièce manquante</label>
+                        </div>
+                        <div class="checkbox checkbox-inline">
+                            <input type="checkbox" id="chk-rappel-drt" value="3" name="status-value">
+                            <label for="chk-rappel-drt">DRT</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal" style="width: 100px;">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-save-config-notif-mail" style="width: 100px;">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#Modal Contenu Rappel Image  #}
+    <div class="modal" id="rappel-img-contenu-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-img-contenu-modal-title">Contenu</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;min-height:250px;">
+                    <input type="hidden" id="notification-contenu-id" name="notification-contenu-id">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="notification-objet" class="control-label col-lg-2">Objet</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control"  id="notification-objet" name="notification-objet"
+                                       value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-right" style="margin-bottom:5px;">
+                                <button class="btn btn-bitbucket btn-white btn-xs" id="frequence-envoi">
+                                    <i class="fa fa-clock-o"></i> Insérer fréquence d'envoi
+                                </button>
+                                {#<button class="btn btn-bitbucket btn-white btn-xs" id="image-manquante">#}
+                                {#<i class="fa fa-th-list"></i> Insérer liste images manquantes#}
+                                {#</button>#}
+                                <button class="btn btn-bitbucket btn-white btn-xs" id="default-content" style="width:210px;">
+                                    <i class="fa fa-file-text-o"></i> Utiliser le contenu par défaut
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <textarea id="email-content" class="form-control" style="height:400px;margin-top: 10px;">Entrer le contenu du mail ici</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="checkbox checkbox-inline checkbox-danger" style="margin-right:30px;text-align:left;">
+                        <input id="check-content-all" type="checkbox">
+                        <label for="check-content-all">
+                            <strong class="text-danger">Appliquer à tous les dossiers</strong>
+                        </label>
+                    </div>
+                    <button type="button" id="btn-save-rappel-img-contenu" class="btn btn-sm btn-primary" style="width:120px;">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#Modal Contenu Rappel Pm  #}
+    <div class="modal" id="rappel-pm-contenu-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-pm-contenu-modal-title">Contenu</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;min-height:250px;">
+                    <input type="hidden" id="notification-pm-contenu-id" name="notification-pm-contenu-id">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="notification-pm-objet" class="control-label col-lg-2">Objet</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control"  id="notification-pm-objet" name="notification-pm-objet"
+                                       value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-right" style="margin-bottom:5px;">
+                                {# <button class="btn btn-bitbucket btn-white btn-xs" id="frequence-envoi-pm">
+                                    <i class="fa fa-clock-o"></i> Insérer fréquence d'envoi
+                                </button>
+                                <button class="btn btn-bitbucket btn-white btn-xs" id="image-manquante">
+                                    <i class="fa fa-th-list"></i> Insérer liste images manquantes
+                                </button> #}
+                                <button class="btn btn-bitbucket btn-white btn-xs" id="default-content-pm" style="width:210px;">
+                                    <i class="fa fa-file-text-o"></i> Utiliser le contenu par défaut
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <textarea id="email-content-pm" class="form-control" style="height:400px;margin-top: 10px;">Entrer le contenu du mail ici</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="checkbox checkbox-inline checkbox-danger" style="margin-right:30px;text-align:left;">
+                        <input id="check-content-pm-all" type="checkbox">
+                        <label for="check-content-pm-all">
+                            <strong class="text-danger">Appliquer à tous les dossiers</strong>
+                        </label>
+                    </div>
+                    <button type="button" id="btn-save-rappel-pm-contenu" class="btn btn-sm btn-primary" style="width:120px;">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal Contenu Autres Pm  #}
+    <div class="modal" id="autres-pm-contenu-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="autres-pm-contenu-modal-title">Contenu</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;min-height:250px;">
+                    <input type="hidden" id="notification-autres-pm-contenu-id" name="notification-autres-pm-contenu-id">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="notification-autres-pm-objet" class="control-label col-lg-2">Objet</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control"  id="notification-autres-pm-objet" name="notification-autres-pm-objet"
+                                       value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-right" style="margin-bottom:5px;">
+                                {# <button class="btn btn-bitbucket btn-white btn-xs" id="frequence-envoi-pm">
+                                    <i class="fa fa-clock-o"></i> Insérer fréquence d'envoi
+                                </button>
+                                <button class="btn btn-bitbucket btn-white btn-xs" id="image-manquante">
+                                    <i class="fa fa-th-list"></i> Insérer liste images manquantes
+                                </button> #}
+                                <button class="btn btn-bitbucket btn-white btn-xs" id="default-content-autres-pm" style="width:210px;">
+                                    <i class="fa fa-file-text-o"></i> Utiliser le contenu par défaut
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <textarea id="email-content-autres-pm" class="form-control" style="height:400px;margin-top: 10px;">Entrer le contenu du mail ici</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="checkbox checkbox-inline checkbox-danger" style="margin-right:30px;text-align:left;">
+                        <input id="check-content-autres-pm-all" type="checkbox">
+                        <label for="check-content-autres-pm-all">
+                            <strong class="text-danger">Appliquer à tous les dossiers</strong>
+                        </label>
+                    </div>
+                    <button type="button" id="btn-save-autres-pm-contenu" class="btn btn-sm btn-primary" style="width:120px;">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal parm rappel #}
+    <div class="modal" id="rappel-param-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-param-modal-title">Contenu</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;min-height:250px;">
+                    <form class="form-horizontal" id="rappel-param-form">
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="btn-save-rappel-param" class="btn btn-sm btn-primary" style="width:120px;">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal Aperçu email envoyé  #}
+    <div class="modal" id="rappel-log-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-log-modal-title">Email</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;min-height:250px;">
+                    <table class="table">
+                        <tr>
+                            <th>Statut</th>
+                            <td id="preview-status"></td>
+                        </tr>
+                        <tr>
+                            <th>Dossier</th>
+                            <td id="preview-dossier"></td>
+                        </tr>
+                        <tr>
+                            <th>Destinataire(s)</th>
+                            <td id="preview-dest">test</td>
+                        </tr>
+                        <tr>
+                            <th>Copie(s)</th>
+                            <td id="preview-copie"></td>
+                        </tr>
+                        <tr>
+                            <th>Sujet</th>
+                            <td id="preview-sujet"></td>
+                        </tr>
+                        <tr>
+                            <th>Date Envoi</th>
+                            <td id="preview-date"></td>
+                        </tr>
+                        <tr>
+                            <th>Contenu</th>
+                            <td><div id="preview-contenu" style="max-height:300px;overflow:auto;"></div></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#Modal Modif statut dossier#}
+    <div class="modal" id="dossier-status-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Modifier statut d'un dossier</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <h3 id="status-dossier-nom">Dossier</h3>
+                        <input id="dossier-id" type="hidden">
+                        <hr>
+                        <h3 style="display:inline-block; margin-right: 5px;">Statut</h3>
+                        <div class="radio radio-inline">
+                            <input type="radio" id="status-actif" value="1" name="status-value" checked="">
+                            <label for="status-actif">Actif</label>
+                        </div>
+                        <div class="radio radio-inline">
+                            <input type="radio" id="status-suspendu" value="2" name="status-value">
+                            <label for="status-suspendu">Suspendu</label>
+                        </div>
+                        {% if is_granted('ROLE_SCRIPTURA_ADMIN') %}
+                            <div class="radio radio-inline">
+                                <input type="radio" id="status-radie" value="3" name="status-value">
+                                <label for="status-radie">Radié</label>
+                            </div>
+                        {% endif %}
+                        <div style="display:inline-block" id="status-debut-container" class="hidden">
+                            <label for="status-debut" style="font-weight: bold;padding: 0 5px 0 10px;">A partir de: </label>
+                            <input id="status-debut" style="max-width: 80px;text-align: center;">
+                        </div>
+                        {% if is_granted('ROLE_CLIENT_RESP') or is_granted('ROLE_CLIENT_ADMIN') %}
+                            <div style="margin-top: 15px;">
+                                <div class="checkbox checkbox-danger checkbox-inline">
+                                    <input type="checkbox" id="check-stop-saisie">
+                                    <label for="check-stop-saisie" class="control-label" style="font-weight: bold;">Stop saisie au: </label>
+                                </div>
+                                <input id="stop-saisie-date" class="form-control input-sm" style="width: 120px;text-align: center;display: inline-block" disabled>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal" style="width: 100px;">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-save-status" style="width: 100px;">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

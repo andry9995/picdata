@@ -1,0 +1,40 @@
+{% set total = 0 %}
+<ul class="folder-list m-b-md cl_sortable" style="padding: 0">
+    {% for indicateursTb in indicateursTbs %}
+        <li data-type="0" class="js_cl_edit_indicateur cl_li" data-id="{{ indicateursTb.id|boost }}">
+            <a href="#">
+                <span class="js_cl_lib">{{ indicateursTb.libelle }}</span>
+                &nbsp;
+                <i class="js_cl_delete_indicateur fa fa-trash-o pull-right" aria-hidden="true"></i>
+                &nbsp;
+                <i class="fa fa-share-square-o pull-right cl_tranferer_indicateur_tb" aria-hidden="true"></i>
+                &nbsp;
+                <span class="label label-warning pull-right">{{ indicateursTb.ponderation }}</span>
+            </a>
+        </li>
+        {% set total = total + indicateursTb.ponderation %}
+    {% endfor %}
+
+    {#{% for indicateursTbInfoperdo in indicateurTbInfoPerdos %}
+        <li data-type="1" class="" style="background-color: #C6C6C6" data-id="{{ indicateursTbInfoperdo.id|boost }}">
+            <a href="#">
+                &nbsp;
+                <i class="fa fa-cubes" aria-hidden="true"></i>
+                <span class="js_cl_lib">{{ indicateursTbInfoperdo.indicateurInfoPerdos.header }}</span>
+                &nbsp;
+                <i class="js_cl_delete_indicateur fa fa-trash-o pull-right" aria-hidden="true"></i>
+            </a>
+        </li>
+    {% endfor %}#}
+</ul>
+<h5 class="hidden">Ponderation</h5>
+<ul class="category-list hidden" style="padding: 0">
+    {% if total == 100 %}
+        {% set cl_ponderation = 'text-navy' %}
+    {% elseif total < 100 %}
+        {% set cl_ponderation = 'text-warning' %}
+    {% else %}
+        {% set cl_ponderation = 'text-danger' %}
+    {% endif %}
+    <li><a href="#"><i class="fa fa-circle {{ cl_ponderation }}"></i><span class="cl_total_ponderation">{{ total }}</span></a></li>
+</ul>

@@ -1,0 +1,37 @@
+{#{{ dump(test) }}#}
+{% set index = 0 %}
+{% for image in images %}
+    {% set ext = (image.extImage|lower == 'pdf') ? extC : image.extImage  %}
+    <div class="file-box" data-id="{{ image.id|boost }}">
+        <div class="file">
+            <a href="#">
+                {#<span class="corner"></span>#}
+                {% set dateScan = '' %}
+                {% if image.nbpage == 200 %}
+                    {% set dateScan = '/' ~ image.lot.dateScan|date("Ymd") %}
+                {% endif %}
+                <div class="image">
+                    <img alt="image" class="img-responsive" src="{{ asset('IMAGES/' ~ clientId ~ dateScan ~ '/' ~ image.nom ~ '.' ~ ext) }}">
+                </div>
+                <div class="file-name">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <small>{{ image.exercice }}</small>
+                            <br>
+                            <small>{{ image.originale }}</small>
+                            <br>
+                            <small>{{ image.nom }}</small>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="checkbox">
+                                <input id="checkbox_{{ index }}" type="checkbox" class="chk-file">
+                                <label for="checkbox_{{ index }}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% set index = index + 1 %}
+{% endfor %}

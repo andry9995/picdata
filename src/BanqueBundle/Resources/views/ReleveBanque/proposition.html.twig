@@ -1,0 +1,67 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Clef</th>
+            <th>Tiers</th>
+            <th>Dossier</th>
+            <th>Libelle</th>
+            <th>Montant&nbsp;TTC</th>
+            <th>Bilan</th>
+            <th>Resultat</th>
+            <th>TVA</th>
+            <th>Occurences</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for tier in tiers %}
+        <tr>
+            <td></td>
+            <td>{{ tier.intitule }}</td>
+            <td>{{ tier.dossier.nom }}</td>
+            <td></td>
+            <td></td>
+            <td>{{ tier.compteStr }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><input type="checkbox"></td>
+        </tr>
+    {% endfor %}
+
+    {% for cle in cles %}
+        <tr>
+            <td>{{ cle.cle.cle }}</td>
+            <td>Tiers</td>
+            <td>Dossier</td>
+            <td></td>
+            <td></td>
+            <td>
+                <select class="form-control">
+                    {% for bilan in cle.bilans %}
+                        <option value="{{ bilan.compte.id|boost }}">{{ bilan.compte.intitule }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select class="form-control">
+                    {% for resultat in cle.resultats %}
+                        <option value="{{ resultat.id|boost }}">{{ resultat.intitule }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select class="form-control">
+                    {% for tva in cle.tvas %}
+                        <option value="{{ tva.id|boost }}">{{ tva.intitule }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td></td>
+            <td><input type="checkbox"></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{#{{ dump(cles) }}#}

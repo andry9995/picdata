@@ -1,0 +1,276 @@
+<div class="ibox-content">
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-lg-12">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5>Details Image</h5>
+                    </div>
+                    <div class="panel-body">
+
+                        <input type="hidden" class="js_cp_image_id" value="{{ img.id }}">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Catégorie</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="js_categorie"
+                                               value="{{ (categorie is null) ? 'Encours' : categorie.libelleNew  }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {#<div class="row">#}
+                            {#<div class="col-lg-12">#}
+                                {#<div class="form-group">#}
+                                    {#<label class="col-md-3 control-label">Ss Catégorie</label>#}
+                                    {#<div class="col-md-9">#}
+                                        {#<input type="text" class="form-control" id="js_sous_categorie"#}
+                                               {#value="{{ (souscategorie is null)? '' : souscategorie.libelleNew }}">#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                        {#<div class="row">#}
+                            {#<div class="col-lg-12">#}
+                                {#<div class="form-group">#}
+                                    {#<label class="col-md-3 control-label">Ss Ss Catégorie</label>#}
+                                    {#<div class="col-md-9">#}
+                                        {#<input type="text" class="form-control" id="js_sous_sous_categorie"#}
+                                               {#value="{{ (soussouscategorie is null) ? '' : soussouscategorie.libelleNew }}">#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+
+
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Ss Catégorie</label>
+                                    <div class="col-md-9">
+                                        {% set souscategorieId = (souscategorie is null) ? -1 : souscategorie.id %}
+                                        <select class="form-control souscategorie" name="souscategorie" {{ (isAdmin) ? '' : 'disabled' }}>
+                                            <option value="-1"></option>
+                                            {% for sCatJ in souscategories %}
+                                                <option value="{{ sCatJ.id }}" {{ (sCatJ.id == souscategorieId) ? 'selected' }}>{{ sCatJ.libelleNew|upper }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Ss Ss Catégorie</label>
+                                    <div class="col-md-9">
+                                        {% set soussouscategorieId = (soussouscategorie is null) ? -1 : soussouscategorie.id %}
+                                        <select class="form-control soussouscategorie" name="soussouscategorie" {{ (isAdmin) ? '' : 'disabled' }}>
+                                            <option value="-1"></option>
+                                            {% for ssCat in soussouscategories %}
+                                                <option value="{{ ssCat.id }}" {{ (ssCat.id == soussouscategorieId) ? 'selected' }}>{{ ssCat.libelleNew|upper }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Exercice</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control js_exercice"  id="" value="{{ (img is null)? '' : (img.exercice) }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Nom Banque</label>
+                                    <div class="col-md-9">
+                                        {#<input type="text" class="form-control js_nom_banque"  value="{{ (saisie is null) ? '' :#}
+                                        {#(saisie.banqueCompte is null) ? saisie.rs : (saisie.banqueCompte.banque) is null ? '': saisie.banqueCompte.banque.nom }}">#}
+
+                                        {% set banqueid = -1 %}
+                                        {% if saisie is not null %}
+                                            {% if saisie.banqueCompte is not null %}
+                                                {% set banqueid = saisie.banqueCompte.banque.id %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                        <select class="form-control js_banque" {{ (not isAdmin) ? 'disabled' : ''  }}>
+                                            <option value="-1"></option>
+                                            {% for banque in banques %}
+                                                <option value="{{ banque.id }}" {{ (banque.id == banqueid) ? 'selected' : '' }}>{{ banque.nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Num Compte</label>
+                                    <div class="col-md-9">
+                                        {#{% set numcompte = "" %}#}
+
+                                        {#{% if saisie is not null %}#}
+                                            {#{% if saisie.banqueCompte is not null %}#}
+                                                {#{% if saisie.banqueCompte.numcompte is not null %}#}
+                                                    {#{% set numcompte = saisie.banqueCompte.numcompte %}#}
+                                                    {#{% set numcompte = numcompte|slice(0,5)~" "~numcompte|slice(5) %}#}
+                                                    {#{% set numcompte = numcompte|slice(0,11)~" "~numcompte|slice(11) %}#}
+                                                    {#{% set numcompte = numcompte|slice(0,23)~" "~numcompte|slice(23) %}#}
+                                                {#{% endif %}#}
+                                            {#{% endif %}#}
+                                        {#{% endif %}#}
+
+                                        {#<input type="text" class="form-control js_num_compte"  value="{{ numcompte }}">#}
+
+
+
+                                        {% set banquecompteid = -1 %}
+                                        {% set numcompte = '' %}
+                                        {% if saisie is not null %}
+                                            {% if saisie.banqueCompte is not null %}
+                                                {% set banquecompteid = saisie.banqueCompte.id %}
+                                                {% set numcompte = saisie.banqueCompte.numcompte %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                        <select class="form-control js_banque_compte" {{ (not isAdmin) ? 'disabled' : ''  }}>
+                                            <option value="-1"></option>
+                                            {% for banquecompte in banqueComptes %}
+                                                {% if banquecompte.id == banquecompteid %}
+                                                    <option value="{{ banquecompte.id }}"selected> {{ banquecompte.numcompte }}</option>
+                                                {% else %}
+                                                    {% if banquecompte.numcompte == numcompte and numcompte != '' %}
+                                                        <option value="{{ banquecompte.id }}" selected>{{ banquecompte.numcompte }}</option>
+
+                                                    {% else %}
+                                                        <option value="{{ banquecompte.id }}" >{{ banquecompte.numcompte }}</option>
+                                                    {% endif %}
+
+                                                {% endif %}
+                                             {% endfor %}
+                                        </select>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Période du</label>
+                                    <div class="col-md-9">
+                                        <div class="input-daterange input-group date">
+                                            <input type="text" class="input form-control js_debut_banque" value="{{ (saisie is null) ? '' : (saisie.periodeD1 is null) ? '' : saisie.periodeD1|date('d/m/Y') }}">
+                                            <span class="input-group-addon">Au</span>
+                                            <input type="text" class="input form-control js_fin_banque" value="{{ (saisie is null) ? '' : (saisie.periodeF1 is null) ? '' : saisie.periodeF1|date('d/m/Y') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {#<div class="row">#}
+                            {#<div class="col-lg-12">#}
+                                {#<div class="form-group">#}
+                                    {#<label class="col-md-3 control-label" >Num relevé</label>#}
+                                    {#<div class="col-md-9">#}
+
+                                        {#<input type="text" class="form-control js_num_releve"  value="">#}
+
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Page</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control js_page"  value="{{ (saisie is null) ? '' : (saisie.page) }}">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {#10: Releve bancaire#}
+                        {% set souscategorieId = (souscategorie is not null) ? souscategorie.id : -1 %}
+                        {% if souscategorieId == 10 %}
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Solde init.</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control js_solde_initial" value="{{ (saisie is null) ? '' : (saisie.soldeDebut|number_format(2, '.', ' ')) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Solde fin.</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control js_solde_final"  value="{{ (saisie is null) ? '' : (saisie.soldeFin|number_format(2, '.', ' ')) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Avancement</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="js_avancement" value="{{ etape }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                {% if isAdmin %}
+                                    <div class="col-md-4 pull-right" style="padding-right: 0;">
+                                        <span class="btn btn-sm btn-primary btn-block btn-cp-save-banque">Valider</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

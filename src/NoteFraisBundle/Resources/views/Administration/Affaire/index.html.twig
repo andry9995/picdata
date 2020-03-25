@@ -1,0 +1,39 @@
+{#{% extends 'NoteFraisBundle:Default:index.html.twig' %}#}
+
+{#{% block wrapper_content %}#}
+
+    {#{{ include('NoteFraisBundle:Default:navigation.html.twig') }}#}
+
+    {#<br/>#}
+
+    {#<div class="row" id="tab-affaire">#}
+        {#<div class="col-lg-12">#}
+            {#<div class="row">#}
+                {#{{ include('NoteFraisBundle:Administration/Affaire:affaireAction.html.twig') }}#}
+            {#</div>#}
+
+            {#<div class="ibox-content">#}
+                {#<div class="row affaire-table">#}
+                    {#{{ include('NoteFraisBundle:Administration/Affaire:affaireTable.html.twig') }}#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+    {#{{ include('NoteFraisBundle:Administration/Affaire:affaireModal.html.twig') }}#}
+
+{#{% endblock %}#}
+
+<div class="col-lg-12">
+    <div class="row">
+        {{ include('NoteFraisBundle:Administration/Affaire:affaireAction.html.twig') }}
+    </div>
+
+    <div class="ibox-content">
+        <div class="row affaire-table">
+            {{ include('NoteFraisBundle:Administration/Affaire:affaireTable.html.twig') }}
+        </div>
+    </div>
+</div>
+
+{{ include('NoteFraisBundle:Administration/Affaire:affaireModal.html.twig') }}

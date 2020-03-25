@@ -1,0 +1,16 @@
+{# client & site #}
+<div class="row">
+    <div class="col-lg-7">
+        {{ render(controller('AppBundle:Commun:clients' , {'conteneur' : 0, 'tous': 0})) }}
+    </div>
+    <div class="col-lg-5" id="js_conteneur_site"></div>
+</div>
+
+{# dossier & exercice #}
+<div class="row">
+    <div class="col-lg-7" id="js_conteneur_dossier"></div>
+    <div class="col-lg-5 text-center">
+        <span class="btn btn-white btn-sm" id="js_dossier_choose"><i class="fa fa-check"></i>&nbsp;Valider</span>
+        <span class="btn btn-white btn-sm" id="js_cancel_dossier"><i class="fa fa-times"></i>&nbsp;Annuler</span>
+    </div>
+</div>

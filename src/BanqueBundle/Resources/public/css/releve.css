@@ -1,0 +1,65 @@
+.italic-text
+{
+    font-style: italic;
+    font-size: 10px;
+}
+
+.tab-error
+{
+    color: red!important;
+}
+
+.simple_tag
+{
+    margin-right: 0!important;
+}
+
+.bande
+{
+    /*padding: 5px!important;
+    padding-bottom: 3px!important;
+    padding-top: 3px!important;
+    margin-bottom: 4px!important;*/
+}
+
+.form-group
+{
+    /*margin-bottom: 0!important;*/
+}
+
+.wrapper-content
+{
+    /*padding: 10px!important;*/
+}
+
+.jqgroup .js_exo
+{
+    text-align: center;
+}
+
+.jqgroup .js_mttc
+{
+    text-align: right;
+    padding-right: 5px;
+}
+
+.jqgroup .js_show_image_
+{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #1ab394;
+}
+
+.popover
+{
+    position: relative;
+    z-index: 10000!important;
+}
+
+.tag_active
+{
+    background-color: #ffffff;
+    border-color: #1ab394;
+    -webkit-animation: blink .5s step-end infinite alternate;
+    box-shadow: #CCCCCC -1px 3px 3px;
+}

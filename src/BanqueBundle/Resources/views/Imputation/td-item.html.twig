@@ -1,0 +1,16 @@
+{% if comptes|length > 0 %}
+    <select class="form-control input-in-jqgrid input-sm cl_imputation_compte" data-type_compte="{{ type_compte }}">
+        <option value="{{ 0|boost }}" data-type="0"></option>
+        {% for compte in comptes %}
+            {% if compte.childs|length > 0 %}
+                <optgroup label="{{ compte.c }}-{{ compte.i }}">
+                    {% for child in compte.childs %}
+                        <option {{ (cpt and cpt.t == 1 and cpt.id == child.id) ? 'selected' : '' }} data-type="{{ child.t }}" value="{{ child.id|boost }}" data-type="{{ child.t }}">{{ child.c }}-{{ child.i }}</option>
+                    {% endfor %}
+                </optgroup>
+            {% else %}
+                <option {{ (cpt and cpt.t == 0 and cpt.id == compte.id) ? 'selected' : '' }} data-type="{{ compte.t }}" value="{{ compte.id|boost }}" data-type="{{ compte.t }}">{{ compte.c }}-{{ compte.i }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+{% endif %}

@@ -1,0 +1,68 @@
+{% extends 'DashboardBundle::dashboard.html.twig' %}
+
+{% block titre %}ENVOI IMAGES{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/plugins/dropzone/basic.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/dropzone/dropzone.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Envoi d'images</h5>
+
+                    <div class="ibox-tools">
+                        <a class="fullscreen-link">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row" id="image-param-liste">
+                        <div class="col-lg-3">
+                            {{ render(controller('AppBundle:Commun:clients' , {'conteneur' : 0})) }}
+                        </div>
+                        <div class="col-lg-3" id="js_conteneur_site"></div>
+                        <div class="col-lg-3" id="js_conteneur_dossier"></div>
+                        <div class="col-lg-2">
+                            {{ render(controller('AppBundle:Commun:exercices' , { 'tous': 0})) }}
+                        </div>
+                        <div class="col-md-1 text-right">
+                            <button class="btn btn-outline btn-primary" id="btn-valider-image-param">
+                                Valider <span class="fa fa-check"></span>
+                            </button>
+                            <button class="btn btn-outline btn-warning hidden" id="btn-cancel-image-param">
+                                Annuler <span class="fa fa-undo"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="image-dropzone-area" class="hidden">
+                        <form id="my-awesome-dropzone" class="dropzone" action="{{ path('image_envoi') }}" method="post">
+                            <button id="btn-upload" type="submit" class="btn btn-primary pull-right">
+                                Envoyer <span class="fa fa-arrow-circle-right"></span>
+                            </button>
+                            <div class="fallback">
+                                <input name="file" type="file" multiple/>
+                            </div>
+                            <input type="hidden" name="js_dossier_upl" id="js_dossier_upl" value="" />
+                            <input type="hidden" name="js_exercice_upl" id="js_exercice_upl" value="" />
+                        </form>
+                        <div class="m text-right">
+                            <span>N'oubliez pas de cliquer sur <span class="btn btn-primary" disabled>ENVOYER <span class="fa fa-arrow-circle-right"></span></span> pour envoyer vos images !</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-upload.js') }}"></script>
+{% endblock %}

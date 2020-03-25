@@ -1,0 +1,123 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}InfoPerdos{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('js/jquery-2.1.1.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }} "></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/fonctions.js') }}"></script>
+
+
+    <script src="{{ asset('js/plugins/summernote/summernote.js') }}"></script>
+    <script src="{{ asset('js/plugins/summernote/summernote-fr-FR.js') }}"></script>
+
+
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/instructionDossier/instruction-dossier.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/editionInstruction/edition-instruction.js') }}?v=1.0.1"></script>
+
+
+
+
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/infoperdos.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/instruction-dossier.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/summernote/summernote.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/plugins/summernote/summernote-bs4.css') }}">
+{% endblock %}
+
+{% block wrapper_content %}
+
+    <div class="row">
+        <div class="col-lg-4">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label">
+                   Type Instruction:
+                </label>
+                <div class="col-lg-8">
+
+                    <select class="form-control" id="js_instruction_type">
+                        <option value="-1"></option>
+
+                        {% for instructionType in instructionTypes %}
+                            <option value="{{ instructionType.id }}">{{ instructionType.libelle }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="ibox ibox-shadow">
+                <div class="ibox-title">
+
+
+                    <div class="ibox-tools">
+
+                        <button id="btn-edit-instr-contenu" class="btn btn-sm btn-primary" type="button"><i class="fa fa-edit"></i>&nbsp;Modifier</button>
+                        <button id="btn-save-instr-contenu" class="btn btn-sm btn-primary" type="button"><i class="fa fa-save"></i>&nbsp;Enregistrer</button>
+
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content no-padding">
+
+                    <div class="js_instr_contenu wrapper p-md ">
+                        {#<div class="scroller">#}
+
+                        {#</div>#}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    {#<div class="row">#}
+
+         {#<div id="sortable1" class="connectedSortable btn btn-default" style="width: 200px; height: 200px;">#}
+                {#<div class="col-sm-3">1</div>#}
+                {#<div class="col-sm-3">2</div>#}
+                {#<div class="col-sm-3">3</div>#}
+                {#<div class="col-sm-3">4</div>#}
+            {#</div>#}
+
+        {#<div id="sortable2" class="connectedSortable btn btn-success" style="width: 200px; height: 200px;">#}
+
+        {#</div>#}
+
+
+    {#</div>#}
+
+{% endblock %}

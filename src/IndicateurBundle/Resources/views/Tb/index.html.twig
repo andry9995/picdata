@@ -1,0 +1,45 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% if affichage == 0 %}
+    {% set titre = 'Synthèse Ratios' %}
+{% else %}
+    {% set titre = 'Scoring' %}
+{% endif %}
+
+{% block titre %}{{ titre }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('twemoji-awesome/dist/twemoji-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/rename-en-cours.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/datePickerPopOverV2.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/indicateur/css/tb/show/index.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/jqGrid/jQuery.jqGrid.setColWidth.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/datePickerPopOverV2.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/show/export.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/show/stat.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/show/cle.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/show/filtre.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/show/index.js') }}"></script>
+{% endblock %}
+
+{% block contenu_droite %}
+    {{ include('IndicateurBundle:Tb:filtre.html.twig', { exercices:exercices } ) }}
+    {#{% if affichage == 0 %}
+        {{ include('AppBundle:Commun:page-en-cours.html.twig') }}
+    {% endif %}#}
+
+    <div class="ibox">
+        <div class="ibox-content" id="js_id_container_dossiers"></div>
+    </div>
+
+    <div id="id_test"></div>
+
+    <form id="id_export" method="post"></form>
+    <input id="id_tb_type" type="hidden" value="{{ affichage }}">
+{% endblock %}

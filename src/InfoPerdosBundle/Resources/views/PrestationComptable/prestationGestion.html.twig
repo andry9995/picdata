@@ -1,0 +1,80 @@
+<form class="form-horizontal" id="js_form_prest_gestion">
+    <div class="row">
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Situations</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_gestion"  id="js_situation" data-field="Situation">
+                        {% set situation = (prestationGestion is null) ? -1 : (prestationGestion.situation is null) ? -1 : prestationGestion.situation %}
+                        <option></option>
+                        <option value="1" {{ (situation== 1) ? 'selected' : '' }}>Mois</option>
+                        <option value="2" {{ (situation== 2) ? 'selected' : '' }}>Trimestre</option>
+                        <option value="3" {{ (situation== 3) ? 'selected' : '' }}>Semestre</option>
+                        <option value="4" {{ (situation== 4) ?'selected' : '' }}>Non applicable</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Indicateurs</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_gestion"  id="js_indicateur" data-field="Indicateur">
+                        {% set indicateur = (prestationGestion is null) ? -1 : (prestationGestion.indicateur is null) ? -1 : prestationGestion.indicateur %}
+
+                        <option></option>
+
+                        {% for indicateurGroup in indicateurGroups %}
+
+                            <option value="{{ indicateurGroup.id }}" {{ (indicateurSpecGroup is null)? '' :
+                                (indicateurSpecGroup.indicateurGroup is null) ? '' : (indicateurSpecGroup.indicateurGroup.id == indicateurGroup.id) ? 'selected' : ''}}>
+                                {{ indicateurGroup.libelle }}
+                            </option>
+
+                        {% endfor %}
+
+                        {#<option value="1" {{ (indicateur == 1) ? 'selected' : '' }}>Oui</option>#}
+                        {#<option value="0" {{ (indicateur == 0) ? 'selected' : '' }}>Non</option>#}
+
+                    </select>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Budget</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_gestion" id="js_budget" data-field="Budget">
+                        {% set budget = (prestationGestion is null) ? -1 : (prestationGestion.budget is null) ? -1 : prestationGestion.budget %}
+                        <option></option>
+                        <option value="1" {{ (budget == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (budget == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-7 control-label">Tableau de bord</label>
+                <div class="col-lg-5">
+                    <select class="form-control prest_gestion" id="js_type_tableau_bord" data-field="TableauBord">
+                        {% set tableauBord = (prestationGestion is null) ? -1 : (prestationGestion.tableauBord is null) ? -1 : prestationGestion.tableauBord %}
+                        <option></option>
+                        <option value="1" {{ (tableauBord == 1) ? 'selected' : '' }}>Oui</option>
+                        <option value="0" {{ (tableauBord == 0) ? 'selected' : '' }}>Non</option>
+                    </select>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>

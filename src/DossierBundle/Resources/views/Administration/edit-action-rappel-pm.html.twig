@@ -1,0 +1,607 @@
+{% set textJourFix = ''  %}
+{% if status == 2 or status == 3  %}
+  {% if stateJourFixe == 2 %}
+    {% if type == 'le' %}
+      {% set textJourFix = 'Tous les ' ~ recur ~ ' mois à partir ' ~ valueSec ~ ', jusqu\'au ' ~ fin %}
+    {% endif %}
+    {% if type == 'apres' %}
+      {% set textJourFix = 'Tous les ' ~ recur ~ ' mois à partir ' ~ valueSec ~ ', ' ~ fin  ~ ' fois' %}
+    {% endif %}
+    {% if type == 'jamais' %}
+      {% set textJourFix = 'Tous les ' ~ recur ~ ' mois à partir' ~ valueSec %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+<div class="row">
+    <div class="col-lg-12">
+        <main>
+            <section id="top-bar" drop-zone="main" data-sorted="true">
+                <div id="clone-container" class="clone-container">
+                    <div id="scroll-box">
+                        <div id="tile-container" class="letter-container">
+                            {% for t in taches %}
+                                <div class="tile-wrapper">
+                                  <div class="tile">
+                                    <div class="card-name titre-tache" style="margin-top: 10px;">
+                                      {{ t.tache }}
+                                    </div>
+                                    <div class="card-date" style="font-size: 9px;">
+                                      {{ t.date }}
+                                    </div>
+                                  </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {#  <section class="content">
+                <div id="center-panel" drop-zone="center">
+                  <div class="clone-container">
+                    <div class="letter-container"></div>
+                  </div>
+                </div>
+            </section> #}
+
+            <section id="bottom-panel" drop-zone="bottom" data-sorted="true">
+                <div class="clone-container">
+                    <div class="letter-container" id="listes-taches">
+                      {% for te in tachesExist %}
+                        <div class="tile-wrapper">
+                          <div class="tile bottom">
+                            <div class="card-name titre-tache" style="margin-top: 10px;">
+                              {{ te.tache }}
+                            </div>
+                            <div class="card-date" style="font-size: 9px;">
+                              {{ te.date }}
+                            </div>
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <main>
+      <section style="margin : 10px;">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+              <div class="col-sm-12" style="text-align: center;"><h5>Règles d'envoi</h5></div>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" id ="js_form_regle_envoi_mail">
+                  <div class="row">
+                    {% if typeNotif == 'banque' %}
+                      <div class="col-lg-12">
+                          <div class="ibox border-bottom">
+                              <div class="ibox-content">
+                                <div class="i-checks">
+                                  <label class=""> 
+                                    <div class="icheckbox_square-green" style="position: relative; margin-top: -10px;">
+                                      <input type="checkbox" checked="checked" id="chk_prem_regle" style="position: absolute; opacity: 0;" disabled="disabled">
+                                      <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    <i></i> 
+                                    <span class="pointer" style="font-weight: 100; font-size: 24px; margin-left: 3px;">Ne pas envoyer si rien ne manque à la date d'envoi calculée</span> 
+                                  </label>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                    {% else %}
+                      <div class="col-lg-6">
+                          <div class="ibox border-bottom">
+                              <div class="ibox-content" style="height: 142px;">
+                                <div class="i-checks">
+                                  <label class=""> 
+                                    <div class="icheckbox_square-green" style="position: relative; margin-top: -10px;">
+                                      <input type="checkbox" checked="checked" id="chk_prem_regle" style="position: absolute; opacity: 0;" disabled="disabled">
+                                      <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    <i></i> 
+                                    <span class="pointer" style="font-weight: 100; font-size: 24px; margin-left: 3px;">Ne pas envoyer s'il existe des pièces à lettrer</span> 
+                                  </label>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="ibox border-bottom">
+                              <div class="ibox-content" style="height: 142px;">
+                                <div class="i-checks">
+                                  <label class=""> 
+                                    <div class="icheckbox_square-green" style="position: relative; margin-top: -10px;">
+                                      <input type="checkbox" checked="checked" id="chk_prem_regle" style="position: absolute; opacity: 0;" disabled="disabled">
+                                      <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    <i></i> 
+                                    <span class="pointer" style="font-weight: 100; font-size: 24px; margin-left: 3px;">Ne pas envoyer s'il existe des dépenses sans pièces, encaissement sans pièces et chèques non identifiés</span> 
+                                  </label>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                    {% endif %}
+                    {% if typeEmail %}
+                      <div class="col-lg-6">
+                          <div class="ibox border-bottom">
+                              <div class="ibox-content" style="height: 184px;">
+                                  <div class="i-checks" style="height: 44px;">
+                                    <label class=""> 
+                                      <div class="icheckbox_square-green chk_second_regle" style="position: relative; margin-top: -10px;">
+                                        <input type="checkbox" id="chk_inp_second_regle" style="position: absolute; opacity: 0;" {{ (status == 1 or status == 3) ? 'checked="checked"' : '' }}>
+                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                      </div>
+                                      <i></i> 
+                                      <span class="pointer chk_second_regle" style="font-weight: 100; font-size: 24px; margin-left: 3px;">Envoi avant la plus prochaine tâche</span> 
+                                    </label>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+
+                                          <div class="form-group">
+                                              <label class="col-sm-4 control-label">Sélectionner</label>
+                                              <div class="col-sm-3">
+                                                <input type="number" class="form-control" id="js_second_regle" name="second_regle" min="1" max="90" value="{{ (status == 1 or status == 3) ? valuePrim  : '' }}">
+                                              </div>
+                                              <label class="control-label" style="font-weight: normal">Jours</label>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="ibox border-bottom">
+                              <div class="ibox-content" style="height: 184px;">
+                                  <div class="i-checks" style="height: 44px;">
+                                    <label class=""> 
+                                      <div class="icheckbox_square-green chk_troisieme_regle" style="position: relative; margin-top: -10px;">
+                                        <input type="checkbox" id="chk_inp_troisieme_regle" style="position: absolute; opacity: 0;" {{ (status == 1 or status == 3) ? 'checked="checked"' : '' }}>
+                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                      </div>
+                                      <i></i> 
+                                      <span class="pointer chk_troisieme_regle" style="font-weight: 100; font-size: 24px; margin-left: 3px;">Envoi à jour fixe</span> 
+                                    </label>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                          <div class="form-group">
+                                              {# <label class="col-sm-4 control-label">Sélectionner</label>
+                                              <div class="col-sm-3">
+                                                <input type="number" class="form-control" id="js_jour_fixe" name="second_regle" min="1" max="31" value="{{ (status == 2) ? value  : '' }}" {{ (status == 2) ? ''  : 'disabled' }}>
+                                              </div>
+                                              <label class="control-label" style="font-weight: normal">Jours</label>
+                                              <i class="fa fa-cog pointer class_action_personnaliser {{ (status == 2) ? '' : 'hidden'}}" style="margin-left: 20px;">
+                                                <span style="margin-left: 3px;">Personnaliser</span>
+                                              </i> #}
+                                              <div class="col-sm-12">
+                                                <div class="row">
+                                                  <div class="i-checks" style="height: 44px;">
+                                                    <label class="col-sm-offset-2  col-sm-4"> 
+                                                      <div class="iradio_square-green" style="position: relative;">
+                                                        <input type="radio" value="une-fois" name="jf" class="cl-une-fois" style="position: absolute; opacity: 0;" {{ (stateJourFixe == 1 and status != 1) ? 'checked="checked"' : '' }}>
+                                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                      </div> 
+                                                      <i></i> 
+                                                      <span class="pointer" style="font-weight: 100; margin-left: 3px;">Une fois</span> 
+                                                    </label>
+                                                    <div class="col-sm-4">
+                                                      <input type="text" class="show-dp-une-fois form-control" value="{{ (stateJourFixe == 1 and status != 1) ? valueSec : '' }}" id="js_jour_fixe" style="margin-top: -8px;">
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="i-checks" style="height: 44px;">
+                                                    <label class="col-sm-offset-2 col-sm-4"> 
+                                                      <div class="iradio_square-green class_action_personnaliser" style="position: relative;">
+                                                        <input type="radio" value="recurr" name="jf" class="cl-recurr" style="position: absolute; opacity: 0;" {{ (stateJourFixe == 2 and status != 1) ? 'checked="checked"' : '' }}>
+                                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                                      </div> 
+                                                      <i></i> 
+                                                      <span class="pointer class_action_personnaliser" style="font-weight: 100; margin-left: 3px;">Récurrence</span> 
+                                                    </label>
+                                                    <div class="col-lg-6">
+                                                      <span class="control-label value-jour-fixe" data-type="{{type}}" data-fin="{{fin}}" data-recur="{{recur}}" data-value="{{ (stateJourFixe == 2) ? valueSec : '' }}" style="font-style: italic;">{{textJourFix}}</span>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  {# <div class="row">
+                                    <div class="form-group">
+                                      <div class="col-sm-12" style="text-align: center;">
+                                        <label class="control-label value-jour-fixe" data-type="{{type}}" data-fin="{{fin}}" data-recur="{{recur}}">{{textJourFix}}</label>
+                                      </div>
+                                    </div>
+                                  </div> #}
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="col-lg-12">
+                      <div class="ibox border-bottom">
+                        <div class="ibox-content">
+                          <div class="i-checks" style="height: 44px;">
+                            <label class=""> 
+                              <div class="icheckbox_square-green" style="position: relative; margin-top: -10px;">
+                                <input type="checkbox" style="position: absolute; opacity: 0;" checked="checked" disabled="disabled">
+                                <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                              </div>
+                              <i></i> 
+                              <span class="pointer" style="font-weight: 100; font-size: 24px; margin-left: 3px;">Envoi à date unique</span> 
+                            </label>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div class="form-group">
+                                <label for="js_date_unique" class="col-sm-4 control-label">Sélectionner</label>
+                                <div class="col-sm-2">
+                                  <input type="text" class="form-control cl_date_unique" value="{{ value }}" id="js_date_unique" name="date_unique">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                </form>
+            </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-sm btn-primary save_pm_action" data-id="{{ notificationId }}" data-type-notif="{{ typeNotif }}" data-type-mail="{{typeEmail}}"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div>
+<script type="text/javascript">
+  var threshold = "60%";
+  var dropZones = {};
+  var letters   = [];
+
+  $('.i-checks').iCheck({
+      checkboxClass: 'icheckbox_square-green',
+      radioClass: 'iradio_square-green'
+  });
+
+  $('.show-dp-une-fois').datepicker({
+    dateFormat: 'dd/mm/yyyy',
+    language: 'fr',
+    keyboardNavigation: false,
+    forceParse: false,
+    autoclose: true
+  });
+
+  $('.cl_date_unique').datepicker({
+    dateFormat: 'dd/mm/yyyy',
+    language: 'fr',
+    keyboardNavigation: false,
+    forceParse: false,
+    autoclose: true
+  });
+
+  $('.class_action_personnaliser').click(function() {
+    index_modal_ui_mail++;
+    var isGo = $('.iradio_square-green').hasClass('disabled');
+    if(isGo) return;
+    var isGo = $('.cl-recurr').attr('disabled');
+    if(isGo == 'disabled') return;
+    $.ajax({
+        data: {
+              index: index_modal_ui_mail,
+              fin: $('.value-jour-fixe').attr('data-fin'),
+              type: $('.value-jour-fixe').attr('data-type'),
+              recur: $('.value-jour-fixe').attr('data-recur'),
+              value: $('.value-jour-fixe').attr('data-value')
+        },
+        url: Routing.generate('dossier_perso_form'),
+        type: 'POST',
+        async: true,
+        dataType: 'html',
+        success: function (data) {
+            test_security(data);
+            var options = { modal: false, resizable: false, title: 'Récurrence personnalisée' };
+            modal_ui(options,data, false,0.6,0.3);
+        }
+    });
+  });
+
+ /* $('.chk_second_regle').click(function() {
+    var state = $('#chk_inp_second_regle').prop('checked');
+    var state1 = $('#chk_inp_troisieme_regle').prop('checked');
+    if(state1) return;
+    if(state){
+        $('#chk_inp_troisieme_regle').removeAttr('disabled');
+        $('#chk_inp_troisieme_regle').parent().removeClass('disabled');
+        $('#js_second_regle').attr('disabled','disabled');
+    }else{
+        $('#chk_inp_troisieme_regle').attr('disabled','disabled');
+        $('#js_jour_fixe').attr('disabled','disabled');
+        $('#js_second_regle').removeAttr('disabled');
+    }
+  });eto*/
+
+/*  $('#js_jour_fixe').keyup(function() {
+    var state = $(this).val();
+    if(state == '' || state == 0) return $('.class_action_personnaliser').addClass('hidden');
+    return $('.class_action_personnaliser').removeClass('hidden');
+  });*/
+
+/*  $('#js_jour_fixe').change(function() {
+    var state = $(this).val();
+    if(state == '' || state == 0) return $('.class_action_personnaliser').addClass('hidden');
+    return $('.class_action_personnaliser').removeClass('hidden');
+  });*/
+
+  $('.chk_troisieme_regle').click(function() {
+    var state = $('.class_action_personnaliser').children().hasClass('checked');
+    if(!state)
+      $('.cl-une-fois').parent().addClass('checked');
+  });
+
+  $("[drop-zone]").each(function() {
+
+    var zone = $(this);
+    var name = zone.attr("drop-zone");
+
+    dropZones[name] = {
+      element : zone,
+      name    : name,
+      sorted  : zone.data("sorted"),
+      clones  : zone.find(".clone-container"),
+      letters : zone.find(".letter-container")
+    };
+  });
+
+  $(".tile").each(function(index) {
+
+    var element = $(this);
+    var wrapper = element.parent();
+    var offset  = element.position();
+    var zone    = undefined;
+    if(element.attr('class') === 'tile')
+      zone      = dropZones.main;
+    else if(element.attr('class') === 'tile bottom')
+      zone      = dropZones.bottom;
+
+    var scope = {
+      clone   : element.clone().attr("clone", "").prependTo(zone.clones),
+      element : element,
+      wrapper : wrapper,
+      width   : wrapper.outerWidth(),
+      height  : wrapper.outerHeight(),
+      moved   : false,
+      index   : index,
+      zone    : zone,
+      get x() { return getPosition(wrapper, this.zone.clones, offset).x; },
+      get y() { return getPosition(wrapper, this.zone.clones, offset).y; },
+      get cloneX() { return getPosition(this.clone, this.zone.clones).x; },
+      get cloneY() { return getPosition(this.clone, this.zone.clones).y; },
+      get previous() { return getPrevious(this, this.zone); }
+    };
+
+    scope.draggable = createDraggable(scope);
+
+    // reversed order
+    letters.unshift(scope);
+
+    element.on("mousedown touchstart", scope, startDraggable);
+  });
+
+
+  // START DRAGGABLE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  function startDraggable(event) {
+
+    var letter = event.data;
+
+    // Maak element onzichtbaar
+    // Maak kloon zichtbaar en verplaats deze naar de coordinaten van het element
+    TweenLite.set(letter.element, { autoAlpha: 0 });
+    TweenLite.set(letter.clone, { x: letter.x, y: letter.y, autoAlpha: 1 });
+
+    letter.draggable.startDrag(event.originalEvent);
+  }
+
+  // GET PREVIOUS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  function getPrevious(letter, zone) {
+
+    if (!zone.sorted) {
+      return { target: zone.letters, insert: "appendTo"};
+    }
+
+    var values = letters.filter(function(value) {
+      return value.zone === letter.zone && value.index < letter.index;
+    });
+
+    return {
+      target: values[0] ? values[0].wrapper : zone.letters,
+      insert: values[0] ? "insertAfter" : "prependTo"
+    };
+  }
+
+  // CREATE DRAGGABLE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  function createDraggable(letter) {
+
+    var clone   = letter.clone;
+    var wrapper = letter.wrapper;
+
+    letter.draggable = new Draggable(clone, {
+      onPress   : setActive,
+      onDrag    : collapseSpace,
+      onRelease : dropTile
+    });
+
+    return letter.draggable;
+    ///////
+
+    function setActive() {
+      TweenLite.to(clone, 0.15, { scale: 1.2, autoAlpha: 0.75 });
+    }
+
+    function collapseSpace() {
+      if (!letter.moved) {
+        if (!this.hitTest(wrapper)) {
+          letter.moved = true;
+          TweenLite.to(wrapper, 0.3, { width: 0, height: 0 });
+        }
+      }
+    }
+
+    function dropTile() {
+
+      var name = undefined;
+      var self = this;
+
+      $.each(dropZones, function(key, zone) {
+        if (self.hitTest(zone.element, threshold) && letter.zone !== zone) {
+
+          name = "tile " + zone.name;
+          letter.zone = zone;
+
+          // Get the previous element and the insert method
+          var previous = letter.previous;
+          wrapper[previous.insert](previous.target);
+
+          // Position the clone inside its new container
+          TweenLite.set(clone, { x: letter.cloneX, y: letter.cloneY });
+          zone.clones.prepend(clone);
+        }
+      });
+
+      moveBack(letter, name);
+    }
+  }
+
+  // MOVE BACK ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  function moveBack(letter, className) {
+
+    var clone   = letter.clone;
+    var element = letter.element;
+    var wrapper = letter.wrapper;
+
+    TweenLite.to(wrapper, 0.2, { width: letter.width, height: letter.height });
+    TweenLite.to(clone, 0.3, { scale: 1, autoAlpha: 1, x: letter.x, y: letter.y, onComplete: done, delay: 0.02 });
+    
+    if (className) TweenLite.to([element, clone], 0.3, { className: className });
+
+    function done() {
+      letter.moved = false;
+      TweenLite.set(clone, { autoAlpha: 0 });
+      TweenLite.set(element, { autoAlpha: 1 });
+    }
+  }
+
+  // GET POSITION :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  function getPosition(target1, target2, offset) {
+
+    var position1 = target1.offset();
+    var position2 = target2.offset();
+
+    offset = offset || { left: 0, top: 0 };
+
+    return {
+      x: position1.left - position2.left + offset.left,
+      y: position1.top  - position2.top  + offset.top
+    };
+  }
+</script>
+
+
+{# <div class="row">
+    <div class="col-lg-12">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-lg-12 checkbox checkbox-inline" style="padding-left: 50px;">
+                    {% set statut = (param and param.status == 'true') ? true : false %}
+                    <input type="checkbox" name="name_pm_action_stat_envoi" id="id_pm_action_stat_envoi" {{ (statut) ? 'checked="checked"' : ''}}>
+                    <label for="id_pm_action_stat_envoi">Par urgence dans le tableau de pièce manquant</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="id_pm_action_periode">P&eacute;riode</label>
+                <div class="col-lg-8">
+                    {% set periode = param ? param.periode : -1 %} #}
+                    {#0=ponctuel,1=annuel,2=semestriel,3=quadrimestriel,4=trimestriel,6=bimensuel,12=mensuel#}
+                    {# <select id="id_pm_action_periode" class="form-control">
+                        <option value="-1"></option>
+                        <option value="0" {{ (periode == 0) ? 'selected' : '' }}>Ponctuel</option>
+                        <option value="1" {{ (periode == 1) ? 'selected' : '' }}>Annuel</option>
+                        <option value="2" {{ (periode == 2) ? 'selected' : '' }}>Semestriel</option>
+                        <option value="3" {{ (periode == 3) ? 'selected' : '' }}>Quadrimestriel</option>
+                        <option value="4" {{ (periode == 4) ? 'selected' : '' }}>Trimestriel</option>
+                        <option value="6" {{ (periode == 6) ? 'selected' : '' }}>Bimensuel</option>
+                        <option value="12"{{ (periode == 12) ? 'selected' : '' }}>Mensuel</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 container">
+        <div class="form-horizontal">
+            <div class="form-group">
+                {% set mois = (param and param.mois != 0) ? param.mois : '' %}
+                <label class="col-lg-5 control-label" for="id_pm_action_mois">Mois</label>
+                <div class="col-lg-7">
+                    <input type="text" class="form-control" id="id_pm_action_mois" value="{{mois}}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                {% set date = (param and param.date != '') ? param.date : '' %}
+                <label class="col-lg-4 control-label" for="id_pm_action_date">Date</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="id_pm_action_date" value="{{date}}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 container pull-left">
+        <div class="form-horizontal">
+            <div class="form-group">
+                {% set jour = (param and param.jour != 0) ? param.jour : '' %}
+                <label class="col-lg-4 control-label" for="id_pm_action_jour">Jour</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="id_pm_action_jour" value="{{jour}}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span> #}
+        {# etotsy izy #}
+        {#{% if tacheEntity is not null and tacheEntity.desactiver == 0 %}
+            <span class="btn btn-sm btn-danger" id="id_delete_tlb"><i class="fa fa-bell-slash-o" aria-hidden="true"></i>&nbsp;D&eacute;sactiver</span>
+        {% endif %}#}
+        {# tapitra eto #}
+        {# <span class="btn btn-sm btn-primary save_pm_action" data-id="{{notification.id}}"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+    </div>
+</div> #}

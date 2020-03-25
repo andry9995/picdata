@@ -1,0 +1,181 @@
+{% set margin = 15 %}
+{{ include('BanqueBundle:ReleveBanque:releve-line.html.twig', { 'releve': releve }) }}
+
+<div class="row bande" style="margin-bottom: {{ margin }}px!important;">
+    <div class="form-horizontal white-bg">
+        <div class="form-group">
+            <label class="col-lg-2 control-label">Cl&eacute;s&nbsp;trouv&eacute;es&nbsp;</label>
+            <div class="col-lg-10">
+                <div class="btn-group" id="id_cle_container">
+                    {% for key, cle in cles %}
+                        <span class="btn {{ (key == 0 and cleChoise is null or cleChoise is not null and cle.id == cleChoise.id) ? 'btn-primary' : 'btn-white' }} btn-sm cl_btn_cle" data-id="{{ cle.id|boost }}">{{ cle.cle }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-9">
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_engagement" value="0" name="radio-type-compta" {{ (methode == 0) ? 'checked' : '' }}>
+            <label for="js_id_engagement">Engagement</label>
+        </div>
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_tresorerie" value="1" name="radio-type-compta" {{ (methode == 1) ? 'checked' : '' }}>
+            <label for="js_id_tresorerie">Tr&eacute;sorerie</label>
+        </div>
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_desactiver" value="5" name="radio-type-compta">
+            <label for="js_id_desactiver">D&eacute;sactiver</label>
+        </div>
+
+        {#<div class="radio radio-inline">
+            <input type="radio" id="js_id_tresorerie_avec_piece" value="2" name="radio-type-compta">
+            <label for="js_id_tresorerie_avec_piece">Tr&eacute;sorerie&nbsp;avec&nbsp;pi&egrave;ce</label>
+        </div>#}
+        {#<div class="radio radio-inline">
+            <input type="radio" id="js_id_ecriture_particuliere" value="3" name="radio-type-compta">
+            <label for="js_id_ecriture_particuliere">Ecriture&nbsp;Particulière</label>
+        </div>#}
+    </div>
+    <div class="col-lg-3">
+        <div class="checkbox checkbox-inline checkbox-warning">
+            <input id="jd_id_pas_piece" type="checkbox">
+            <label for="jd_id_pas_piece">Pas&nbsp;de&nbsp;Pi&egrave;ce</label>
+        </div>
+    </div>
+</div>
+
+<div class="row bande hidden white-bg js_cl_container_image_affecter" style="margin-bottom: {{ margin }}px!important;">
+    {# variation #}
+    <div class="col-lg-6 hidden">
+        <label>Exercice:&nbsp;</label>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n_1" value="-1">
+            <label for="js_id_n_1">N-1</label>
+        </div>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n" value="0" checked>
+            <label for="js_id_n">N</label>
+        </div>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n_p_1" value="1">
+            <label for="js_id_n_p_1">N+1</label>
+        </div>
+    </div>
+
+    <div class="col-lg-6 hidden">
+        {# sens #}
+        <div class="checkbox checkbox-inline hidden">
+            <input type="checkbox" id="js_id_sens">
+            <label for="js_id_sens">Sens&nbsp;-</label>
+        </div>
+
+        {# flagguer #}
+        <div class="checkbox checkbox-inline hidden">
+            <input type="checkbox" id="js_id_flagguer">
+            <label for="js_id_flagguer">Pi&egrave;ces&nbsp;Flaggu&eacute;es</label>
+        </div>
+    </div>
+</div>
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;" id="id_container_ecriture">
+    <div class="col-lg-12" id="id_container_type-0_1">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th width="5%"></th>
+                    <th width="30%"><label for="id_ecr_bilan">Bilan</label></th>
+                    <th width="30%"><label for="id_ecr_resultat">R&eacute;sultat</label></th>
+                    <th width="30%"><label for="id_ecr_tva">Tva</label></th>
+                    <th width="5%%"><label for="id_ecr_tva_taux">Taux&nbsp;Tva</label></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <div class="btn-group">
+                            <i class="fa fa-pencil-square-o fa-2x dropdown-toggle pointer" data-toggle="dropdown" aria-hidden="true"></i>
+                            <ul class="dropdown-menu" id="id_container_banque_type">
+                                {% for banqueType in banqueTypes %}
+                                    <li class="js_type_banque_li" data-id="{{ banqueType.id|boost }}"><a href="#">{{ banqueType.libelle }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
+                    <td><select id="id_ecr_bilan" class="form-control input-sm" style="border: none;"></select></td>
+                    <td><select id="id_ecr_resultat" class="form-control input-sm" style="border: none;"></select></td>
+                    <td><select id="id_ecr_tva" class="form-control input-sm" style="border: none;"></select></td>
+                    <td><input id="id_ecr_tva_taux" class="form-control input-sm" style="border: none;" type="text"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="cle_dossier_test"></div>
+
+<div class="row bande white-bg js_cl_container_image_affecter" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12 js_container_tb">
+        <table id="js_cl_tb_affecter"></table>
+    </div>
+</div>
+<div class="row bande white-bg js_cl_container_image_affecter" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12 js_container_tb">
+        <table id="js_cl_tb_ecriture"></table>
+    </div>
+</div>
+
+
+<table class="table table-bordered" id="id_container_desactiver">
+    <thead>
+        <tr>
+            <th>
+                <div class="radio radio-info radio-inline">
+                    <input type="radio" id="id_exlure_dossier" value="0" name="radio-exlure" checked>
+                    <label for="id_exlure_dossier">Dossier</label>
+                </div>
+            </th>
+            <th>
+                <div class="radio radio-info radio-inline">
+                    <input type="radio" id="id_exlure_banque" value="1" name="radio-exlure">
+                    <label for="id_exlure_banque">Banque</label>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select class="form-control" id="id_desactiver_dossier">
+                    <option value="{{ dossier.id|boost }}">{{ dossier.nom }}</option>
+                </select>
+            </td>
+            <td>
+                <select class="form-control" id="id_desactiver_banque">
+                    {% for banque in banques %}
+                        <option value="{{ banque.id|boost }}">{{ banque.nom }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<div class="row">
+    <div class="col-lg-2">
+        <label class="js_cl_container_image_affecter">Non&nbsp;Pris:&nbsp;</label>
+        <span class="label js_ecart js_cl_container_image_affecter">&nbsp;</span>
+    </div>
+    <div class="col-lg-10 text-right">
+        <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        {% if us %}
+            <span class="btn btn-sm btn-white js_id_pas_piece js_cl_container_image_affecter" data-type="2"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp;Pi&egrave;ce&nbsp;Manquante</span>
+            <span class="btn btn-sm btn-white js_pas_cle"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;Pas&nbsp;de&nbsp;Cl&eacute;</span>
+            <span class="btn btn-sm btn-primary" id="id_save_cle_dossier"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,269 @@
+<div class="form-horizontal">
+
+    <div class="col-sm-6">
+
+        <div class="form-group">
+            <label class="control-label col-md-5">Titre</label>
+            <div class="col-md-7">
+                <input type="text" placeholder="Exemple Carburant xxx" class="form-control" id="js_depense_titre" value="{{ (depense is null) ? '' : depense.titre }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Date</label>
+            <div class="col-md-7" >
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" class="form-control" id="js_depense_date" value="{{ (depense is null) ? '' : (depense.date) is null ? '' : depense.date|date('d/m/Y') }} ">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Catégorie</label>
+            <div class="col-md-7">
+                <select data-placeholder="Exemple Carburant" class="form-control chosen-select" id="js_depense_categorie">
+
+                    {% set sousCategorieId = (depense is null) ? -1 : (depense.ndfSouscategorieDossier is null) ? -1 : depense.ndfSouscategorieDossier.id %}
+
+                    <option value=""></option>
+                    {% for categorie in categories %}
+                        <optgroup label="{{ categorie.libelle }}">
+                            {% for scd in sousCategoriesDossier %}
+                                {% if scd.ndfSouscategorie.ndfCategorie == categorie %}
+                                    <option value="{{ scd.id }}" {{ (sousCategorieId == scd.id) ? 'selected' : '' }}>{{ scd.libelle }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Paiement par</label>
+            <div class="col-md-7">
+                <select data-placeholder="Exemple Entreprise" class="form-control chosen-select" id="js_depense_type_reglement">
+                    <option value=""></option>
+
+                    {% set typeRegelement = 0 %}
+                    {% if depense is not null %}
+                        {% if depense.typeReglement is not null %}
+                            {% set typeRegelement = depense.typeReglement %}
+                        {% endif %}
+                    {% endif %}
+
+                    <option value="1" {{ (typeRegelement == 1) ? 'selected' : '' }}>Entreprise</option>
+                    <option value="0" {{ (typeRegelement == 0) ? 'selected' : '' }}>Employé</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Mode de règlement</label>
+            <div class="col-md-7">
+                <select data-placeholder="Exemple Chèque" class="form-control chosen-select" id="js_depense_mode_reglement">
+                    <option value=""></option>
+                    {% set modeReglementId = (depense is null) ? -1 : (depense.modeReglement is null) ? -1 : depense.modeReglement.id %}
+                    {% for modeReglement in modeReglements %}
+                        <option value="{{  modeReglement.id }}" {{ (modeReglement.id == modeReglementId) ? 'selected' : '' }}>{{ modeReglement.libelle }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Pays</label>
+            <div class="col-md-7">
+                <select data-placeholder="Exemple France" class="form-control chosen-select" id="js_depense_pays">
+                    <option value=""></option>
+                    {% set paysId = (depense is null) ? -1 : (depense.pays is null) ? -1 : depense.pays.id %}
+
+                    {% if paysId == -1 %}
+                        {% for pays in payss %}
+                            {% if pays.nom|lower == 'france' %}
+                                {% set paysId = pays.id %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for pays in payss %}
+                        <option value="{{  pays.id }}" {{ (pays.id == paysId) ? 'selected' : '' }}>{{ pays.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-sm-6">
+
+        <div class="form-group">
+            <label class="control-label col-md-5">Ttc</label>
+            <div class="col-md-7">
+                <input type="text" placeholder="Exemple 10" class="form-control" id="js_depense_ttc" value="{{ (depense is null)? '' : depense.ttc }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Devise</label>
+            <div class="col-md-7">
+                <select data-placeholder="Exemple Euro" class="form-control chosen-select" id="js_depense_devise">
+                    <option value=""></option>
+                    {% set deviseId = (depense is null) ? -1 : (depense.devise is null) ? -1 : depense.devise.id %}
+
+                    {% if deviseId == -1 %}
+                        {% for devise in devises %}
+                            {% if devise.nom|lower == 'euro' %}
+                                {% set deviseId = devise.id %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for devise in devises %}
+
+                        <option value="{{  devise.id }}" {{ (devise.id == deviseId) ? 'selected' : '' }}>{{ devise.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group {{ (depense is null) ? '' : (depense.devise is null) ? '' : (depense.devise.id != 1) ? '' : 'hidden' }}">
+            <label class="control-label col-md-5">Ttc converti en Euro</label>
+            <div class="col-md-7">
+                <input type="text" placeholder="TTC en Euro" class="form-control" id="js_depense_ttc_converti" value="" disabled>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Taux TVA</label>
+            <div class="col-md-7">
+                <div class="input-group">
+                <select data-placeholder="Exemple 20" class="form-control chosen-select" multiple id="js_depense_tva_taux">
+                    <option value=""></option>
+
+                    {% for tvaTaux in tvaTauxs %}
+                        <option value="{{ tvaTaux.id }}">{{ tvaTaux.taux }}</option>
+                    {% endfor %}
+
+                </select>
+
+                <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+
+                </div>
+            </div>
+        </div>
+
+        {#<div class="form-group">#}
+            {#<label class="control-label col-lg-5">Montant TVA</label>#}
+            {#<div class="col-lg-7">#}
+                {#<input type="text" placeholder="" class="form-control" id="js_depense_tva_montant" value="" disabled>#}
+            {#</div>#}
+        {#</div>#}
+
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Note</label>
+            <div class="col-md-7">
+                <select data-placeholder="Choisir une note" class="form-control chosen-select" id="js_depense_note">
+                    <option value=""></option>
+
+                    {% set noteId = -1 %}
+
+                    {% if depense is null %}
+                        {% if note is not null %}
+                            {% set noteId = note.id %}
+                        {% endif %}
+
+                    {% else %}
+                        {% if depense.ndfNote is not null %}
+                            {% set noteId = depense.ndfNote.id %}
+                        {% endif %}
+                    {% endif %}
+
+
+                    {#{% set noteId = (depense is null) ? -1 : (depense.ndfNote is null) ? -1 : depense.ndfNote.id %}#}
+
+                    {% for note in notes %}
+                        <option value="{{ note.id|boost }}" {{ (note.id == noteId) ? 'selected' : '' }}>{{ note.libelle }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Affaire</label>
+            <div class="col-md-7">
+                <select data-placeholder="Choisir une affaire" class="form-control chosen-select" id="js_depense_affaire">
+                    <option value=""></option>
+                    {% set affaireId = (depense is null) ? -1 : (depense.ndfAffaire is null) ? -1 : depense.ndfAffaire.id %}
+
+                    {% for affaire in affaires %}
+                        <option value="{{ affaire.id|boost }}" {{ (affaire.id == affaireId) ? 'selected' : '' }}>{{ affaire.libelle }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-5 control-label">Contacts</label>
+            <div class="col-md-7">
+                <select data-placeholder="Choisir les contacts" class="form-control chosen-select" multiple id="js_depense_contact">
+                    <option value=""></option>
+                    {% for contact in contacts %}
+                        <option value="{{ contact.id }}">{{ contact.nom ~ ' ' ~ contact.prenom}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<br/>
+
+{#<div class="row">#}
+    <div class="row">
+
+        <div class="form-group col-md-6">
+            <label class="col-md-5 control-label">Avec pièces jointe</label>
+            <div class="col-md-2">
+                <input type="checkbox" class="js-switch_4"  id="js_depense_pj" {{ (depense is null) ? '' : (depense.pj == 1) ? 'checked' : '' }}/>
+            </div>
+
+        </div>
+
+        <div class="form-group col-md-3">
+            <label class="col-md-8 control-label">A rembourser</label>
+            <div class="col-md-4">
+                <input type="checkbox" class="js-switch_2"  id="js_depense_a_rembourser" {{ (depense is null) ? '' : (depense.remboursable == 1) ? 'checked' : '' }}/>
+            </div>
+
+        </div>
+
+        <div class="form-group col-md-3">
+            <label class="col-md-5 control-label">Facturable</label>
+            <div class="col-md-7">
+                <input   type="checkbox" class="js-switch form-control" id="js_depense_a_facturer" {{ (depense is null) ? '' : (depense.facturable == 1) ? 'checked' : '' }} />
+            </div>
+        </div>
+
+    </div>
+{#</div>#}
+
+<div class="ibox-content">
+
+    <div class="pull-right">
+        {#<button class="btn btn-sm" id="js_annuler_depense"><strong>Annuler</strong></button>#}
+        <button class="btn btn-sm btn-primary" id="js_save_depense"><strong>Sauvegarder</strong></button>
+
+    </div>
+
+</div>

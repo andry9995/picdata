@@ -1,0 +1,779 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{#{% form_theme smtp_form 'bootstrap_3_horizontal_layout.html.twig' %}#}
+
+{% block titre %}
+    {{ parent() }} - Tableau des images
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/tableauimage/css/tableau.css') }}?v=3.2">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}?v=3.4"></script>
+    <script src="{{ asset('bundles/facturation/js/facturation-functions.js') }}?v=3.4"></script>
+    <script src="{{ asset('bundles/tableauimage/js/tb-image-functions.js') }}?v=3.9.0"></script>
+    <script src="{{ asset('bundles/tableauimage/js/tableau.js') }}?v=3.5"></script>
+    <script src="{{ asset('bundles/tableauimage/js/smtp.js') }}?v=3.5"></script>
+    <script src="{{ asset('bundles/tableauimage/js/rappel-image.js') }}?v=3.5"></script>
+    <script src="{{ asset('bundles/tableauimage/js/rappel-log.js') }}?v=3.5"></script>
+    <script src="{{ asset('bundles/tableauimage/js/export.js') }}?v=1.2"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+
+    <div class="hidden">
+        <form id="form-export" method="POST">
+            <input type="hidden" id="exp_client" name="exp_client">
+            <input type="hidden" id="exp_exercice" name="exp_exercice">
+            <input type="hidden" id="exp_datas" name="exp_datas">
+        </form>
+    </div>
+
+
+    {% set hidden = '' %}
+    {% if not is_granted('ROLE_DOSSIER_SCAN') %}
+        {% set hidden = 'hidden' %}
+    {% endif %}
+    <div class="col-lg-12">
+        <div class="tabs-container jqgrid-tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tableau-image"><i class="fa fa-table"></i> Tableau des
+                        images</a></li>
+                <li class="{{ hidden }}"><a data-toggle="tab" href="#notification"><i class="fa fa-bell-o"></i> Notifications</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                {#TABLEAU DES IMAGES#}
+                <div id="tableau-image" class="tab-pane active">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        {{ render(controller('AppBundle:Commun:clients', {'attr_id': 'tableau-client', 'label_col': 2, 'select_col': 10})) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form class="form-horizontal">
+                                            <div class="form-group" style="margin-bottom: 10px;">
+                                                <label for="tableau-site" class="control-label col-lg-2">
+                                                    <span>Site</span>
+                                                    <span class="label label-warning">0</span>
+                                                </label>
+                                                <div class="col-lg-10">
+                                                    <select data-ref="" class="site form-control"
+                                                            id="tableau-site"></select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        {#{{ render(controller('AppBundle:Commun:exercices', {'attr_id': 'tableau-exercice', 'label_col': 3, 'select_col': 5})) }}#}
+
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-3">Exercice</label>
+
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="tableau-exercice">
+                                                        {#{% if tous == 1 %}#}
+                                                            {#<option value="0" selected="selected">Tous</option>#}
+                                                        {#{% elseif tous != 2 %}#}
+                                                            {#<option value="0" selected="selected">&nbsp;</option>#}
+                                                        {#{% endif %}#}
+                                                        {% for exercice in 2014..2020 %}
+                                                            <option value="{{ exercice }}">{{ exercice }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-lg-5">
+                                                    <select class="form-control" id="tableau-type-date">
+                                                        <option value="0" selected>Par date pièce</option>
+                                                        <option value="1">Par date réception</option>
+                                                    </select>
+                                                </div>
+
+
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form class="form-horizontal">
+                                            <div class="form-group" style="margin-bottom: 10px;">
+                                                <label for="tableau-dossier" class="control-label col-lg-3">
+                                                    <span>Dossiers</span>
+                                                    <span id="tableau-nb-dossier" class="label label-warning">0</span>
+                                                </label>
+                                                <div class="col-lg-9">
+                                                    <select class="dossier form-control" id="tableau-dossier"></select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-lg-12">
+                                        <div class="dropdown">
+                                            <button class="btn btn-default btn-outline dropdown-toggle" type="button"
+                                                    style="width:150px;"
+                                                    id="btn-param-dropdown" data-toggle="dropdown" aria-expanded="true">
+                                                <span class="glyphicon glyphicon-cog"></span> Paramètres
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="btn-param-dropdown">
+                                                <li role="presentation">
+                                                    <a id="btn-tb-categorie" role="menuitem" tabindex="-1" href="#">
+                                                        <span class="fa fa-bookmark glyph-menu"></span> Catégories
+                                                    </a>
+                                                </li>
+                                                <li role="presentation">
+                                                    <a id="btn-tb-periode" role="menuitem" tabindex="-1" href="#">
+                                                        <span class="fa fa-calendar glyph-menu"></span> Période
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="btn-group" style="width: 150px;">
+                                            {#<button id="btn-go-tableau" class="btn btn-primary" style="width: 150px;">#}
+                                            <button id="btn-go-tableau" class="btn btn-primary" style="width: 70%;">
+                                                <i class="fa fa-arrow-circle-o-right"></i> Go
+                                            </button>
+
+                                            <button id="btn-export" class="btn btn-default" style="width: 30%;">
+                                                <i class="fa fa-download"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="row">
+                                    {#1=fini,2=finissable,3=attente image,4=attente reponse,9=non traitable#}
+                                    <div class="col-md-6">
+                                        <div class="radio radio-inline">
+                                            <input type="radio" name="show-filter-item" id="show-filter-item-tous"
+                                                   value="0" checked>
+                                            <label for="show-filter-item-tous">
+                                                Tous
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="radio radio-success radio-inline">
+                                            <input type="radio" name="show-filter-item" id="show-filter-item-fini"
+                                                   value="1">
+                                            <label for="show-filter-item-fini" class="text-fini">
+                                                Finis
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="radio radio-info radio-inline">
+                                            <input type="radio" name="show-filter-item" id="show-filter-item-finissable"
+                                                   value="2">
+                                            <label for="show-filter-item-finissable" class="text-finissable">
+                                                Finissable
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="radio radio-purple radio-inline">
+                                            <input type="radio" name="show-filter-item"
+                                                   id="show-filter-item-attente-reponse" value="4">
+                                            <label for="show-filter-item-attente-reponse" class="text-attente-reponse">
+                                                Attente&nbsp;réponses
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="radio radio-warning radio-inline">
+                                            <input type="radio" name="show-filter-item"
+                                                   id="show-filter-item-attente-image" value="3">
+                                            <label for="show-filter-item-attente-image" class="text-attente-image">
+                                                Attente images
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="radio radio-danger radio-inline">
+                                            <input type="radio" name="show-filter-item"
+                                                   id="show-filter-item-non-traitable" value="9">
+                                            <label for="show-filter-item-non-traitable" class="texte-non-traitable">
+                                                Non traitable
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="show-categories-container" class="checkbox checkbox-inline">
+                                            <input type="checkbox" id="show-categories" class="styled">
+                                            <label for="show-categories">
+                                                Masquer catégories
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12" id="btn-paginat">
+                            </div>
+                        </div>
+                        <table id="js_tableau" class="js-jqgrid-table"></table>
+                        <div id="pager_tableau"></div>
+                    </div>
+                </div>
+                {#NOTIFICATIONS#}
+                <div id="notification" class="tab-pane">
+                    <div class="panel-body">
+                        <div class="fh-column hidden-xs">
+                            <div class="full-height-scroll">
+                                <ul class="list-group elements-list">
+                                    <li class="list-group-item" id="tab-smtp">
+                                        <a data-toggle="tab" href="#smtp">
+                                            <strong>Paramètres SMTP</strong>
+                                            <i id="param-smtp-missing" title="Les paramètres SMTP ne sont pas encore configurés." class="fa fa-warning pull-right hidden" style="color:#f8ac59;"></i>
+                                            <div class="small p-t-xs">
+                                                Paramètres SMTP pour envoyer les mails aux clients.
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item active" id="tab-param-rappel">
+                                        <a data-toggle="tab" href="#rappel-image">
+                                            <strong>Rappel Images Non Parvenues</strong>
+                                            <div class="small p-t-xs">
+                                                    Destinataires, période d'envoi, fréquence d'envoi, contenu du mail.
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="list-group-item" id="tab-log-rappel">
+                                        <a data-toggle="tab" href="#rappel-log">
+                                            <strong>Historique d'envoi</strong>
+                                            <div class="small p-t-xs">
+                                                    Liste des emails envoyés par dossier et par date.
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="full-height">
+                            <div class="full-height-scroll white-bg border-left">
+                                <div class="element-detail-box">
+                                    <div class="tab-content">
+                                        <div id="smtp" class="tab-pane">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12">
+                                                    {{ render(controller('AppBundle:Commun:clients', {'conteneur': '0', 'tous': '0', 'attr_id': 'client-smtp', 'label_col': 4, 'select_col': 8})) }}
+                                                    {{ form_start(smtp_form, {"attr": {"id": "form-smtp", "class": "form-horizontal"}}) }}
+                                                    <div class="form-group">
+                                                        {{ form_label(smtp_form.smtp, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                                                        <div class="col-md-8">
+                                                            {{ form_widget(smtp_form.smtp, {"attr": {"class": "form-control"}}) }}
+                                                        </div>
+                                                        {{ form_errors(smtp_form.smtp) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(smtp_form.port, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(smtp_form.port, {"attr": {"class": "form-control", "style": "width:70px;"}}) }}
+                                                        </div>
+                                                        {{ form_errors(smtp_form.port) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(smtp_form.login, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                                                        <div class="col-md-8">
+                                                            {{ form_widget(smtp_form.login, {"attr": {"class": "form-control"}}) }}
+                                                        </div>
+                                                        {{ form_errors(smtp_form.login) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(smtp_form.password.first, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                                                        <div class="col-md-8">
+                                                            {{ form_widget(smtp_form.password.first, {"attr": {"class": "form-control"}}) }}
+                                                        </div>
+                                                        {{ form_errors(smtp_form.password.first) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(smtp_form.password.second, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                                                        <div class="col-md-8">
+                                                            {{ form_widget(smtp_form.password.second, {"attr": {"class": "form-control"}}) }}
+                                                        </div>
+                                                        {{ form_errors(smtp_form.password.second) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(smtp_form.certificate, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(smtp_form.certificate, {"attr": {"class": "form-control"}}) }}
+                                                        </div>
+                                                        {{ form_errors(smtp_form.certificate) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        {{ form_label(smtp_form.copie, null, {"label_attr": {"class": "control-label col-md-4"}}) }}
+                                                        <div class="col-md-8">
+                                                            {{ form_widget(smtp_form.copie, {"attr": {"class": "form-control"}}) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group text-right">
+                                                        <div class="col-md-4"></div>
+                                                        <div class="col-md-8">
+                                                            <button id="btn-save-smtp" class="btn btn-primary btn-block">Enregistrer</button>
+                                                        </div>
+                                                    </div>
+                                                    {{ form_end(smtp_form) }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div id="rappel-help-info" class="smtp-help well">
+                                                        <div>
+                                                            <blockquote>
+                                                                <small>Les informations ci-dessus sont à demander à votre informaticien ou à
+                                                                    votre hebergeur.
+                                                                </small>
+                                                            </blockquote>
+                                                        </div>
+                                                        <div class="smtp-help-item">
+                                                            <span class="label label-default">SMTP</span>
+                                                            <small>L'adresse de votre serveur mail qui sera utilisé pour envoyé votre email;
+                                                                généralement de la forme <strong>smtp.domaine.xxx</strong>.
+                                                            </small>
+                                                        </div>
+                                                        <div class="smtp-help-item">
+                                                            <span class="label label-default">Port</span>
+                                                            <small>C'est le port de sortie du serveur de vos emails. <strong>Exemple: 587,
+                                                                    465</strong></small>
+                                                        </div>
+                                                        <div class="smtp-help-item">
+                                                            <span class="label label-default">Login</span>
+                                                            <small>C'est le nom d'utilisateur pour connecter au serveur (<strong>Une adresse
+                                                                    email</strong>).
+                                                            </small>
+                                                        </div>
+                                                        <div class="smtp-help-item">
+                                                            <span class="label label-default">Mot de passe</span>
+                                                            <small>C'est le mot de passe associé au nom d'utilisateur.</small>
+                                                        </div>
+                                                        <div class="smtp-help-item">
+                                                            <span class="label label-default">Certificat</span>
+                                                            <small>C'est la méthode de chiffrement utilisée par le serveur.</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="rappel-image" class="tab-pane active">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    {{ render(controller('AppBundle:Commun:clients', {'conteneur': '0', 'tous': '0', 'attr_id': 'client-rappel-image', 'label_col': 4, 'select_col': 8})) }}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group" style="margin-bottom: 10px;">
+                                                            <label for="site-rappel-image" class="control-label col-lg-4">
+                                                                <span>Site</span>
+                                                                <span class="label label-warning" style="display:inline-block">0</span>
+                                                            </label>
+                                                            <div class="col-lg-8">
+                                                                <select data-ref="" class="site form-control" id="site-rappel-image"></select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label class="control-label" for="activer-envoi">
+                                                        <span id="activer-envoi-label">Statut envoi</span>
+                                                    </label>
+                                                    <input id="activer-envoi" type="checkbox" class="js-switch">
+                                                </div>
+                                            </div>
+                                            <table id="js_rappel_image" class="js-jqgrid-table"></table>
+                                            <div id="pager_rappel_image"></div>
+                                        </div>
+                                        <div id="rappel-log" class="tab-pane">
+                                            <input type="hidden" id="exercice-rappel-log" value="{{ 'now'|date('Y') }}">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    {{ render(controller('AppBundle:Commun:clients', {'conteneur': '0', 'tous': '0', 'attr_id': 'client-rappel-log', 'label_col': 4, 'select_col': 8})) }}
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group" style="margin-bottom: 10px;">
+                                                            <label for="site-rappel-log" class="control-label col-lg-4">
+                                                                <span>Site</span>
+                                                                <span class="label label-warning" style="display:inline-block">0</span>
+                                                            </label>
+                                                            <div class="col-lg-8">
+                                                                <select data-ref="" class="site form-control" id="site-rappel-log"></select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <form class="form-horizontal">
+                                                        <div class="form-group" style="margin-bottom: 10px;">
+                                                            <label for="dossier-rappel-log" class="control-label col-lg-4">
+                                                                <span>Dossier</span>
+                                                                <span class="label label-warning" style="display:inline-block">0</span>
+                                                            </label>
+                                                            <div class="col-lg-8">
+                                                                <select data-ref="" class="dossier form-control" id="dossier-rappel-log"></select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <table id="js_rappel_log1" class="js-jqgrid-table"></table>
+                                            <div id="pager_rappel_log"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal Paramètres catégories#}
+    <div class="modal" id="param-categorie-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">Catégories à afficher pour chaque dossier</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="js_tb_categorie" class="js-jqgrid-table"></table>
+                    <div id="pager_tb_categorie"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal">Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal Paramètres période envoi des images#}
+    <div class="modal" id="param-periode-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Période d'envoi des images</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="js_tb_periode" class="js-jqgrid-table"></table>
+                    <div id="pager_tb_periode"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal">Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal détail des images par cellule dans tbImage#}
+    <div class="modal" id="detail-image-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight" style="width: 900px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="detail-image-modal-title">Détails des images</h4>
+                </div>
+                <div class="modal-body" style="height: 350px; padding: 5px 20px 0;">
+                    <table id="js_tb_detail_image" class="js-jqgrid-table"></table>
+                    <div id="pager_tb_detail_image"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal">Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal SetImageZero dans tbImage#}
+    <div class="modal" id="image-zero-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="image-zero-modal-title">Pas d'images</h4>
+                </div>
+                <div class="modal-body" style="height: 120px;">
+                    <label class="btn btn-default btn-outline btn-block" style="text-align: left !important;">
+                        <input type="radio" name="image-zero" id="image-zero-attente" autocomplete="off" value="1">
+                        Pièces en attente
+                    </label>
+                    <label class="btn btn-default btn-outline btn-block" style="text-align: left !important;">
+                        <input type="radio" name="image-zero" id="image-zero-null" autocomplete="off" value="0"> Pas de
+                        pièces pour ce mois
+                    </label>
+                    <input type="hidden" id="image-zero-dossier">
+                    <input type="hidden" id="image-zero-exercice">
+                    <input type="hidden" id="image-zero-categorie">
+                    <input type="hidden" id="image-zero-mois">
+                    <input type="hidden" id="image-zero-banque">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-save-image-zero">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal status dossier dans tbImage#}
+    <div class="modal" id="status-dossier-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="status-dossier-modal-title">Statut du dossier</h4>
+                </div>
+                <div class="modal-body" style="height: 120px;">
+                    <div id="dossier-status-check">
+                        <div class="checkbox checkbox-success">
+                            <input type="checkbox" id="status-dossier-termine" class="styled" value="1">
+                            <label for="status-dossier-termine" class="text-primary">
+                                Dossier terminé pour SCRIPTURA
+                            </label>
+                        </div>
+                        <div class="checkbox checkbox-purple">
+                            <input type="checkbox" id="status-dossier-attente-reponse" class="styled" value="4">
+                            <label for="status-dossier-attente-reponse" class="text-attente-reponse">
+                                Dossier en attente réponse
+                            </label>
+                        </div>
+                        <div class="checkbox checkbox-danger">
+                            <input type="checkbox" id="status-dossier-non-traitable" class="styled" value="9">
+                            <label for="status-dossier-non-traitable" class="text-danger">
+                                Dossier non traitable
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" id="status-dossier-id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-save-status-dossier">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal Destinataires Rappel Image  #}
+    <div class="modal" id="rappel-img-dest-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-img-dest-modal-title">Destinataires</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;">
+                    <form role="form" class="form-horizontal">
+                        <input type="hidden" id="notification-dest-id" name="notification-dest-id">
+
+                        <div class="form-group" id="group-nom-contact">
+                            <div class="col-sm-4">
+                                <label for="titre-contact">Titre</label>
+                                <select class="form-control" name="titre-contact" id="titre-contact">
+                                    <option value="1">Monsieur</option>
+                                    <option value="2">Madame</option>
+                                    <option value="3">Mademoiselle</option>
+                                    <option value="4">Madame, Monsieur</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-8">
+                                <label for="nom-contact">Nom</label>
+                                <input class="form-control" name="nom-contact" id="nom-contact" placeholder="Nom du contact">
+                            </div>
+                        </div>
+                        <div class="form-group" id="group-destinataire" style="margin-top: 15px;">
+                            <div class="col-sm-12">
+                                <label for="list-destinataire">Destinataire(s)</label>&nbsp;&nbsp;&nbsp;<span class="small label label-default"> Séparer les adresses email par un point virgule </span>
+                                <input class="form-control" name="list-destinataire" id="list-destinataire">
+                            </div>
+                        </div>
+                        <div class="form-group" id="group-destinataire" style="margin-top: 15px;">
+                            <div class="col-sm-12">
+                                <label for="list-copie">Copie(s)</label>&nbsp;&nbsp;&nbsp;<span class="small label label-default"> Séparer les adresses email par un point virgule </span>
+                                <input class="form-control" name="list-copie" id="list-copie">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-save-rappel-img-destinataire" class="btn btn-sm btn-primary" style="width:100px;">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal Contenu Rappel Image  #}
+    <div class="modal" id="rappel-img-contenu-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-img-contenu-modal-title">Contenu</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;min-height:250px;">
+                    <input type="hidden" id="notification-contenu-id" name="notification-contenu-id">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="notification-objet" class="control-label col-lg-2">Objet</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control"  id="notification-objet" name="notification-objet"
+                                       value="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-right" style="margin-bottom:5px;">
+                                <button class="btn btn-bitbucket btn-white btn-xs" id="frequence-envoi">
+                                    <i class="fa fa-clock-o"></i> Insérer fréquence d'envoi
+                                </button>
+                                {#<button class="btn btn-bitbucket btn-white btn-xs" id="image-manquante">#}
+                                {#<i class="fa fa-th-list"></i> Insérer liste images manquantes#}
+                                {#</button>#}
+                                <button class="btn btn-bitbucket btn-white btn-xs" id="default-content" style="width:210px;">
+                                    <i class="fa fa-file-text-o"></i> Utiliser le contenu par défaut
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <textarea id="email-content" class="form-control" style="height:400px;margin-top: 10px;">Entrer le contenu du mail ici</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="checkbox checkbox-inline checkbox-danger" style="margin-right:30px;text-align:left;">
+                        <input id="check-content-all" type="checkbox">
+                        <label for="check-content-all">
+                            <strong class="text-danger">Appliquer à tous les dossiers</strong>
+                        </label>
+                    </div>
+                    <button type="button" id="btn-save-rappel-img-contenu" class="btn btn-sm btn-primary" style="width:120px;">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal parm rappel #}
+    <div class="modal" id="rappel-param-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-param-modal-title">Contenu</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;min-height:250px;">
+                    <form class="form-horizontal" id="rappel-param-form">
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="btn-save-rappel-param" class="btn btn-sm btn-primary" style="width:120px;">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#Modal Aperçu email envoyé  #}
+    <div class="modal" id="rappel-log-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content animated fadeInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="rappel-log-modal-title">Email</h4>
+                </div>
+                <div class="modal-body" style="padding: 5px 20px 0;min-height:250px;">
+                    <table class="table">
+                        <tr>
+                            <th>Statut</th>
+                            <td id="preview-status"></td>
+                        </tr>
+                        <tr>
+                            <th>Dossier</th>
+                            <td id="preview-dossier"></td>
+                        </tr>
+                        <tr>
+                            <th>Destinataire(s)</th>
+                            <td id="preview-dest">test</td>
+                        </tr>
+                        <tr>
+                            <th>Copie(s)</th>
+                            <td id="preview-copie"></td>
+                        </tr>
+                        <tr>
+                            <th>Sujet</th>
+                            <td id="preview-sujet"></td>
+                        </tr>
+                        <tr>
+                            <th>Date Envoi</th>
+                            <td id="preview-date"></td>
+                        </tr>
+                        <tr>
+                            <th>Contenu</th>
+                            <td><div id="preview-contenu" style="max-height:300px;overflow:auto;"></div></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

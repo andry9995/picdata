@@ -1,0 +1,63 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Info Perdos{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/infoperdos/js/infoPerdos-function.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/contratPrevoyance.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/noteFrais.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/professionLiberale.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/regimeImposition.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/regimeFiscal.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/regimeSuivi.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/regimeTva.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/typeActivite.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/typeVente.js') }}"></script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block contenu_droite %}
+    <div class="tabs-container">
+        <div class="tabs-left">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-caracteristique" id="js-caracteristique-tab"> Carractéristique dossier</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-statut-dirigeant" id="js-statut-dirigeant-tab">Statut du dirigeant majoritaire</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-document-juridique">Document juridique</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-vehicule">Vehicules</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-document-comptable"> Documents comptables et fiscaux</a></li>
+            </ul>
+            <div class="tab-content ">
+                <div id="tab-caracteristique" class="tab-pane active">
+                    {{ include('InfoPerdosBundle:PrincipaleTable:caracteristique.html.twig') }}
+
+                </div>
+
+                <div id="tab-statut-dirigeant" class="tab-pane">
+                    {{ include('InfoPerdosBundle:PrincipaleTable:statutDirigeant.html.twig') }}
+                </div>
+
+                <div id="tab-document-juridique" class="tab-pane">
+                    <div class="panel-body">
+                    </div>
+                </div>
+                <div id="tab-vehicule" class="tab-pane">
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+                <div id="tab-document-comptable" class="tab-pane">
+                    <div class="panel-body">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

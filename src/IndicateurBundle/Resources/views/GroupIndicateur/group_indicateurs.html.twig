@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-sm-12" style="margin-bottom: 5px !important;">
+        <span class="btn btn-primary btn-xs" id="js_add_groupe_indicateur"><i class="fa fa-plus-circle"></i>&nbsp;Nouveau indicateur</span>
+    </div>
+</div>
+<div class="panel-group" id="indicateur_group_acordion">
+    {% set index = 1 %}
+    {% for indicateur in indicateurs %}
+        <div class="panel panel-default js_panel_group_indicateur">
+            <div class="panel-heading" style="padding: 1px !important;">
+                <h5 class="panel-title js_group_indicateur_item" data-id="{{ indicateur.id|boost }}" data-index="{{ index }}">
+                    <span class="row" style="margin: 0!important;">
+                        <span class="col-lg-1">
+                            <a data-toggle="collapse" data-parent="#indicateur_group_acordion" href="#collapse_{{ index }}">
+                                <span class="btn btn-sm js_group_libelle">{{ indicateur.libelle }}</span>
+                            </a>
+                        </span>
+                        <span class="col-lg-10">
+                            <span class="btn btn-white btn-circle js_group_edit js_tooltip" data-tooltip="Modifier"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                            <span class="btn btn-white btn-circle js_group_add_child js_tooltip" data-tooltip="Ajouter item"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+                            <span class="btn btn-white btn-circle js_group_delete js_tooltip" data-tooltip="Supprimer"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                        </span>
+                    </span>
+                </h5>
+            </div>
+            <div id="collapse_{{ index }}" class="panel-collapse collapse {{ (index == 1) ? 'in' : '' }}">
+                <div class="panel-body no-padding-bottom">
+                    {{ render(controller('IndicateurBundle:Indicateur:indicateurs',{ group:indicateur , index_group:index })) }}
+                </div>
+            </div>
+        </div>
+        {% set index = index + 1 %}
+    {% endfor %}
+</div>
+
+<div id="js_temp_form" class="hidden">
+    <div class="row">
+        <div class="col-lg-12">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Nom</label>
+                    <div class="col-lg-10">
+                        <input type="text" placeholder="Indicateur" class="form-control js_group_libelle">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 text-right">
+                        <span class="btn btn-primary btn-sm js_btn_save"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+                        <span class="btn btn-white btn-sm js_btn_cancel"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="js_indicateur_num" value="{{ index }}" >
+<input type="hidden" id="js_temp_action" value="0">

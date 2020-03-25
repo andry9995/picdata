@@ -1,0 +1,149 @@
+{% set class_n_1 = 'danger' %}
+{% set class_n = 'default' %}
+{% set class_n1 = 'primary' %}
+
+{% set check_rubrique = '' %}
+{% set check_super_rubrique = '' %}
+{% set check_hyper_rubrique = '' %}
+
+{% set check_normal = '' %}
+{% set check_tri_valeur = '' %}
+{% set check_tri_date = '' %}
+
+{% if indicateur_item is not null %}
+    {% set check_normal = (indicateur_item.typeOperation == 0) ? 'checked' : '' %}
+    {% set check_tri_valeur = (indicateur_item.typeOperation == 1) ? 'checked' : '' %}
+    {% set check_tri_date = (indicateur_item.typeOperation == 2) ? 'checked' : '' %}
+{% else %}
+    {% set check_normal = 'checked' %}
+{% endif %}
+
+{% if operandes|length > 0 %}
+    {% set type_o = operandes[0].rubrique.type %}
+    {% if type_o == 0 %}
+        {% set check_rubrique = 'checked' %}
+    {% elseif type_o == 1 %}
+        {% set check_super_rubrique = 'checked' %}
+    {% elseif type_o == 2 %}
+        {% set check_hyper_rubrique = 'checked' %}
+    {% else %}
+    {% endif %}
+{% else %}
+    {% set check_rubrique = 'checked' %}
+{% endif %}
+
+<form class="form-horizontal" id="js_form_edit_indicateur_item"
+      data-id_indicateur_item="{{ (indicateur_item is null) ? 0|boost : indicateur_item.id|boost }}"
+      data-id_indicateur="{{ (indicateur is null) ? 0|boost : indicateur.id|boost }}">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Nom</label>
+        <div class="col-lg-10 text-center">
+            <input type="text" placeholder="Nom" class="form-control" id="js_indicateur_item_libelle"
+                   value="{{ (indicateur_item is null) ? '' : indicateur_item.libelle }}">
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-3"><span class="label label-warning-light"><strong>Formule</strong></span></div>
+                <div class="col-lg-9 text-center" id="js_group_rubrique">
+                    <div class="radio radio-info radio-inline">
+                        <input type="radio" id="radio_type_rubrique" data-val="0" name="radio_type" class="js_radio_type" {{ check_rubrique }}>
+                        <label for="radio_type_rubrique">Rubrique</label>
+                    </div>
+                    <div class="radio radio-inline">
+                        <input type="radio" id="radio_type_super_rubrique" data-val="1" name="radio_type" class="js_radio_type" {{ check_super_rubrique }} >
+                        <label for="radio_type_super_rubrique">Super-Rubrique</label>
+                    </div>
+                    <div class="radio radio-success radio-inline">
+                        <input type="radio" id="radio_type_hyper_rubrique" data-val="2" name="radio_type" class="js_radio_type" {{ check_hyper_rubrique }}>
+                        <label for="radio_type_hyper_rubrique">Hyper-Rubrique</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Nom&nbsp;Formule</label>
+                <div class="col-lg-10 text-center">
+                    <input type="text" placeholder="Formule" class="form-control" id="js_formule_libelle"  value="{{ (indFormule != null) ? indFormule.libelle : '' }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Unit&eacute;</label>
+                <div class="col-lg-10 text-center">
+                    <input type="text" placeholder="Nom" class="form-control" id="js_indicateur_item_unite"
+                           value="{{ (indicateur_item is null) ? '' : indicateur_item.unite }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Rubrique</label>
+                <div class="col-lg-5 text-center" id="js_conteneur_rubrique"></div>
+                <div class="col-lg-3">
+                    <select id="js_varation_n" class="form-control">
+                        <option value="-1" data-class="label-{{ class_n_1 }}" class="text-{{ class_n_1 }}">n-1</option>
+                        <option value="0" data-class="label-{{ class_n }}" selected>n</option>
+                        <option value="1" data-class="label-{{ class_n1 }}" class="text-{{ class_n1 }}">n+1</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <span class="btn btn-default btn-sm" id="js_add_rubrique">Ajouter</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="js_formule" class="form-control scroller"
+                        style="border: 1px solid #CCCCCC !important;word-wrap: break-word!important; padding: 5px !important;height: 100px;width: 100%!important;">
+                        {% if indFormule != null %}
+                            {% set index = 0 %}
+                            {% for ch in indFormule.formule|split('') %}
+                                {% if ch == '#' %}
+                                    {% if operandes[index].variationN == -1 %}
+                                        {% set class_variation = class_n_1 %}
+                                    {% elseif operandes[index].variationN == 1 %}
+                                        {% set class_variation = class_n1 %}
+                                    {% else %}
+                                        {% set class_variation = class_n %}
+                                    {% endif %}
+                                    <span class="label label-{{ class_variation }} operateur operande" data-variation="{{ operandes[index].variationN }}" style="margin-right: 1px !important;margin-left: 1px !important;" data-id="{{ operandes[index].rubrique.id|boost }}">{{ operandes[index].rubrique.libelle }}</span>
+                                    {% set index = index + 1 %}
+                                {% else %}
+                                    <span class="operateur">{{ ch }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <span class="blink" id="js_blink_formule">|</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Operateur&nbsp;Sp&eacute;cifique</label>
+                <div class="col-lg-10 text-center" id="js_type_operateur">
+                    <div class="radio radio-info radio-inline">
+                        <input type="radio" id="radio_type_normal" data-val="0" name="radio_oper" class="js_radio_operateur" {{ check_normal }}>
+                        <label for="radio_type_normal">Aucun</label>
+                    </div>
+                    <div class="radio radio-inline">
+                        <input type="radio" id="radio_type_tri_valeur" data-val="1" name="radio_oper" class="js_radio_operateur" {{ check_tri_valeur }} >
+                        <label for="radio_type_tri_valeur">Tri&nbsp;par&nbsp;VALEUR</label>
+                    </div>
+                    <div class="radio radio-success radio-inline">
+                        <input type="radio" id="radio_type_tri_date" data-val="2" name="radio_oper" class="js_radio_operateur" {{ check_tri_date }}>
+                        <label for="radio_type_tri_date">Tri&nbsp;par&nbsp;DATE</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:15px !important">
+        <div class="col-lg-12 text-right">
+            <span class="btn btn-primary btn-sm" id="js_btn_save_indicateur_item"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Enregistrer</span>
+            <span class="btn btn-white btn-sm js_btn_cancel"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        </div>
+    </div>
+
+    <input type="text" style="height: 0 !important;width: 0!important;" id="js_focus"/>
+</form>

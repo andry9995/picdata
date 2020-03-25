@@ -1,0 +1,66 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadShowClient({{ client.id }});"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Balance Client {{ client.intitule }}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 10%">Date</th>
+                    <th style="width: 70%">Description</th>
+                    <th style="width: 10%">Montant</th>
+                    <th style="width: 10%">Solde</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ firstDate|date('Y/m/d') }}</td>
+                    <td>Solde à reporter</td>
+                    <td class="pos-right">{{ 0|number_format(0, '.', ' ') }}</td>
+                    <td class="pos-right">
+                        {% set solde = 0 %}
+                        {{ solde|number_format(0, '.', ' ') }}
+                    </td>
+                </tr>
+                {% for element in elements %}
+                <tr>
+                    <td>{{ element['date']|date('d/m/Y') }}</td>
+                    <td>
+                        {% if element['type'] == 'encaissement' %}
+                            <span><a onclick="loadEditEncaissement({{ element['id'] }})">Reçu {{ element['code'] }}</a></span> 
+                        {% elseif element['type'] == 'facture' %}
+                            <span><a onclick="loadEditFacture({{ element['id'] }})">Facture {{ element['code'] }}</a></span> 
+                        {% elseif element['type'] == 'paiement' %}
+                            <span>Paiement {{ element['code'] }}</span> appliqué à <span><a onclick="loadEditFacture({{ element['facture'].id }})">Facture {{ element['facture'].code }}</a></span>
+                        {% endif %}
+                    </td>
+                    <td class="pos-right">
+                        {% if element['type'] == 'encaissement' %}
+                            {{ '-'~element['amount']|number_format(0, '.', ' ') }}
+                        {% elseif element['type'] == 'facture' %}
+                            {{ element['amount']|number_format(0, '.', ' ') }} 
+                        {% elseif element['type'] == 'paiement' %}
+                            {{ '-'~element['amount']|number_format(0, '.', ' ') }}
+                        {% endif %}
+                    </td>
+                    <td class="pos-right">
+                        {% if element['type'] == 'encaissement' %}
+                            {% set solde = solde - element['amount'] %}
+                        {% elseif element['type'] == 'facture' %}
+                            {% set solde = solde + element['amount'] %}
+                        {% elseif element['type'] == 'paiement' %}
+                            {% set solde = solde - element['amount'] %}
+                        {% endif %}
+                        {{ solde|number_format(0, '.', ' ') }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

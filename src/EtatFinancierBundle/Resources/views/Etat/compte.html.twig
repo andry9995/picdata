@@ -1,0 +1,49 @@
+{% set defaut = 'btn-outline btn-default' %}
+{% set debit_active = 'btn-primary' %}
+{% set credit_active = 'btn-warning' %}
+{% set btn_credit = '&nbsp;<span class="btn btn-circle btn-warning">C</span>&nbsp;' %}
+{% set btn_debit = '&nbsp;<span class="btn btn-circle btn-primary">D</span>&nbsp;' %}
+<div class="row">
+    <div class="col-sm-12">
+        <table  class="table table-hover js_table_compte" data-brut="{{ brut }}">
+            <tbody>
+                {% for compte in comptes %}
+
+                    {% set message = '<table class="table table-bordered table-condensed">' %}
+                    {% set message = message ~ '<tr><th>Etat</th><th>Libell&eacute;</th><th>Sens</th><th></th></tr><tbody>' %}
+                    {% for etat in compte.etats %}
+                        {% set brut_amort = '' %}
+                        {% set sens = ((etat.sens == 1) ? btn_debit : ((etat.sens == 2) ? btn_credit : (btn_debit~btn_credit))) %}
+                        {% if etat.etat.etatFinancier == 0 %}
+                            {% set etatF = 'Bilan actif' %}
+                            {% set brut_amort = (etat.brutAmort == 1) ? 'brut' : 'amort.' %}
+                        {% endif %}
+                        {% if etat.etat.etatFinancier == 1 %}{% set etatF = 'Bilan passif' %}{% endif %}
+                        {% if etat.etat.etatFinancier == 2 %}{% set etatF = 'Produits et charges' %}{% endif %}
+                        {% if etat.etat.etatFinancier == 3 %}{% set etatF = 'Tableau OEC' %}{% endif %}
+                        {% set message = message ~ '<tr>' %}
+                            {% set message = message ~ '<td>' ~ etatF ~ '</td>' %}
+                            {% set message = message ~ '<td>' ~ etat.etat.libelle ~ '</td>' %}
+                            {% set message = message ~ '<td>' ~ sens ~ '</td>' %}
+                            {% set message = message ~ '<td>' ~ brut_amort ~ '</td>' %}
+                        {% set message = message ~ '</tr>' %}
+                    {% endfor %}
+                    {% set message = message ~ '</tbody></table>' %}
+                    <tr data-id="{{ compte.id }}" data-id_compte_etat="{{ compte.idEtatCompte }}" class="{{ (compte.idEtatCompte == 0) ? 'js_non_cocher' : '' }}">
+                        <td class="pointer tooltip-demo">
+                            <i class="fa {{ (compte.etats|length != 0) ? 'fa-info-circle js_tooltip' : '' }}" data-tooltip="{{ (compte.etats|length != 0) ? message : '' }}"></i>
+                        </td>
+                        <td>{{ compte.compte }}</td>
+                        <td>{{ compte.intitule }}</td>
+                        <td>
+                            <span class="js_compte js_control_element btn btn-circle js_debit {{ (compte.cochage == 1 or compte.cochage == 3) ? debit_active : defaut }}">D</span>
+                        </td>
+                        <td>
+                            <span class="js_compte js_control_element btn btn-circle js_credit {{ (compte.cochage == 2 or compte.cochage == 3) ? credit_active : defaut }}">C</span>
+                        </td>                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

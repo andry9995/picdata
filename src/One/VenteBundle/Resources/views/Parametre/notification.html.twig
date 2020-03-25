@@ -1,0 +1,241 @@
+<div class="row">
+    <div class="col-sm-12">
+        <form class="form-horizontal" id ="notification-form">
+
+            {% set status = (notification is null) ? 0 : (notification.status is null) ? 0 : notification.status %}
+
+            {% set opportuniteStatus = 0 %}
+            {% set tacheStatus = 0 %}
+            {% set appelStatus = 0 %}
+            {% set paiementStatus = 0 %}
+
+            {% set opportuniteStatus = 0 %}
+            {% set tacheStatus = 0 %}
+            {% set appelStatus = 0 %}
+            {% set paiementStatus = 0 %}
+
+            {% set opportuniteAvant = 1 %}
+            {% set tacheAvant = 1 %}
+            {% set appelAvant = 1 %}
+            {% set paiementAvant = 1 %}
+
+            {% set opportuniteDelais = 0 %}
+            {% set tacheDelais = 0 %}
+            {% set appelDelais = 0 %}
+            {% set paiementDelais = 0 %}
+
+            {% set opportuniteDelaisType = 0 %}
+            {% set tacheDelaisType = 0 %}
+            {% set appelDelaisType = 0 %}
+            {% set paiementDelaisType = 0 %}
+
+            {% if status == 1 %}
+                {% set opportuniteStatus = (notification.opportunite is  null) ? 0 : notification.opportunite %}
+                {% set tacheStatus = (notification.tache is null) ? 0 : notification.tache %}
+                {% set appelStatus = (notification.appel is null) ? 0 : notification.appel %}
+                {% set paiementStatus = (notification.paiement is null) ? 0 : notification.paiement %}
+
+            {% endif %}
+
+            {% if notification is not null %}
+
+                {% set opportuniteAvant  = (notification.opportuniteAvant is null) ? 1 : notification.opportuniteAvant %}
+                {% set tacheAvant = (notification.tacheAvant is null) ? 1 : notification.tacheAvant %}
+                {% set appelAvant = (notification.appelAvant is null) ? 1 : notification.appelAvant %}
+                {% set paiementAvant = (notification.paiementAvant is null) ? 1 : notification.paiementAvant %}
+
+
+                {% set opportuniteDelais = (notification.opportuniteDelais is null) ? 0 : notification.opportuniteDelais %}
+                {% set tacheDelais = (notification.tacheDelais is null) ? 0 : notification.tacheDelais %}
+                {% set appelDelais = (notification.appelDelais is null) ? 0 : notification.appelDelais %}
+                {% set paiementDelais = (notification.paiementDelais is null) ? 0 : notification.paiementDelais %}
+
+                {% set opportuniteDelaisType = (notification.opportuniteDelaisType is null) ? 0 : notification.opportuniteDelaisType %}
+                {% set tacheDelaisType = (notification.tacheDelaisType is null) ? 0 : notification.tacheDelaisType %}
+                {% set appelDelaisType = (notification.appelDelaisType is null) ? 0 : notification.appelDelaisType %}
+                {% set paiementDelaisType = (notification.paiementDelaisType is null) ? 0 : notification.paiementDelaisType %}
+
+            {% endif %}
+
+            <div class="form-group">
+                <label class="control-label col-sm-3">Notifications</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" class="switch" id="notification" name="notification"
+                            {{ (status == 1) ? 'checked' : 0 }} onchange="setEnable(this, true)" />
+                    <p class="help-block">Activer et désactiver toutes les notifications par email pour ce dossier</p>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="form-group notification-details opportunite-group">
+                <label class="control-label col-sm-3">Opportunité</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" class="switch" id="opportunite" name="opportunite"
+                            {{ (opportuniteStatus == 1 and status == 1) ? 'checked' : '' }} onchange="setEnable(this);"/>
+                    <span>
+                            <div class="schedule">
+                                <span> Envoyé </span>
+                            </div>
+
+                            <div class="schedule" style="width: 50px;">
+                                <input type="text" class="form-control text-center" name="opportunite-details" id="opportunite-details"
+                                        {{ (opportuniteStatus == 0) ? 'disabled' : '' }} value="{{ opportuniteDelais }}">
+                            </div>
+
+                            <div class="schedule">
+                                <select class="form-control" {{ (opportuniteStatus == 0) ? 'disabled' : ''  }}
+                                        name="opportunite-details-type" id="opportunite-details-type">
+                                    <option value="0" {{ (opportuniteDelaisType == 0) ? 'selected' : '' }}>jours</option>
+                                    <option value="1" {{ (opportuniteDelaisType == 1) ? 'selected' : '' }}>semaines</option>
+                                </select>
+                            </div>
+
+                            <div class="schedule">
+                                <select class="form-control" {{ (opportuniteStatus == 0) ? 'disabled' : '' }}
+                                        name="opportunite-avant" id="opportunite-avant">
+                                    <option value="1" {{ (opportuniteAvant == 1) ? 'selected' : '' }}>avant</option>
+                                    <option value="0" {{ (opportuniteAvant == 0) ? 'selected' : '' }}>après</option>
+                                </select>
+                            </div>
+
+                            <div class="schedule">
+                                <span class="">&nbsp;&nbsp;la date d’échéance.</span>
+                            </div>
+                        </span>
+
+                    <p class="help-block">Me notifier par email lorsqu’une opportunité arrive à expiration.</p>
+                </div>
+
+            </div>
+
+
+            <div class="form-group notification-details tache-group">
+                <label class="control-label col-sm-3">Tâche</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" class="switch" id="tache" name="tache"
+                            {{ (tacheStatus == 1 and status == 1) ? 'checked' : '' }} onchange="setEnable(this);"/>
+                    <span>
+                            <div class="schedule">
+                                <span> Envoyé </span>
+                            </div>
+
+                            <div class="schedule" style="width: 50px;">
+                                <input type="text" class="form-control text-center" name="tache-details" id="tache-details"
+                                        {{ (tacheStatus == 0) ? 'disabled' : '' }} value="{{ tacheDelais }}">
+                            </div>
+
+                            <div class="schedule">
+                                <select class="form-control" {{ (tacheStatus == 0) ? 'disabled' : ''  }}
+                                        name="tache-details-type" id="tache-details-type">
+                                    <option value="0" {{ (tacheDelaisType == 0) ? 'selected' : '' }}>jours</option>
+                                    <option value="1" {{ (tacheDelaisType == 1) ? 'selected' : '' }}>semaines</option>
+                                </select>
+                            </div>
+
+                            <div class="schedule">
+                                <select class="form-control" {{ (tacheStatus == 0) ? 'disabled' : '' }}
+                                        name="tache-avant" id="tache-avant">
+                                    <option value="1" {{ (tacheAvant == 1) ? 'selected' : '' }}>avant</option>
+                                    <option value="0" {{ (tacheAvant == 0) ? 'selected' : '' }}>après</option>
+                                </select>
+                            </div>
+
+                            <div class="schedule">
+                                <span class="">&nbsp;&nbsp;la date d’échéance.</span>
+                            </div>
+                        </span>
+
+                    <p class="help-block">Me notifier par email lorsqu’une tâche arrive à expiration.</p>
+                </div>
+
+            </div>
+
+            <div class="form-group notification-details appel-group">
+                <label class="control-label col-sm-3">Appel</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" class="switch" id="appel" name="appel"
+                            {{ (appelStatus == 1 and status == 1) ? 'checked' : '' }} onchange="setEnable(this);"/>
+                    <span>
+                            <div class="schedule">
+                                <span> Envoyé </span>
+                            </div>
+
+                            <div class="schedule" style="width: 50px;">
+                                <input type="text" class="form-control text-center" name="appel-details" id="appel-details"
+                                        {{ (appelStatus == 0) ? 'disabled' : '' }} value="{{ appelDelais }}">
+                            </div>
+
+                            <div class="schedule">
+                                <select class="form-control" {{ (appelStatus == 0) ? 'disabled' : ''  }}
+                                        name="appel-details-type" id="appel-details-type">
+                                    <option value="0" {{ (appelDelaisType == 0) ? 'selected' : '' }}>jours</option>
+                                    <option value="1" {{ (appelDelaisType == 1) ? 'selected' : '' }}>semaines</option>
+                                </select>
+                            </div>
+
+                            <div class="schedule">
+                                <select class="form-control" {{ (appelStatus == 0) ? 'disabled' : '' }}
+                                        name="appel-avant" id="appel-avant">
+                                    <option value="1" {{ (appelAvant == 1) ? 'selected' : '' }}>avant</option>
+                                    <option value="0" {{ (appelAvant == 0) ? 'selected' : '' }}>après</option>
+                                </select>
+                            </div>
+
+                            <div class="schedule">
+                                <span class="">&nbsp;&nbsp;la date d’échéance.</span>
+                            </div>
+                        </span>
+
+                    <p class="help-block">Me prévenir par email lorsqu’un appel doit être effectué.</p>
+                </div>
+
+            </div>
+
+
+            <div class="form-group notification-details paiement-group">
+                <label class="control-label col-sm-3">Paiement de Facture Client</label>
+                <div class="col-sm-9">
+                    <input type="checkbox" class="switch" id="paiement" name="paiement"
+                            {{ (paiementStatus == 1 and status == 1) ? 'checked' : '' }} onchange="setEnable(this);"/>
+                    <span>
+                            <div class="schedule">
+                                <span> Envoyé </span>
+                            </div>
+
+                            <div class="schedule" style="width: 50px;">
+                                <input type="text" class="form-control text-center" name="paiement-details" id="paiement-details"
+                                        {{ (paiementStatus == 0) ? 'disabled' : '' }} value="{{ paiementDelais }}">
+                            </div>
+
+                            <div class="schedule">
+                                <select class="form-control" {{ (paiementStatus == 0) ? 'disabled' : ''  }}
+                                        name="paiement-details-type" id="paiement-details-type">
+                                    <option value="0" {{ (paiementDelaisType == 0) ? 'selected' : '' }}>jours</option>
+                                    <option value="1" {{ (paiementDelaisType == 1) ? 'selected' : '' }}>semaines</option>
+                                </select>
+                            </div>
+
+                            <div class="schedule">
+                                <select class="form-control" {{ (paiementStatus == 0) ? 'disabled' : '' }}
+                                        name="paiement-avant" id="paiement-avant">
+                                    <option value="1" {{ (paiementAvant == 1) ? 'selected' : '' }}>avant</option>
+                                    <option value="0" {{ (paiementAvant == 0) ? 'selected' : '' }}>après</option>
+                                </select>
+                            </div>
+
+                            <div class="schedule">
+                                <span class="">&nbsp;&nbsp;la date d’échéance.</span>
+                            </div>
+                        </span>
+
+                    <p class="help-block">Me prévenir par email lorsque le paiement d’une facture client n’a pas été payé dans les délais.</p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <span class="btn btn-primary pull-right" onclick="saveParamNotification();">Valider</span>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+menu_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MenuBundle:Default:index }
+    
+#menu_utilisateur:
+#    path:   /menu/{utilisateur}
+#    defaults: { _controller: MenuBundle:Menu:menuUtilisateur ,utilisateur: 0}
+#    options:
+#        expose: true
+
+#Liste des menus complets
+menu_liste_complet:
+    path: /menu/liste-complet
+    defaults: { _controller: MenuBundle:Menu:listeMenu }
+    methods: [GET]
+    options:
+        expose: true
+
+menu_left2:
+    path: /menu/left2
+    defaults: { _controller: MenuBundle:Menu:encodePassword }
+    methods: [GET]
+    options:
+        expose: true

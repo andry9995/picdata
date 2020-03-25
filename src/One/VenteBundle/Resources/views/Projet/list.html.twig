@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button class="btn btn-primary" data-toggle="modal" onclick="loadNewProjet();">Nouveau Projet</button>
+        </div>
+    </div>
+</div>
+
+{% if projets|length > 0 or period != 'all' %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="filter-bar">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon btn-search" onclick="searchProjet();">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </span>
+                        <input type="text" class="form-control search" name="search" value="{{ q }}" placeholder="Recherche dans Projets">
+                        <span class="glyphicon glyphicon-remove hidden init-search" aria-hidden="true" onclick="initSearchProjet();"></span>
+                        
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-12 col-xs-12">
+                    <div class="dropdown pull-right sort-date">
+                        {% if period == 'today' %}{% set sortdate = "Aujourd'hui" %}
+                        {% elseif period == 'lastweek' %}{% set sortdate = 'Semaine dernière' %}
+                        {% elseif period == 'thisweek' %}{% set sortdate = 'Cette semaine' %}
+                        {% elseif period == 'nextweek' %}{% set sortdate = 'Semaine prochaine' %}
+                        {% elseif period == 'lastmonth' %}{% set sortdate = 'Mois dernier' %}
+                        {% elseif period == 'thismonth' %}{% set sortdate = 'Ce mois' %}
+                        {% elseif period == 'nextmonth' %}{% set sortdate = 'Mois prochain' %}
+                        {% elseif period == 'lastyear' %}{% set sortdate = 'Année dernière' %}
+                        {% elseif period == 'thisyear' %}{% set sortdate = 'Cette année' %}
+                        {% elseif period == 'custom' %}{% set sortdate = startperiod ~' - '~ endperiod %}
+                        {% else %}{% set sortdate = 'Toutes les dates' %}
+                        {% endif %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-calendar"></span> {{ sortdate }} <span class="glyphicon glyphicon-menu-down"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="date-field">
+                                <input type="text" class="form-control datepicker startdate" value="{{ startperiod }}">
+                                <input type="text" class="form-control datepicker enddate" value="{{ endperiod }}">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="setPeriod('custom'); loadListProjet();"></span>
+                            </li>
+                            <li{% if period == 'all' or period == '' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('all'); loadListProjet();">
+                                    {% if period == 'all' or period == '' %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Toutes les dates
+                                </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li{% if period == 'today' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('today'); loadListProjet();">
+                                    {% if period == 'today'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Aujourd'hui
+                                </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li{% if period == 'thisweek' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('thisweek'); loadListProjet();">
+                                    {% if period == 'thisweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Cette semaine
+                                </a></li>
+                            <li{% if period == 'thismonth' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('thismonth'); loadListProjet();">
+                                    {% if period == 'thismonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Ce mois
+                                </a></li>
+                            <li{% if period == 'thisyear' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('thisyear'); loadListProjet();">
+                                    {% if period == 'thisyear'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Cette année
+                                </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li{% if period == 'nextweek' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('nextweek'); loadListProjet();">
+                                    {% if period == 'nextweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Semaine prochaine
+                                </a></li>
+                            <li{% if period == 'nextmonth' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('nextmonth'); loadListProjet();">
+                                    {% if period == 'nextmonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Mois prochain
+                                </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li{% if period == 'lastweek' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('lastweek'); loadListProjet();">
+                                    {% if period == 'lastweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Semaine dernière
+                                </a></li>
+                            <li{% if period == 'lastmonth' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('lastmonth'); loadListProjet();">
+                                    {% if period == 'lastmonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Mois dernier
+                                </a></li>
+                            <li{% if period == 'lastyear' %} class="active"{% endif %}>
+                                <a onclick="setPeriod('lastyear'); loadListProjet();">
+                                    {% if period == 'lastyear'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Année dernière
+                                </a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown pull-right">
+                        {% if sort == 'name' or sort == '' %}{% set sorttext = 'Par Nom' %}{% endif %}
+                        {% if sort == 'datecreation' %}{% set sorttext = 'Par Date de Création' %}{% endif %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ sorttext }} <span class="glyphicon glyphicon-menu-down"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li{% if sort == 'datecreation' %} class="active"{% endif %}>
+                                <a onclick="setSort('datecreation'); loadListProjet();">
+                                    {% if sort == 'datecreation' %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Par Date de Création
+                                </a></li>
+                            <li{% if sort == 'name' or sort == '' %} class="active"{% endif %}>
+                                <a onclick="setSort('name'); setPeriod('all'); loadListProjet();">
+                                    {% if sort == 'name' or sort == '' %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Par Nom
+                                </a></li>
+                        </ul>
+                    </div>
+                    <span class="pull-right sortorder" onclick="
+                          {% if sortorder == 'ASC' %}setSortOrder('DESC');{% else %}setSortOrder('ASC');{% endif %} loadListProjet();
+                          ">
+                        {% if sortorder == 'ASC' %}<span class="glyphicon glyphicon-arrow-up"></span>{% endif %}
+                        {% if sortorder == 'DESC' %}<span class="glyphicon glyphicon-arrow-down"></span>{% endif %}
+                    </span>
+                </div>
+                <div class="col-md-1 col-sm-12 col-xs-12">
+                    <div class="input-group pull-right">
+                        <span class="input-group-addon view-bloc">
+                            <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                        </span>
+                        <span class="input-group-addon view-list">
+                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="select-bar hidden">
+            <span class="pull-left elements-selected"></span>
+            <a class="pull-left unckecked-all" onclick="uncheckAll();">tout désélectionner</a>
+            <button class="btn btn-danger pull-right delete-selected" onclick="deleteSelectedProjet();">Supprimer</button>
+            <a class="pull-right cancel-select" onclick="uncheckAll();">Annuler</a>
+        </div>
+    </div>
+</div>
+<div class="row list-view">
+    <div class="col-sm-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                    <th>Nom</th>
+                    <th>Commentaire</th>
+                    <th class="action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for projet in projets %}
+                <tr>
+                    <td><input type="checkbox" class="element" value="{{ projet.id }}" onchange="toggleThis();" /></td>
+                    <td><a onclick="loadShowProjet({{ projet.id }});">{{ projet.nom }}</a></td>
+                    <td>{{ projet.description }}</td>
+                    <td>
+                        <div class="dropdown">
+                            <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                            </span>
+                            <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                <li class="remove-action">
+                                    <a onclick="deleteProjet({{ projet.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row bloc-view projet-bloc-view">
+    {% for projet in projets %}
+        <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="bloc">
+                <div class="bloc-content">
+                    <p class="bloc-title"><a onclick="loadShowProjet({{ projet.id }});">{{ projet.nom }}</a></p>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="bloc-footer">
+                    <div class="dropdown">
+                        <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                        </span>
+                        <div class="clear-fix"></div>
+                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                            <li class="remove-action">
+                                <a onclick="deleteProjet({{ projet.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}

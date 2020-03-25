@@ -1,0 +1,68 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}InfoPerdos{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="{{ asset('bundles/app/js/commun.js') }}"></script>#}
+    <script src="{{ asset('js/plugins/summernote/summernote.js') }}"></script>
+    <script src="{{ asset('js/plugins/summernote/summernote-fr-FR.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/validate/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker-fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/locales/fr.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/themes/fa/theme.js') }}"></script>
+    <script src="{{ asset('bundles/infoperdos/js/infoPerdos-function.js') }}?v=2.2.5"></script>
+    <script src="{{ asset('bundles/infoperdos/js/infoCaracteristique/piece-a-envoyer.js') }}?v=2.2.6"></script>
+    <script src="{{ asset('bundles/infoperdos/js/instructionDossier/instruction-dossier.js') }}?v=2.2.6"></script>
+    <script src="{{ asset('bundles/infoperdos/js/infoCaracteristique/identificationDossier.js') }}?v=2.3.7"></script>
+    <script src="{{ asset('bundles/infoperdos/js/infoCaracteristique/libelleEcriture.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/plugins/summernote/summernote.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/plugins/summernote/summernote-bs4.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('css/plugins/sweetalert/sweetalert.css') }}" >#}
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/infoperdos.css') }}?v=2.0.0">
+    <link rel="stylesheet" href="{{ asset('bundles/infoperdos/css/instruction-dossier.css') }}?v=1.9.5">
+
+{% endblock %}
+
+{% block wrapper_content %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            {{ include('InfoPerdosBundle:Default:filtre.html.twig')}}
+        </div>
+    </div>
+
+    <br/>
+
+    {#<div class="row">#}
+    {#<button class="btn btn-sm btn-primary btn-tout-valider" type="submit" id = "btn-validation-information-dossier" style="display:none;">VALIDER INFORMATIONS DOSSIER</button>#}
+    {#<button class="btn btn-sm btn-primary btn-tout-valider" type="submit" id = "btn-validation-methode-comptable" style="display:none;">VALIDER METHODES COMPTABLES</button>#}
+    {#<button class="btn btn-sm btn-primary btn-tout-valider" type="submit" id = "btn-validation-prestation-demande" style="display:none;">VALIDER PRESTATIONS DEMANDEES</button>#}
+    {#<button class="btn btn-sm btn-primary btn-tout-valider" type="submit" id = "btn-validation-piece-envoyer" style="display:none;">VALIDER PIECES A ENVOYER</button>#}
+    {#</div>#}
+    {#<br/>#}
+
+    <div class="row contenu-tab">
+        {{ include('InfoPerdosBundle:Default:contenuTabs.html.twig',
+        {'regimeFiscals':regimeFiscals,'regimeImpositions':regimeImpositions,'natureActivites':natureActivites,
+            'modeVentes':modeVentes,'conventionCompables':conventionCompables,'notesFrais':notesFrais,
+            'regimeTvas':regimeTvas,'tvaTauxs':tvaTauxs, 'formeJuridiques':formeJuridiques, 'dossier':dossier, 'logiciels':logiciels})
+        }}
+    </div>
+
+    {{ include('InfoPerdosBundle:Default:tutorielModal.html.twig') }}
+
+    <input type="text" id="js_dossier_id" hidden>
+
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% if etat == 0 %}
+    {% set titre = 'FINANCIER' %}
+{% elseif etat == 1 %}
+    {% set titre = 'DE GESTION' %}
+{% else %}
+    {% set titre = ' ' %}
+{% endif %}
+{% block titre %}Etat {{ titre }}{% endblock %}
+
+{% block contenu_droite %}
+    <div class="row">
+        {{ include('EtatBaseBundle:EtatBase:filtre.html.twig') }}
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" id="js_id_container_etat">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    {% for key, item in etats %}
+                        <li class="{{ (key == 0) ? 'active' : '' }} js_li_etat"><a data-toggle="tab" href="#tab-{{ key }}">{{ item.etat.libelle }}</a></li>
+                    {% endfor %}
+                    <li>
+                        <a id="js_chart_footer">
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    {% for key, item in etats %}
+                        <div class="{{ (key == 0) ? 'active' : '' }} tab-pane js_cl_tab_etat" data-id="{{ item.etat.id|boost }}" id="tab-{{ key }}">
+                            <div class="panel-body js_cl_container_etat">
+
+                            </div>
+                            <input class="js_per_hidden" type="hidden">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="js_is_etat" value="1">
+    <input type="hidden" id="id_change" value="{{ isModifiable ? 1 : 0 }}">
+    <input type="hidden" id="js_et" value="{{ etat }}">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/datePickerPopOverV2.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/indicateur/css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/etat/css/affichage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/split/all.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/summernote/summernote.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jqGrid/jQuery.jqGrid.setColWidth.js') }}"></script>
+    <script src="{{ asset('js/plugins/split/shieldui-all.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/app/js/datePickerPopOverV2.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/etat/js/show/filtre.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/indicateur/js/affichageV2/details.js') }}?v=1.1"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/cloture_exercice.js') }}"></script>
+    <script src="{{ asset('bundles/etatbase/js/etat/export.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/show/exporter.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/show/commentaire.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/show/index.js') }}?v=1.1"></script>
+{% endblock %}

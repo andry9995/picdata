@@ -1,0 +1,288 @@
+<form class="form-horizontal" id="js_form_info_caracteristique_dossier">
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Régime&nbsp;Fiscal</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="regime_fiscal" id="js_regime_fiscal"
+                            data-field="RegimeFiscal">
+
+                        <option></option>
+
+                        {% set regimeFiscalDossier = (dossier is null) ? 0 : (dossier.regimeFiscal.id is not defined)? 0 : dossier.regimeFiscal.id %}
+
+                        {% for regimeFiscal in regimeFiscals %}
+                            <option value="{{ regimeFiscal.id }}" {{ (regimeFiscal.id == regimeFiscalDossier)? 'selected' :'' }} data-code = {{ regimeFiscal.code }}>
+                                {{ (regimeFiscal.libelle != '') ? regimeFiscal.libelle : ' ' }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Régime&nbsp;d'imposition</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="regime_imposition" id="js_regime_imposition"
+                            data-field="RegimeImposition">
+                        <option></option>
+
+                        {% set regimeImpositionDossier = (dossier is null) ? 0 : (dossier.regimeImposition.id is not defined)? 0 : dossier.regimeImposition.id %}
+
+                        {% for regimeImposition in regimeImpositions %}
+                            <option value="{{ regimeImposition.id }}" {{ (regimeImposition.id == regimeImpositionDossier)? 'selected' :'' }} >
+                                {{ (regimeImposition.libelle != '') ? regimeImposition.libelle : '' }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Type&nbsp;d'activités</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="nature_activite" id="js_nature_activite"
+                            data-field="NatureActivite">
+                        <option></option>
+
+                        {% set natureActiviteDossier = (dossier is null) ? 0 : (dossier.natureActivite.id is not defined)? 0 : dossier.natureActivite.id %}
+
+                        {% for natureActivite in natureActivites %}
+                            <option value="{{ natureActivite.id }}" {{ (natureActivite.id == natureActiviteDossier) ? 'selected' : '' }} data-code="{{ (natureActivite.code is null) ? '' : natureActivite.code}}">
+                                {{ (natureActivite.libelle !='')? natureActivite.libelle : '' }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Forme&nbsp;activité</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="forme_activite" id="js_forme_activite"
+                            data-field="FormeActivite2">
+                        {% set formeActiviteId = (dossier is null) ? -1 : (dossier.formeActivite.id is not defined) ? -1 : dossier.formeActivite.id %}
+                        <option></option>
+                        {% for formeActivite in formeActivites %}
+                            <option value="{{ formeActivite.id }}"  {{ (formeActivite.id == formeActiviteId)?'selected':'' }} data-code="{{ (formeActivite.code is null)? '' : formeActivite.code }}" >{{ formeActivite.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Profession&nbsp;libérale</label>
+                <div class="col-lg-6">
+                    <input type="text" placeholder="Profession libérale"
+                           data-id="{{ (dossier is null) ? '' : (dossier.professionLiberale.id is not defined)? '' : (dossier.professionLiberale.id)}}"
+                           class="form-control tree info_caracteristique_dossier" name="profession_liberale"
+                           id="js_profession_liberale" data-field="ProfessionLiberale"
+                           value="{{ (dossier is null)? '' : (dossier.professionLiberale.libelle is not defined)?'' : dossier.professionLiberale.libelle}}"
+                    >
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Type&nbsp;de&nbsp;ventes</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="type_vente" id="js_mode_vente" data-field="ModeVente">
+                        <option></option>
+                        {% set modeVenteDossier = (dossier is null) ? 0 : (dossier.modeVente.id is not defined)? 0 : dossier.modeVente.id %}
+                        {% for modeVente in modeVentes %}
+                            <option value="{{ modeVente.id }}" {{ (modeVente.id == modeVenteDossier) ? 'selected' : '' }}
+                                    data-code="{{ (modeVente.code is null) ? '' : modeVente.code }}">
+                                {{ (modeVente.libelle !='')? modeVente.libelle : '' }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">TVA&nbsp;régime</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="tva_regime" id="js_tva_regime" data-field="RegimeTva">
+                        <option></option>
+                        {% set regimeTvaDossier = (dossier == null) ? 0 : (dossier.regimeTva.id is not defined) ? 0 : dossier.regimeTva.id   %}
+                        {% for regimeTva in regimeTvas%}
+                            <option value="{{ regimeTva.id }}" {{ (regimeTva.id == regimeTvaDossier) ? 'selected' : '' }}
+                                    data-code="{{ (regimeTva.code is null)? '' : regimeTva.code }}">
+                                {{ (regimeTva.libelle != '') ? (regimeTva.libelle|title) : '' }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">TVA&nbsp;paiements</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="tva_mode" id="js_tva_mode" data-field="TvaMode">
+                        <option></option>
+                        {% set tvaMode = (dossier is null)? -1 : (dossier.tvaMode is null)? -1 : dossier.tvaMode %}
+                        <option value="0" class="regime_simplifie" {{ (tvaMode==0)?'selected':'' }} >Accomptes semestriels</option>
+                        <option value="1" class="regime_simplifie" {{ (tvaMode==1)?'selected':'' }}>Accomptes trimestriels</option>
+                        <option value="2" class="regime_normale" {{ (tvaMode==2)?'selected':'' }}>Paiement mensuels</option>
+                        <option value="3" class="regime_normale" {{ (tvaMode==3)?'selected':'' }}>Paiement trimestriels</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-4">
+
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Tva&nbsp;fait&nbsp;générateur</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="tva_fait_generateur" id="js_tva_fait_generateur"
+                            data-field="TvaFaitGenerateur">
+                        {% set tvaFaitGenerateur = (dossier is null)? -1 : (dossier.tvaFaitGenerateur is null) ? -1 : dossier.tvaFaitGenerateur %}
+                        <option {{ (tvaFaitGenerateur == -1) ? 'selected': '' }}></option>
+                        <option value="1" {{ (tvaFaitGenerateur ==1) ? 'selected' :'' }}>Encaissement</option>
+                        <option value="0" {{ (tvaFaitGenerateur ==0) ? 'selected' :'' }}>Débit</option>
+                        <option value="2" {{ (tvaFaitGenerateur ==2) ? 'selected' :'' }}>Mixte</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">TVA&nbsp;taux</label>
+                <div class="col-lg-6">
+                    <select data-placeholder="Choisir Taux"  class="form-control tva-comptable-fiscal info_caracteristique_dossier chosen-select"
+                            multiple  name="tva_taux"  id="js_tva_taux" data-field="TvaTaux">
+                        {% for tvaTaux in tvaTauxs%}
+                            <option value="{{ tvaTaux.id }}">{{ tvaTaux.taux }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Date&nbsp;déclaration</label>
+                <div class="col-lg-6">
+                    <select class="form-control tva-comptable-fiscal info_caracteristique_dossier" name="date_tva" id="js_date_tva" data-field="TvaDate">
+
+                        {% set dateTva = (dossier is null) ? -1 : (dossier.tvaDate is null) ? -1 : dossier.tvaDate %}
+
+                        <option {{ (dateTva == -1) ? 'selected' : '' }}></option>
+                        {% for i in 15..25 %}
+                            <option value="{{ i }}" {{ (dateTva == i) ? 'selected' : '' }}>{{ i }}</option>
+                        {% endfor %}
+
+
+                        {% if dossier is not null %}
+                            {% if dossier.regimeFiscal is not null %}
+                                {% if dossier.regimeFiscal.code == 'CODE_BA' %}
+                                    <option value="55" {{ (dateTva == 55) ? 'selected': ''  }}>5ème jour du 5ème mois</option>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-6 control-label">Taxe&nbsp;sur&nbsp;les&nbsp;salaires</label>
+                <div class="col-lg-6">
+                    <select class="form-control info_caracteristique_dossier" name="taxe_salaire" id="js_taxe_salaire" data-field="TaxeSalaire">
+                        {% set taxeSalaire = (dossier is null)? -1 : (dossier.taxeSalaire is null) ? -1 : dossier.taxeSalaire %}
+                        <option {{ (taxeSalaire == -1) ? 'selected': '' }}></option>
+                        <option value="1" {{ (taxeSalaire ==1) ? 'selected' :'' }}>Oui</option>
+                        <option value="0" {{ (taxeSalaire ==0) ? 'selected' :'' }}>Non</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</form>
+
+{#<br/>#}
+
+{#<div class="row">#}
+    {#<div class="ibox ibox-shadow">#}
+        {#<div class="ibox-title">#}
+            {#<div class="col-sm-3"><h5>Règle de paiement</h5></div>#}
+        {#</div>#}
+        {#<div class="ibox-content">#}
+
+            {#<div class="row">#}
+
+            {#<form class="form-horizontal" id="js_form_info_caracteristique_dossier_paiement">#}
+
+            {#<div class="col-lg-4">#}
+
+                {#<div class="form-group">#}
+                    {#<label class="col-lg-3 control-label">Date</label>#}
+                    {#<div class="col-lg-8">#}
+                        {#<select class="form-control info_caracteristique_dossier regle_paiement" name="regle_paiement_date" id="js_regle_paiement_date"#}
+                                {#data-field="TypeDate">#}
+
+                            {#{% set typeDate = (reglePaiement is null) ? -1 : (reglePaiement.typeDate) is null ? -1 : reglePaiement.typeDate %}#}
+                            {#<option value=""{{ (typeDate == -1) ? 'selected' : '' }}></option>#}
+                            {#<option value="0" {{ (typeDate == 0) ? 'selected' : '' }}>Date Facture</option>#}
+                            {#<option value="1" {{ (typeDate == 1) ? 'selected' : ''  }}>Date Livraison</option>#}
+                        {#</select>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+
+            {#<div class="col-lg-4">#}
+                {#<div class="form-group">#}
+                    {#<label class="col-lg-7 control-label">Nombre de jours</label>#}
+                    {#<div class="col-lg-4">#}
+                        {#<input type="text" class="form-control info_identification_dossier regle_paiement"#}
+                               {#name="regle_paiement_nbre_jour" id="js_regle_paiement_nbre_jour"  data-field="NbreJour"#}
+                               {#value="{{ (reglePaiement is null) ? '' : (reglePaiement.nbreJour is null) ? '' : reglePaiement.nbreJour }}">#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+
+
+            {#<div class="col-lg-4">#}
+                {#<div class="form-group">#}
+                    {#<label class="col-lg-6 control-label">Date&nbsp;Le</label>#}
+                    {#<div class="col-lg-4">#}
+                        {#<select class="form-control info_caracteristique_dossier regle_paiement" name="regle_paiement_date_le" id="js_regle_paiement_date_le" data-field="DateLe">#}
+
+                            {#{% set dateLe = (reglePaiement is null) ? -1 : (reglePaiement.dateLe is null) ? -1 : reglePaiement.dateLe %}#}
+                            {#<option value="" {{ (dateLe == -1) ? 'selected' : '' }}></option>#}
+                            {#{% for i in 5..30 %}#}
+                                {#{% if i is divisible by(5) %}#}
+                                    {#<option value="{{ i }}" {{ (dateLe == i) ? 'selected' : '' }}>{{ i }}</option>#}
+                                {#{% endif %}#}
+                            {#{% endfor %}#}
+
+                        {#</select>#}
+                    {#</div>#}
+                {#</div>#}
+
+
+
+            {#</div>#}
+
+            {#</form>#}
+
+            {#</div>#}
+
+        {#</div>#}
+    {#</div>#}
+{#</div>#}

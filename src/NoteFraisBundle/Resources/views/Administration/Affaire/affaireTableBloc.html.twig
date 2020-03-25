@@ -1,0 +1,51 @@
+{% for affaire in affaires %}
+    {% set status = (affaire.status == 0) ? '<span class="label label-warning pull-right" data-status="0" >Desctivée</span>' : '<span class="label label-info pull-right" data-status="1" >Activée</span>' %}
+
+
+    <div class="col-md-4">
+        <div class="ibox ibox-shadow affaire-box">
+            <div class="ibox-title" data-id="{{ affaire.id|boost }}">
+                {{ status|raw }}
+                <h5>{{ affaire.libelle }}</h5>
+            </div>
+            <div class="ibox-content">
+
+                <ul class="list-group clear-list m-t">
+                    <li class="list-group-item">
+                        <span class="label label-success">Réference</span>
+                        <span class="pull-right">{{ affaire.reference }}</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="label label-success">Date Début</span>
+                        <span class="pull-right">{{ (affaire.dateDeb is null) ? '' : affaire.dateDeb|date('d/m/Y') }}</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="label label-success">Date fin</span>
+                        <span class="pull-right">{{ (affaire.dateFin is null) ? '' : affaire.dateFin|date('d/m/Y') }}</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="label label-success">Client</span>
+                        <span class="pull-right">{{ (affaire.nomClient) }}</span>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="ibox-footer">
+
+                <div class="row">
+                    {#{{ action|raw }}#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% endfor %}

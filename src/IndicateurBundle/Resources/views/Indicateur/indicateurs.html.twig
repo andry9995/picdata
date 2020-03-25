@@ -1,0 +1,29 @@
+<div class="panel-group" id="indicateur_acordion_{{ index_group }}">
+    {% set index = 0 %}
+    {% for indicateur in indicateurs %}
+        <div class="panel panel-default js_panel_indicateur">
+            <div class="panel-heading" style="padding: 1px !important;">
+                <h5 class="panel-title js_indicateur_item" data-id="{{ indicateur.id|boost }}">
+                    <span class="row" style="margin: 0!important;">
+                        <span class="col-lg-2">
+                            <a data-toggle="collapse" data-parent="#indicateur_acordion_{{ index_group }}" href="#collapse_indicateur_{{ index_group }}_{{ index }}">
+                                <span class="btn btn-sm js_indicateur_libelle">{{ indicateur.libelle }}</span>
+                            </a>
+                        </span>
+                        <span class="col-lg-10">
+                            <span class="btn btn-white btn-circle js_indicateur_edit js_tooltip" data-tooltip="Modifier"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                            <span class="btn btn-white btn-circle js_indicateur_add_child js_tooltip" data-tooltip="Ajouter item"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+                            <span class="btn btn-white btn-circle js_indicateur_delete js_tooltip" data-tooltip="Supprimer"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                        </span>
+                    </span>
+                </h5>
+            </div>
+            <div id="collapse_indicateur_{{ index_group }}_{{ index }}" class="panel-collapse collapse {{ (index == 0) ? 'in' : '' }}">
+                <div class="panel-body no-padding-bottom">
+                    {{ render(controller('IndicateurBundle:IndicateurItem:indicateurItems',{ indicateur:indicateur.id })) }}
+                </div>
+            </div>
+        </div>
+        {% set index = index + 1 %}
+    {% endfor %}
+</div>

@@ -1,0 +1,6 @@
+comptabilite_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ComptabiliteBundle:Default:index }
+comptabilite_index:
+    path: /comptabilite
+    defaults: { _controller: ComptabiliteBundle:Default:index }

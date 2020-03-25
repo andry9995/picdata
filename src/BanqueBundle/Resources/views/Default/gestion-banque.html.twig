@@ -1,0 +1,15 @@
+{% extends 'BanqueBundle:Default:index.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/banque/js/gestion-banque.js') }}"></script>
+{% endblock %}
+
+{% block contenu_banque %}
+    <div class="row scroller" id="js_gestion_banque">
+        <table id="js_banque_liste"></table>
+        {{ include('AppBundle:Commun:page-en-cours.html.twig') }}
+        <div id="js_banque_pager"></div>
+    </div>
+
+{% endblock %}

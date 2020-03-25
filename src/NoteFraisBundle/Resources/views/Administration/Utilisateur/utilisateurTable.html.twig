@@ -1,0 +1,56 @@
+<div class="table-responsive">
+    <table class="footable table table-striped table-hover toggle-arrow-tiny table-utilisateur" data-page-size="8">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>E-mail</th>
+            <th>Administrateur</th>
+            <th>Matricule</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for utilisateur in utilisateurs %}
+
+            {% set dataStatus = (utilisateur.status is null) ? '0' : utilisateur.status %}
+            {% set status = (dataStatus == 0) ? '<span class="label label-warning" data-status="0" style="display: inline-block;width: 100%;">Desctivée</span>' : '<span class="label label-info" data-status="1" style="display: inline-block;width: 100%;">Activée</span>' %}
+
+
+            <tr data-id="{{ utilisateur.id|boost }}">
+                <td class="utilisateur-check">
+                    <div class="checkbox checkbox-success checkbox-inline">
+                        <input type="checkbox" class="checkbox-success">
+                        <label></label>
+                    </div>
+                </td>
+                <td class="utilisateur-nom">{{ utilisateur.nom }}</td>
+                <td class="utilisateur-prenom">{{ utilisateur.prenom }}</td>
+                <td class="utilisateur-mail">{{ utilisateur.mail }}</td>
+                <td class="utilisateur-administrateur">
+                    <div class="checkbox checkbox-success checkbox-inline">
+                        <input type="checkbox" class="checkbox-success" {{ (utilisateur.isManager == 1) ? 'checked' : ''  }}>
+                        <label></label>
+                    </div>
+                </td>
+                <td class="utilisateur-matricule">{{ utilisateur.matricule }}</td>
+                <td class="utilisateur-status">{{ status|raw }}</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td colspan="12">
+                <ul class="pagination pull-right"></ul>
+            </td>
+        </tr>
+        </tfoot>
+
+
+    </table>
+</div>

@@ -1,0 +1,5 @@
+services:
+    # Service API Zendesk  
+    api.zendesk:
+      class: ZendeskBundle\Service\Zendesk\Zendesk
+      arguments: ['%zendesk_config%']

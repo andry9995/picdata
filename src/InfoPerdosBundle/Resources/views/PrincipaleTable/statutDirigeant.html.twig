@@ -1,0 +1,20 @@
+<div class="panel-body">
+    <div class="tabs-containers jqgrid-tabs"  style="background-color: #f3f3f4">
+
+        <ul class="nav nav-tabs" style="height: 50px">
+            <li class="active"><a data-toggle="tab" href="#tab-regime-suivi" id="js-regime-suivi-tab"> Regime suivi</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-contrat-prevoyance">Contrat de prevoyance</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="tab-regime-suivi" class="tab-pane active">
+                {{ include('InfoPerdosBundle:StatutDirigeant:regimeSuivi.html.twig') }}
+            </div>
+
+            <div id="tab-contrat-prevoyance" class="tab-pane">
+                {{ include('InfoPerdosBundle:StatutDirigeant:contratPrevoyance.html.twig') }}
+            </div>
+
+        </div>
+    </div>
+</div>

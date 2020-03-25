@@ -1,0 +1,11 @@
+{{ include('BanqueBundle:ReleveBanque:releve-line.html.twig') }}
+
+<div class="row">
+    <div class="col-lg-12" id="id_container_id"
+         data-releve="{{ releve.id|boost }}"
+         data-releve_ext="{{ (releveExt ? releveExt.id : 0)|boost }}">
+        <table id="id-non-lettrable"></table>
+    </div>
+
+    <div id="r_test"></div>
+</div>

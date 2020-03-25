@@ -1,0 +1,75 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% if action == 1 %}
+    {% set titre = 'PM' %}
+{% else %}
+    {% set titre = 'Rapprochement de banque' %}
+{% endif %}
+{% block titre %}{{ titre }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jqGrid/jQuery.jqGrid.setColWidth.js') }}"></script>
+    <script src="{{ asset('js/plugins/jquery-menu-context/jquery.contextMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/chosen/chosen.jquery.js') }}"></script>
+    <script src="{{ asset('js/plugins/fileinput/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jsTree/jstree.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/qtip/jquery.qtip.min.js') }}"></script>
+
+    <script src="{{ asset('bundles/infoperdos/js/infoCaracteristique/piece-a-envoyer.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/image-data/image-show.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+
+    <script src="{{ asset('js/fonctions.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/nature.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/s-categorie.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/releve-complementaire.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/edit-releve.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/control.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/search-extends.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/stat.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/image_a_affecter.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/cle.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/cle_dossier.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/detail_imputation.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/releve.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/compte_detail.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/lettrage_autre.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/lettrage-compta.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/lettrage_desiquilibre.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/mode-import.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/cle-new.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/non_lettrable.js') }}"></script>
+    <script src="{{ asset('bundles/banque/js/releve2/index.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/iCheck/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/qtip/jquery.qtip.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jquery-menu-context/jquery.contextMenu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/fileinput/fileinput.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jsTree/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/etatbase/css/grand_livre.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/banque/css/releve.css') }}">
+{% endblock %}
+
+{% block wrapper_content %}
+    {{ include('BanqueBundle:ReleveBanque2:filtre.html.twig') }}
+    {{ include('BanqueBundle:ReleveBanque2:statistique.html.twig') }}
+
+    <div class="row bande white-bg">
+        <div class="col-lg-12" id="id-container">
+            <table id="js_id_releve_liste"></table>
+        </div>
+    </div>
+    {{ include('BanqueBundle:ReleveBanque:tiersModal.html.twig') }}
+    <input type="hidden" id="js_id_action" value="{{ action }}">
+    <input type="hidden" id="id_us" value="{{ us ? 1 : 0 }}">
+
+    {% if action == 0 %}
+        <input type="hidden" value="{{ bts }}" id="js_id_banque_type_status">
+    {% endif %}
+{% endblock %}

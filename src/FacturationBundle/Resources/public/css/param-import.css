@@ -1,0 +1,22 @@
+.param-input {
+    border: 1px solid transparent;
+    outline: none;
+    padding: 2px;
+    width: 100%;
+}
+
+.param-input:hover, .param-input:focus, .param-input:active {
+    border: 1px solid #1ab394;
+}
+
+@media all and (max-width: 992px) {
+    #prestation-list {
+        max-height: 200px;
+    }
+    #critere-container {
+        margin-top: 30px;
+    }
+    #loader {
+        margin-top: 25px;
+    }
+}

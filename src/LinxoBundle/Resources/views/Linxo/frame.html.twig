@@ -1,0 +1,27 @@
+{% if linxo is not null and linxo.login != '' and linxo.mp != '' %}
+<div class="form-horizontal">
+    <p>Votre&nbsp;Accès</p>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Email</label>
+        <div class="col-lg-10">
+            <input type="email" placeholder="Email" class="form-control" value="{{ linxo.login }}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Password</label>
+        <div class="col-lg-10">
+            <input type="text" placeholder="Password" class="form-control" value="{{ linxo.mp }}">
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<input type="hidden" id="id_code" value="">
+<div id="id_test"></div>
+
+<div class="alert alert-danger hidden" id="id_message">
+    <span>Veuillez d 'abord validez votre CGU dans LINXO puis r&eacute;esayez&nbsp;</span>
+    <span class="btn btn-white btn-sm btn-outline" href="#" id="id_pop_up_cgu">Valider&nbsp;CGU</span>.
+</div>
+
+<iframe src="{{ src }}" id="id_frame" style="width:100%;height: 600px;border: none"></iframe>

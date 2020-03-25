@@ -1,0 +1,260 @@
+<div class="modal-content">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-7 preview" style="color: {{ modele.fontColor }}; font-family: {{ modele.fontFamily }}; font-size: {{ modele.fontSize }}px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        {#<span class="company-name" {% if modele.showCompanyName == 0 %}style="display: none;"{% endif %}>{{ params.companyNom }}<br></span>#}
+                        {#<span class="company-address">{{ params.companyAdresse }}<br></span>#}
+                        {#<span class="company-country">{{ params.companyPays.nom }} </span><span class="company-postal-code">{{ params.companyCodePostal }}<br></span>#}
+                        {#<span class="company-email">{{ params.companyMail }}<br></span>#}
+                        {#<span class="company-tel">{{ params.companyTel }}<br></span>#}
+                        {#<span class="company-siteweb">{{ params.companySiteweb }}<br></span>#}
+
+
+                        <span class="company-name" {% if modele.showCompanyName == 0 %}style="display: none;"{% endif %}>{{ dossier.rsSte }}<br></span>
+                        <span class="company-address">{{ dossier.numRue}}<br></span>
+                        <span class="company-country">{{ dossier.ville }} </span>
+                        <span class="company-postal-code">{{ dossier.codePostal }}<br></span>
+
+                    </div>
+                    <div class="col-md-6 pos-right">
+                        <span class="document-type">DEVIS</span><br/>
+                        <span class="document-code">N° {{ devis.code }}</span><br/>
+                        <span class="document-date">{{ devis.dateDevis|date("d/m/Y") }}</span><br/>
+                        <span class="doc-reglement" {% if modele.showReglement == 0 %}style="display: none;"{% endif %}>{{ devis.oneReglement.nom }}</span>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6"><span class="customer-num" {% if modele.showNumClient == 0 %}style="display: none;"{% endif %}><b>Client {{ devis.tiers.numeroClient }}</b><br><br></span></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="shipping-address" {% if modele.showShippingAddress == 0 %}style="display: none;"{% endif %}>
+                            {% set paysLivraison = (devis.tiers.paysLivraison is null) ? '' : devis.tiers.paysLivraison.nom %}
+                            <span class="shipping-address-label">{{ modele.shippingAddressLabel }}</span><br>
+                            <span class="shipping-customer-contact">{{ devis.tiers.intitule }}</span><br/>
+                            {% if devis.tiers.adresseLivraison1 %}
+                            <span class="shipping-customer-address">{{ devis.tiers.adresseLivraison1 }}</span><br/>
+                            {% endif %}
+                            {% if devis.tiers.codePostalLivraison %}
+                            <span class="shipping-customer-country">{{ paysLivraison~' '~devis.tiers.codePostalLivraison }}</span><br/>
+                            {% else %}
+                            <span class="shipping-customer-country">{{ paysLivraison }}</span><br/>
+                            {% endif %}
+                            {% if devis.tiers.email %}
+                            <span class="shipping-customer-email">Email : {{ devis.tiers.email }}</span><br/>
+                            {% endif %}
+                            {% if devis.tiers.telephone %}
+                            <span class="shipping-customer-tel">Tel : {{ devis.tiers.telephone }}</span><br/>
+                            {% endif %}
+                            {% if devis.tiers.siteWeb %}
+                            <span class="shipping-customer-website">Site web : {{ devis.tiers.siteWeb }}</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="billing-address" {% if modele.billingAddressRight == 0 %}style="display: none;"{% endif %}>
+                            {% set paysFacturation = (devis.tiers.paysFacturation is null) ? '' : devis.tiers.paysFacturation.nom %}
+                            <span class="billing-address-label">{{ modele.billingAddressLabel }}</span><br>
+                            <span class="billing-customer-contact">{{ devis.tiers.intitule }}</span><br/>
+                            {% if devis.tiers.adresseFacturation1 %}
+                            <span class="billing-customer-address">{{ devis.tiers.adresseFacturation1 }}</span><br/>
+                            {% endif %}
+                            {% if devis.tiers.codePostalFacturation %}
+                            <span class="billing-customer-country">{{ paysFacturation~' '~devis.tiers.codePostalFacturation }}</span><br/>
+                            {% else %}
+                            <span class="billing-customer-country">{{ paysFacturation }}</span><br/>
+                            {% endif %}
+                            {% if devis.tiers.email %}
+                            <span class="billing-customer-email">Email : {{ devis.tiers.email }}</span><br/>
+                            {% endif %}
+                            {% if devis.tiers.telephone %}
+                            <span class="billing-customer-tel">Tel : {{ devis.tiers.telephone }}</span><br/>
+                            {% endif %}
+                            {% if devis.tiers.siteWeb %}
+                            <span class="billing-customer-website">Site web : {{ devis.tiers.siteWeb }}</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-popup">
+                            <thead>
+                                <tr style="background-color: {{ modele.headColor }}">
+                                    <th style="background-color: {{ modele.headColor }}">{{ modele.designationLabel }}</th>
+                                    <th style="background-color: {{ modele.headColor }}">TVA</th>
+                                    <th class="pos-right" style="background-color: {{ modele.headColor }}; {% if modele.showQuantity == 0 %}display: none;{% endif %}">{{ modele.quantityLabel }}</th>
+                                    <th class="pos-right" style="background-color: {{ modele.headColor }}; {% if modele.showPrice == 0 %}display: none;{% endif %}">{{ modele.priceLabel }}</th>
+                                    <th class="pos-right" style="background-color: {{ modele.headColor }};">Montant HT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set totalHT = 0 %}
+                                {% for article in articles %}
+                                <tr>
+                                    <td>
+                                        <span {% if modele.showProductCode == 0 %}style="display: none;"{% endif %}><b>{{ article.oneArticle.code }} </b></span><span><b>{{ article.oneArticle.nom }}</b></span><br/>
+                                        <span class="article-description">{{ article.description|nl2br }}</span>
+                                    </td>                
+                                    <td>
+                                        {% if article.tvaTaux.taux > 0 %}<span>{{ article.tvaTaux.taux }}%</span>{% endif %}
+                                    </td>                
+                                    <td class="pos-right" {% if modele.showQuantity == 0 %}style="display: none;"{% endif %}><span>{{ article.quantite }}</span></td>
+                                    {#<td class="pos-right" {% if modele.showPrice == 0 %}style="display: none;"{% endif %}><span>{{ article.prix|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span><span class="article-unit" {% if modele.showUnit == 0 %}style="display: none;"{% endif %}> /{{ article.oneArticle.oneUniteArticle.nom }}</span></td>#}
+                                    {#<td class="pos-right"><span>{{ (article.quantite * article.prix)|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>#}
+
+                                    <td class="pos-right" {% if modele.showPrice == 0 %}style="display: none;"{% endif %}>
+                                        <span>{{ article.prix|number_format(2, '.', ' ')}}</span>
+                                        <span class="article-unit" {% if modele.showUnit == 0 %}style="display: none;"{% endif %}>
+                                            /{{ article.oneArticle.oneUniteArticle.nom }}
+                                        </span>
+                                    </td>
+                                    {#<td class="pos-right"><span>{{ (article.quantite * article.prix)|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>#}
+                                    <td class="pos-right">
+                                        <span>{{ (article.quantite * article.prix)|number_format(2, '.', ' ')}}</span>
+                                    </td>
+
+                                </tr>
+                                {% set totalHT = totalHT + (article.quantite * article.prix) %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8">
+                        <table class="table table-popup" style="width: 100%">
+                            <tbody>
+                                <tr>
+                                    <td><span class="ht-label"><b>Total HT</b></span></td>               
+                                    {#<td class="pos-right"><span class="ht-value"><b>{{ devisDetails['ht']|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</b></span></td>               #}
+                                    <td class="pos-right"><span class="ht-value">
+                                            <b>{{ devisDetails['ht']|number_format(2, '.', ' ')}}</b>
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% if devisDetails['remise'] > 0 %}
+                                <tr>
+                                    <td><span>Remise</span></td>               
+                                    {#<td class="pos-right"><span>{{ devisDetails['remise']|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>               #}
+                                    <td class="pos-right">
+                                        <span>{{ devisDetails['remise']|number_format(2, '.', ' ')}}</span>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% if devisDetails['tva'] > 0 %}
+                                <tr>
+                                    <td><span>TVA</span></td>               
+                                    {#<td class="pos-right"><span>{{ devisDetails['tva']|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</span></td>               #}
+                                    <td class="pos-right">
+                                        <span>{{ devisDetails['tva']|number_format(2, '.', ' ')}}</span>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                <tr class="total-ttc">
+                                    <td><span class="ttc-label"><b>Total TTC</b></span></td>               
+                                    {#<td class="pos-right"><span class="ttc-label"><b>{{ devisDetails['ttc']|number_format(2, '.', ' ')~' '~params.comptableDevise.symbole }}</b></span></td>               #}
+                                    <td class="pos-right">
+                                        <span class="ttc-label"><b>{{ devisDetails['ttc']|number_format(2, '.', ' ')}}</b></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" {% if modele.showPaymentInfo == 0 %}style="display: none;"{% endif %}>
+                    <div class="col-md-6">
+                        <p>{{ modele.paymentInfoLabel }}</p>
+                        <p>{{ devis.note|nl2br }}</p>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <div class="col-md-5 preview-action">
+                <div class="all-action">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="email-action">
+                                <button type="button" class="btn btn-primary btn-lg" onclick="showEmailAction();">
+                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><br/>Email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="print-action">
+                                <button type="button" class="btn btn-default btn-lg" onclick="window.open('{{ path('one_pdf_print', {'type': 'devis', 'id': devis.id, 'dossierId': dossier.id|boost }) }}');">
+                                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="download-action">
+                                {#<button type="button" class="btn btn-default btn-lg" onclick="window.open('{{ path('one_pdf_download', {'type': 'devis', 'id': devis.id}) }}');">#}
+                                <button type="button" class="btn btn-default btn-lg" onclick="window.open('{{ path('one_pdf_print', {'type': 'devis', 'id': devis.id, 'dossierId': dossier.id|boost }) }}');">
+                                    <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> Télécharger le PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="download-action">
+                                <label for="change-modele">Changer de modèle</label>
+                                <select class="form-control" id="change-modele" onchange="changeModele(this, {{ devis.id }}, 'devis');">
+                                    {% for mod in modeles %}
+                                        <option value="{{ mod.id }}" {% if modele.modele.id == mod.id %}selected="selected"{% endif %}>{{ mod.modeleName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+                
+                <div class="send-action hidden">
+                    <p class="back-all-action" onclick="showAllAction();"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Retour</p>
+                    <form id="email-form">
+                        <div class="form-group">
+                            <label for="recipient">A*</label>
+                            <input type="email" class="form-control" id="recipient" name="recipient">
+                        </div>
+                        <div class="form-group">
+                            <label for="sender">De: </label>
+                            <select class="form-control" id="sender" name="sender">
+                                <option value="{{ utilisateur.email }}">{{ utilisateur.nomComplet ~ " < "~utilisateur.email~" >" }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Objet: </label>
+                            <input type="text" class="form-control" id="subject" name="subject" value="Oneup - Devis N° {{ devis.code }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea class="form-control" id="message" name="message"></textarea>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> M'envoyer une copie
+                            </label>
+                        </div>
+                    </form>
+                    <button class="btn btn-primary" onclick="sendDocument('devis', {{ devis.id }});">Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="ibox float-e-margins ibox-shadow">
+    <div class="ibox-title">
+        <h5><i class="fa fa-comment" aria-hidden="true"></i></h5>
+        <div class="ibox-tools">
+            {% if isModifiable %}
+                <a href="#" class="cl_edit_commentaire">Modifier</a>
+                <a href="#" class="cl_save_commentaire hidden">Enregistrer</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="ibox-content cl_container_comment" style="overflow: auto">
+        <div class="cl_summer wrapper p-md">
+            {{ commentaire|raw }}
+        </div>
+    </div>
+</div>

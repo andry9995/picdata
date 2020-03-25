@@ -1,0 +1,8 @@
+<span class="btn btn-white js_periode" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ periodePicker }}">
+    <i class="fa fa-calendar-o" aria-hidden="true"></i>
+    <span>&nbsp;&nbsp;P&eacute;riode</span>
+    <input type="hidden" class="js_hidden_periode_binary" {#value="{{ indicateur.periodeBinary }}"#}>
+</span>
+{% if otherParam != '' %}
+    <input type="hidden" class="js_cl_hide_periode_other" value="{{ otherParam }}">
+{% endif %}

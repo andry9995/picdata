@@ -1,0 +1,83 @@
+.container-4{
+  overflow: hidden;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.container-4 input#search{
+  font-size: 10pt;
+  float: left;
+  padding-left: 15px;
+}
+
+.container-4 button.icon{
+  height: 34px;
+  width: 50px;
+  color: #f7a54b;
+  opacity: 0;
+  font-size: 10pt;
+  border-radius: unset !important;
+ 
+  -webkit-transition: all .55s ease;
+  -moz-transition: all .55s ease;
+  -ms-transition: all .55s ease;
+  -o-transition: all .55s ease;
+  transition: all .55s ease;
+}
+
+.container-4:hover button.icon, .container-4:active button.icon, .container-4:focus button.icon{
+    outline: none;
+    opacity: 1;
+    margin-left: -50px;
+
+}
+
+img.user-avatar{
+	width: 40px !important;
+  box-shadow: 1px 1px 5px #ccc!important;
+  border: 2px solid #fff;
+  margin-bottom: 5px;
+}
+
+.show-conversation{
+	width: 100%;
+}
+
+.badge-container {
+	margin: 10px;
+}
+
+.avatar-after {
+    margin-left: -15px;
+	 /*border: 2px solid #fff;*/
+}
+
+.avatar-first {
+	/*border: 2px solid #fff;*/
+}
+
+.avatar-grouped {
+	text-align: center;
+}
+
+.conversation-blog {
+	background-color: #eaeaea;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.input-search:focus, .input-search:hover{
+    border-color: #f7a54b !important;
+}
+
+.messaging-date {
+  color: #fff;
+  margin: 5px;
+  background-color: #8bc34a;
+  font-size: 10px;
+}
+
+.badge-conversation{
+  background-color: #dddddd !important;
+  color: #686b6d !important;
+}

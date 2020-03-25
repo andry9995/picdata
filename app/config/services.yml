@@ -1,0 +1,115 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+#services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+#serializer
+
+
+services:
+#    Extension Twig
+    app.twig_extension:
+        class: AppBundle\Controller\Cryptage
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    app.twig_filter_route_exists:
+        class: AppBundle\Functions\RouteExists
+        public: false
+        arguments:
+          - "@router"
+        tags:
+            - { name: twig.extension }
+    twig.twig_truncate_text:
+         class: AppBundle\Functions\TruncateText
+         tags:
+             - { name: twig.extension }
+    twig.twig_filter_html_twig:
+         class: AppBundle\Functions\htmlTwig
+         tags:
+             - { name: twig.extension }
+
+
+
+#    Serializer
+    get_set_method_normalizer:
+        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+        tags:
+          - { name: serializer.normalizer }
+
+#    Encodage password
+    app.boost_password_encoder:
+        class: AppBundle\Security\BoostEncoder
+
+#Login Handler
+#    success handler
+    security.authentication.success_handler:
+      class: AppBundle\EventListener\AuthenticationSuccessHandler
+      arguments:
+        - "@security.http_utils"
+        - {}
+        - "@doctrine.orm.entity_manager"
+        - "@router"
+        - "@security.authorization_checker"
+      tags:
+          - { name: 'monolog.logger', channel: 'security'}
+
+#   authentication handler
+    login_listener:
+      class: AppBundle\EventListener\LoginHandler
+      arguments:
+        - "@security.token_storage"
+        - "@security.authorization_checker"
+        - "@doctrine.orm.entity_manager"
+        - "@security.authentication_utils"
+      tags:
+          - { name: "kernel.event_subscriber" }
+
+#Custom validator
+    app.utilisateur_existant_validator:
+        class: AppBundle\Validator\Constraints\UtilisateurExistantValidator
+        arguments:
+          - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: validator.constraint_validator }
+
+#Access validation - Menu
+    security.access_validation:
+        class: AppBundle\EventListener\MenuAllowed
+        arguments:
+          - "@security.token_storage"
+          - "@security.authorization_checker"
+          - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: "kernel.event_listener", event: "kernel.controller", method: "onKernelController" }
+
+#Get Theme Client
+    app.client_theme:
+        class: AppBundle\Functions\ClientTheme
+        arguments:
+          - "@security.token_storage"
+          - "@security.authorization_checker"
+          - "@doctrine.orm.entity_manager"
+          - "@assets.packages"
+          - "%kernel.root_dir%"
+
+
+#Email Image Manquante
+    echange.notification_image:
+        class: AppBundle\Functions\NotificationImageHandler
+        arguments:
+          - "@doctrine.orm.entity_manager"
+          - "@templating.engine.twig"
+
+#Mailer Par Client (with SMTP Client)
+    app.mailer_par_client:
+        class: AppBundle\Functions\MailerParClient
+        arguments:
+          - "@doctrine.orm.entity_manager"
+          - "@mailer"

@@ -1,0 +1,20 @@
+imputation_directe:
+    path:     imputation_directe/show
+    defaults: { _controller: BanqueBundle:Imputation:show }
+    methods: [POST]
+    options:
+        expose: true
+
+imputation_directe_tr:
+    path:     imputation_directe/trs
+    defaults: { _controller: BanqueBundle:Imputation:trs }
+    methods: [POST]
+    options:
+        expose: true
+
+imputation_directe_save:
+    path:   imputation_directe/save
+    defaults: { _controller: BanqueBundle:Imputation:save }
+    methods: [POST]
+    options:
+        expose: true

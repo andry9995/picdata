@@ -1,0 +1,52 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListClient();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Transformater Prospect en Client</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="select-bar hidden">
+            <button class="btn btn-primary pull-right delete-selected" onclick="processProspectToClient();">Transformer en Client</button>
+            <a class="pull-right cancel-select" onclick="uncheckAll();">Annuler</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Email</th>
+                    <th>Tel</th>
+                    <th>Code du prospect</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prospect in prospects %}
+                <tr>
+                    <td><input type="checkbox" class="element" value="{{ prospect.id }}" onchange="toggleThis();" /></td>
+                    <td>{{ prospect.intitule }}</td>
+                    <td>
+                        {% if prospect.adresseFacturation1 != '' %}
+                            {{ prospect.adresseFacturation1 ~ ', ' }}
+                        {% endif %}
+                        {% if prospect.villeFacturation != '' %}
+                            {{ prospect.villeFacturation ~ ', ' }}
+                        {% endif %}
+                        {{ prospect.paysFacturation.nom }}
+                    </td>
+                    <td>{{ prospect.email }}</td>
+                    <td>{{ prospect.telephone }}</td>
+                    <td>{{ prospect.numeroClient }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

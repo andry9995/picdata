@@ -1,0 +1,87 @@
+/*.jqgroup {*/
+    /*background: rgba(160, 253, 248, 0.07);*/
+/*}*/
+.file-pdf {
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+    margin-right: 5px;
+}
+.file-contrat-item {
+    overflow: hidden;
+}
+.delete-file-pdf, .js-contrat {
+    cursor: pointer;
+}
+
+.btn-saisie-toggle-action {
+    width: 110px;
+    max-width: 110px;
+}
+
+#select-nouveau-saisie {
+    text-transform: uppercase;
+}
+
+.label-nb-ligne {
+    border-top: 1px solid #fff;
+    width: 100%;
+    min-width: 100%;
+    display: inline-block;
+    text-align: left;
+}
+
+#btn-multiple-cabinet {
+    margin-top: 7px;
+}
+
+#btn-saisie, #btn-multiple-cabinet {
+    width: 80px;
+    max-width: 80px;
+}
+
+.label-remise {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    padding: 0;
+    width: 100px;
+}
+
+.ui-jqgrid tr.footrow-ltr td {
+    background-color: rgb(242, 220, 219);
+    border-right-color: #fff;
+}
+
+#facturation {
+    position: relative;
+}
+#nb-ligne-container {
+    position: absolute;
+    top: -27px;
+    left: 200px;
+    background-color: #9de0f6;
+    padding: 5px;
+    width: 250px;
+    font-size: .95em;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+#btn-export-excel .fa, #btn-recalculer .fa {
+    margin-right: 5px;
+}
+
+#btn-export-excel .fa {
+    color: #1ab394;
+}
+
+#btn-recalculer .fa {
+    color: #0a6aa1;
+}
+
+.open > .dropdown-toggle.btn-primary:hover,
+.open > .dropdown-toggle.btn-primary:focus {
+    color: #fff;
+    background-color: #18a689;
+    border-color: #18a689;
+}

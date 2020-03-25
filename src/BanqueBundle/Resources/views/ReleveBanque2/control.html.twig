@@ -1,0 +1,62 @@
+{#{% set lrm = "" %}
+{% set releveManquant =  null %}
+{% set moisManquantList = null %}
+
+{% if rm|length > 0 %}
+    {% set releveManquant = rm|first %}
+    {% set moisManquantList = releveManquant.mois %}
+
+    {% for moisManquant in moisManquantList %}
+        {% if lrm == ""%}
+            {% set lrm = moisManquant|trim|slice(5,2) %}
+
+        {% else %}
+            {% set lrm = lrm ~ ", " ~ moisManquant|trim|slice(5,2) %}
+        {% endif %}
+    {% endfor %}
+{% endif %}#}
+
+{#<div class="row" style="margin-bottom: 2px!important;">
+    <div class="col-sm-12">
+        <span class="label label-default">Relev&eacute;s&nbsp;manquant:&nbsp;<span class="text-success">{{ (lrm == "") ? "Aucun relevé manquant" : lrm }}</span></span>
+        <span class="label label-default">Solde&nbsp;initial:&nbsp;<span class="text-success">{{ soldeDebut|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+        <span class="label label-default">Solde&nbsp;Final:&nbsp;<span class="text-success">{{ soldeFin|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+        <span class="label label-default">Mouvement:&nbsp;<span class="text-success">{{ mouvement|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+        <span class="label label-default">Solde&nbsp;Final&nbsp;Calcul&eacute;:&nbsp;<span class="text-success">{{ (soldeDebut + mouvement)|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+        <span class="label label-default">Diff&eacute;rence:&nbsp;<span class="text-success">{{ (soldeFin - soldeDebut - mouvement)|number_format(2, ',', '&nbsp;')|raw }}</span></span>
+    </div>
+</div>#}
+
+{# status:  0:OK, 1:absence total, 2:RM #}
+
+<div class="row tooltip-demo">
+    <span class="simple_tag white-bg">
+        <span id="id_cloture_dossier" data-cloture="{{ cloture }}">Cloture&nbsp;</span>
+        <span class="badge badge-info">{{ dateCloture|date('d/m/Y') }}</span>
+    </span>
+
+    {% set ecart = (soldeFin - soldeDebut - mouvement)|round(2, 'floor') %}
+    {% if ecart != 0 %}
+        <span class="simple_tag white-bg">
+            <span>Ecart&nbsp;</span>
+            <span class="badge badge-danger">{{ ecart|number_format(2, ',', '&nbsp;')|raw }}</span>
+        </span>
+    {% endif %}
+
+    {% if status == 0 %}
+        {% set statusTexte = 'OK' %}
+    {% elseif status == 1 %}
+        {% set statusTexte = 'ABSCENCE TOTAL' %}
+    {% else %}
+        {% set statusTexte = 'RM' %}
+    {% endif %}
+
+    <span class="simple_tag white-bg"  data-toggle="{{ (rms|length != 0) ? 'tooltip' : '' }}" data-placement="bottom" title="" data-original-title="{{ rmTable }}">
+        <span>A&nbsp;jour&nbsp;</span>
+
+        {% if aJourA < 0 %}
+            <span>&agrave;&nbsp;</span><span class="badge badge-info">M{{ aJourA }}</span>
+        {% endif %}
+    </span>
+
+</div>

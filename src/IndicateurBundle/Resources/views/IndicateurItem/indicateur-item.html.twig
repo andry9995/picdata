@@ -1,0 +1,38 @@
+{% set indicateurs = indicateur_items.donnees %}
+{% set row = indicateur_items.row %}
+{% set col = indicateur_items.col %}
+{% set is_table = indicateur_items.is_table %}
+
+<table class="table table-condensed table-hover table-bordered">
+    {% if is_table %}
+        <thead>
+            <tr>
+                <th colspan="{{ col }}" data-id_indicateur="{{ indicateur.id|boost }}" data-row_number="{{ indicateur.rowNumber }}" data-col_number="{{ indicateur.colNumber }}">
+                    <span class="btn btn-xs btn-white js_add_cell js_add_row"><i class="fa fa-arrow-circle-o-down"></i>&nbsp;Ajouter&nbsp;ligne</span>
+                    <span class="btn btn-xs btn-white js_add_cell"><i class="fa fa-arrow-circle-o-right"></i>&nbsp;Ajouter&nbsp;Colonne</span>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+    {% endif %}
+    <tbody>
+    {% if row > 0 %}
+        {% for i in 1..row %}
+            <tr>
+                {% for j in 1..col %}
+                    <td class="pointer {{ (is_table) ? 'js_table' : '' }} js_indicateur_item_td"
+                        data-id="{{ (indicateurs[i ~ '-' ~ j] is defined) ? indicateurs[i ~ '-' ~ j].id|boost : '' }}"
+                        data-row="{{ i }}" data-col="{{ j }}">
+                        {% if (indicateurs[i ~ '-' ~ j] is defined) %}
+                            {{ indicateurs[i ~ '-' ~ j].libelle }}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    </td>
+                    <td><i class="fa fa-trash js_delete_indicateur_item pointer" aria-hidden="true"></i></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>

@@ -1,0 +1,68 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}DOSSIERS{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="ibox">
+        <div class="ibox-title">
+            <div class="row" style="ver">
+                <div class="col-sm-8"><h5>Informations permanentes de dossier</h5></div>
+                <div class="col-sm-4">
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="fullscreen-link">
+                            <i class="fa fa-expand"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ render(controller('AppBundle:Commun:sites',{'conteneur' : 0 ,  'client' : 0 , 'tous' : 1})) }}
+                </div>
+                <div class="col-sm-8 text-right">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span class="btn btn-rounded btn-outline btn-primary"><i class="fa fa-check"></i><span><strong>&nbsp;Actif</strong></span></span>
+                            <span class="btn btn-rounded btn-outline btn-warning"><i class="fa fa-pause"></i><span><strong>&nbsp;Suspendu</strong></span></span>
+                            <span class="btn btn-rounded btn-outline btn-danger"><i class="fa fa-trash-o"></i><span><strong>&nbsp;Radié</strong></span></span>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-cogs"></i>&nbsp;Activation dossier</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-pencil-square-o"></i>&nbsp;Modification dossier</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="full-height-scroll scroller" id="js_activation_dossier"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>            
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/dossier/js/activation.js') }}"></script>
+{% endblock %}

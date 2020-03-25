@@ -1,0 +1,78 @@
+{#{% extends 'NoteFraisBundle:Default:index.html.twig' %}#}
+
+{#{% block javascripts %}#}
+
+    {#{{ parent() }}#}
+
+{#{% endblock %}#}
+
+{#{% block wrapper_content %}#}
+
+    {#{{ include('NoteFraisBundle:Default:navigation.html.twig') }}#}
+
+    <br/>
+
+    <div class="row" id="tab-parametre">
+
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-param-utilisateur"> Utilisateurs des NDF</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-param-categorie"> Catégorie de frais</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-param-bareme">Barèmes kilometriques</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-param-vehicule">Véhicules</a></li>
+                {#<li class=""><a data-toggle="tab" href="#tab-param-affaire">Affaires</a></li>#}
+                <li class=""><a data-toggle="tab" href="#tab-param-contact">Contact</a></li>
+            </ul>
+            <div class="tab-content">
+
+                <div id="tab-param-utilisateur" class="tab-pane active">
+                    <div class="panel-body">
+
+                        {{ include('NoteFraisBundle:Administration/Utilisateur:index.html.twig') }}
+
+                    </div>
+                </div>
+
+                <div id="tab-param-categorie" class="tab-pane">
+                    <div class="panel-body">
+
+                        {{ include('NoteFraisBundle:Administration/Categorie:index.html.twig') }}
+
+                    </div>
+                </div>
+                <div id="tab-param-bareme" class="tab-pane">
+                    <div class="panel-body">
+
+                        {{ include('NoteFraisBundle:Administration/FraisKilometrique:index.html.twig') }}
+
+                    </div>
+                </div>
+                <div id="tab-param-vehicule" class="tab-pane">
+                    <div class="panel-body">
+
+                        {{ include('NoteFraisBundle:Administration/Vehicule:index.html.twig') }}
+
+                    </div>
+                </div>
+                {#<div id="tab-param-affaire" class="tab-pane">#}
+                    {#<div class="panel-body">#}
+
+                        {#{{ include('NoteFraisBundle:Administration/Affaire:index.html.twig') }}#}
+
+                    {#</div>#}
+                {#</div>#}
+                <div id="tab-param-contact" class="tab-pane">
+                    <div class="panel-body">
+
+                        {{ include('NoteFraisBundle:Administration/Contact:index.html.twig') }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#{{ include('NoteFraisBundle:Default:modal.html.twig') }}#}
+
+{#{% endblock %}#}
+

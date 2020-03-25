@@ -1,0 +1,20 @@
+<div class="ibox scroller">
+    <div class="ibox-content">
+
+        <h4>1 Dossiers avec ventes au comptoir </h4>
+        <p>Pour les dossiers avec ventes au comptoir :</p>
+        <h5><strong>Si les ventes doivent être comptabilisées dans plus d’un compte (prestation, marchandises, taux TVA multiples) :</strong></h5>
+        <p>Les ventes sont saisies à partir d’un récapitulatif qui permet d’identifier les imputations comptables, y compris les différentes TVA à déclarer. </p>
+        <p>Les encaissements CB sont regroupés par mois et imputées dans un compte transitoire. De même, les commissions (#627xxx) sont regroupés dans une ligne mensuelle.</p>
+        <h5><strong>Si les ventes sont toutes à imputer dans un même compte, avec un taux unique de TVA :</strong></h5>
+        <p>Les encaissements  CB peuvent être imputés directement en vente, et en TVA, sans saisie de la récapitulation des ventes, ni compte transitoire.</p>
+        <br/>
+
+        <h4>2 Tous les dossiers avec journal de banque</h4>
+        <p>Les journaux de banque sont centralises mensuellement sur le compte banque 512xxx. </p>
+
+        {{ include('InfoPerdosBundle:InstructionDossier:footer.html.twig') }}
+
+    </div>
+</div>
+

@@ -1,0 +1,46 @@
+<form class="form-horizontal" id="js_form_instruction_saisie">
+
+    <div class="row">
+        <div class="col-lg-4">
+        <div class="form-group">
+            <label class="control-label col-lg-6">Saisie&nbsp;des&nbsp;petites&nbsp;dépenses</label>
+            <div class="col-lg-6">
+                <input type="text" class="form-control" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-6">Saisie&nbsp;des&nbsp;facturettes</label>
+            <div class="col-lg-6">
+                <input type="text" class="form-control">
+            </div>
+        </div>
+
+
+    </div>
+        <div class="col-lg-4">
+
+        <div class="form-group">
+            <label class="control-label col-lg-6">Gestion&nbsp;des&nbsp;dates&nbsp;d'écritures</label>
+            <div class="col-lg-6">
+                <input type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label class="col-lg-6 control-label">Note&nbsp;de&nbsp;frais</label>
+            <div class="col-lg-6">
+                <select class="form-control" name="note_frais" id="js_note_frais">
+                    <option></option>
+                    {% for noteFrais in notesFrais %}
+                        <option value="{{ noteFrais.id }}">{{ (noteFrais.libelle!= '') ? noteFrais.libelle : '' }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+</form>

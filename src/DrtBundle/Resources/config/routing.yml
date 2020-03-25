@@ -1,0 +1,66 @@
+drt_index:
+    path:     /drt
+    defaults: { _controller: DrtBundle:Drt:drtIndex }
+
+drt_doublon_dossier:
+    path:     /drt/dossier
+    defaults: { _controller: DrtBundle:Drt:Dossier }
+    methods: [POST]
+    options:
+        expose: true
+
+drt_dossier_tree:
+    path:     /drt/dossier_tree
+    defaults: { _controller: DrtBundle:Drt:drtDossierTree }
+    methods: [POST]
+    options:
+        expose: true
+
+drt_add_echange:
+    path:     /drt/add
+    defaults: { _controller: DrtBundle:Drt:drtAddEchange }
+    methods: [POST]
+    options:
+        expose: true
+
+drt_get_list:
+    path:     /drt/list
+    defaults: { _controller: DrtBundle:Drt:drtGetList }
+    methods: [POST]
+    options:
+        expose: true
+
+drt_add_reponse:
+    path:     /drt/add/reponse
+    defaults: { _controller: DrtBundle:Drt:drtAddReponse }
+    methods: [POST]
+    options:
+        expose: true
+
+drt_add_reponse_r:
+    path:     /drt/add/reponse_r
+    defaults: { _controller: DrtBundle:Drt:drtAddReponseR }
+    methods: [POST]
+    options:
+        expose: true
+
+drt_upload_file:
+    path:     /drt/upload_drt/{dossier}/{exercice}/{echangeType}/{numero_drt}/{numero_reponse}
+    defaults: { _controller: DrtBundle:Drt:drtUploadFile }
+    methods: [GET]
+    options:
+        expose: true
+
+drt_import:
+    path:     /drt/import
+    defaults: { _controller: DrtBundle:Drt:drtImport }
+    methods: [POST]
+    options:
+        expose: true
+
+drt_delete:
+    path:     /drt/delete
+    defaults: { _controller: DrtBundle:Drt:drtDelete }
+    methods: [POST]
+    options:
+        expose: true

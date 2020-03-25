@@ -1,0 +1,25 @@
+<div class="ibox">
+    <div class="ibox-content">
+        <div class="btn-group">
+            {% for exercice in exercices %}
+                <span class="js_dp_exercice btn btn-white btn-xs btn-outline">{{ exercice }}</span>
+            {% endfor %}
+        </div>
+        <table class="table table-condensed table-hover no-margin">
+            {% set trimestre = 0 %}
+            {% set index = 0 %}
+            {% for key,val in moiss %}
+                {% if(index == 0 or (index % 3 == 0)) %}
+                    {% set trimestre = trimestre + 1 %}
+                    <tr class="pointer">
+                    <td class="js_dp_T{{ trimestre }} js_dp_trimestre" colspan="2">T{{ trimestre }}</td>
+                {% endif %}
+                <td data-val="{{ key }}">{{ val }}</td>
+                {% if(index == moiss|length or ((index + 1) % 3 == 0)) %}
+                    </tr>
+                {% endif %}
+                {% set index = index + 1 %}
+            {% endfor %}
+        </table>
+    </div>
+</div>

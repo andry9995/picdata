@@ -1,0 +1,93 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}{{ parent() }} - Désactivation dossier{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/infoperdos/js/activationDossier/activation-dossier-functions.js') }}?v=1.6"></script>
+    <script src="{{ asset('bundles/infoperdos/js/activationDossier/activation-dossier.js') }}?v=1.7"></script>
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/jqGrid/jqGrid.bootstrap.css') }}?v=1.2">
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-lg-3">
+            {{ render(controller('AppBundle:Commun:clients', {'tous': 0})) }}
+        </div>
+        <div class="col-lg-3">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="site" class="control-label col-lg-4">
+                        <span>Site</span>
+                        <span class="label label-warning">0</span>
+                    </label>
+                    <div class="col-lg-8">
+                        <select data-ref="" class="site form-control" id="site"></select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table id="js_suspendre_dossier" class="js-jqgrid-table"></table>
+            <div id="pager_suspendre_dossier"></div>
+        </div>
+    </div>
+    {#Modal Modif statut dossier#}
+    <div class="modal" id="dossier-status-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Modifier statut d'un dossier</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <h3 id="status-dossier-nom">Dossier</h3>
+                        <input id="dossier-id" type="hidden">
+                        <hr>
+                        <h3 style="display:inline-block; margin-right: 5px;">Statut</h3>
+                        <div class="radio radio-inline">
+                            <input type="radio" id="status-actif" value="1" name="status-value" checked="">
+                            <label for="status-actif">Actif</label>
+                        </div>
+                        <div class="radio radio-inline">
+                            <input type="radio" id="status-suspendu" value="2" name="status-value">
+                            <label for="status-suspendu">Suspendu</label>
+                        </div>
+                        {% if is_granted('ROLE_SCRIPTURA_ADMIN') %}
+                            <div class="radio radio-inline">
+                                <input type="radio" id="status-radie" value="3" name="status-value">
+                                <label for="status-radie">Radié</label>
+                            </div>
+                        {% endif %}
+                        <div style="display:inline-block" id="status-debut-container" class="hidden">
+                            <label for="status-debut" style="font-weight: bold;padding: 0 5px 0 10px;">A partir de: </label>
+                            <input id="status-debut" style="max-width: 80px;text-align: center;">
+                        </div>
+                        {% if is_granted('ROLE_CLIENT_RESP') or is_granted('ROLE_CLIENT_ADMIN') %}
+                            <div style="margin-top: 15px;">
+                                <div class="checkbox checkbox-danger checkbox-inline">
+                                    <input type="checkbox" id="check-stop-saisie">
+                                    <label for="check-stop-saisie" class="control-label" style="font-weight: bold;">Stop saisie au: </label>
+                                </div>
+                                <input id="stop-saisie-date" class="form-control input-sm" style="width: 120px;text-align: center;display: inline-block" disabled>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal" style="width: 100px;">Annuler</button>
+                    <button type="button" class="btn btn-sm btn-primary btn-outline" id="btn-save-status" style="width: 100px;">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

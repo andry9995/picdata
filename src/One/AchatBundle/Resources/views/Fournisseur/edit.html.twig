@@ -1,0 +1,260 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListFournisseur();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Nouveau Fournisseur</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="fournisseur-form">
+
+            <input type="hidden" id="id-dossier"  name="id-dossier">
+            <input type="hidden" id="id" name="id" value="{{ fournisseur.id }}">
+
+            <div class="text-center" style="margin-bottom: 20px;">
+                <div class="radio radio-inline">
+                    <input type="radio" id="fournisseur-type-entreprise" value="2" name="fournisseur-type"
+                            {{ (fournisseur.type == 2) ? 'checked' : '' }}>
+                    <label for="fournisseur-type-entreprise">Entreprise</label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="fournisseur-type-particulier" value="1" name="fournisseur-type"
+                            {{ (fournisseur.type == 1) ? 'checked' : '' }}>
+                    <label for="fournisseur-type-particulier">Particulier</label>
+                </div>
+            </div>
+
+            <div class="entreprise-group {{ (fournisseur.type == 1) ? 'hidden' : '' }}">
+                <div class="form-group">
+                    <label for="nom-entreprise" class="col-md-4 control-label">Nom de l'entreprise*</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <input type="text" class="form-control" id="nom-entreprise"  name="nom-entreprise"
+                               placeholder="nom de l'entreprise" value="{{ fournisseur.nomEntreprise }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="particulier-group {{ (fournisseur.type == 2) ? 'hidden' : '' }}">
+                <div class="form-group">
+                    <label for="nom" class="col-md-4 control-label">Nom*</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <input type="text" class="form-control" id="nom" name="nom" placeholder="nom"
+                               value="{{ fournisseur.nom }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="prenom" class="col-md-4 control-label">Prénom</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="prénom"
+                               value="{{ fournisseur.prenom }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="col-md-4 control-label">Email</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="email"
+                           value="{{ fournisseur.email }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+                    <input type="text" class="form-control" id="telephone" name="telephone" placeholder="telephone"
+                           value="{{ fournisseur.telephone }}">
+                </div>
+                <div class="col-md-3 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="site-web" name="site-web" placeholder="site web"
+                           value="{{ fournisseur.siteWeb }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="adresse-facturation" class="col-md-4 control-label">Adresse Facturation</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="adresse-facturation" name="adresse-facturation"
+                           placeholder="Adresse facturation" value="{{ fournisseur.adresse }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6 col-sm-8 col-xs-8 col-md-offset-4">
+                    <input type="text" class="form-control" id="ligne-2" name="ligne-2" placeholder="ligne 2"
+                           value="{{ fournisseur.telephone2 }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+                    <input type="text" class="form-control" id="code-postal" name="code-postal" placeholder="code postal"
+                           value="{{ fournisseur.codePostal }}">
+                </div>
+                <div class="col-md-3 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="ville" name="ville" placeholder="ville"
+                           value="{{ fournisseur.ville }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+                    <select class="form-control" id="pays-facturation" name="pays-facturation">
+                        {% set paysId =  (fournisseur.pays is null) ? -1 : fournisseur.pays.id  %}
+                        {% for country in countries %}
+
+                            {% if paysId == -1 %}
+                                {% if country.alpha2 == 'FR' %}
+                                    {% set paysId = country.id %}
+                                {% endif %}
+                            {% endif %}
+
+                            <option value="{{ country.id }}" {{ (country.id == paysId) ? 'selected' : '' }}>{{ country.nom }}</option>
+
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <hr />
+            <label class="control-label">Contacts</label>
+            <div id="contact-row">
+
+                <div class="contact-list">
+                    {% if contacts|length > 0 %}
+                        {% for contact in contacts %}
+                            {% set classname = contact.nom %}
+                            {% if contact.prenom != '' %}
+                                {% set classname = contact.prenom ~ ' ' ~ contact.nom %}
+                            {% endif %}
+                            {% set classname = classname|lower|replace(' ', '-') %}
+
+                            {% set contactPaysId = (contact.pays is null) ? -1 : contact.pays.id  %}
+
+                            <div class="row {{ contact.id~'now'|date('U') }}">
+                                <input type="hidden" class="serialized" name="contacts[]" value="{{
+                                'id='~contact.id~
+                                '&nom='~contact.nom~
+                                '&prenom='~contact.prenom~
+                                '&email='~contact.email~
+                                '&tel-portable='~contact.telephone~
+                                    '&adresse='~contact.adresse~
+                                    '&code-postal='~contact.codePostal~
+                                    '&ville='~contact.ville~
+                                    '&pays='~contactPaysId
+                                }}"
+                                />
+                                <div class="col-sm-3">
+                                    {% if contact.prenom != '' %}{{ contact.prenom ~ ' ' }}{% endif %}{{ contact.nom }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                    {% if contact.email != '' %}
+                                        {{ ' ' ~ contact.email }}
+                                    {% else %}
+                                        {{ " Pas d'email" }}
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3">
+                                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                    {% if contact.telephone != '' %}
+                                        {{ ' ' ~ contact.telephone }}
+                                    {% else %}
+                                        {{ " Pas de téléphone" }}
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3"><div class="pull-right">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" onclick="loadEditContactFournisseur('{{ contact.id~'now'|date('U') }}');"></span> <span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="removeContactFournisseur('{{ contact.id~'now'|date('U') }}');"></span></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+
+                <button type="button" class="btn btn-default new-contact" onclick="loadNewContactFournisseur();">Nouveau contact</button>
+            </div>
+
+            <hr />
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Avancé</span>
+            <div class="advanced-group hidden">
+
+                <div class="form-group">
+                    <label for="reglement" class="col-md-4 control-label">Finance</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <select class="form-control" id="reglement" name="reglement">
+                            {% set modeReglementId = (fournisseur.oneReglement is null) ? -1 : fournisseur.oneReglement.id %}
+                            <option value="-1" disabled>Mode règlement</option>
+                            {% for reglement in reglements %}
+                                <option value="{{ reglement.id }}" {{ (modeReglementId == reglement.id) ? 'selected' : '' }}>
+                                    {{ reglement.nom }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="entreprise-group">
+                    <div class="form-group">
+                        <label for="siret" class="col-md-4 control-label">Entreprise</label>
+                        <div class="col-md-3 col-sm-8 col-xs-8">
+                            <input type="text" class="form-control" id="siret" name="siret" placeholder="siret"
+                                   value="{{ fournisseur.siret }}">
+                        </div>
+                        <div class="col-md-3 col-sm-8 col-xs-8">
+                            <input type="text" class="form-control" id="numero-fournisseur" name="numero-fournisseur"
+                                   placeholder="Numero Fournisseur" value="{{ fournisseur.numeroFournisseur }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+
+                        <select class="form-control" id="type-impot" name="type-impot">
+                            {% set typeImpotId = (fournisseur.oneTypeImpot is null) ? -1 : fournisseur.oneTypeImpot.id %}
+                            <option value="-1" disabled>Type Impot</option>
+                            {% for typeImpot in typeImpots %}
+                                <option value="{{ typeImpot.id }}" {{ (typeImpot.id == typeImpotId) ? 'selected' : '' }}>
+                                    {{ typeImpot.libelle }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+                        <select class="form-control" id="pcc" name="pcc">
+                            {% set pccId = (fournisseur.pcc is null) ? -1 : fournisseur.pcc.id %}
+                            <option value="-1" disabled>Compte</option>
+                            {% for pcc in pccs %}
+                                <option value="{{ pcc.id }}" {{ (pccId == pcc.id) ? 'selected' : '' }}>
+                                    {{ pcc.compte}} - {{ pcc.intitule}}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="note" class="col-md-4 control-label">Note</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <textarea class="form-control" id="note" name="note" placeholder="note">{{ fournisseur.note }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListFournisseur();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveFournisseur();">Enregistrer</button>
+        </div>
+    </div>
+</div>

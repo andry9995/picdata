@@ -1,0 +1,181 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListFournisseur();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Nouveau Fournisseur</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="fournisseur-form">
+
+            <input type="hidden" id="id-dossier"  name="id-dossier">
+
+            <div class="text-center" style="margin-bottom: 20px;">
+                <div class="radio radio-inline">
+                    <input type="radio" id="fournisseur-type-entreprise" value="2" name="fournisseur-type"
+                           checked>
+                    <label for="fournisseur-type-entreprise">Entreprise</label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="fournisseur-type-particulier" value="1" name="fournisseur-type">
+                    <label for="fournisseur-type-particulier">Particulier</label>
+                </div>
+            </div>
+
+            <div class="entreprise-group">
+                <div class="form-group">
+                    <label for="nom-entreprise" class="col-md-4 control-label">Nom de l'entreprise*</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <input type="text" class="form-control" id="nom-entreprise"  name="nom-entreprise"
+                               placeholder="nom de l'entreprise">
+                    </div>
+                </div>
+            </div>
+
+            <div class="particulier-group hidden">
+                <div class="form-group">
+                    <label for="nom" class="col-md-4 control-label">Nom*</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <input type="text" class="form-control" id="nom" name="nom" placeholder="nom">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="prenom" class="col-md-4 control-label">Prénom</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="prénom">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="col-md-4 control-label">Email</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="email">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+                    <input type="text" class="form-control" id="telephone" name="telephone" placeholder="telephone">
+                </div>
+                <div class="col-md-3 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="site-web" name="site-web" placeholder="site web">
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label for="adresse-facturation-1" class="col-md-4 control-label">Adresse Facturation</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="adresse-facturation" name="adresse-facturation"
+                           placeholder="Adresse facturation">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6 col-sm-8 col-xs-8 col-md-offset-4">
+                    <input type="text" class="form-control" id="ligne-2" name="ligne-2" placeholder="ligne 2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+                    <input type="text" class="form-control" id="code-postal" name="code-postal" placeholder="code postal">
+                </div>
+                <div class="col-md-3 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="ville" name="ville" placeholder="ville">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+                    <select class="form-control" id="pays-facturation" name="pays-facturation" placeholder="pays">
+                        {% for country in countries %}
+                            <option value="{{ country.id }}" {% if country.alpha2 == 'FR' %}selected="selected"{% endif %}>{{ country.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <hr />
+            <label class="control-label">Contacts</label>
+            <div id="contact-row">
+                <div class="contact-list"></div>
+                <button type="button" class="btn btn-default new-contact" onclick="loadNewContactFournisseur();">Nouveau contact</button>
+            </div>
+
+            <hr />
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Avancé</span>
+            <div class="advanced-group hidden">
+
+                <div class="form-group">
+                    <label for="reglement" class="col-md-4 control-label">Finance</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <select class="form-control" id="reglement" name="reglement">
+                            <option value="-1" disabled>Mode règlement</option>
+                            {% for reglement in reglements %}
+                                <option value="{{ reglement.id }}">{{ reglement.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="entreprise-group">
+                    <div class="form-group">
+                        <label for="siret" class="col-md-4 control-label">Entreprise</label>
+                        <div class="col-md-3 col-sm-8 col-xs-8">
+                            <input type="text" class="form-control" id="siret" name="siret" placeholder="siret">
+                        </div>
+                        <div class="col-md-3 col-sm-8 col-xs-8">
+                            <input type="text" class="form-control" id="numero-fournisseur" name="numero-fournisseur" placeholder="Numero Fournisseur">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+
+                        <select class="form-control" id="type-impot" name="type-impot">
+                            <option value="-1" disabled>Type Impot</option>
+                            {% for typeImpot in typeImpots %}
+                                <option value="{{ typeImpot.id }}">{{ typeImpot.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-8 col-xs-8 col-md-offset-4">
+                        <select class="form-control" id="pcc" name="pcc">
+                            <option value="-1" disabled>Compte</option>
+                            {% for pcc in pccs %}
+                                <option value="{{ pcc.id }}">{{ pcc.compte ~ pcc.intitule}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="note" class="col-md-4 control-label">Note</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <textarea class="form-control" id="note" name="note" placeholder="note"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListFournisseur();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveFournisseur();">Enregistrer</button>
+        </div>
+    </div>
+</div>

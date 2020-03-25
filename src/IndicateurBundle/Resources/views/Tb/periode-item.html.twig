@@ -1,0 +1,50 @@
+<div class="row" style="margin-top: 3px!important;">
+    <div class="col-sm-12">
+        <span><strong>Exercice</strong></span>
+        <table class="table table-condensed table-bordered table-hover no-margin table-no-padding table-dpk pointer">
+            <thead>
+                <tr>
+                    {% for exe in exercices %}
+                        <th class="text-center js_dpk_exercice {{ (exercice == exe) ? 'td-active' : '' }}">{{ exe }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12" style="margin-top:10px!important">
+        <span><strong>Periode</strong></span>
+        <table class="table table-condensed table-bordered table-hover no-margin text-center table-dpk">
+            <tbody>
+                <tr>
+                    <th rowspan="4" class="js_dpk_periode td-active" data-val="1" data-mere-annee="-1" data-mere-semestre="-1" data-mere-trimestre="-1" data-niveau="0">A</th>
+                    <th rowspan="2" class="js_dpk_periode js_dpk_semestre" data-val="1" data-mere-annee="1" data-mere-semestre="-1" data-mere-trimestre="-1" data-niveau="1">S1</th>
+                    <th class="js_dpk_periode js_dpk_trimestre" data-val="1" data-mere-annee="1" data-mere-semestre="1" data-mere-trimestre="-1" data-niveau="2">T1</th>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="1" data-mere-annee="1" data-mere-semestre="1" data-mere-trimestre="1" data-niveau="3">M1</td>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="2" data-mere-annee="1" data-mere-semestre="1" data-mere-trimestre="1" data-niveau="3">M2</td>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="3" data-mere-annee="1" data-mere-semestre="1" data-mere-trimestre="1" data-niveau="3">M3</td>
+                </tr>
+                <tr>
+                    <th class="js_dpk_periode js_dpk_trimestre" data-val="2" data-mere-annee="1" data-mere-semestre="1" data-mere-trimestre="-1" data-niveau="2">T2</th>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="4" data-mere-annee="1" data-mere-semestre="1" data-mere-trimestre="2" data-niveau="3">M4</td>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="5" data-mere-annee="1" data-mere-semestre="1" data-mere-trimestre="2" data-niveau="3">M5</td>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="6" data-mere-annee="1" data-mere-semestre="1" data-mere-trimestre="2" data-niveau="3">M6</td>
+                </tr>
+                <tr>
+                    <th rowspan="2" class="js_dpk_periode js_dpk_semestre" data-val="2" data-mere-annee="1" data-mere-semestre="-1" data-mere-trimestre="-1" data-niveau="1">S2</th>
+                    <th class="js_dpk_periode js_dpk_trimestre" data-val="3" data-mere-annee="1" data-mere-semestre="2" data-mere-trimestre="-1" data-niveau="2">T3</th>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="7" data-mere-annee="1" data-mere-semestre="2" data-mere-trimestre="3" data-niveau="3">M7</td>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="8" data-mere-annee="1" data-mere-semestre="2" data-mere-trimestre="3" data-niveau="3">M8</td>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="9" data-mere-annee="1" data-mere-semestre="2" data-mere-trimestre="3" data-niveau="3">M9</td>
+                </tr>
+                <tr>
+                    <th class="js_dpk_periode js_dpk_trimestre" data-val="4" data-mere-annee="1" data-mere-semestre="2" data-mere-trimestre="-1" data-niveau="2">T4</th>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="10" data-mere-annee="1" data-mere-semestre="2" data-mere-trimestre="4" data-niveau="3">M10</td>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="11" data-mere-annee="1" data-mere-semestre="2" data-mere-trimestre="4" data-niveau="3">M11</td>
+                    <td class="js_dpk_periode js_dpk_mois" data-val="12" data-mere-annee="1" data-mere-semestre="2" data-mere-trimestre="4" data-niveau="3">M12</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

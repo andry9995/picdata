@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-lg-12">
+
+        {% set titre = (type == 0) ? 'Centre d\'aide PicData' : 'Guides d\'utilisation PicData' %}
+
+        <div class="col-lg-11">
+            <h1>{{ titre }}</h1>
+        </div>
+        <div class="col-lg-1">
+
+            {% if isAdmin %}
+                <button class="btn btn-success js_add_aide_1"
+                        data-toggle="tooltip" data-placement="bottom"
+                        data-type="{{ type }}"><i class="fa fa-plus"></i>
+                </button>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+<br/>
+
+
+{% for aide1 in aide1s %}
+
+    <div class="col-xs-4">
+        <div class="ibox">
+
+            {% if isAdmin %}
+
+                <div class="ibox-title">
+                    <div class="ibox-tools">
+                        <a href="#" class="btn btn-xs btn-danger js_delete_aide_1" data-type="{{ type }}" data-id="{{ aide1.id }}"><i class="fa fa-trash"></i></a>
+                        <a href="#" class="btn btn-xs btn-success js_edit_aide_1" data-type="{{ type }}" data-id="{{ aide1.id }}"><i class="fa fa-edit"></i></a>
+                    </div>
+                </div>
+
+            {% endif %}
+
+            <div class="ibox-content product-box">
+
+                <div class="product-desc">
+
+                    <a href="{{ path('centre_aide_2', {'json': aide1.id, 'type': type }) }}" class="product-name">{{ aide1.titre }}</a>
+
+                    <div class="small m-t-xs desc">
+                        {{ aide1.contenu|slice(0,140) ~ '...' }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% if isAdmin %}
+    <div class="row">
+        {{ include('AideBundle:Default:centre_aide_1_modal.html.twig') }}
+    </div>
+{% endif %}

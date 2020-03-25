@@ -1,0 +1,108 @@
+<div class="table-responsive table-list">
+    <table class="footable table table-striped table-hover toggle-arrow-tiny table-note" data-page-size="8">
+        <thead>
+            <tr>
+                {% if fromModal == true %}
+                    <th>
+                        {#<div class="checkbox checkbox-success checkbox-inline">#}
+                            {#<input type="checkbox" class="checkbox-primary">#}
+                            {#<label></label>#}
+                        {#</div>#}
+                    </th>
+                {% endif %}
+                <th>Note</th>
+                <th>Utilisateur</th>
+                <th>Période</th>
+                <th>Total</th>
+                <th>Remboursable</th>
+                <th>Dépense</th>
+                {% if fromModal == false %}
+                    <th>Action</th>
+                {% endif %}
+            </tr>
+        </thead>
+
+        <tbody>
+
+             {% for details in detailNotes %}
+
+                 {% set action =
+                     '<div class="input-group">
+                        <div class="input-group-btn">
+                            <button data-toggle="dropdown" class="btn btn-xs dropdown-toggle btn-note-action" type="button"><i class="fa fa-tasks"></i></button>
+                                 <ul class="dropdown-menu">
+                                     <li><a href="#" class="action-note-editer">Editer</a></li>
+                                     <li><a href="#" class="action-note-details">Détails</a></li>
+                                 </ul>
+                        </div>
+                     </div>'
+                 %}
+
+                 {% set note = details['note'] %}
+                 {% set depense = details['depense'] %}
+                 {% set periode = "" %}
+
+                 {% if details['periode']|length == 2 %}
+                     {#{{ dump(details['periode']) }}#}
+                     {% if details['periode']['du'] == details['periode']['au'] %}
+                         {% set periode = details['periode']['du'] %}
+                     {% else %}
+                         {% set periode = details['periode']['du'] ~ ' Au ' ~ details['periode']['au'] %}
+                     {% endif %}
+
+                 {% endif %}
+
+                 {% set depenseIcone = '<span><i class="fa fa-file"></i><span>' %}
+                 {% set devise = '<span><i class="fa fa-eur"></i></span>' %}
+
+                 <tr data-id="{{ note.id|boost }}">
+                     {% if fromModal == true %}
+                         <td class="note-check">
+                             <div class="checkbox checkbox-success checkbox-inline">
+                                     <input type="checkbox" class="checkbox-success">
+                                     <label></label>
+                                 </div>
+                         </td>
+                     {% endif %}
+                     <td class="note-note">{{ note.libelle }}</td>
+                     <td class="note-utilisateur">{{ (note.ndfUtilisateur is null) ? '' : note.ndfUtilisateur.nom ~ " " ~ note.ndfUtilisateur.prenom }}</td>
+                     <td class="note-periode">{{ periode }}</td>
+                     <td class="note-total">{{ depense['totalTtc']|number_format(2, '.', ',') }}&nbsp;&nbsp;{{ devise|raw }}</td>
+                     <td class="note-remboursable">{{ depense['remboursable'] }}&nbsp;&nbsp;{{ devise|raw }}</td>
+                     <td class="note-depense">{{ depense['nbDepense'] }}&nbsp;&nbsp;{{ depenseIcone|raw }}</td>
+                     {% if fromModal == false %}
+                         <td class="note-action">{{ action|raw }}</td>
+                     {% endif %}
+                 </tr>
+
+             {% endfor %}
+
+        </tbody>
+
+
+        <tfoot>
+            <tr>
+                <td colspan="12">
+                    <ul class="pagination pull-right"></ul>
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+</div>
+
+
+<div class="table-bloc hidden">
+    {{ include('NoteFraisBundle:Note:noteTableBloc.html.twig') }}
+</div>
+
+
+<div class="ibox-content note-assigner hidden">
+
+    <div class="pull-right">
+        <button class="btn btn-sm" id="js_annuler_assigner_note"><strong>Annuler</strong></button>
+        <button class="btn btn-sm btn-primary" id="js_assigner_note"><strong>Assigner</strong></button>
+
+    </div>
+
+</div>

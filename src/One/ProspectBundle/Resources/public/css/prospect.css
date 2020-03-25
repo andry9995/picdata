@@ -1,0 +1,61 @@
+/* 
+    Created by Netbeans
+    Created on : 23 juin 2017, 21:39:04
+    Author     : Mamy Rakotonirina
+*/
+
+/*Affichage bloc*/
+.prospect-bloc-view .bloc {
+    background: #F9F9F9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.prospect-bloc-view .bloc .bloc-content {
+    display: block;
+    padding: 10px;
+}
+.prospect-bloc-view .bloc .bloc-content .bloc-title {
+    font-size: 1.6rem;
+}
+.prospect-bloc-view .bloc .btn-default {
+    background: none;
+    border: none;
+    color: #1BB394;
+}
+.prospect-bloc-view .bloc .bloc-footer {
+    background: #FFFFFF;
+    border-top: 1px solid #E7EAEC;
+    display: block;
+    margin-top: 10px;
+    min-height: 50px;
+    padding-top: 10px;
+}
+.prospect-bloc-view .bloc .bloc-footer .dropdown {
+    min-height: 25px;
+}
+
+/*Affichage détails*/
+.prospect-detail-infos {
+    background-color: #F9F9F9;
+    border: 1px solid #E7EAEC;
+    padding: 10px;
+}
+.glyphicon.edit-action {
+    cursor: pointer;
+}
+
+.prospect-detail-infos .item {
+    display: flex;
+}
+.prospect-detail-infos .item .glyphicon {
+    width: 20px;
+}
+.prospect-detail-infos .item .fa {
+    width: 20px;
+}
+.prospect-detail-infos .item .info-text {
+    flex: 1.0;
+}
+
+.prospect-detail-infos .contact-name {
+    color: #1CB394;
+}

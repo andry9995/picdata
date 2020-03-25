@@ -1,0 +1,58 @@
+<table class="table" data-page-size="8">
+    <thead>
+    <tr class="th-col">
+        <th class="col-sm-3 text-center">Nom</th>
+        <th class="col-sm-2 text-center">Prenom</th>
+        <th class="col-sm-2 text-center">Email</th>
+        <th class="col-sm-1 text-center">Responsable</th>
+        <th class="col-sm-1 text-center">Envoi</th>
+        <th class="col-sm-2 text-center">Dernière envoi</th>
+        <th class="col-sm-1 text-center">Action</th>
+    </tr>
+    </thead>
+    <tbody id="col_data_tablist_pm">
+    	{% for liste in listes %}
+    		{% set responsable = '' %}
+        	{% if liste.responsable == 0 %}
+        		{% set responsable = 'Client' %}
+			{% endif %}
+        	{% if liste.responsable == 1 %}
+    			{% set responsable = 'EC site' %}
+			{% endif %}
+        	{% if liste.responsable == 2 %}
+    			{% set responsable = 'EC dossier' %}
+			{% endif %}
+        	{% if liste.responsable == 3 %}
+    			{% set responsable = 'Supervision' %}
+			{% endif %}
+        	{% if liste.responsable == 4 %}
+    			{% set responsable = 'Administratif' %}
+			{% endif %}
+        	{% if liste.responsable == 5 %}
+    			{% set responsable = 'Scriptura' %}
+			{% endif %}
+        	{% if liste.responsable == 6 %}
+    			{% set responsable = 'Client final' %}
+			{% endif %}
+    		<tr data-id="{{liste.id}}">
+    			<td class="col-sm-3 text-left html-new-nom-mail-pm">{{liste.nom}}</td>
+    			<td class="col-sm-2 text-left html-new-prenom-mail-pm">{{liste.prenom}}</td>
+    			<td class="col-sm-2 text-left">{{liste.mail}}</td>
+    			<td class="col-sm-1 text-left">{{responsable}}</td>
+    			{% if liste.statut %}
+	    			<td class="col-sm-1 text-center">
+	    				<input type="checkbox" name="ck-envoi-pm" value="{{liste.statut}}" checked="checked" id="ck-envoi-pm">
+	    			</td>
+	    		{% else %}
+	    			<td class="col-sm-1 text-center">
+	    				<input type="checkbox" name="ck-envoi-pm" value="{{liste.statut}}" id="ck-envoi-pm">
+	    			</td>
+	    		{% endif %}
+    			<td class="col-sm-2 text-center"></td>
+    			<td class="col-sm-1 text-center">
+    				<i class="pointer fa fa-trash delete-mail-pm"></i>
+    			</td>
+    		</tr>
+    	{% endfor %}
+    </tbody>
+</table>

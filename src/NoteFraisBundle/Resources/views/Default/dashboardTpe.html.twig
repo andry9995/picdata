@@ -1,0 +1,347 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Note de frais{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src={{ asset('js/plugins/masonary/masonry.pkgd.min.js') }}></script>
+    <script src="{{ asset('bundles/notefrais/js/dashboard.js') }}?v=1.0.0"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/notefrais/css/dashboard.css') }}?v=1.0.0">
+{% endblock %}
+
+{% block wrapper_content %}
+
+
+
+
+{#<div class="grid" >#}
+    {#<div class="grid-item">#}
+        {#<div class="panel panel-success">#}
+            {#<div class="panel-heading">#}
+                {#A faire#}
+            {#</div>#}
+            {#<div class="panel-body">#}
+
+                {#<ul class="list-group clear-list m-t">#}
+                    {#<li class="list-group-item">#}
+                                {#<span class="pull-right">#}
+                                    {#Envoi images TVA#}
+                                {#</span>#}
+                        {#<span class="label label-success">Aujourd'hui</span>#}
+                    {#</li>#}
+                    {#<li class="list-group-item">#}
+                               {#<span class="pull-right">#}
+                                    {#xxxxxxxxx#}
+                                {#</span>#}
+                        {#<span class="label label-success">Demain</span>#}
+                    {#</li>#}
+                    {#<li class="list-group-item">#}
+                                {#<span class="pull-right">#}
+                                    {#xxxxx#}
+                                {#</span>#}
+                        {#<span class="label label-success">Après demain</span>#}
+                    {#</li>#}
+                {#</ul>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+
+
+    {#<div class="grid-item">#}
+        {#<div class="panel panel-success">#}
+            {#<div class="panel-heading">#}
+                {#Banques#}
+            {#</div>#}
+
+            {#<div class="panel-body">#}
+                {#<ul class="list-group clear-list m-t">#}
+                    {#<li class="list-group-item">#}
+                                {#<span class="pull-right">#}
+                                    {#52 652.00#}
+                                {#</span>#}
+                        {#<span class="label label-success">Compte A</span> Soleil#}
+                    {#</li>#}
+                    {#<li class="list-group-item">#}
+                               {#<span class="pull-right">#}
+                                  {#1 205.00#}
+                                {#</span>#}
+                        {#<span class="label label-success">Compte B</span>  Nuage#}
+                    {#</li>#}
+                    {#<li class="list-group-item">#}
+                                {#<span class="pull-right">#}
+                                    {#0.00#}
+                                {#</span>#}
+                        {#Dépenses prévues dans 4 semaines:#}
+                    {#</li>#}
+                    {#<li class="list-group-item">#}
+                                {#<span class="pull-right">#}
+                                   {#0.00#}
+                                {#</span>#}
+                        {#Recettes prévues dans 4 semaines:#}
+                    {#</li>#}
+                    {#<li class="list-group-item">#}
+                                {#<span class="pull-right">#}
+                                  {#0.00#}
+                                {#</span>#}
+                        {#Solde prévue#}
+                    {#</li>#}
+                {#</ul>#}
+
+            {#</div>#}
+        {#</div>#}
+
+    {#</div>#}
+
+    {#<div class="grid-item">#}
+        {#<div class="panel panel-success">#}
+            {#<div class="panel-heading">#}
+                {#Ventes#}
+            {#</div>#}
+            {#<div class="panel-body">#}
+
+                {#<ul class="list-group clear-list m-t">#}
+                    {#<li class="list-group-item">#}
+                                {#<span class="pull-right">#}
+                                    {#52 652.00#}
+                                {#</span>#}
+                        {#Opportunités à suivre#}
+                    {#</li>#}
+                    {#<li class="list-group-item">#}
+                               {#<span class="pull-right">#}
+                                  {#5#}
+                                {#</span>#}
+                        {#<span class="label label-success">Compte B</span>  Nuage#}
+                        {#Devis en attente#}
+                    {#</li>#}
+                    {#<li class="list-group-item">#}
+                                {#<span class="pull-right">#}
+                                    {#0.00#}
+                                {#</span>#}
+                        {#Clients dus#}
+                    {#</li>#}
+
+                {#</ul>#}
+
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="grid-item">#}
+        {#<div class="panel panel-success">#}
+            {#<div class="panel-heading">#}
+                {#Achat#}
+            {#</div>#}
+            {#<div class="panel-body">#}
+                {#<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+
+    {#<div class="grid-item">#}
+        {#<div class="panel panel-success">#}
+            {#<div class="panel-heading">#}
+                {#Comptabilite#}
+            {#</div>#}
+            {#<div class="panel-body">#}
+                {#<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+
+    {#<div class="grid-item">#}
+        {#<div class="panel panel-success">#}
+            {#<div class="panel-heading">#}
+                {#Note de frais#}
+            {#</div>#}
+            {#<div class="panel-body">#}
+                {#<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}
+
+
+    <div class="row">
+
+        <div class="col-md-4 dash-tpe">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <i class="fa fa-tasks"></i>
+                    &nbsp;
+                    A faire
+                </div>
+                <div class="panel-body">
+
+                    <ul class="list-group clear-list m-t">
+                        <li class="list-group-item">
+                                <span class="pull-right">
+                                    Envoi images TVA
+                                </span>
+                            <span class="label label-success">Aujourd'hui</span>
+                        </li>
+                        <li class="list-group-item">
+                               <span class="pull-right">
+                                    xxxxxxxxx
+                                </span>
+                            <span class="label label-success">Demain</span>
+                        </li>
+                        <li class="list-group-item">
+                                <span class="pull-right">
+                                    xxxxx
+                                </span>
+                            <span class="label label-success">Après demain</span>
+                        </li>
+                    </ul>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <i class="fa fa-bank"></i>
+                    &nbsp;&nbsp;
+                    Banques
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group clear-list m-t">
+                        <li class="list-group-item">
+                                <span class="pull-right">
+                                    52 652.00
+                                </span>
+                            <span class="label label-success">Compte A</span> Soleil
+                        </li>
+                        <li class="list-group-item">
+                               <span class="pull-right">
+                                  1 205.00
+                                </span>
+                            <span class="label label-success">Compte B</span>  Nuage
+                        </li>
+                        <li class="list-group-item">
+                                <span class="pull-right">
+                                    0.00
+                                </span>
+                             Dépenses prévues dans 4 semaines:
+                        </li>
+                        <li class="list-group-item">
+                                <span class="pull-right">
+                                   0.00
+                                </span>
+                            Recettes prévues dans 4 semaines:
+                        </li>
+                        <li class="list-group-item">
+                                <span class="pull-right">
+                                  0.00
+                                </span>
+                            Solde prévue
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-4 ">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <i class="fa fa-tags"></i>
+                    &nbsp;
+                    Ventes
+                </div>
+                <div class="panel-body">
+
+                    <ul class="list-group clear-list m-t">
+                        <li class="list-group-item">
+                                <span class="pull-right">
+                                    52 652.00
+                                </span>
+                            Opportunités à suivre
+                        </li>
+                        <li class="list-group-item">
+                               <span class="pull-right">
+                                  5
+                                </span>
+                            Devis en attente
+                        </li>
+                        <li class="list-group-item">
+                                <span class="pull-right">
+                                    0.00
+                                </span>
+                            Clients dus
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3"></div>
+
+
+
+    </div>
+
+    <div class="row">
+
+
+        <div></div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <i class="fa fa-shopping-cart"></i>
+                    &nbsp;
+                    Achat
+                </div>
+                <div class="panel-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <i class="fa fa-calculator"></i>
+                    &nbsp;
+                    Comptabilité
+                </div>
+                <div class="panel-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <i class="fa fa-car"></i>
+                    &nbsp;
+                    Note de frais
+                </div>
+                <div class="panel-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

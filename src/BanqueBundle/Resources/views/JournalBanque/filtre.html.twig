@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-sm-2">{{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'label_col':4, 'select_col':8 } )) }}</div>
+    <div class="col-sm-3">{{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0,'label_col':2,'select_col':10 })) }}</div>
+    <div class="col-sm-4" id="js_conteneur_dossier"></div>
+    <div class="col-sm-3" id="js_id_conteneur_banque"></div>
+
+    <div class="col-sm-2" id="id_container_btn_periode"></div>
+    <div class="col-sm-3" id="js_id_conteneur_compte"></div>
+    <div class="col-sm-4" id="id_container_pcc_bc"></div>
+    <div class="col-sm-3">
+        <div class="row">
+            <div class="col-sm-4 text-center">
+                <div class="text-left">
+                    <div class="checkbox checkbox-inline">
+                        <input id="id_chk_centraliser" type="checkbox">
+                        <label for="id_chk_centraliser">Centraliser</label>
+                    </div>
+                </div>
+                <div class="text-left">
+                    <div class="checkbox checkbox-inline">
+                        <input id="id_chk_detailler_ob" type="checkbox" checked>
+                        <label for="id_chk_detailler_ob">Obs&nbsp;Detaillés</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 text-right">
+                <span id="id_control_container"><span class="btn btn-white" id="id_control">KO</span></span>
+                <span id="id_show_params" class="btn btn-white"><i class="fa fa-cog" aria-hidden="true"></i></span>
+                <span class="btn btn-white" id="id_show_filtre_date" data-type="2" data-start="" data-end=""><i class="fa fa-filter" aria-hidden="true"></i></span>
+                <div class="btn-group">
+                    <span data-toggle="dropdown" class="btn btn-white dropdown-toggle"><i class="fa fa-download" aria-hidden="true"></i></span>
+                    <ul class="dropdown-menu">
+                        <li class="cl_export" data-type="xls"><a href="#">Excel</a></li>
+                        <li class="cl_export" data-type="xml"><a href="#">XML</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden" id="js_conteneur_site"></div>
+    <div class="js_date_picker_hidden hidden"></div>
+</div>

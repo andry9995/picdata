@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-sm-3">
+        {{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0, 'tous': affichage })) }}
+    </div>
+    <div class="col-sm-2" id="js_conteneur_site">
+
+    </div>
+    <div class="col-sm-3" id="js_conteneur_dossier">
+
+    </div>
+    <div class="col-sm-4">
+        <span class="btn btn-sm btn-white js_periode {{ affichage == 1 ? 'hidden' : '' }}">
+            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+            <span>&nbsp;&nbsp;P&eacute;riode</span>
+        </span>
+        {% if affichage == 1 %}
+            <div class="btn-group">
+                <span data-toggle="dropdown" class="btn btn-white btn-sm dropdown-toggle">Compta</span>
+                <ul class="dropdown-menu" id="id_exos">
+                    {% for key, exercice in exercices %}
+                        <li class="cl_exo_filtre">
+                            <a href="#">
+                                <input class="cl_exo_item" data-exercice="{{ exercice }}" type="checkbox" id="i_exo_{{ exercice }}" checked>&nbsp;
+                                <label for="i_exo_{{ exercice }}">{{ exercice }}</label>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <span class="btn btn-sm btn-white cl_cle_admin">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <span>&nbsp;Cl&eacute;</span>
+            </span>
+        {% endif %}
+        {{ include('IndicateurBundle:Tb:type-affichage.html.twig') }}
+        <div class="checkbox checkbox-inline {{ affichage == 1 ? 'hidden' : '' }}">
+            <input type="checkbox" id="js_id_variation">
+            <label for="js_id_variation">Variation</label>
+        </div>
+        <span id="id_stat_container" class="{{ affichage == 1 ? '' : 'hidden' }}"></span>
+
+        <div class="btn-group pull-right">
+            <span data-toggle="dropdown" class="btn btn-white btn-sm dropdown-toggle"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;Export</span>
+            <ul class="dropdown-menu">
+                <li class="cl_export" data-format="xls"><a href="#">Excel</a></li>
+            </ul>
+        </div>
+        <span class="btn btn-white btn-sm pull-right" id="id_go"><i class="fa fa-play" aria-hidden="true"></i>&nbsp;Go</span>
+    </div>
+</div>
+
+<div class="hidden" id="js_id_interval_hidden">
+    {{ include('IndicateurBundle:Tb:periode-interval.html.twig', { exercices:exercices }) }}
+</div>

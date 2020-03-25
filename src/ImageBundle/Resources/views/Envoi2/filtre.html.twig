@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col-sm-2">
+        {{ render(controller('AppBundle:Commun:exercices' , { 'tous': 0,'nbr':8 })) }}
+    </div>
+    <div class="col-sm-3">
+        {{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0 })) }}
+    </div>
+    <div class="col-sm-2" id="js_conteneur_site">
+
+    </div>
+    <div class="col-sm-3" id="js_conteneur_dossier">
+
+    </div>
+    <div class="col-sm-2">
+        <span class="checkbox checkbox-default pull-left hidden">
+            <input id="js_is_analytique" type="checkbox" checked>
+            <label for="js_is_analytique">Analytique</label>
+        </span>
+        <span class="btn btn-default" id="js_analytiques"><i class="fa fa-bookmark" aria-hidden="true"></i>&nbsp;Analytiques</span>
+
+        <span class="checkbox checkbox-default pull-left hidden">
+            <input id="js_is_commentaire" type="checkbox" checked>
+            <label for="js_is_commentaire">Commentaire</label>
+        </span>
+        <span class="btn btn-default" id="js_commentaires"><i class="fa fa-commenting" aria-hidden="true"></i></span>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 2px!important;">
+    <div class="col-sm-4">
+        <span class="btn btn-primary btn-outline btn-sm" id="js_upload_click"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;Envoyer</span>
+        <span class="btn btn-primary btn-outline btn-sm" id="js_remove_all"><i class="fa fa-window-maximize" aria-hidden="true"></i>&nbsp;Vider&nbsp;la&nbsp;liste</span>
+        <a href="{{ path('img_historique') }}" class="btn btn-outline btn-primary btn-sm"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Mes&nbsp;Envois</a>
+
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="id_cumuler">
+            <label for="id_cumuler">Lot&nbsp;journalier</label>
+        </div>
+
+        {#<span class="btn btn-primary btn-outline btn-sm" id="js_signer">Signer</span>#}
+    </div>
+    <div class="col-sm-5">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-horizontal hidden">
+                    <div class="form-group">
+                        <label class="control-label col-lg-5" for="js_id_ana">
+                            <span>Analytique</span>
+                        </label>
+                        <div class="col-lg-7">
+                            <select data-ref="" class="site form-control" id="js_id_ana">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-horizontal hidden">
+                    <div class="form-group">
+                        <label class="control-label col-lg-5" for="js_id_commentaire">
+                            <span>Commentaire</span>
+                        </label>
+                        <div class="col-lg-7">
+                            <select data-ref="" class="site form-control" id="js_id_commentaire">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal hidden">
+                <div class="form-group">
+                    <label class="control-label col-lg-6" for="js_id_mp">
+                        <span>Mode&nbsp;de&nbsp;Paiement</span>
+                        <span class="label label-warning">{{ modePaiements|length }}</span>
+                    </label>
+                    <div class="col-lg-6">
+                        <select data-ref="" class="site form-control" id="js_id_mp">
+                            <option value="{{ 0|boost }}"></option>
+                            {% for modePaiement in modePaiements %}
+                                <option value="{{ modePaiement.id|boost }}">{{ modePaiement.libelle }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-horizontal hidden">
+            <div class="form-group has-error">
+                <label class="col-lg-3 control-label" for="js_message_urgent">Message&nbsp;urgente</label>
+                <div class="col-lg-9">
+                    <input type="text" id="js_message_urgent" placeholder="Message" class="form-control input-sm">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

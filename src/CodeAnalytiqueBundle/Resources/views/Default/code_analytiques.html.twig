@@ -1,0 +1,7 @@
+<select id="js_analytique">
+    <option value="{{ 0|boost }}"></option>
+    {% for analytique in code_analytiques %}
+        <option value="{{ analytique.id|boost }}">{{ analytique.libelle }}</option>
+    {% endfor %}
+</select>
+<span class="help-block m-b-none">Analytique &agrave; marqu&eacute; sur les pièces</span>

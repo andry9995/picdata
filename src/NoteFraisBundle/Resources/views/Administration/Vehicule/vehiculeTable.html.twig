@@ -1,0 +1,45 @@
+<div class="table-responsive">
+    <table class="footable table table-striped toggle-arrow-tiny table-hover table-vehicule" data-page-size="8">
+        <thead>
+        <tr>
+            <th>Marque</th>
+            <th>Modèle</th>
+            <th>Immatriculation</th>
+            <th>Type Véhicule</th>
+            <th>Carburant</th>
+            <th>Puissance fiscal</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for vehicule in vehicules %}
+
+            {% set marque = (vehicule is null) ? ''  : (vehicule.vehiculeMarque is null) ? '' : vehicule.vehiculeMarque.libelle %}
+            {% set modele = (vehicule is null) ? '' : (vehicule.modele) %}
+            {% set immatricule = (vehicule is null) ? '' : vehicule.immatricule %}
+            {% set typeVehicule = (vehicule is null) ? '' : (vehicule.ndfTypeVehicule is null) ? '' : vehicule.ndfTypeVehicule.libelle %}
+            {% set puissance = (vehicule is null) ? '' : (vehicule.status is null) ? '' : vehicule.nbCv ~ ' CV' %}
+            {% set carburant = (vehicule is null) ? '' : (vehicule.carburant is null) ? '' : vehicule.carburant.libelle %}
+
+            <tr data-id= {{ vehicule.id|boost }}>
+                <td class="vehicule-marque">{{ marque }}</td>
+                <td class="vehicule-modele">{{ modele }}</td>
+                <td class="vehicule-immatricule">{{ immatricule }}</td>
+                <td class="vehicule-type">{{ typeVehicule }}</td>
+                <td class="vehicule-carburant">{{ carburant }}</td>
+                <td class="vehicule-puissance">{{ puissance }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+
+        <tfoot>
+        <tr>
+            <td colspan="12">
+                <ul class="pagination pull-right"></ul>
+            </td>
+        </tr>
+        </tfoot>
+
+    </table>
+</div>

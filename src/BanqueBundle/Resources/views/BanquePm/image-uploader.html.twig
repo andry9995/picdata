@@ -1,0 +1,41 @@
+{% if releve is not null %}
+    {{ include('BanqueBundle:ReleveBanque:releve-line.html.twig') }}
+{% endif %}
+
+{% if releves|length > 0 %}
+    <div id="id_releve_manquants" class="row bande white-bg" style="margin-bottom: 15px!important;">
+        <div class="col-lg-12">
+            <table class="table" style="margin-bottom: 1px!important;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Image</th>
+                        <th>Date&nbsp;Op&deg;</th>
+                        <th>Libelle&nbsp;Banque</th>
+                        <th>Mouvement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rel in releves %}
+                        <tr data-id="{{ rel.id|boost }}">
+                            <td>
+                                <div class="radio radio-info radio-inline">
+                                    <input type="radio" id="radio-rel-{{ rel.id }}" name="radio-name-rel">
+                                    <label for="radio-rel-{{ rel.id }}"></label>
+                                </div>
+                            </td>
+                            <td class="js_show_image_ pointer text-primary">{{ rel.image.nom }}</td>
+                            <td class="hidden js_id_image">{{ rel.image.id|boost }}</td>
+                            <td class="js_cl_date_operation">{{ rel.dateReleve|date('d/m/Y') }}</td>
+                            <td class="js_cl_etendre_recherche">{{ rel.libelle }}</td>
+                            <td align="right" data-m="{{ rel.credit - rel.debit }}">{{ (rel.credit - rel.debit)|number_format(2, ',', '&nbsp;')|raw }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
+
+<input type="hidden" value="{{ mois }}" data-type_banque="{{ typeBanque }}" id="id_mois" data-banque_ob_manquant="{{ (banqueObManquant ? banqueObManquant.id : 0)|boost }}" data-banque_compte="{{ (banqueCompte ? banqueCompte.id : 0)|boost }}">
+<input type="file" class="form-control" name="id_image" id="id_image" data-type="{{ type }}">

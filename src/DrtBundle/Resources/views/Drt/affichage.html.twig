@@ -1,0 +1,16 @@
+{% if ext in extensions.images %}
+    <img src="{{ asset(chemin) }}">
+{% elseif ext in extensions.xls %}
+    excel
+{% elseif ext in extensions.pdf %}
+    <object id="js_embed"
+            width="100%"
+            height="100%"
+            type="application/pdf"
+            title=""
+            data="{{ asset(chemin) }}?#scrollbar=1&toolbar=0&navpanes=1">
+        <p>Votre  navigateur ne peut pas affichier le fichier PDF. Vous pouvez le télécharger en cliquant <a target="_blank" href="' . $chemin . '" style="text-decoration: underline;">ICI</a></p>
+    </object>
+{% else %}
+
+{% endif %}

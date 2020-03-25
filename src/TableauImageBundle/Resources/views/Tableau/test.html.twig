@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>TEST</title>
+</head>
+<body>
+    {#{{ dump(images) }}#}
+{#{% for image in images %}#}
+    {#{% for ndf in image.image.controleNoteFrais %}#}
+        {#{{ dump(ndf) }}#}
+    {#{% endfor %}#}
+{#{% endfor %}#}
+</body>
+</html>

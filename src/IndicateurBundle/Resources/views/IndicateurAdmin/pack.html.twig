@@ -1,0 +1,48 @@
+{% set index = 0 %}
+{% for pack in packs %}
+    <div class="panel panel-default js_pack_panel" data-id="{{ pack.id|boost }}">
+        <div class="panel-heading" style="padding: 1px !important;">
+            <h5 class="panel-title">
+                <span class="row" style="margin: 0!important;">
+                    <span class="col-lg-4">
+                        <a data-toggle="collapse" data-parent="#id_panels_conteneur_{{ index_group }}" href="#js_pack_collapse_{{ index_group }}_{{ index }}" class="js_pack_collapse">
+                            <span class="btn btn-xs js_pack_libelle">
+                                <strong class="js_pack_libelle_string">{{ pack.libelle }}</strong>
+
+                                {% if client is not null or dossier is not null %}
+                                    {% if pack.client is not null %}
+                                        {% set text = 'spécifique pour le CLIENT ' ~ pack.client.nom %}
+                                    {% elseif pack.dossier is not null %}
+                                        {% set text = 'spécifique pour le DOSSIER ' ~ pack.dossier.nom %}
+                                    {% else %}
+                                        {% set text = 'général' %}
+                                    {% endif %}
+                                    <small>&nbsp;({{ text }})</small>
+                                {% endif %}
+                            </span>
+                        </a>
+                    </span>
+                    <span class="col-lg-8 js_pack_control hidden text-right"> {#{{ (index == 0) ? '' : 'hidden' }}#}
+                        <span class="btn btn-white btn-xs js_tooltip js_indicateur_show_edit js_add" data-tooltip="Ajouter item"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        {% if (client is not null and pack.client == client) or (dossier is not null and pack.dossier == dossier) or (client is null and dossier is null) %}
+                            <span class="btn btn-xs js_tooltip js_valider_indicateur_pack {{ (pack.valider == 1) ? 'btn-primary' : 'btn-default' }}"><i class="fa fa-check" aria-hidden="true"></i></span>
+                            <span class="btn btn-white btn-xs js_tooltip js_pack_show_edit" data-tooltip="Modifier"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                            <span class="btn btn-white btn-xs js_tooltip js_pack_delete" data-tooltip="Supprimer"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                        {% endif %}
+
+                        {% if (dossier is not null and pack.dossier is null) or (client is not null and pack.client is null)  %}
+                            <span class="btn btn-xs js_tooltip js_dupliquer btn-white" data-type="1"><i class="fa fa-files-o" aria-hidden="true"></i></span>
+                            <span class="btn btn-xs js_tooltip js_show_indicateur {{ (pack.enabled) ? 'btn-primary' : 'btn-default' }}" data-type="1" title="Afficher ce pack">Afficher</span>
+                        {% endif %}
+                    </span>
+                </span>
+            </h5>
+        </div>
+        <div id="js_pack_collapse_{{ index_group }}_{{ index }}" class="panel-collapse collapse"> {#{{ (index == 0) ? 'in' : '' }}#}
+            <div class="panel-body gray-bg js_indicateur_conteneur scroller" style="padding: 5px!important;">
+                {{ include('IndicateurBundle:IndicateurAdmin:indicateurs.html.twig',{ 'pack':pack , 'client':client, 'dossier':dossier, 'dStyles':dStyles }) }}
+            </div>
+        </div>
+    </div>
+    {% set index = index + 1 %}
+{% endfor %}

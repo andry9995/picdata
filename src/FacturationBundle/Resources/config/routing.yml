@@ -1,0 +1,611 @@
+#PARAMETRES GENERAUX
+facturation_parametres:
+    path:     /parametres-generaux
+    defaults: { _controller: FacturationBundle:ParamGen:index }
+
+#DOMAINES
+#Liste
+fact_domaine:
+    path:    /fact-domaine/{json}
+    defaults: { _controller: FacturationBundle:ParamGen:domaine, json: 1 }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+
+#Edit domaine
+fact_domaine_edit:
+    path:    /fact-domaine
+    defaults: { _controller: FacturationBundle:ParamGen:domaineEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove domaine
+fact_domaine_remove:
+    path:    /fact-domaine
+    defaults: { _controller: FacturationBundle:ParamGen:domaineRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+#INDICE
+#Liste indice
+fact_indice:
+    path:     /fact-indice
+    defaults: { _controller: FacturationBundle:ParamGen:indice }
+    options:
+        expose: true
+    methods: [GET]
+#Edit indice
+fact_indice_edit:
+    path:     /fact-indice
+    defaults: { _controller: FacturationBundle:ParamGen:indiceEdit }
+    options:
+         expose: true
+    methods: [POST]
+#Remove indice
+fact_indice_remove:
+    path:     /fact-indice
+    defaults: { _controller: FacturationBundle:ParamGen:indiceRemove }
+    options:
+         expose: true
+    methods: [DELETE]
+
+#UNITE DE FACTURATION
+#Liste
+fact_unite:
+    path:    /fact-unite/{json}
+    defaults: { _controller: FacturationBundle:ParamGen:unite, json: 1 }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+#Edit unité
+fact_unite_edit:
+    path:     /fact-unite
+    defaults: { _controller: FacturationBundle:ParamGen:uniteEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove unité
+fact_unite_remove:
+    path:     /fact-unite
+    defaults: { _controller: FacturationBundle:ParamGen:uniteRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+#REMISE VOLUME
+#Liste
+fact_remise_volume:
+    path:     /fact-remise-volume
+    defaults: { _controller: FacturationBundle:ParamGen:remiseVolume }
+    options:
+        expose: true
+    methods: [GET]
+#Edit remise volume
+fact_remise_volume_edit:
+    path:   /fact-remise-volume
+    defaults: { _controller: FacturationBundle:ParamGen:remiseVolumeEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove remise volume
+fact_remise_volume_remove:
+    path:   /fact-remise-volume
+    defaults: { _controller: FacturationBundle:ParamGen:remiseVolumeRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+#REMISE NIVEAU
+#Liste
+fact_remise_niveau:
+    path:     /fact-remise-niveau/{json}
+    defaults: { _controller: FacturationBundle:ParamGen:remiseNiveau, json: 1 }
+    options:
+      expose: true
+    methods: [GET]
+    requirements:
+      json: 0|1
+
+#MODELE DE TARIFICATION
+#Liste
+fact_model_tarif:
+    path:     /fact-model-tarif/{json}
+    defaults: { _controller: FacturationBundle:ParamGen:modelTarif, json: 1 }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        json: 0|1
+#Edit Model Tarif
+fact_model_tarif_edit:
+    path:     /fact-model-tarif
+    defaults: { _controller: FacturationBundle:ParamGen:modelTarifEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove Model Tarif
+fact_model_tarif_remove:
+    path:     /fact-model-tarif
+    defaults: { _controller: FacturationBundle:ParamGen:modelTarifRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+
+#PRESTATION
+facturation_prestation:
+    path:     /prestation
+    defaults: { _controller: FacturationBundle:Prestation:index }
+
+#PRESTATION GENERALE
+#Liste
+fact_prestation_generale:
+    path:     /prestation-generale
+    defaults: { _controller: FacturationBundle:Prestation:prestationGeneral }
+    options:
+        expose: true
+    methods: [GET]
+#Edit Prestation générale
+fact_prestation_generale_edit:
+    path:     /prestation-generale
+    defaults: { _controller: FacturationBundle:Prestation:prestationGeneralEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove Prestation générale
+fact_prestation_generale_remove:
+    path:     /prestation-generale
+    defaults: { _controller: FacturationBundle:Prestation:prestationGeneralRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+#PRESTATION CLIENT
+#Liste
+fact_prestation_client:
+    path:     /prestation-client/{client}/{jqgrid}
+    defaults: { _controller: FacturationBundle:Prestation:prestationClient, jqgrid: 1 }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+      jqgrid: 0|1
+
+#Edit Prestation client
+fact_prestation_client_edit:
+    path:     /prestation-client
+    defaults: { _controller: FacturationBundle:Prestation:prestationClientEdit }
+    options:
+        expose: true
+    methods: [POST]
+
+#PRESTATION DOSSIER
+fact_prestation_dossier:
+    path:     /prestation-dossier/{dossier}
+    defaults: { _controller: FacturationBundle:Prestation:prestationDossier }
+    options:
+        expose: true
+    methods: [GET]
+#Edit Prestation dossier
+fact_prestation_dossier_edit:
+    path:     /prestation-dossier
+    defaults: { _controller: FacturationBundle:Prestation:prestationDossierEdit }
+    options:
+        expose: true
+    methods: [POST]
+
+#TARIFICATIONS
+facturation_tarification:
+    path:     /tarification
+    defaults: { _controller: FacturationBundle:Tarif:index }
+
+#TARIF  GENERAL
+#Liste tarif general
+fact_tarification_general:
+    path:     /tarification-general/{annee}/{indice}/{modele}/{recalculer}
+    defaults: { _controller: FacturationBundle:Tarif:tarifGeneral, indice: 0, recalculer: 0 }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+      annee: \d+
+      indice: 0|1
+      modele: \d+
+      recalculer: 0|1
+
+#Modif tarif general
+fact_tarification_general_edit:
+    path:     /tarification-general
+    defaults: { _controller: FacturationBundle:Tarif:tarifGeneralEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove tarif general
+fact_tarification_general_remove:
+    path:     /tarification-general
+    defaults: { _controller: FacturationBundle:Tarif:tarifGeneralRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+#TARIF CLIENT
+#Liste
+fact_tarification_client:
+    path:     /tarification-client/{annee}/{client}/{indice}/{modele}/{recalculer}
+    defaults: { _controller: FacturationBundle:TarifClient:tarifClient, indice: 0, recalculer: 0 }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+      annee: \d+
+      indice: 0|1
+      modele: \d+
+      recalculer: 0|1
+
+#Modif tarif client
+fact_tarification_client_edit:
+    path:     /tarification-client
+    defaults: { _controller: FacturationBundle:TarifClient:tarifClientEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove tarif client
+fact_tarification_client_remove:
+    path:     /tarification-client
+    defaults: { _controller: FacturationBundle:TarifClient:tarifClientRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+#TARIF DOSSIER
+#Liste
+fact_tarification_dossier:
+    path:     /tarification-dossier/{annee}/{dossier}/{indice}/{modele}
+    defaults: { _controller: FacturationBundle:TarifDossier:tarifDossier, indice: 0 }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+      annee: \d+
+      indice: 0|1
+      modele: \d+
+#Modif tarif dossier
+fact_tarification_dossier_edit:
+    path:     /tarification-dossier
+    defaults: { _controller: FacturationBundle:TarifDossier:tarifDossierEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove tarif dossier
+fact_tarification_dossier_remove:
+    path:     /tarification-dossier
+    defaults: { _controller: FacturationBundle:TarifDossier:tarifDossierRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+
+#CONTRAT SIGNE
+#Index
+facturation_contrat:
+    path: /contrat
+    defaults: { _controller: FacturationBundle:Contrat:index }
+    methods: [GET]
+
+#Liste contrat
+fact_contrat_liste:
+    path: /contrat/liste
+    defaults: { _controller: FacturationBundle:Contrat:contrat }
+    options:
+        expose: true
+    methods: [GET]
+#Ajout contrat
+fact_contrat_add:
+    path: /contrat/add
+    defaults: { _controller: FacturationBundle:Contrat:contratAdd }
+    options:
+        expose: true
+    methods: [POST]
+#Modif contrat
+fact_contrat_edit:
+    path: /contrat/edit
+    defaults: { _controller: FacturationBundle:Contrat:contratEdit }
+    options:
+        expose: true
+    methods: [POST]
+#Remove contrat
+fact_contrat_remove:
+    path: /contrat
+    defaults: { _controller: FacturationBundle:Contrat:contratRemove }
+    options:
+        expose: true
+    methods: [DELETE]
+#liste client
+fact_contrat_client_liste:
+    path: /contrat/client-liste
+    defaults: { _controller: FacturationBundle:Contrat:client }
+    options:
+        expose: true
+    methods: [GET]
+#detail contrat
+fact_contrat_detail:
+    path: /contrat/detail/{contrat}
+    defaults: { _controller: FacturationBundle:Contrat:contratDetail }
+    options:
+        expose: true
+    methods: [GET]
+    requirements:
+        contrat: \d+
+#delete contrat fichier
+fact_contrat_fichier_remove:
+    path: /contrat/fichier
+    defaults: { _controller: FacturationBundle:Contrat:contratFichierDelete }
+    options:
+        expose: true
+    methods: [DELETE]
+
+#PARAMETRE ECRITURE
+fact_param_import:
+    path: /param-import
+    defaults: { _controller: FacturationBundle:ParamImport:index }
+    methods: [GET]
+
+fact_param_import_edit:
+    path: /param-import/{prestation}
+    defaults: { _controller: FacturationBundle:ParamImport:edit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        prestation: \d+
+
+fact_param_import_list:
+    path: /param-import-list/{prestation}
+    defaults: { _controller: FacturationBundle:ParamImport:liste }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        prestation: \d+
+
+
+#SAISIE PAR DOSSIER
+facturation_saisie:
+    path: /saisie
+    defaults: { _controller: FacturationBundle:Saisie:index }
+    methods: [GET]
+#Liste mois saisis pour un dossier
+fact_saisie_mois_saisi_dossier:
+    path:     /saisie-mois-dossier/{dossier}/{exercice}
+    defaults: { _controller: FacturationBundle:Saisie:moisSaisiDossier }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        exercice: \d{4}
+#Liste mois saisis pour un client
+fact_saisie_mois_saisi_client:
+    path:     /saisie-mois-client/{client}/{exercice}
+    defaults: { _controller: FacturationBundle:Saisie:moisSaisiClient }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        exercice: \d{4}
+
+#Liste saisie pour un dossier
+#@param mois: mois de saisie (MM-YYYY)
+#@param annee_tarif: annee du tarif à appliquer dans le calcul
+#@param type: affichage mois déjà saisi (1) ou nouveau saisi (0)
+fact_saisie_liste:
+    path: /saisie-liste/{dossier}/{exercice}/{mois}/{annee_tarif}/{type}
+    defaults: { _controller: FacturationBundle:Saisie:saisie, type: 0 }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        exercice: \d{4}
+        mois: \d{2}-\d{4}
+        annee_tarif: \d+
+        type: 0|1
+#Fact Saisie Edit
+fact_saisie_edit:
+    path: /saisie
+    defaults: { _controller: FacturationBundle:Saisie:saisieEdit }
+    methods: [POST]
+    options:
+        expose: true
+
+#FactControle Import Auto: Header
+fact_controle_import_header:
+    path: /controle-import-header/{client}/{exercice}/{mois}/{annee_tarif}
+    defaults: { _controller: FacturationBundle:Saisie:controleImportHeader }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        exercice: \d{4}
+        mois: \d{2}-\d{4}
+        annee_tarif: \d+
+
+fact_controle_import_dossier:
+    path: /controle-import-dossier/{dossier}/{exercice}/{mois}/{annee_tarif}
+    defaults: { _controller: FacturationBundle:Saisie:controleImportDossier }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        exercice: \d{4}
+        mois: \d{2}-\d{4}
+        annee_tarif: \d+
+
+#FACTURATION
+facturation_finale:
+    path: /facturation
+    defaults: { _controller: FacturationBundle:Facturation:index }
+    methods: [GET]
+#Liste saisie d'un cabinet pour un exercice et un mois de saisie
+fact_facturation_finale_liste:
+    path: /facturation/liste/{client}/{mois}/{exercice}/{annee_tarif}/{recalculer}
+    defaults: { _controller: FacturationBundle:Facturation:facturation }
+    methods: [GET]
+    options:
+        expose: true
+    requirements:
+        mois: \d{2}-\d{4}
+        exercice: \d{4}
+        annee_tarif: \d+
+        recalculer: 0|1
+#Export excel facturation
+fact_facturation_finale_export:
+    path: /facturation/export/{client}/{mois}/{exercice}/{annee_tarif}
+    defaults: { _controller: FacturationBundle:Facturation:exportExcel }
+    options:
+        expose: true
+    requirements:
+        mois: \d{2}-\d{4}
+        exercice: \d{4}
+        annee_tarif: \d+
+
+#CLIENTS ASSOCIES
+facturation_client_associe:
+    path: /client-associe
+    defaults: { _controller: FacturationBundle:ClientAssocie:index }
+    methods: [GET]
+    options:
+        expose: true
+#Liste client associés d'un client
+fact_client_associe_liste:
+    path: /client-associe/list/{client}
+    defaults: { _controller: FacturationBundle:ClientAssocie:clientAssocie }
+    methods: [GET]
+    options:
+        expose: true
+#Ajouter client associé
+fact_client_associe_add:
+    path: /client-associe/add/{client}
+    defaults: { _controller: FacturationBundle:ClientAssocie:clientAssocieAdd }
+    methods: [POST]
+    options:
+        expose: true
+#Remove client associé
+fact_client_associe_remove:
+    path: /client-associe
+    defaults: { _controller: FacturationBundle:ClientAssocie:clientAssocieRemove }
+    methods: [DELETE]
+    options:
+        expose: true
+
+#Remise Appliqué par client
+fact_remise_applique:
+    path: /remise-applique/{client}
+    defaults: { _controller: FacturationBundle:ParamGen:remiseApplique }
+    methods: [GET]
+    options:
+        expose: true
+#Edit Remise appliqué
+fact_remise_applique_edit:
+    path: /remise-applique/{client}/{remise}
+    defaults: { _controller: FacturationBundle:ParamGen:remiseAppliqueEdit }
+    methods: [POST]
+    options:
+        expose: true
+    requirements:
+        remise: \d*
+        
+billing_final:
+    path:     /billing-final
+    defaults: { _controller: FacturationBundle:FacturationFinale:index }
+
+billing_final_list:
+    path:     /billing-final-list
+    defaults: { _controller: FacturationBundle:FacturationFinale:billingFinalList }
+    methods: [POST]
+    options:
+        expose: true
+
+billing_final_simulation:
+    path:     /billing-final-simulation
+    defaults: { _controller: FacturationBundle:ParamImport:simulation }
+    methods: [POST]
+    options:
+        expose: true
+
+billing_final_load_param:
+    path:     /billing_final/load-param
+    defaults: { _controller: FacturationBundle:ParamImport:loadParam }
+    options:
+        expose: true
+    methods: [POST]
+
+billing_final_save_param:
+    path:     /billing_final/save-param
+    defaults: { _controller: FacturationBundle:ParamImport:saveParam }
+    options:
+        expose: true
+    methods: [POST]
+
+billing_final_nb_prestation:
+    path:     /billing-final-nb-prestation
+    defaults: { _controller: FacturationBundle:ParamImport:nbPrestation }
+    methods: [POST]
+    options:
+        expose: true
+
+etat_compta:
+    path:     /etat-compta
+    defaults: { _controller: FacturationBundle:ParamImport:etatCompta }
+    methods: [POST]
+    options:
+        expose: true
+
+etat_compta_journaux:
+    path:     /etat-compta-journaux
+    defaults: { _controller: FacturationBundle:ParamImport:journauxParam }
+    methods: [POST]
+    options:
+        expose: true
+
+journal_list:
+    path: /journal-list
+    defaults: { _controller: FacturationBundle:ParamImport:journalList }
+    methods: [GET]
+    options:
+        expose: true
+
+journal_edit:
+    path:    /journal-edit
+    defaults: { _controller: FacturationBundle:ParamImport:journalEdit }
+    options:
+        expose: true
+    methods: [POST]
+
+journal_dossier_param:
+    path: /journal-dossier-param/{client}
+    defaults: { _controller: FacturationBundle:ParamImport:JournalDossierParam }
+    options:
+        expose: true
+
+journal_delete:
+    path: /journal-delete/{journal}
+    defaults: { _controller: FacturationBundle:ParamImport:journalDelete }
+    options:
+        expose: true
+        
+journal_dossier_param_save:
+    path:    /journal-dossier-param-save
+    defaults: { _controller: FacturationBundle:ParamImport:saveJournalDossierType }
+    options:
+        expose: true
+    methods: [POST]
+
+sync_journal_model:
+    path: /sync-journal-model
+    defaults: { _controller: FacturationBundle:ParamImport:syncJournalModel }
+    options:
+        expose: true
+

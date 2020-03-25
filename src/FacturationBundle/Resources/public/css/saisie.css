@@ -1,0 +1,14 @@
+.ui-jqgrid .ui-jqgrid-htable th {
+    height: 30px;
+    padding: 0 2px 0 2px;
+}
+.ui-jqgrid .ui-jqgrid-htable th div {
+    overflow: hidden;
+    position: relative;
+    height: 30px;
+}
+
+#change-type-remise-form .popover {
+    width: 300px;
+    max-width: 500px;
+}

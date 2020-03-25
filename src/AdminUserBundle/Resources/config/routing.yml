@@ -1,0 +1,6 @@
+admin_user_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AdminUserBundle:Default:index }
+admin_user_dashbord:
+    path: /dashbord/parametrage
+    defaults: { _controller: AdminUserBundle:Parametrage:index }

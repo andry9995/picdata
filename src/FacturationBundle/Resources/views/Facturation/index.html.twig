@@ -1,0 +1,78 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/facturation/css/facturation.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/facturation/css/saisie.css') }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/facturation/js/facturation-functions.js') }}"></script>
+    <script src="{{ asset('bundles/facturation/js/facturation.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="col-lg-12">
+        <div class="tabs-container jqgrid-tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#facturation">Facturation finale</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="facturation" class="tab-pane active">
+                    <div id="nb-ligne-container">Nb lignes client : <span id="nb-ligne-client" class="pull-right"></span></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                {{ render(controller('AppBundle:Commun:clients',{'conteneur': 0})) }}
+                            </div>
+                            <div class="col-lg-3">
+                                {{ render(controller('AppBundle:Commun:exercices',{'tous': 0})) }}
+                            </div>
+                            <div class="col-lg-3">
+                                <form id="form-saisi-fini" class="form-horizontal form-select-mois">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label">Cumul au</label>
+                                        <div class="col-lg-7">
+                                            <select id="select-saisi-fini" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-2">
+                                {{ render(controller('FacturationBundle:ParamGen:anneeTarif')) }}
+                            </div>
+                            <div class="col-lg-1">
+                                {#<button class="btn btn-primary">Go</button>#}
+                                <div class="btn-group">
+                                    <button id="btn-facturation" type="button" class="btn btn-primary">Go</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a id="btn-export-excel" href="#"><i class="fa fa-file-excel-o"></i> Exporter en Excel</a></li>
+                                        {#<li class=""><a id="btn-recalculer" href="#"><i class="fa fa-calculator"></i> Recalculer</a></li>#}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <table id="js_facturation" class="js-jqgrid-table"></table>
+                            <div id="pager_facturation"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden">
+        <form id="form-export" method="POST">
+            <input type="hidden" id="colNames" name="colNames">
+            <input type="hidden" id="colModel" name="colModel">
+            <input type="hidden" id="rowData" name="rowData">
+            <input type="hidden" id="footerData" name="footerData">
+            <input type="hidden" id="codePrestation" name="codePrestation">
+        </form>
+    </div>
+{% endblock %}

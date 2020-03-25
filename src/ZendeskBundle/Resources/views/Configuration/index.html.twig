@@ -1,0 +1,157 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}
+    Zendesk - Configuration
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!--<script src="{{ asset('bundles/utilisateur/js/utilisateur-fonctions.js') }}"></script> -->
+    <script src="{{ asset('bundles/zendesk/js/configuration.js') }}"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+
+	<div class="row">
+		<div class="col-lg-12">
+	        <div class="tabs-container">
+	            <ul class="nav nav-tabs">
+	            	<li class="active"><a data-toggle="tab" href="#zendesk-config-mail"> <i class="fa fa-envelope"></i> Mail de support</a></li>
+                    {# <li class=""><a data-toggle="tab" href="#acces-user">Rôle par utilisateur</a></li> #}
+	            </ul>
+	            <div class="tab-content" id="tab-container">
+                    <div id="zendesk-config-mail" class="tab-pane active">
+                    	<div class="panel-body">
+                    		<div class="row">
+                    			<div class="col-lg-6">
+                    				<div class="ibox ibox-shadow">
+                    					<div class="ibox-title">
+                    						<h3>Mail de support Zendesk par client</h3>
+                    					</div>
+                    					<div class="ibox-content">
+                    						<div class="row">
+				                    			<div class="col-lg-12">
+							                        {{ render(controller('AppBundle:Commun:clients', { 'tous': 0, 'attr_id': 'zcm-client', 'label_col': 1, 'select_col': 11})) }}
+				                    			</div>
+				                    		</div>
+				                    		<div class="row">
+				                    			<div class="col-lg-12">
+				                    				<form class="form-horizontal">
+					                                    <div class="form-group" style="margin-bottom: 10px;">
+					                                        <label for="zcm-mail" class="control-label col-lg-2" style="text-align:left; padding-bottom: 5px">
+					                                            <span>Support</span>
+					                                        </label>
+					                                        <div class="col-lg-12">
+
+					                                        	<input type="hidden" name="exist" id="exist" value="0">
+
+					                                       		<div class="row mail-row">
+					                                       			<div class="col-lg-12">
+					                                       				<select id="zcm-mail" class="form-control">
+					                                       					<option value="0">Choisir un email</option>
+					                                       				</select>
+					                                       			</div>
+					                                       		</div>
+					                                       		{# <br> #}
+					                                       		<div class="row mail-input-row hidden">
+					                                       			<div class="col-lg-10">
+					                                            		<input type="mail" class="form-control" id="zcm-mail-input" name="zcm-mail-input" placeholder="Mail de support zendesk">
+					                                       			</div>
+					                                       			<div class="col-lg-2">
+					                                       				<a href="#" class="btn-edit btn btn-primary btn-outline btn-block">
+					                                       					<span><i class="fa fa-pencil"></i></span>
+					                                       				</a>
+					                                       			</div>
+					                                       		</div>
+
+					                                        </div>
+					                                    </div>
+					                                </form>
+				                    			</div>
+				                    		</div>
+				                    		<div class="row">
+				                    			<div class="col-lg-12">
+				                    				{# <br> #}
+							            			<button type="button" class="zcm-save btn btn-block btn-outline btn-primary">
+							            				Enregistrer
+							            			</button>
+				                    			</div>
+				                    		</div>
+                    					</div>
+                    				</div>
+                    			</div>
+                    		</div>
+                    	</div>
+                    </div>
+                    {# <div id="acces-user" class="tab-pane">
+                    	<div class="panel-body">
+                			<div class="row">
+								<div class="col-lg-12">
+									{{ include('ZendeskBundle:Configuration:filtre.html.twig')}}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="ibox ibox-shadow">
+										<div class="ibox-content">
+											<div class="row">
+												<div class="col-lg-12">
+						                            <h4 class="bg-info padding-6">Listes des utilisateurs</h4>
+						                            <div style="width:100%; display: flex;flex-direction: row-reverse; padding: 0 5px 5px;">
+						                                <input id="user-search" type="search" placeholder="Chercher" style="width: 250px" class="form-control">
+						                            </div>
+						                            <div id="user-list" style="overflow-y: scroll;">
+						                                <ul class="list-group">
+						                                </ul>
+						                            </div>
+						                        </div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6 configuration-form">
+									<div class="ibox ibox-shadow">
+										<div class="ibox-title">
+											<h3>
+												<i class="fa fa-user"></i>
+												Configuration des rôles
+											</h3>
+										</div>
+										<div class="ibox-content">
+											<form role="form">
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="form-group">
+															<label>Rôle Zendesk</label>
+															<select class="form-control">
+																<option>Aucun</option>
+																<option>Admin</option>
+																<option>Agent</option>
+																<option>Responsable</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="form-group">
+															<button class="btn btn-primary form-control">Enregistrer</button>
+														</div>
+													</div> 
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+	                    	</div>
+	                    </div>
+		            </div> #}
+		        </div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

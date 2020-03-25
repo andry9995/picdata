@@ -1,0 +1,73 @@
+general_dashboard_homepage:
+    path:     /dashboard/{type}
+    defaults: { _controller: GeneralBundle:Dashboard:index, type: 0 }
+
+dashboard_ajax:
+    path:     /dashboard-ajax
+    defaults: { _controller: GeneralBundle:Dashboard:dashboardAjax}
+    methods: [POST]
+    options:
+        expose: true
+
+dashboard_dossiers_actifs:
+  path: /dashboard-dossier-actif/{client}/{exercice}
+  defaults: { _controller: 'AppBundle:Commun:getDossiersActifByClient' }
+  methods: [GET]
+  options:
+    expose: true
+
+general_details:
+    path:     /general
+    defaults: { _controller: GeneralBundle:General:index }
+
+
+general_images:
+    path:   /general-images/{client}/{dossier}/{exercice}/{periode}/{perioddeb}/{periodfin}/{typedate}/{analyse}/{tab}/{filtre_sd}/{operateur_sd}/{value_sd}/{site}
+    defaults: { _controller: 'GeneralBundle:General:generalImages', filtre_sd: '', operateur_sd: '', value_sd: '' }
+    methods: [GET]
+    options:
+        expose: true
+
+general_repartitions:
+    path:     /general-repartitions/{client}/{exercice}/{site}
+    defaults: { _controller: GeneralBundle:General:repartions}
+    methods: [GET]
+    options:
+        expose: true
+
+general_details_export:
+    path:   /general-details-exp
+    defaults:   { _controller: GeneralBundle:General:exportDetails}
+    methods:    [GET]
+
+dashboard_get_info_tache:
+    path:     /dashboard-get-info-tache
+    defaults: { _controller: GeneralBundle:Dashboard:dashboardGetInfoTache}
+    methods: [POST]
+    options:
+        expose: true 
+
+dashboard_ajax_default:
+    path:     /dashboard-default
+    defaults: { _controller: GeneralBundle:Dashboard:dashboardDefault}
+    methods: [GET]
+    options:
+        expose: true
+
+dashboard_evolution_dossier:
+    path:     /dashboard-evolution-dossier
+    defaults: { _controller: GeneralBundle:EvolutionDossier:index}
+    methods: [GET]
+    options:
+        expose: true
+
+dashboard_evolution:
+    path:     /dashboard-evolution
+    defaults: { _controller: GeneralBundle:EvolutionDossier:evolution}
+    methods: [POST]
+    options:
+        expose: true 
+
+dashboard_calendrier_tache:
+    path:     /production/calendrier-tache/{type}
+    defaults: { _controller: GeneralBundle:Dashboard:index, type: 1 }

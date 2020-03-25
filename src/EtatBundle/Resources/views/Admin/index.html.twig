@@ -1,0 +1,65 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% if etat == 0 %}
+    {% set titre = 'financier' %}
+{% elseif etat == 1 %}
+    {% set titre = 'de gestion' %}
+{% else %}
+    {% set titre = ' ' %}
+{% endif %}
+{% block titre %}Admin etat {{ titre }}{% endblock %}
+
+{% block contenu_droite %}
+    {{ include('EtatBundle:Admin:filtre.html.twig',{'adminGranted':adminGranted, 'etat':etat}) }}
+    <span id="js_add_etat"></span>
+    <input id="js_id_etat" type="hidden" value="{{ etat }}">
+
+    <div class="tabs-container" id="id_groups_contener">
+        <ul class="nav nav-tabs">
+            {% set index = 0 %}
+            {% for et in etats %}
+                <li class="{{ (index == 0) ? 'active' : '' }} js_li_tab" data-id="{{ et.id|boost }}"><a data-toggle="tab" href="#etat_{{ index }}">{{ et.libelle }}</a></li>
+                {% set index = index + 1 %}
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% set index = 0 %}
+            {% for et in etats %}
+                <div id="etat_{{ index }}" class="tab-pane {{ (index == 0) ? 'active' : '' }}" data-id="{{ et.id|boost }}">
+                    <div class="panel-body"></div>
+                </div>
+                {% set index = index + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {# resizable table #}
+    <script src="{{ asset('js/plugins/tableResizable/jquery.resizableColumns.min.js') }}"></script>
+    {# Color picker #}
+    <script src="{{ asset('js/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>
+    {# menu context #}
+    <script src="{{ asset('js/plugins/jquery-menu-context/jquery.contextMenu.js') }}"></script>
+
+    <script src="{{ asset('bundles/app/js/commun.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/indicateur/js/indicateurAdmin/indicateur.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/indicateur/js/indicateurAdmin/cellule.js') }}?v=2"></script>
+    {#<script src="{{ asset('bundles/etat/js/admin/control.js') }}"></script>#}
+    <script src="{{ asset('bundles/etat/js/admin/filtre.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/etat/js/admin/style.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/etat/js/admin/font.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/admin/periode.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/admin/index.js') }}?v=1.0"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/indicateur/css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/tableResizable/jquery.resizableColumns.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jquery-menu-context/jquery.contextMenu.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/etat/css/control.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/etat/css/font.css') }}">
+{% endblock %}

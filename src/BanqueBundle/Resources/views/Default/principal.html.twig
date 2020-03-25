@@ -1,0 +1,44 @@
+{{ include('AppBundle:Commun:page-en-cours.html.twig') }}
+
+<div class="row" id="js_principal_box">
+    <div class="col-lg-3">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+                <h5>Relevé de banque (mois en cours)</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins" id="js_releve_mois_encours"></h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+                <h5>Pièces à affecter</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins" id="js_nb_piece_affecter"></h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox ibox-shadow">
+            <div class="ibox-title">
+                <h5>Lignes à valider</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins" id="js_nb_ligne_valider"></h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+</div>

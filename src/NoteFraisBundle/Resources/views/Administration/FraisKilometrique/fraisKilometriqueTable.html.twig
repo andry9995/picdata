@@ -1,0 +1,84 @@
+<thead>
+<tr>
+    <th>Puissance Fiscale</th>
+    <th>Jusqu'à 5 000 km</th>
+    <th>De 5 000 à 20 000 km</th>
+    <th>Au delà de 20 000km</th>
+</tr>
+</thead>
+
+<tbody>
+{% for frais in fraisKms %}
+    <tr>
+
+        {% set formule1 = '' %}
+
+        {% if frais.fois1 is not null %}
+            {% if frais.fois1 != '' %}
+                {% set formule1 = 'Distance * '~ frais.fois1 %}
+            {% endif %}
+        {% endif %}
+
+        {% if frais.plus1 is not null %}
+            {% if frais.plus1 != '' %}
+                {% if formule1 != '' %}
+                    {% set formule1 = '(Distance * ' ~ frais.fois1 ~ ') + ' ~ frais.plus1 %}
+                {% else %}
+                    {% set formule1 = 'Distance + ' ~ frais.plus1 %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        {% set formule2 = '' %}
+
+        {% if frais.fois2 is not null %}
+            {% if frais.fois2 != '' %}
+                {% set formule2 = 'Distance * '~ frais.fois2 %}
+            {% endif %}
+        {% endif %}
+
+        {% if frais.plus2 is not null %}
+            {% if frais.plus2 != '' %}
+                {% if formule2 != '' %}
+                    {% set formule2 = '(Distance * ' ~ frais.fois2 ~ ') + ' ~ frais.plus2 %}
+                {% else %}
+                    {% set formule2 = 'Distance + ' ~ frais.plus2 %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        {% set formule3 = '' %}
+
+        {% if frais.fois3 is not null %}
+            {% if frais.fois3 != '' %}
+                {% set formule3 = 'Distance * '~ frais.fois3 %}
+            {% endif %}
+        {% endif %}
+
+        {% if frais.plus3 is not null %}
+            {% if frais.plus3 != '' %}
+                {% if formule3 != '' %}
+                    {% set formule3 = '(Distance * ' ~ frais.fois3 ~ ') + ' ~ frais.plus3 %}
+                {% else %}
+                    {% set formule3 = 'Distance + ' ~ frais.plus3 %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        <td>{{ frais.libelle }}</td>
+        <td>{{ formule1 }}</td>
+        <td>{{ formule2 }}</td>
+        <td>{{ formule3 }}</td>
+    </tr>
+{% endfor %}
+
+</tbody>
+
+
+<tfoot>
+    <tr>
+        <td colspan="12">
+            <ul class="pagination pull-right"></ul>
+        </td>
+    </tr>
+</tfoot>

@@ -1,0 +1,31 @@
+.dz-filename
+{
+    overflow: auto !important;
+}
+
+.dz-message
+{
+    top: 30%!important;
+    /*width: 60%!important;*/
+    /*position: relative!important;
+    width: 80%!important;
+    left: 30%!important;*/
+    /*text-align: center!important;*/
+}
+.dz-message span
+{
+    font-size: 20px!important;
+}
+
+.file-drop-zone
+{
+    overflow: auto!important;
+}
+.fileinput-remove, .kv-file-upload, #div-input-image .file-caption-main .fileinput-upload
+{
+    display: none!important;
+}
+.file-preview
+{
+    background: #ffffff!important;
+}

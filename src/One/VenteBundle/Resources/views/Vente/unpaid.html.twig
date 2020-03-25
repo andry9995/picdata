@@ -1,0 +1,25 @@
+{% for facture in factures %}
+    {% set total = venteDetails[facture.id]['ttc'] %}
+    {% set paid = paidAmounts[facture.id] %}
+    {% set unpaid = total - paid %}
+    {% if total != 0 %}
+        {% set percent = (unpaid * 100)/total %}
+    {% else %}
+        {% set percent = 0 %}
+    {% endif %}
+    <tr id="{{ facture.id }}" class="item-selectable" onclick="selectItem(this); getSelectedFacture(this);">
+        <td>{{ facture.tiers.intitule }}</td>
+        <td>{{ facture.code }}</td>
+        <td>{{ facture.dateFacture|date("d/m/Y") }}</td>
+        <td>{{ total|number_format(2, ',', ' ') }}</td>
+        <td>{{ paid|number_format(2, ',', ' ') }}</td>
+        <td>{{ unpaid|number_format(2, ',', ' ') }}</td>
+        <td>{{ percent|number_format(2, ',', ' ') }}</td>
+        <td></td>
+        <td>{% if facture.oneProjet %}{{ facture.oneProjet.nom }}{% endif %}</td>
+        <input type="hidden" class="total" value="{{ total }}">
+        <input type="hidden" class="paid" value="{{ paid }}">
+        <input type="hidden" class="unpaid" value="{{ unpaid }}">
+        <input type="hidden" class="percent" value="{{ percent }}">
+    </tr>
+{% endfor %}

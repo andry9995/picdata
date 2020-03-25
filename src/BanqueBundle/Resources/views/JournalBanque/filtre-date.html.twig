@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="radio radio-info radio-inline">
+            <input type="radio" id="radio-filtre-0" value="0" name="radio-type-filtre" {{ (type == 0) ? 'checked' : '' }}>
+            <label for="radio-filtre-0">Date&nbsp;Op&eacute;ration</label>
+        </div>
+        <div class="radio radio-info radio-inline">
+            <input type="radio" id="radio-filtre-1" value="1" name="radio-type-filtre" {{ (type == 1) ? 'checked' : '' }}>
+            <label for="radio-filtre-1">Date&nbsp;d&apos;envoi</label>
+        </div>
+        <div class="radio radio-info radio-inline">
+            <input type="radio" id="radio-filtre-2" value="2" name="radio-type-filtre" {{ (type == 2) ? 'checked' : '' }}>
+            <label for="radio-filtre-2">Enlever&nbsp;filtre</label>
+        </div>
+    </div>
+    <div class="col-lg-12" style="margin-top: 10px!important;">
+        <div class="form-group" id="id_date_range">
+            <div class="input-daterange input-group" id="datepicker">
+                <input type="text" id="id_date_start" class="input-sm form-control" value="{{ start ? start|date('d/m/Y') : '' }}">
+                <span class="input-group-addon">&Agrave;</span>
+                <input type="text" id="id_date_end" class="input-sm form-control" value="{{ end ? end|date('d/m/Y') : '' }}">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 text-right">
+        <span class="btn btn-white btn-sm js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+        <span class="btn btn-primary btn-sm" id="id_valider_filtre"><i class="fa fa-filter" aria-hidden="true"></i>&nbsp;Filtrer</span>
+    </div>
+</div>

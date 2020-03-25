@@ -1,0 +1,161 @@
+<input type="hidden" id="notification-dossier-id" name="notification-dossier-id">
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label for="rappel-periodicite" class="control-label col-lg-4">Périodicité envoi</label>
+            <div class="col-lg-8">
+                {% set periode = (notification is null)? '' : notification.periode %}
+
+                <select class="form-control" id="rappel-periodicite" name="rappel-periodicite">
+                    <option value="" ></option>
+                    <option value="P" {{ (periode|upper == 'P' ? 'selected' : '')  }}>Ponctuelle</option>
+                    <option value="M" {{ (periode|upper == 'M' ? 'selected' : '')  }}>Mensuelle</option>
+                    <option value="T" {{ (periode|upper == 'T' ? 'selected' : '')  }}>Trimestrielle</option>
+                    <option value="S" {{ (periode|upper == 'S' ? 'selected' : '')  }}>Semestrielle</option>
+                    <option value="A" {{ (periode|upper == 'A' ? 'selected' : '')  }}>Annuelle</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label for="rappel-mois-plus" class="control-label col-lg-4">Mois +</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="number" id="rappel-mois-plus" name="rappel-mois-plus"
+                       value="{{ (tbimageperiode is null) ? '' : tbimageperiode.moisPlus }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label for="rappel-jour" class="control-label col-lg-4">Jour</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="number" id="rappel-jour" name="rappel-jour"
+                       value="{{ (tbimageperiode is null) ? '' : tbimageperiode.jour }}">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label for="rappel-debut" class="control-label col-lg-4">Début</label>
+            <div class="col-lg-8">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" class="form-control"  id="rappel-debut" name="rappel-debut"
+                           value="{{ (notification is null) ? '' : notification.debutEnvoi|date('d/m/Y') }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label for="rappel-categories" class="control-label col-lg-4">Catégories</label>
+            <div class="col-lg-8">
+                <select class="form-control chosen-select" id="rappel-categories" multiple name="rappel-categories[]">
+                    <option value=""></option>
+                    {% for categorie in categories %}
+                        {% set selected = (categorie.id in categorielist) ? 'selected' : '' %}
+                        <option value="{{ categorie.id}}" {{ selected }} >{{ categorie.libelleNew }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label for="rappel-destinataire" class="control-label col-lg-4">Destinataires</label>
+            <div class="col-lg-8">
+                <input type="text" class="form-control"  id="rappel-destinataire" name="rappel-destinataire"
+                       value="{{ (notification is null) ? '' : notification.destinataire }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox ibox-shadow" style="border-color: black;">
+            <div class="ibox-title">
+                <h5>Contenu du mail</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="rappel-objet" class="control-label col-lg-2">Objet</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control"  id="rappel-objet" name="rappel-objet"
+                                       value="{{ (notification is null) ? '' : notification.objet }}">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="text-right">
+                            <button class="btn btn-bitbucket btn-white btn-xs" id="rappel-frequence">
+                                <i class="fa fa-clock-o"></i>
+                                Inserer fréquence d'envoi
+                            </button>
+
+                            <button class="btn btn-bitbucket btn-white btn-xs" id="rappel-default-content">
+                                <i class="fa fa-file-text-o"></i>
+                                Utiliser le contenu par défaut
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <textarea id="rappel-email-content" class="form-control" style="height:200px;" name="rappel-content">
+                        {{ (notification is null) ? '' : notification.contenu }}
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox ibox-shadow" style="border-color: black;">
+            <div class="ibox-title">
+                <h5>Historique</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <table id="table-rappel-historique"></table>
+                <div id="pager-rappel-historique"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="checkbox checkbox-inline checkbox-danger pull-right" style="margin-right:10px;text-align:left;">
+            <input id="check-stop-send" type="checkbox" name="check-stop-send" {{ (stopenvoi == true) ? 'checked' : '' }}>
+            <label for="check-stop-send">
+                <strong class="text-danger">STOP ENVOI</strong>
+            </label>
+        </div>
+    </div>
+</div>
+
+

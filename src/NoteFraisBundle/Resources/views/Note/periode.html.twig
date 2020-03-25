@@ -1,0 +1,50 @@
+{#<div class="row">#}
+    {#<div class="col-sm-12">#}
+        {#<table class="table table-bordered no-margin table-no-padding table-periode-annee pointer">#}
+            {#<thead>#}
+                {#<tr>#}
+                    {#{% for exercice in exericices %}#}
+                        {#<th class="text-center {{ (note is null)? '' : (note.annee == exercice) ? 'active' :  '' }}" data-value="{{ exercice }}">{{ exercice }}</th>#}
+                    {#{% endfor %}#}
+                {#</tr>#}
+            {#</thead>#}
+        {#</table>#}
+    {#</div>#}
+{#</div>#}
+<div class="row">
+    <div class="col-sm-12">
+        {{ include('NoteFraisBundle:Default:exercice.html.twig') }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12" style="margin-top:10px!important">
+
+
+
+        <table class="table table-bordered no-margin table-no-padding table-periode pointer">
+            <tbody>
+                <tr>
+                    <td class="text-center {{ (1 in mois) ? "active":"" }}" data-value="1">JAN</td>
+                    <td class="text-center {{ (2 in mois) ? "active":"" }}" data-value="2">FEV</td>
+                    <td class="text-center {{ (3 in mois) ? "active":"" }}" data-value="3">MAR</td>
+                </tr>
+                <tr>
+                    <td class="text-center {{ (4 in mois) ? "active":"" }}" data-value="4">AVR</td>
+                    <td class="text-center {{ (5 in mois) ? "active":"" }}" data-value="5">MAI</td>
+                    <td class="text-center {{ (6 in mois) ? "active":"" }}" data-value="6">JUI</td>
+                </tr>
+                <tr>
+                    <td class="text-center {{ (7 in mois) ? "active":"" }}" data-value="7">JUL</td>
+                    <td class="text-center {{ (8 in mois) ? "active":"" }}" data-value="8">AOU</td>
+                    <td class="text-center {{ (9 in mois) ? "active":"" }}" data-value="9">SEP</td>
+                </tr>
+                <tr>
+                    <td class="text-center {{ (10 in mois) ? "active":"" }}" data-value="10">OCT</td>
+                    <td class="text-center {{ (11 in mois) ? "active":"" }}" data-value="11">NOV</td>
+                    <td class="text-center {{ (12 in mois) ? "active":"" }}" data-value="12">DEC</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

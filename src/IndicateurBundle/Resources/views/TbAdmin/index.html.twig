@@ -1,0 +1,84 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% if affichage == 0 %}
+    {% set titre = 'Synthèse Ratios' %}
+{% else %}
+    {% set titre = 'Scoring' %}
+{% endif %}
+
+{% block titre %}Admin - {{ titre }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('twemoji-awesome/dist/twemoji-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/plugins/jquery-menu-context/jquery.contextMenu.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/indicateur/css/tb/admin/index.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/plugins/jquery-menu-context/jquery.contextMenu.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/admin/decision.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/admin/infoperdos.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/admin/indicateur_tb_domaine.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/tb/admin/index.js') }}"></script>
+{% endblock %}
+
+{% block contenu_droite %}
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-lg-4">
+                <div>
+                    <div class="btn-group">
+                        <span data-toggle="dropdown" class="btn btn-sm btn-white dropdown-toggle"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Ajouter</span>
+                        <ul class="dropdown-menu">
+                            <li id="id_show_add_domaine"><a href="#">Domaine</a></li>
+                            <li class="js_add_in_infoperdos"><a href="#">Information de dossier</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="js_id_container_indicateur"></div>
+            </div>
+            <div class="col-lg-8">
+                <div class="panel panel-default">
+                    <div class="panel-body" id="js_id_container_indicateur_etail">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input id="id_tb_type" type="hidden" value="{{ affichage }}">
+
+    <div class="hidden" id="js_id_indicateur_add_hidden">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Nom</label>
+                <div class="col-lg-10">
+                    <input type="text" placeholder="Nom" class="form-control js_cl_indicateur_libelle">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12 text-right">
+                    <span class="btn btn-sm btn-primary js_cl_add_indicateur"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden" id="js_id_indicateur_tb_add_hidden">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Nom</label>
+                <div class="col-lg-10">
+                    <input type="text" placeholder="Nom" class="form-control js_cl_indicateur_tb_nom">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12 text-right">
+                    <span class="btn btn-sm btn-primary js_cl_add_indicateur_tb"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

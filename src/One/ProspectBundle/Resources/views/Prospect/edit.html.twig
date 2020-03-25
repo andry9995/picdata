@@ -1,0 +1,411 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadShowProspect({{ prospect.id }});"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Edition Prospect</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="prospect-form">
+            <input type="hidden" id="id" name="id" value="{{ prospect.id }}">
+            <div class="text-center" style="margin-bottom: 20px;">
+                <div class="radio radio-inline">
+                    <input type="radio" id="isclient" value="0" name="isprospect"
+                           {% if prospect.type == 1 %}checked{% endif %}>
+                    <label for="isclient">Client</label>
+                </div>
+                <div class="radio radio-inline" style="margin-right: 50px" >
+                    <input type="radio" id="isprospect" value="1" name="isprospect" {{ (prospect.type  == 1) ? 'disabled' : '' }} {% if prospect.type == 4 %}checked{% endif %}>
+                    <label for="isprospect">Prospect</label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="prospect-type-entreprise" value="2" name="prospect-type"
+                           {% if prospect.particulierEntreprise == 2 %}checked{% endif %}>
+                    <label for="prospect-type-entreprise">Entreprise</label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="prospect-type-particulier" value="1" name="prospect-type" {% if prospect.particulierEntreprise == 1 %}checked{% endif %}>
+                    <label for="prospect-type-particulier">Particulier</label>
+                </div>
+            </div>
+
+            <div class="hidden">
+                <input type="text" class="form-control" id="id-dossier"  name="id-dossier">
+            </div>
+
+
+            <div class="entreprise-group {% if prospect.particulierEntreprise == 1 %}hidden{% endif %}">
+                <div class="form-group">
+                    <label for="nom-entreprise" class="col-md-4 control-label">Nom de l'entreprise*</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="nom-entreprise"  name="nom-entreprise"
+                               placeholder="nom de l'entreprise" value="{{ prospect.nomEntreprise }}">
+                    </div>
+                </div>
+            </div>
+            <div class="particulier-group {% if prospect.particulierEntreprise == 2 %}hidden{% endif %}">
+                <div class="form-group">
+                    <label for="nom" class="col-md-4 control-label">Nom*</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="nom" name="nom" placeholder="nom" value="{{ prospect.nom }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="prenom" class="col-md-4 control-label">Prénom</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="prénom" value="{{ prospect.prenom }}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-md-4 control-label">Email</label>
+                <div class="col-md-6">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="email" value="{{ prospect.email }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="telephone" class="col-md-4 control-label">Téléphone</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="telephone" name="telephone" placeholder="téléphone" value="{{ prospect.telephone }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="telephone" class="col-md-4 control-label">Skype</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="skype" name="skype" placeholder="skype" value="{{ prospect.skype }}">
+                </div>
+            </div>
+
+
+            {% set origineId = (prospect.oneProspectOrigine is null) ? -1 : prospect.oneProspectOrigine.id %}
+            {% set origineCode = (prospect.oneProspectOrigine is null) ? '' : prospect.oneProspectOrigine.code %}
+
+            <div class="form-group">
+                <label for="origine" class="col-md-4 control-label">Origine</label>
+                <div class="col-md-3">
+
+
+                    <select class="form-control" id="origine" name="origine" placeholder="origine" onchange="setRecommandation()">
+                        <option value="-1"></option>
+                        {% for origine in origines %}
+                            <option value="{{ origine.id }}" data-code="{{ origine.code }}" {{ (origine.id == origineId) ? 'selected':'' }}>{{ origine.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group recommandation {{ (origineCode != 'CODE_RECOMMANDATION' ? 'hidden' : '') }}">
+                <label for="nom-recommandation" class="col-md-4 control-label">Nom Recommandation</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="nom-recommandation" name="nom-recommandation"
+                           placeholder="Nom" value="{{ (recommandation is null) ? '' : (recommandation.nom) }}">
+                </div>
+            </div>
+
+            <div class="form-group recommandation {{ (origineCode != 'CODE_RECOMMANDATION' ? 'hidden' : '') }}">
+                <label for="prenom-recommandation" class="col-md-4 control-label">Prénom Recommandation</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="prenom-recommandation" name="prenom-recommandation"
+                           placeholder="prenom-recommandation" value="{{ (recommandation is null) ? '' : (recommandation.prenom) }}">
+                </div>
+            </div>
+
+            <div class="form-group recommandation {{ (origineCode != 'CODE_RECOMMANDATION' ? 'hidden' : '') }}">
+                <label for="societe-recommandation" class="col-md-4 control-label">Société Recommandation</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="societe-recommandation" name="societe-recommandation"
+                           placeholder="societe" value="{{ (recommandation is null) ? '' : (recommandation.societe) }}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="date-premier-contact" class="col-md-4 control-label">Date de première contact</label>
+                <div class="col-md-3 input-group date" style="padding-left: 15px;padding-right: 15px;">
+                    <input type="text" class="form-control datepicker" id="date-premier-contact" name="date-premier-contact"
+                           placeholder="Date première contact" value="{{ (prospect is null) ? '' : (prospect.premierContact is null) ? '' : (prospect.premierContact|date('d/m/Y')) }}" style="border-color: rgb(229, 230, 231);">
+                    <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="adresse-facturation-1" class="col-md-4 control-label">Adresse
+                    Facturation</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="adresse-facturation-1" name="adresse-facturation-1"
+                           placeholder="ligne 1" value="{{ prospect.adresseFacturation1 }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-4">
+                    <input type="text" class="form-control" id="adresse-facturation-2" name="adresse-facturation-2"
+                           placeholder="ligne 2" value="{{ prospect.adresseFacturation2 }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-4">
+                    <input type="text" class="form-control" id="ville-facturation" name="ville-facturation" placeholder="ville" value="{{ prospect.villeFacturation }}">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="code-postal-facturation" name="code-postal-facturation"
+                           placeholder="code postal" value="{{ prospect.codePostalFacturation }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-4">
+                    <select class="form-control" id="pays-facturation" name="pays-facturation" placeholder="pays">
+                        {% set paysId = (prospect.paysFacturation is not null) ? prospect.paysFacturation.id : -1%}
+                        <option></option>
+
+                        {% for country in countries %}
+
+                            {% if paysId == -1 %}
+                                {% if country.alpha2 == 'FR' %}
+                                    {% set paysId = country.id %}
+                                {% endif %}
+                            {% endif %}
+                            <option value="{{ country.id}}" {{ (country.id == paysId) ? 'selected' : '' }}>{{ country.nom }}</option>
+
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="adresse-livraison-identique" class="col-md-4 control-label">Adresse de livraison
+                    identique</label>
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <input id="adresse-livraison-identique" name="adresse-livraison-identique" type="checkbox" checked>
+                        <label></label>
+                    </div>
+                </div>
+            </div>
+            <div class="adresse-livraison-group hidden">
+                <div class="form-group">
+                    <label for="adresse-livraison-1" class="col-md-4 control-label">Adresse
+                        Facturation</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="adresse-livraison-1" name="adresse-livraison-1"
+                               placeholder="ligne 1" value="{{ prospect.adresseLivraison1 }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="adresse-livraison-2" name="adresse-livraison-2"
+                               placeholder="ligne 2" value="{{ prospect.adresseLivraison2 }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3 col-md-offset-4">
+                        <input type="text" class="form-control" id="ville-livraison" name="ville-livraison" placeholder="ville" value="{{ prospect.villeLivraison }}">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="code-postal-livraison" name="code-postal-livraison"
+                               placeholder="code postal" value="{{ prospect.codePostalLivraison }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3 col-md-offset-4">
+                        <select class="form-control" id="pays-livraison" name="pays-livraison" placeholder="pays">
+                            {% for country in countries %}
+                                {#<option value="{{ country.id }}" {% if country.id == prospect.paysLivraison.id %}selected="selected"{% endif %}>{{ country.nom }}</option>#}
+                                <option value="{{ country.id }}" {% if country.alpha2 == 'FR' %}selected="selected"{% endif %}>{{ country.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="site-web" class="col-md-4 control-label">Site web</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="site-web" name="site-web" placeholder="site web" value="{{ prospect.siteWeb }}">
+                </div>
+            </div>
+                
+            <hr />
+            <label class="control-label">Contacts</label>
+            <div id="contact-row">
+                <div class="contact-list">
+                    {% if contacts|length > 0 %}
+                        {% for contact in contacts %}
+                            {% set classname = contact.nom %}
+                            {% if contact.prenom != '' %}
+                                {% set classname = contact.prenom ~ ' ' ~ contact.nom %}
+                            {% endif %}
+                            {% set classname = classname|lower|replace(' ', '-') %}
+                            <div class="row {{ contact.id~'now'|date('U') }}">
+                                {% set paysId = (contact.pays is null) ? -1 : contact.pays.id %}
+
+                                {#<input type="hidden" class="serialized" name="contacts[]" value="{{ 'id='~contact.id~'&nom='~contact.nom~'&prenom='~contact.prenom~'&email='~contact.email~'&tel-portable='~contact.telPortable~'&tel-pro='~contact.telPro~'&tel-perso='~contact.telPerso~'&adresse-1='~contact.adresse1~'&adresse-2='~contact.adresse2~'&ville='~contact.ville~'&code-postal='~contact.codePostal~'&service='~contact.service~'&fonction='~contact.fonction~'&pays='~contact.onePays.id }}" />#}
+                                <input type="hidden" class="serialized" name="contacts[]" value="{{ 'id='~contact.id~'&nom='~contact.nom~'&prenom='~contact.prenom~'&email='~contact.email~'&tel-portable='~contact.telPortable~'&tel-pro='~contact.telPro~'&tel-perso='~contact.telPerso~'&adresse-1='~contact.adresse1~'&adresse-2='~contact.adresse2~'&ville='~contact.ville~'&code-postal='~contact.codePostal~'&service='~contact.service~'&fonction='~contact.fonction~'&pays='~paysId }}" />
+                                <div class="col-sm-3">
+                                    {% if contact.prenom != '' %}{{ contact.prenom ~ ' ' }}{% endif %}{{ contact.nom }}
+                                </div>
+                                <div class="col-sm-3">
+                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                    {% if contact.email != '' %}
+                                        {{ ' ' ~ contact.email }}
+                                    {% else %}
+                                        {{ " Pas d'email" }}
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3">
+                                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                    {% if contact.telPortable != '' %}
+                                        {{ ' ' ~ contact.telPortable }}
+                                    {% elseif contact.telPro != '' %}
+                                        {{ ' ' ~ contact.telPro }}
+                                    {% elseif contact.telPerso != '' %}
+                                        {{ ' ' ~ contact.telPerso }}
+                                    {% else %}
+                                        {{ " Pas de téléphone" }}
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3"><div class="pull-right">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" onclick="loadEditContactClient('{{ contact.id~'now'|date('U') }}');"></span> <span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="removeContactClient('{{ contact.id~'now'|date('U') }}');"></span></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <button type="button" class="btn btn-default new-contact" onclick="loadNewContactClient();">Nouveau contact</button>
+            </div>
+            
+            <hr />
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Avancé</span>
+            <div class="advanced-group hidden">
+                <div class="form-group">
+                    <label for="qualification" class="col-md-4 control-label">Qualification</label>
+                    <div class="col-md-3">
+                        <select class="form-control" id="qualification" name="qualification" placeholder="Qualification">
+                            {% for qualification in qualifications %}
+                                <option value="{{ qualification.id }}" {% if qualification.id == prospect.oneQualification.id %}selected="selected"{% endif %}>{{ qualification.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reglement" class="col-md-4 control-label">Règlement</label>
+                    <div class="col-md-3">
+                        <select class="form-control" id="reglement" name="reglement" placeholder="Règlement">
+                            {% for reglement in reglements %}
+                                <option value="{{ reglement.id }}" {% if reglement.id == prospect.oneReglement.id %}selected="selected"{% endif %}>{{ reglement.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="famille-prix" class="col-md-4 control-label">Famille de prix</label>
+                    <div class="col-md-3">
+                        <select class="form-control" id="famille-prix" name="famille-prix" placeholder="">
+                            {% for pricefamily in pricefamilies %}
+                                <option value="{{ pricefamily.id }}" {% if pricefamily.id == prospect.oneFamillePrix.id %}selected="selected"{% endif %}>{{ pricefamily.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                {#<div class="form-group">
+                    <label for="tva-taux" class="col-md-4 control-label">TVA</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <select class="form-control" id="tva-taux" name="tva-taux" placeholder="">
+                            {% for taxe in taxes %}
+                                <option value="{{ taxe.id }}" {% if taxe.id == prospect.tauxTva.id %}selected="selected"{% endif %}>{{ taxe.taux }}%</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="tva-prioritaire" class="col-md-4 control-label">TVA prioritaire sur celle du produit</label>
+                    <div class="col-md-3 col-sm-8 col-xs-8">
+                        <div class="checkbox">
+                            <input id="tva-prioritaire" name="tva-prioritaire" type="checkbox" {% if prospect.tvaPrioritaire == 1 %}checked{% endif %} {% if prospect.tauxTva.id == 1 %}disabled{% endif %}>
+                            <label></label>
+                        </div>
+                    </div>
+                </div>#}
+                <hr />
+                <div class="form-group">
+                    <label for="numero-client" class="col-md-4 control-label">Numéro client</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="numero-client" name="numero-client" placeholder="numéro client" value="{{ prospect.numeroClient }}">
+                    </div>
+                </div>
+                <div class="entreprise-group {% if prospect.type == 1 %}hidden{% endif %}">
+                    <div class="form-group">
+                        <label for="nb-salarie" class="col-md-4 control-label">Nombre de salariés</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="nb-salarie" name="nb-salarie" placeholder="nombre de salariés" value="{{ prospect.nbSalarie }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="activite" class="col-md-4 control-label">Activités</label>
+                        <div class="col-md-3">
+                            <select class="form-control" id="activite" name="activite" placeholder="">
+                                {% for activite in activites %}
+                                    <option value="{{ activite.id }}" {% if activite.id == prospect.oneActivite.id %}selected="selected"{% endif %}>{{ activite.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="forme-juridique" class="col-md-4 control-label">Forme juridique</label>
+                        <div class="col-md-3">
+                            <select class="form-control" id="forme-juridique" name="forme-juridique" placeholder="">
+                                {% for legalform in legalforms %}
+                                    {% if prospect.formeJuridique %}
+                                        <option value="{{ legalform.id }}" {% if legalform.id == prospect.formeJuridique.id %}selected="selected"{% endif %}>{{ legalform.libelle }}</option>
+                                    {% else %}
+                                        <option value="{{ legalform.id }}">{{ legalform.libelle }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="emailing-autorise" class="col-md-4 control-label">Emailing autorisé</label>
+                    <div class="col-md-3">
+                        <div class="checkbox">
+                            <input id="emailing-autorise" name="emailing-autorise" type="checkbox" {% if prospect.emailingAutorise == 1 %}checked{% endif %}>
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="entreprise-group {% if prospect.type == 1 %}hidden{% endif %}">
+                    <div class="form-group">
+                        <label for="siret" class="col-md-4 control-label">SIREN*</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="siret" name="siret" placeholder="siret" value="{{ prospect.siret }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tva-intracom" class="col-md-4 control-label">TVA Intracommunautaire</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="tva-intracom" name="tva-intracom" placeholder="tva intracommunautaire" value="{{ prospect.tvaIntracom }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="note" class="col-md-4 control-label">Note</label>
+                    <div class="col-md-3">
+                        <textarea class="form-control" id="note" name="note" placeholder="note">{{ prospect.note }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadShowProspect({{ prospect.id }});">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveProspect();">Enregistrer</button>
+        </div>
+    </div>
+</div>

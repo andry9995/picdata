@@ -1,0 +1,152 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListAppel();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Nouvelle Action</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="appel-form">
+            <div class="form-group">
+                <label for="sujet" class="col-md-4 control-label">Sujet*</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <input type="text" class="form-control" id="sujet" name="sujet" placeholder="sujet">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="client-prospect" class="col-md-4 control-label">Client*</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="client-prospect" name="client-prospect" placeholder="" onchange="getListContacts(this.value);" {% if parent=='prospect' or parent=='client' or parent=='opportunite' %}readonly{% endif %}>
+                        {% if parent=='prospect' or parent=='client' %}
+                            {% for clientProspect in clientProspects %}
+                                {% if clientProspect.id == parentid %}
+                                <option value="{{ clientProspect.id }}" selected="selected">{{ clientProspect.intitule }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% elseif parent=='opportunite' %}
+                            {% for clientProspect in clientProspects %}
+                                {% if clientProspect.id == cp.id %}
+                                <option value="{{ clientProspect.id }}" selected="selected">{{ clientProspect.intitule }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <option value=""></option>
+                            {% for clientProspect in clientProspects %}
+                                <option value="{{ clientProspect.id }}">{{ clientProspect.intitule }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact-client" class="col-md-4 control-label">Contact</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="contact-client" name="contact-client" placeholder="">
+                        <option value=""></option>
+                        {% if contacts|length > 0 %}
+                            {% for contact in contacts %}
+                                <option value="{{ contact.id }}">{% if contact.prenom != '' %}{{ contact.prenom ~' ' }}{% endif %}{{ contact.nom }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="note" class="col-md-4 control-label">Note</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <textarea class="form-control" id="note" name="note" placeholder="note"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="qualification" class="col-md-4 control-label">Qualification de l'appel*</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="qualification" name="qualification" placeholder="">
+                        {% for qualification in qualifications %}
+                            <option value="{{ qualification.id }}" {% if qualification.id == 1 %}selected{% endif %}>{{ qualification.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="text-center" style="margin-bottom: 20px;">
+                <div class="radio radio-inline">
+                    <input type="radio" id="status-a-faire" value="0" name="appel-status"
+                           checked>
+                    <label for="status-a-faire">A faire</label>
+                </div>
+                <div class="radio radio-inline">
+                    <input type="radio" id="status-fait" value="1" name="appel-status">
+                    <label for="status-fait">Fait</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cloture" class="col-md-4 control-label">Date d'échéance</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <div class="input-group date">
+                        <input type="text" class="form-control datepicker" id="echeance" name="echeance" placeholder="échéance">
+                        <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            
+            <hr />
+            <span id="toggle-advanced"><i class="fa fa-caret-right" aria-hidden="true"></i> Plus</span>
+            <div class="advanced-group hidden">
+                <div class="form-group">
+                    <label for="opportunite" class="col-md-4 control-label">Opportunité</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <select class="form-control" id="opportunite" name="opportunite" {% if parent=='opportunite' or parent2=='opportunite' %}readonly{% endif %}>
+                            {% if parent=='opportunite' %}
+                                {% for opportunite in opportunites %}
+                                    {% if opportunite.id == parentid %}
+                                    <option value="{{ opportunite.id }}" selected>{{ opportunite.nom }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% elseif parent2=='opportunite' %}
+                                {% for opportunite in opportunites %}
+                                    {% if opportunite.id == parentid2 %}
+                                    <option value="{{ opportunite.id }}" selected>{{ opportunite.nom }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <option value=""></option>
+                                {% for opportunite in opportunites %}
+                                    <option value="{{ opportunite.id }}">{{ opportunite.nom }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                {#<div class="form-group">
+                    <label for="projet" class="col-md-4 control-label">Projet</label>
+                    <div class="col-md-6 col-sm-8 col-xs-8">
+                        <select class="form-control" id="projet" name="projet" {% if parent=='projet' %}readonly{% endif %}>
+                            {% if parent=='projet' %}
+                                {% for projet in projets %}
+                                    {% if projet.id == parentid %}
+                                    <option value="{{ projet.id }}" selected="selected">{{ projet.nom }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <option value=""></option>
+                                {% for projet in projets %}
+                                    <option value="{{ projet.id }}">{{ projet.nom }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>#}
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListAppel();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveAppel();">Enregistrer</button>
+        </div>
+    </div>
+</div>

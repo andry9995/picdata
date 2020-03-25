@@ -1,0 +1,25 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Contr&ocirc;le{% endblock %}
+
+{% block contenu_droite %}
+    {% include('EtatBundle:Control:filtre.html.twig') %}
+    <div class="ibox float-e-margins">
+        <div class="ibox-content" id="js_conteneur_table">
+        </div>
+    </div>
+    <input type="hidden" id="js_id_errors" value="">
+    {#<div>{{ dump(etatErros) }}</div>#}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/etat/css/control.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/etat/js/control/test.js') }}"></script>
+    <script src="{{ asset('bundles/etat/js/control/index.js') }}"></script>
+{% endblock %}

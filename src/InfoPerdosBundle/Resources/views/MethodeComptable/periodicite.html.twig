@@ -1,0 +1,21 @@
+<form class="form-horizontal" id="js_form_meth_periodicite">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="col-lg-5 control-label">Tenue&nbsp;de&nbsp;la&nbsp;comptabilité</label>
+                <div class="col-lg-6">
+                    <select class="form-control meth_periodicite" name="js_tenue_comptabilite" id="js_tenue_comptablilite" data-field="TenueComptablilite">
+                        {% set tenueCompta = (methodeComptable is null)? -1 : (methodeComptable.tenueComptablilite is null) ? -1 : methodeComptable.tenueComptablilite %}
+                        <option></option>
+                        <option value="1" {{ (tenueCompta == 1)? 'selected': '' }}>Mensuelle</option>
+                        <option value="2" {{ (tenueCompta == 2)? 'selected': '' }}>Trimestrielle</option>
+                        <option value="3" {{ (tenueCompta == 3)? 'selected': '' }}>Semestrielle</option>
+                        <option value="4" {{ (tenueCompta == 4)? 'selected': '' }}>Annuelle</option>
+                        <option value="5" {{ (tenueCompta == 5)? 'selected': '' }}>Ponctuelle</option>
+                    </select>
+                </div>
+            </div>
+         </div>
+    </div>
+
+</form>

@@ -1,0 +1,81 @@
+
+    <div class="col-sm-2">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 control-label">
+                    <span>Recherche</span>
+                </label>
+                <div class="col-lg-8">
+                    <select class="form-control" name="filtre_consultation" id="js_filtre_consultation">
+                        <option value=""></option>
+                        <option value="1" selected>Catégorie</option>
+                        <option value="2">Tiers</option>
+                        {#<option value="3">LINXO_SOBANK</option>#}
+                        <option value="4">Utilisateur</option>
+                        <option value="5">Numéro Pièce</option>
+                        {#<option value="6">Par Date Scan</option>#}
+                        <option value="6" data-type="1">Par Date Envoi</option>
+                        <option value="6" data-type="2">Par Date Pièce</option>
+                        <option value="7">Avancement</option>
+                        <option value="8">Téléchargement</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-sm-3">
+        {{ render(controller('AppBundle:Commun:clients',{'conteneur' : 0, 'tous' : 0})) }}
+    </div>
+
+
+
+    <div class="col-sm-3" id="js_conteneur_site">
+
+    </div>
+
+    <div class="col-sm-2">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-5 control-label">
+                    <span>Exercice</span>
+                </label>
+                <div class="col-lg-7">
+                    <select class="form-control" id="js_exercice">
+                        <option></option>
+                        {{ render(controller('ConsultationPieceBundle:ConsultationPiece:exercice')) }}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    {#<div class="col-lg-4 col-parent">#}
+        {#<div class="col-lg-7" id="js_conteneur_site">#}
+
+        {#</div>#}
+
+        {#<div class="col-lg-5">#}
+
+            {#<form class="form-horizontal">#}
+                {#<div class="form-group">#}
+                    {#<label class="col-lg-5 control-label">#}
+                        {#<span>Exercice</span>#}
+                    {#</label>#}
+
+                    {#<div class="col-lg-7">#}
+                        {#<select class="form-control" id="js_exercice" style="padding: 6px 6px 6px 6px;">#}
+                         {#{{ render(controller('ConsultationPieceBundle:ConsultationPiece:exerciceV2')) }}#}
+                        {#</select>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</form>#}
+        {#</div>#}
+    {#</div>#}
+
+
+
+
+

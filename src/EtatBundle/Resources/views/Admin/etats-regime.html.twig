@@ -1,0 +1,3 @@
+{% for keyRegime, etatRegime in etatsDetails %}
+    {{ include('EtatBundle:Admin:etat-regime.html.twig',{keyRegime:keyRegime, etatRegime:etatRegime, keyEtat:keyEtat, dStyles:dStyles}) }}
+{% endfor %}

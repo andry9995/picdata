@@ -1,0 +1,56 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+
+{% block titre %}Indicateurs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/plugins/datapicker/datepicker3.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/indicateur/css/ibox.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/indicateur/css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/etat/css/affichage.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/datePickerPopOverV2.css') }}">
+{% endblock %}
+
+{% block contenu_droite %}
+    <div class="row">
+        {{ include('IndicateurBundle:AffichageV2:filtre.html.twig') }}
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="js_conteneur_pack"></div>
+    </div>
+    <input type="hidden" id="js_is_etat" value="0">
+    <form id="id_export" method="post"></form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {# HICHART #}
+    <script src="{{ asset('js/plugins/highchart/highcharts.js') }}"></script>
+    <script src="{{ asset('js/plugins/highchart/highcharts-3d.js') }}"></script>
+    <script src="{{ asset('js/plugins/highchart/highcharts-more.js') }}"></script>
+    <script src="{{ asset('js/plugins/highchart/solid-gauge.js') }}"></script>
+    <script src="{{ asset('js/plugins/highchart/exporting.js') }}"></script>
+
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+
+    {# Jvectormap #}
+    <script src="{{ asset('js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+
+    {# Flot #}
+    <script src="{{ asset('js/plugins/flot/jquery.flot.js') }}"></script>
+    <script src="{{ asset('js/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/flot/jquery.flot.resize.js') }}"></script>
+
+    <script src="{{ asset('js/plugins/jqGrid/jQuery.jqGrid.setColWidth.js') }}"></script>
+
+    <script src="{{ asset('js/charts.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/app/js/commun.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/app/js/datePickerPopOverV2.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/indicateur/js/affichageV2/indicateur.js') }}?v=1.1"></script>
+    <script src="{{ asset('bundles/indicateur/js/affichageV2/index.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/indicateur/js/affichageV2/anciennete.js') }}?v=1.0"></script>
+    <script src="{{ asset('bundles/indicateur/js/affichageV2/details.js') }}?v=1.1"></script>
+    <script src="{{ asset('bundles/indicateur/js/affichageV2/parametre.js') }}"></script>
+    <script src="{{ asset('bundles/indicateur/js/affichageV2/export.js') }}"></script>
+{% endblock %}

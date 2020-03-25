@@ -1,0 +1,139 @@
+<div class="row">
+    <h4 class="bg-info padding-6">
+        Paramètres
+        <span class="btn-group pull-right" style="margin-top: -3px;">
+            <button id="btn-save-param" type="button" class="btn btn-xs btn-info">
+                <i class="fa fa-save"></i> Enregistrer
+            </button>
+        </span>
+    </h4>
+    <div id="parametre-list" style="overflow-y: auto;">
+        <table class="table" id="table-param">
+            <thead>
+                <tr>
+                    <th>Journal</th>
+                    <th>Source Image</th>
+                    <th>Mot cléf</th>
+                    <th>Unité</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-param">
+                <tr>
+                    <td>
+                        <div class="journal-select">
+                            <select class="js-example-basic-multiple " multiple="multiple" id="journal-param">
+                              <option value="0">Tous</option>
+                              {% for journal in journals %}
+                                {% if parameters.journal_ids is defined %}
+                                    {% set exist = false %}
+                                    {% for id_journal in parameters.journal_ids %}
+                                        {% if journal.id == id_journal %}
+                                            <option value ="{{ journal.id }}" selected="">{{ journal.libelle }}</option>
+                                            {% set exist = true  %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if exist == false %}
+                                        <option value ="{{ journal.id }}">{{ journal.libelle }}</option>
+                                    {% endif %}
+                                {% else %}
+                                    <option value ="{{ journal.id }}">{{ journal.libelle }}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="source-select">
+                            <select class="js-example-basic-multiple " multiple="multiple" id="source-param">
+                              <option value="0">Tous</option>
+                              {% for source in sources %}
+                                {% if parameters.source_ids is defined%}
+                                    {% set exist = false %}
+
+                                    {% for id_source in parameters.source_ids %}
+                                        {% if source.id == id_source %}
+                                            <option value ="{{ source.id }}" selected="">{{ source.source }}</option>
+                                            {% set exist = true  %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if exist == false %}
+                                        <option value ="{{ source.id }}">{{ source.source }}</option>
+                                    {% endif %}
+                                {% else %}
+                                    <option value ="{{ source.id }}">{{ source.source }}</option>
+                                {% endif %}
+
+                              {% endfor %}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="text" name="" id="param-mot-clef" {% if parameters.mot_clef is defined %}value="{{ parameters.mot_clef }}"{% endif %}>
+                        <input type="hidden" name="" id="prestation_id" value="{{ prestation_id }}">
+                        <input type="hidden" name="" id="client_id" value="{{ client_id }}">
+                        <input type="hidden" name="" id="param_id" {% if parameters.id is defined%} value="{{parameters.id}}" {% endif %}>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-lg-10">
+                                        <select id="unite-param" data-placeholder="" class="form-control select-unite-param">
+                                            <option value="0" {% if parameters.unite is defined and parameters.unite == 0 %}selected=""{% endif %}>Mois</option>
+                                            <option value="1" {% if parameters.unite is defined and parameters.unite == 1 %}selected=""{% endif %}>Ligne</option>
+                                            <option value="2" {% if parameters.unite is defined and parameters.unite == 2 %}selected=""{% endif %}>Image</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" id="simulation">
+    <h4 class="bg-info padding-6">
+        Simulation
+        <span class="btn-group pull-right" style="margin-top: -3px;">
+            <button type="button" class="btn btn-xs btn-info btn-go-simulation">
+                GO
+            </button>
+        </span>
+    </h4>
+    <div id="parametre-list" style="overflow-y: auto;">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <form class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label for="dossier-param" class="control-label col-lg-2">
+                            <span>Dossier</span>
+                            <span class="label label-warning">0</span>
+                        </label>
+                        <div class="col-lg-10">
+                            <select id="dossier-param" data-placeholder="Séléctionner un dossier" class="form-control select-dossier-param">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">
+                        {{ render(controller('AppBundle:Commun:exercices', { 'tous':2, 'attr_id' : 'exercice-param' , 'label_col':2, 'select_col':10, 'nbr': 8 } )) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <spanclass="libelle-prestation">Nombre de Ligne : </span> <span class="label label-info" id="nb-mois-traite">0</span>
+            </div>
+        </div>
+    </div>
+</div>
+

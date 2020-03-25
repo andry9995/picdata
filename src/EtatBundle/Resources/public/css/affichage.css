@@ -1,0 +1,33 @@
+.ui-jqgrid-hdiv,
+/*.ui-jqgrid-hdiv .ui-jqgrid-hbox,
+.ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-htable,
+.ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-htable thead,*/
+.ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-htable thead .ui-jqgrid-labels
+/*.ui-jqgrid-bdiv,
+.ui-jqgrid-bdiv .ui-jqgrid-btable,
+.ui-jqgrid-bdiv .ui-jqgrid-btable tbody*/
+{
+    border-collapse: collapse;
+    background-color: transparent!important;
+    border: none!important;
+}
+
+.ui-jqgrid-resize
+{
+    border-right: 1px solid rgba(0, 0, 0, 0) !important;
+}
+
+.td-control-error
+{
+    border: 1px dotted #ee1e2d!important;
+    color: #ee1e2d!important;
+}
+.td-control-ok
+{
+    border: 1px dotted #2b542c!important;
+    color: #2b542c!important;
+}
+.td-column-disabled
+{
+    background-color: #dcdcdc!important;
+}

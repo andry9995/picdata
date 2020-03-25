@@ -1,0 +1,63 @@
+/*!
+ * Custom jqgrid css - https://lesexperts.biz
+ * Mise en forme des Jqgrid
+ *
+ * Copyright (c) 2019
+ */
+
+ .ui-widget-header {
+    background: #00968899 !important;
+    color: #333 !important;
+    font-weight: bold !important;
+}
+
+.ui-widget-content {
+    border: none !important;
+}
+
+.ui-jqgrid .jqg-second-row-header th.ui-th-column-header {
+    /*background-color: #fff !important;*/
+    /*background-image: none !important;808080 */
+    background-color: #dcdcdc !important;
+    background-image: none !important;
+    font-weight: bold;
+    font-size: 13px;
+    color: #333 !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.ui-jqgrid .jqg-third-row-header th.ui-th-column {
+    background-color: #bfffc466!important;
+    background-image: none !important;
+    font-weight: bold;
+    font-size: 13px;
+    color: #333 !important;
+    padding: 8px;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #dcdcdc !important;
+    border: none;
+    border-bottom: 1px solid #cccccc;
+    font-weight: bold;
+    font-size: 13px;
+    color: #676a6c; 
+
+}
+
+.ui-jqgrid tr.ui-row-ltr td {
+    border: none !important;
+    border-bottom: 1px solid #cccccc !important;
+    color: #686b6d !important;
+    padding: 8px;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight,.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover {
+    /*color: initial !important;
+    background: #fff !important;*/
+}
+
+/*.ui-jqgrid .ui-jqgrid-htable th div{
+    max-height: 30px !important;
+}*/

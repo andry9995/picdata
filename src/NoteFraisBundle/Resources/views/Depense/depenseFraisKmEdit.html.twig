@@ -1,0 +1,169 @@
+
+<div class="form-horizontal">
+
+    <div class="col-lg-6">
+
+        <div class="form-group">
+            <label class="control-label col-lg-3">Titre</label>
+            <div class="col-lg-9">
+                <input type="text" placeholder="Exemple Paris-Marseille" class="form-control" id="js_depense_fk_titre"
+                       value="{{ (depenseFk is null) ? '' : depenseFk.titre }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Véhicule</label>
+            <div class="col-lg-9">
+
+                    <div class="input-group">
+
+                        <select data-placeholder="Choisissez un véhicule" class="form-control chosen-select" id="js_depense_fk_vehicule">
+                            <option value=""></option>
+
+                            {% set vehiculeId = (depenseFk is null) ? '' : (depenseFk.vehicule is null) ? -1 : depenseFk.vehicule.id %}
+                            {% for  vehicule in vehicules %}
+
+                                {% set vehiculeOption = (vehicule.vehiculeMarque is null) ? '' : vehicule.vehiculeMarque.libelle %}
+                                {% set vehiculeOption = vehiculeOption ~' '~ (vehicule.modele) %}
+                                {% set vehiculeOption = vehiculeOption ~' '~ vehicule.immatricule %}
+
+                                <option value="{{ vehicule.id|boost }}" {{ (vehicule.id == vehiculeId) ? 'selected': '' }}>{{ vehiculeOption  }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="input-group-addon" id="js_depense_fk_edit_veh"><i class="fa fa-edit"></i></span>
+                        <span class="input-group-addon" id="js_depense_fk_add_veh"><i class="fa fa-plus"></i></span>
+                    </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-3">Départ</label>
+            <div class="col-lg-9">
+                <input type="text" placeholder="Exemple Paris" class="form-control " id="js_depense_fk_depart" value="{{ (depenseFk is null) ? '' : depenseFk.depart }}"
+                data-lat="{{ (depenseFk is null) ?  '' : depenseFk.departLat }}"
+                data-lng="{{ (depenseFk is null) ? '' : depenseFk.departLong }}"
+                >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-3">Arrivée</label>
+            <div class="col-lg-9">
+                <input type="text" placeholder="Exemple Lyon" class="form-control" id="js_depense_fk_arrivee" value="{{ (depenseFk is null) ? '' : depenseFk.arrivee }}"
+                data-lat="{{ (depenseFk is null) ? '' : depenseFk.arriveeLat }}"
+                data-lng="{{ (depenseFk is null) ? '' : depenseFk.arriveeLong }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-3">Trajets</label>
+            <div class="col-lg-9">
+                <div class="input-group">
+                    <input type="text" placeholder="Exemple 500" class="form-control" id="js_depense_fk_trajet" value="{{ (depenseFk is null) ? '' :depenseFk.trajet }}">
+                    <span class="input-group-addon">Km</span>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-3">TTC</label>
+            <div class="col-lg-9">
+                <div class="input-group">
+                    <input type="text" placeholder="" class="form-control" id="js_depense_fk_ttc" value="{{ (depenseFk is null) ? '' : depenseFk.ttc }}" disabled>
+                    <span class="input-group-addon">Euro</span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Periode</label>
+            <div class="col-lg-9" >
+
+                <div class="input-daterange input-group" id="datepicker">
+                    <input type="text" class="input-sm form-control date" id="js_depense_fk_periode_deb"
+                           value="{{ (depenseFk is null) ? '' : (depenseFk.periodeDeb is null) ? '' : depenseFk.periodeDeb|date('d/m/Y') }}">
+                    <span class="input-group-addon">Au</span>
+                    <input type="text" class="input-sm form-control date" id="js_depense_fk_periode_fin"
+                           value="{{ (depenseFk is null) ? '' : (depenseFk.periodeFin is null) ? '' : depenseFk.periodeFin|date('d/m/Y') }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Note</label>
+            <div class="col-lg-9">
+                <select data-placeholder="Choisir une note" class="form-control chosen-select" id="js_depense_fk_note">
+
+                    <option></option>
+
+                    {% set noteFKId = -1 %}
+
+                    {% if depenseFk is null %}
+                        {% if note is not null %}
+                            {% set noteFKId = note.id %}
+                        {% endif %}
+                    {% else %}
+                        {% if depenseFk.ndfNote is not null %}
+                            {% set noteFKId = depenseFk.ndfNote.id %}
+                        {% endif %}
+                    {% endif %}
+
+                    {#{% set noteFKId = (depenseFk is null) ? '' : (depenseFk.ndfNote is null) ? '' : depenseFk.ndfNote.id %}#}
+
+                    {% for note in notes %}
+
+                        <option value="{{ note.id|boost }}" {{ (noteFKId == note.id) ? 'selected' : '' }}>{{ note.libelle }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Affaire</label>
+            <div class="col-lg-9">
+                <select data-placeholder="Choisir une affaire" class="form-control chosen-select" id="js_depense_fk_affaire">
+
+                    <option></option>
+
+                    {% set affaireFKId = (depenseFk is null) ? '' : (depenseFk.ndfAffaire is null) ? '' : depenseFk.ndfAffaire.id %}
+
+                    {% for affaire in affaires %}
+
+                        <option value="{{ affaire.id|boost }}" {{ (affaireFKId == affaire.id) ? 'selected' : '' }}>{{ affaire.libelle }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Facturable</label>
+                <div class="col-lg-9">
+                    <input type="checkbox" class="js-switch_3"  id="js_depense_fk_a_facturer" {{ (depenseFk is null) ? '' : (depenseFk.facturable== 1) ? 'checked' : '' }}/>
+                </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-lg-6 map">
+
+        <div id="map"></div>
+
+    </div>
+</div>
+
+<div class="ibox-content">
+
+    <div class="pull-right">
+        {#<button class="btn btn-sm" id="js_annuler_depense"><strong>Annuler</strong></button>#}
+        <button class="btn btn-sm btn-primary" id="js_save_depense_fk"><strong>Sauvegarder</strong></button>
+
+    </div>
+
+</div>

@@ -1,0 +1,95 @@
+
+.ui-jqgrid .ui-jqgrid-btable #js-piece-piece{
+    cursor : pointer;
+}
+
+.details-data .form-group{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.details-data .panel-heading{
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.details-data input, .details-data select{
+    height: 30px;
+}
+
+.details-data .control-label{
+    height: 37px;
+}
+
+
+.ui-jqgrid-sdiv .ui-jqgrid-ftable .footrow {
+    background-color: #beebff;
+    background-image: none;
+    border-color: rgb(204, 204, 204);
+}
+
+#js_filtre_entete{
+    height: 40px;
+}
+
+.col-parent{
+    padding: 0 0 0 0;
+}
+
+.col-filtre{
+    padding: 0 5px 0 5px;
+}
+
+
+.filtre{
+    min-width: 130px;
+    min-height: 65px;
+}
+
+#js_scroller_parent{
+    background-color: #FFFFFF;
+}
+
+
+#js_data_details .ibox-content .row .form-horizontal .col-lg-12 .form-group{
+    margin: 0 -15px 5px -15px;
+}
+
+#js_data_details .ibox-content .row .form-horizontal .col-lg-12 .control-label{
+    padding: 7px 0 0 15px;
+}
+
+.js-piece-details, .js-piece-image, .js-releve-doublon {
+    cursor: pointer;
+}
+
+.ecriture th{
+    text-align: center;
+}
+
+.ecriture tr.jqgrow:nth-child(odd) {
+    background: #f6f6f6
+}
+
+
+.ecriture{
+    margin-top: 20px;
+    /*bottom: 10px;*/
+}
+
+.ecriture thead{
+    background-color: red;
+}
+
+.date span{
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.btn-cp{
+    padding-right: 0;
+}
+
+.date_scan_select.selected{
+    background-color: #ffffff;
+}

@@ -1,0 +1,56 @@
+<div class="table-responsive table-list">
+    <table class="footable table table-striped table-hover toggle-arrow-tiny table-affaire" data-page-size="8">
+        <thead>
+        <tr>
+            {#<th>#}
+                {#<div class="checkbox checkbox-success checkbox-inline">#}
+                {#<input type="checkbox" class="checkbox-primary">#}
+                {#<label></label>#}
+                {#</div>#}
+            {#</th>#}
+            <th>Intitulé</th>
+            <th>Référence</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Nom du client</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+            {% for affaire in affaires %}
+                {% set status = (affaire.status == 0) ? '<span class="label label-warning" data-status="0" style="display: inline-block;width: 100%;">Desctivée</span>' : '<span class="label label-info" data-status="1" style="display: inline-block;width: 100%;">Activée</span>' %}
+
+                <tr data-id="{{ affaire.id|boost }}">
+                    {#<td>#}
+                        {#<div class="checkbox checkbox-success checkbox-inline">#}
+                            {#<input type="checkbox" class="checkbox-success">#}
+                            {#<label></label>#}
+                        {#</div>#}
+                    {#</td>#}
+                    <td>{{ affaire.libelle }}</td>
+                    <td>{{ affaire.reference }}</td>
+                    <td>{{ (affaire.dateDeb is null) ? '' : affaire.dateDeb|date('d/m/Y') }}</td>
+                    <td>{{ (affaire.dateFin is null) ? '' : affaire.dateFin|date('d/m/Y') }}</td>
+                    <td>{{ (affaire.nomClient) }}</td>
+                    <td>{{ status|raw }}</td>
+                </tr>
+
+            {% endfor %}
+
+
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td colspan="12">
+                <ul class="pagination pull-right"></ul>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="table-bloc hidden">
+    {{ include('NoteFraisBundle:Administration/Affaire:affaireTableBloc.html.twig') }}
+</div>

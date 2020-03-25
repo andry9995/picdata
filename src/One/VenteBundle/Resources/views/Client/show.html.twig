@@ -1,0 +1,1625 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="initAllFilter(); loadListClient();"></span>
+    </div>
+    <div class="col-md-8">
+        {#<h2 class="heading">Client {{ client.nomVisible }}</h2>#}
+        {#Imputation#}
+        <h2 class="heading">Client {{ client.intitule }}</h2>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="pull-right">
+            <div class="btn-group">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Nouvelle action <span class="glyphicon glyphicon-menu-down"></span>
+                </button>
+                <ul class="dropdown-menu pull-right">
+                    <li><a onclick="loadNewFacture();">Nouvelle Facture Client</a></li>
+                    <li><a onclick="loadNewDevis();">Nouveau Devis</a></li>
+                    <li><a onclick="loadNewCommande();">Nouveau Bon Commande</a></li>
+                    <li><a onclick="changeTab('tab-paiement'); loadGetPaiement();">Recevoir Paiement Client</a></li>
+                    <li><a onclick="loadNewEncaissement();">Nouvel Encaissement Client</a></li>
+                    <li><a onclick="loadNewAvoir();">Nouvel Avoir Client</a></li>
+                    <li><a onclick="loadNewTache();">Nouvelle Tâche</a></li>
+                    <li><a onclick="loadNewAppel();">Nouvelle Action</a></li>
+                    <li><a onclick="loadNewOpportunite();">Nouvelle Opportunité</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="client-detail-infos">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="pull-left">Informations</h3>
+                    <span onclick="loadEditClient({{ client.id }});" class="edit-action glyphicon glyphicon-pencil pull-right" aria-hidden="true"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 item">
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    <span class="info-text">
+                {% if client.adresseFacturation1 != '' %}
+                    {{ client.adresseFacturation1 ~ ', ' }}
+                {% endif %}
+                        {% if client.villeFacturation != '' %}
+                            {{ client.villeFacturation ~ ', ' }}
+                        {% endif %}
+                        {{ (client.paysFacturation is null) ? '' : client.paysFacturation.nom }}
+                </span>
+                </div>
+            </div>
+
+            {% if client.oneActivite %}
+                <div class="row">
+                    <div class="col-md-12 item">
+                        <span class="info-text">{{ client.oneActivite.nom }}</span>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if client.telephone != '' %}
+                <div class="row">
+                    <div class="col-md-12 item">
+                        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                        <span class="info-text">{{ client.telephone }}</span>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if client.email != '' %}
+                <div class="row">
+                    <div class="col-md-12 item">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        <span class="info-text pointer" onclick="showNewMail({{ client.id }});">{{ client.email }}</span>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if client.skype != '' %}
+                <div class="row">
+                    <div class="col-md-12 item">
+                        <span class="fa fa-skype" aria-hidden="true"></span>
+                        <span class="info-text">{{ client.skype }}</span>
+                    </div>
+                </div>
+            {% endif %}
+
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="pull-left">Solde dû</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span><a onclick="loadBalanceClient({{ client.id }});">Voir relevé client</a></span>
+                </div>
+            </div>
+
+            {% if contacts|length > 0 %}
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="pull-left">Contacts</h3>
+                    </div>
+                </div>
+                {% for contact in contacts %}
+                    <div class="row">
+                        <div class="col-md-12 item">
+                            <span class="contact-name">{% if contact.prenom != '' %}{{ contact.prenom ~ ' ' }}{% endif %}{{ contact.nom }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 item">
+                            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                            <span class="info-text">
+                        {% if contact.adresse1 != '' %}
+                            {{ contact.adresse1 ~ ', ' }}
+                        {% endif %}
+                                {% if contact.ville != '' %}
+                                    {{ contact.ville ~ ', ' }}
+                                {% endif %}
+                                {{ (contact.pays is null) ? '' : contact.pays.nom }}
+                        </span>
+                        </div>
+                    </div>
+                    {% if contact.email != '' %}
+                        <div class="row">
+                            <div class="col-md-12 item">
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                <span class="info-text">{{ contact.email }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if contact.telPortable != '' %}
+                        <div class="row">
+                            <div class="col-md-12 item">
+                                <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                <span class="info-text">{{ contact.telPortable }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if contact.telPro != '' %}
+                        <div class="row">
+                            <div class="col-md-12 item">
+                                <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                <span class="info-text">{{ contact.telPro }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if contact.telPerso != '' %}
+                        <div class="row">
+                            <div class="col-md-12 item">
+                                <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                <span class="info-text">{{ contact.telPerso }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <br />
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    {#{% if factures|length > 0 or deviss|length > 0 or commandes|length > 0 or encaissements|length > 0 or paiements|length > 0 or avoirs|length > 0 or opportunites|length > 0 or taches|length > 0 or appels|length > 0 or type != 'all' %}#}
+    {#Imputation#}
+    {% if factures|length > 0 or imputations|length > 0 or deviss|length > 0 or commandes|length > 0 or encaissements|length > 0 or paiements|length > 0 or avoirs|length > 0 or opportunites|length > 0 or taches|length > 0 or appels|length > 0 or type != 'all' %}
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="type-filter-bar">
+                    {#{% set nbactivites = factures|length + deviss|length + commandes|length + encaissements|length + paiements|length + avoirs|length + opportunites|length + taches|length + appels|length %}#}
+                    {#Imputation#}
+                    {% set nbactivites = factures|length + imputations|length + deviss|length + commandes|length + encaissements|length + paiements|length + avoirs|length + opportunites|length + taches|length + appels|length %}
+                    <li{% if type == 'all' %} class="active"{% endif %}>
+                        <a onclick="
+                                setFilterType('all');
+                                updateView('bloc');
+                                setPeriod('all'); initSearchInClient({{ client.id }});">
+                            Activité
+                            <i>{{ nbactivites }}</i>
+                        </a>
+                    </li>
+                    {#{% if factures|length > 0 %}#}
+                    {#Imputation#}
+                    {% if factures|length > 0 or imputations|length > 0 %}
+                        <li{% if type == 'facture' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('facture');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Facture
+                                <i>{{ factures|length + imputations|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if deviss|length > 0 %}
+                        <li{% if type == 'devis' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('devis');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Devis
+                                <i>{{ deviss|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if commandes|length > 0 %}
+                        <li{% if type == 'commande' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('commande');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Bon de Commande
+                                <i>{{ commandes|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if encaissements|length > 0 %}
+                        <li{% if type == 'encaissement' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('encaissement');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Encaissements Clients
+                                <i>{{ encaissements|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if paiements|length > 0 %}
+                        <li{% if type == 'paiement' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('paiement');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Paiements
+                                <i>{{ paiements|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if avoirs|length > 0 %}
+                        <li{% if type == 'avoir' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('avoir');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Avoir
+                                <i>{{ avoirs|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if opportunites|length > 0 %}
+                        <li{% if type == 'opportunite' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('opportunite');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Opportunité
+                                <i>{{ opportunites|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if appels|length > 0 %}
+                        <li{% if type == 'appel' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('appel');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Action
+                                <i>{{ appels|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if taches|length > 0 %}
+                        <li{% if type == 'tache' %} class="active"{% endif %}>
+                            <a onclick="
+                                    setFilterType('tache');
+                                    setPeriod('all');
+                                    initSearchInClient({{ client.id }});">
+                                Tâche pour Opportunité
+                                <i>{{ taches|length }}</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="details-filter-bar">
+                    <div class="row">
+                        {% if type == 'all' %}
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            {% else %}
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                {% endif %}
+                                <div class="input-group">
+                                    {#<span class="input-group-addon btn-search" onclick="searchInClient({{ client.id }});">#}
+                                    {#<span class="glyphicon glyphicon-search" aria-hidden="true"></span>#}
+                                    {#</span>#}
+                                    {#Imputation#}
+                                    {% if client is not null %}
+                                        <span class="input-group-addon btn-search" onclick="searchInClient({{ client.id }}, true);">
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                        </span>
+                                    {% else %}
+                                        <span class="input-group-addon btn-search" onclick="searchInClient({{ tiers.id }}, false);">
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                        </span>
+                                    {% endif %}
+
+                                    {% if type == 'all' %}{% set placeholder = 'Recherche' %}{% endif %}
+                                    {% if type == 'facture' %}{% set placeholder = 'Recherche dans Factures' %}{% endif %}
+                                    {% if type == 'devis' %}{% set placeholder = 'Recherche dans Devis' %}{% endif %}
+                                    {% if type == 'commande' %}{% set placeholder = 'Recherche dans Bons de commande' %}{% endif %}
+                                    {% if type == 'encaissement' %}{% set placeholder = 'Recherche dans Encaissements' %}{% endif %}
+                                    {% if type == 'paiement' %}{% set placeholder = 'Recherche dans Paiements' %}{% endif %}
+                                    {% if type == 'avoir' %}{% set placeholder = 'Recherche dans Avoirs' %}{% endif %}
+                                    {% if type == 'opportunite' %}{% set placeholder = 'Recherche dans Opportunités' %}{% endif %}
+                                    {% if type == 'appel' %}{% set placeholder = 'Recherche dans Actions' %}{% endif %}
+                                    {% if type == 'tache' %}{% set placeholder = 'Recherche dans Tâches pour Opportunité' %}{% endif %}
+                                    <input type="text" class="form-control search" name="search" value="{{ q }}" placeholder="{{ placeholder }}">
+
+                                    <span class="glyphicon glyphicon-remove hidden init-search" aria-hidden="true" onclick="initSearchInClient({{ client.id }});"></span>
+
+                                </div>
+                            </div>
+                            {% if type != 'all' %}
+
+
+                                <div class="col-md-5 col-sm-12 col-xs-12">
+                                    <div class="dropdown pull-right sort-date">
+                                        {% if period == 'today' %}{% set sortdate = "Aujourd'hui" %}
+                                        {% elseif period == 'lastweek' %}{% set sortdate = 'Semaine dernière' %}
+                                        {% elseif period == 'thisweek' %}{% set sortdate = 'Cette semaine' %}
+                                        {% elseif period == 'nextweek' %}{% set sortdate = 'Semaine prochaine' %}
+                                        {% elseif period == 'lastmonth' %}{% set sortdate = 'Mois dernier' %}
+                                        {% elseif period == 'thismonth' %}{% set sortdate = 'Ce mois' %}
+                                        {% elseif period == 'nextmonth' %}{% set sortdate = 'Mois prochain' %}
+                                        {% elseif period == 'lastyear' %}{% set sortdate = 'Année dernière' %}
+                                        {% elseif period == 'thisyear' %}{% set sortdate = 'Cette année' %}
+                                        {% elseif period == 'custom' %}{% set sortdate = startperiod ~' - '~ endperiod %}
+                                        {% else %}{% set sortdate = 'Toutes les dates' %}
+                                        {% endif %}
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                            {{ sortdate }}
+                                            <span class="glyphicon glyphicon-menu-down"></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li class="date-field">
+                                                <input type="text" class="form-control datepicker startdate" value="{{ startperiod }}">
+                                                <input type="text" class="form-control datepicker enddate" value="{{ endperiod }}">
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="setPeriod('custom');loadShowClient({{ client.id }});">
+                                                </span>
+                                            </li>
+                                            <li{% if period == 'all' or period == '' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('all'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'all' or period == '' %}
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                    {% endif %}
+                                                    &nbsp;&nbsp;Toutes les dates
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li{% if period == 'today' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('today'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'today'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Aujourd'hui
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li{% if period == 'thisweek' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('thisweek'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'thisweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Cette semaine
+                                                </a>
+                                            </li>
+                                            <li{% if period == 'thismonth' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('thismonth'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'thismonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Ce mois
+                                                </a>
+                                            </li>
+                                            <li{% if period == 'thisyear' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('thisyear'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'thisyear'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Cette année
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li{% if period == 'nextweek' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('nextweek'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'nextweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Semaine prochaine
+                                                </a>
+                                            </li>
+                                            <li{% if period == 'nextmonth' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('nextmonth'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'nextmonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Mois prochain
+                                                </a>
+                                            </li>
+                                            <li role="separator" class="divider"></li>
+                                            <li{% if period == 'lastweek' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('lastweek'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'lastweek'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Semaine dernière
+                                                </a>
+                                            </li>
+                                            <li{% if period == 'lastmonth' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('lastmonth'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'lastmonth'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Mois dernier
+                                                </a>
+                                            </li>
+                                            <li{% if period == 'lastyear' %} class="active"{% endif %}>
+                                                <a onclick="setPeriod('lastyear'); loadShowClient({{ client.id }});">
+                                                    {% if period == 'lastyear'  %}<span class="glyphicon glyphicon-ok"></span>{% endif %}&nbsp;&nbsp;Année dernière
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="dropdown pull-right">
+
+                                        {% if sort == 'echeance' or sort == '' %}{% set sorttext = 'Par Prochaine Echéance' %}{% endif %}
+                                        {% if sort == 'datecreation' %}{% set sorttext = 'Par Date de Création' %}{% endif %}
+                                        {% if sort == 'datedevis' %} {% set sorttext = 'Par Date du Devis' %} {% endif %}
+                                        {% if sort == 'status' %} {% set sorttext = 'Par Status' %} {% endif %}
+                                        {% if sort == 'montant' %} {% set sorttext = 'Par Montant' %} {% endif %}
+                                        {% if sort == 'datevente' %}{% set sorttext = 'Par Date de la Facture' %}{% endif %}
+
+                                        {% if type == 'devis' %}
+
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                {{ sorttext }}
+                                                <span class="glyphicon glyphicon-menu-down"></span>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+
+                                                <li{% if sort == 'echeance' or sort == '' %} class="active"{% endif %}>
+                                                    <a onclick="updateView('bloc'); setSort('echeance'); loadShowClient({{ client.id }});">
+                                                        {% if sort == 'echeance' or sort == '' %}
+                                                            <span class="glyphicon glyphicon-ok"></span>
+                                                        {% endif %}
+                                                        &nbsp;&nbsp;Par Prochaine Echéance
+                                                    </a>
+                                                </li>
+                                                <li{% if sort == 'datedevis' %} class="active"{% endif %}>
+                                                    <a onclick="updateView('bloc'); setSort('datedevis'); loadShowClient({{ client.id }});">
+                                                        {% if sort == 'datedevis' %}
+                                                            <span class="glyphicon glyphicon-ok"></span>
+                                                        {% endif %}
+                                                        &nbsp;&nbsp;Par Date du Devis
+                                                    </a>
+                                                </li>
+                                                <li{% if sort == 'datecreation' %} class="active"{% endif %}>
+                                                    <a onclick="updateView('bloc'); setSort('datecreation'); loadShowClient({{ client.id }});">
+                                                        {% if sort == 'datecreation' %}
+                                                            <span class="glyphicon glyphicon-ok"></span>
+                                                        {% endif %}
+                                                        &nbsp;&nbsp;Par Date de Création
+                                                    </a>
+                                                </li>
+                                                <li {% if sort == 'montant' %} class="active" {% endif %}>
+                                                    <a onclick="updateView('bloc'); setSort('montant'); loadShowClient({{ client.id }});">
+                                                        {% if sort == 'montant' %}
+                                                            <span class="glyphicon glyphicon-ok"></span>
+                                                        {% endif %}
+                                                        &nbsp;&nbsp;Par Montant
+                                                    </a>
+                                                </li>
+                                                <li {% if sort == 'status' %} class="active" {% endif %}>
+                                                    <a onclick="updateView('bloc'); setSort('status'); loadShowClient({{ client.id }});">
+                                                        {% if sort == 'status' %}
+                                                            <span class="glyphicon glyphicon-ok"></span>
+                                                        {% endif %}
+                                                        &nbsp;&nbsp;Par Status
+                                                    </a>
+                                                </li>
+                                            </ul>
+
+
+                                        {% else %}
+                                            {% if type == 'facture' %}
+
+
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    {{ sorttext }}
+                                                    <span class="glyphicon glyphicon-menu-down"></span>
+                                                </a>
+
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li{% if sort == 'echeance' or sort == '' %} class="active"{% endif %}>
+                                                        <a onclick="updateView('bloc'); setSort('echeance'); loadShowClient({{ client.id }});">
+                                                            {% if sort == 'echeance' or sort == '' %}
+                                                                <span class="glyphicon glyphicon-ok"></span>{% endif %}
+                                                            &nbsp;&nbsp;Par Prochaine Echéance
+                                                        </a>
+                                                    </li>
+                                                    <li{% if sort == 'datevente' %} class="active"{% endif %}>
+                                                        <a onclick="updateView('bloc'); setSort('datevente'); loadShowClient({{ client.id }});">
+                                                            {% if sort == 'datevente' %}
+                                                                <span class="glyphicon glyphicon-ok"></span>
+                                                            {% endif %}
+                                                            &nbsp;&nbsp;Par Date de la Facture
+                                                        </a>
+                                                    </li>
+                                                    <li{% if sort == 'datecreation' %} class="active"{% endif %}>
+                                                        <a onclick="updateView('bloc'); setSort('datecreation'); loadShowClient({{ client.id }});">
+                                                            {% if sort == 'datecreation' %}
+                                                                <span class="glyphicon glyphicon-ok"></span>
+                                                            {% endif %}
+                                                            &nbsp;&nbsp;Par Date de Création
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+
+
+                                            {% endif %}
+
+                                        {% endif %}
+
+
+
+                                    </div>
+
+                                    <span class="pull-right sortorder" onclick="
+                                    {% if sortorder == 'ASC' %}setSortOrder('DESC');{% else %}setSortOrder('ASC');{% endif %} loadShowClient({{ client.id }});
+                                            ">
+                                {% if sortorder == 'ASC' %}<span class="glyphicon glyphicon-arrow-up"></span>{% endif %}
+                                        {% if sortorder == 'DESC' %}<span class="glyphicon glyphicon-arrow-down"></span>{% endif %}
+                                    </span>
+
+                                </div>
+
+
+
+
+
+
+
+
+
+
+                                <div class="col-md-1 col-sm-12 col-xs-12">
+                                    <div class="input-group pull-right">
+                                <span class="input-group-addon view-bloc">
+                                    <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                                </span>
+                                        <span class="input-group-addon view-list">
+                                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                                </span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="details-select-bar hidden">
+                        <span class="pull-left elements-selected"></span>
+                        <a class="pull-left unckecked-all" onclick="uncheckAll();">tout désélectionner</a>
+                        <button class="btn btn-danger pull-right delete-selected" onclick="{% if type == 'facture' %}deleteSelectedFacture(){% elseif type == 'devis' %}deleteSelectedDevis(){% elseif type == 'commande' %}deleteSelectedCommande(){% elseif type == 'encaissement' %}deleteSelectedEncaissement(){% elseif type == 'avoir' %}deleteSelectedAvoir(){% elseif type == 'opportunite' %}deleteSelectedOpportunite(){% elseif type == 'tache'%}deleteSelectedTache(){% elseif type == 'appel'%}deleteSelectedAppel(){% endif %};">Supprimer</button>
+                        <a class="pull-right cancel-select" onclick="uncheckAll();">Annuler</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% if type == 'all' or type == 'facture' %}
+                    {% for facture in factures %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view opportunite-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <p class="bloc-title"><a onclick="setFilterType('facture');loadEditFacture({{ facture.id }}, true);">Facture {{ facture.code }}</a></p>
+                                    <p class="bloc-date">{{ facture.dateFacture|date('d/m/y') }}</p>
+                                    <p class="bloc-client">{{ facture.tiers.intitule }}</p>
+                                    <p class="bloc-rest">
+                                    <span class="status {% if facture.statusFacture == 0 %}todo{% elseif facture.statusFacture == 1 %}won{% endif %}">
+                                        {% if facture.statusFacture == 0 %}
+                                            {% set now = date('now'|date('Y/m/d')) %}
+                                            {% set echeance = date(facture.dateFacture|date('Y/m/d')) %}
+                                            {% set difference = echeance.diff(now) %}
+                                            {% set leftdays = difference.days %}
+                                            {% if leftdays == 0 %}Aujourd'hui
+                                            {% elseif leftdays == 1 and echeance > now %}Dans 1 jour
+                                            {% elseif leftdays == 1 and echeance < now %}1 jour de retard
+                                            {% elseif leftdays > 1 and echeance > now %}Dans {{ leftdays }} jours
+                                            {% elseif leftdays > 1 and echeance < now %}{{ leftdays }} jours de retard
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if facture.statusFacture == 1 %}Payée{% endif %}
+                                    </span>
+                                        <span class="bill"></span>
+                                        <span class="amount">{{ factureDetails[facture.id]['ttc']|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</span>
+                                    </p>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteFacture({{ facture.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+
+
+
+                    {% for fact in imputations %}
+                        {% set facture = fact['imputation'] %}
+                        {% set montant = fact['montant'] %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view opportunite-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <p class="bloc-title"><a onclick="loadEditFacture({{ facture.id }}, false);">Facture {{ facture.numFacture }}</a></p>
+                                    <p class="bloc-date">{{ facture.dateFacture|date('d/m/y') }}</p>
+                                    <p class="bloc-client">{{ client.intitule }}</p>
+                                    <p class="bloc-rest">
+                                    <span class="status won">
+
+                                        {#{% set now = date('now'|date('Y/m/d')) %}#}
+                                        {#{% set echeance = date(facture.dateFacture|date('Y/m/d')) %}#}
+                                        {#{% set difference = echeance.diff(now) %}#}
+                                        {#{% set leftdays = difference.days %}#}
+                                        {#{% if leftdays == 0 %}Aujourd'hui#}
+                                        {#{% elseif leftdays == 1 and echeance > now %}Dans 1 jour#}
+                                        {#{% elseif leftdays == 1 and echeance < now %}1 jour de retard#}
+                                        {#{% elseif leftdays > 1 and echeance > now %}Dans {{ leftdays }} jours#}
+                                        {#{% elseif leftdays > 1 and echeance < now %}{{ leftdays }} jours de retard#}
+                                        {#{% endif %}#}
+
+                                    </span>
+                                        <span class="bill"></span>
+                                        <span class="amount">{{ montant }}</span>
+                                    </p>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteFacture({{ facture.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+
+                    {% if type == 'facture' %}
+                        <div class="col-md-12 list-view opportunite-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                                    <th>Date de la Facture</th>
+                                    <th>Facture</th>
+                                    <th>Client/Prospect</th>
+                                    <th>Montant</th>
+                                    <th>Reste à payer</th>
+                                    <th>Note</th>
+                                    <th>Prochaine Echéance</th>
+                                    <th>Statut</th>
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for facture in factures %}
+                                    <tr>
+                                        <td><input type="checkbox" class="element" value="{{ facture.id }}" onchange="toggleThis();" /></td>
+                                        <td>{{ facture.dateFacture|date('d/m/y') }}</td>
+                                        <td><a onclick="setFilterType('facture');loadEditFacture({{ facture.id }}, true);">{{ facture.code }}</a></td>
+                                        <td>{{ facture.tiers.intitule }}</td>
+                                        <td>{{ factureDetails[facture.id]['ttc']|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                                        <td></td>
+                                        <td>{% if facture.note != '' %}
+                                                <span class="glyphicon glyphicon-info-sign facture-note" aria-hidden="true" data-toggle="popover" data-placement="left" data-trigger="click" data-html="true" data-content="{{ facture.note }}"></span>
+                                            {% endif %}
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                    <span class="status {% if facture.statusFacture == 0 %}todo{% elseif facture.statusFacture == 1 %}won{% endif %}">
+                                        {% if facture.statusFacture == 0 %}
+                                            {% set now = date('now'|date('Y/m/d')) %}
+                                            {% set echeance = date(facture.dateFacture|date('Y/m/d')) %}
+                                            {% set difference = echeance.diff(now) %}
+                                            {% set leftdays = difference.days %}
+                                            {% if leftdays == 0 %}Aujourd'hui
+                                            {% elseif leftdays == 1 and echeance > now %}Dans 1 jour
+                                            {% elseif leftdays == 1 and echeance < now %}1 jour de retard
+                                            {% elseif leftdays > 1 and echeance > now %}Dans {{ leftdays }} jours
+                                            {% elseif leftdays > 1 and echeance < now %}{{ leftdays }} jours de retard
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if facture.statusFacture == 1 %}Payée{% endif %}
+                                    </span>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="deleteFacture({{ facture.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% for fact in imputations %}
+                                    {% set facture = fact['imputation'] %}
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ facture.dateFacture|date('d/m/y') }}</td>
+                                        <td><a onclick="loadEditFacture({{ facture.id }}, false);">{{ facture.numFacture }}</a></td>
+                                        <td>{{ client.intitule }}</td>
+                                        <td>{{ fact['montant'] }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        {#<a onclick="deleteFacture({{ facture.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>#}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+
+
+
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if type == 'all' or type == 'devis' %}
+                    {% for devis in deviss %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view devis-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <p class="bloc-title"><a onclick="loadEditDevis({{ devis.id }});">Devis {{ devis.code }}</a></p>
+                                    <p class="bloc-date">{{ devis.dateDevis|date('d/m/y') }}</p>
+                                    <p class="bloc-client">{{ devis.tiers.intitule }}</p>
+                                    <p class="bloc-rest">
+                                    <span class="status {% if devis.status == 1 %}todo{% elseif devis.status == 2 %}won{% elseif devis.status == 3 %}lost{% endif %}">
+                                        {% if devis.status == 1 %}
+                                            {% set now = date('now'|date('Y/m/d')) %}
+                                            {% set echeance = date(devis.finValidite|date('Y/m/d')) %}
+                                            {% set difference = echeance.diff(now) %}
+                                            {% set leftdays = difference.days %}
+                                            {% if leftdays == 0 %}Aujourd'hui
+                                            {% elseif leftdays == 1 and echeance > now %}Dans 1 jour
+                                            {% elseif leftdays == 1 and echeance < now %}1 jour de retard
+                                            {% elseif leftdays > 1 and echeance > now %}Dans {{ leftdays }} jours
+                                            {% elseif leftdays > 1 and echeance < now %}{{ leftdays }} jours de retard
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if devis.status == 2 %}Gagné{% endif %}
+                                        {% if devis.status == 3 %}Perdu{% endif %}
+                                    </span>
+                                        <span class="bill"></span>
+                                        <span class="amount">{{ devis.montant|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</span>
+                                    </p>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteDevis({{ devis.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if type == 'devis' %}
+                        <div class="col-md-12 list-view devis-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                                    <th>Date du devis</th>
+                                    <th>Devis</th>
+                                    <th>Client/Prospect</th>
+                                    <th>Montant</th>
+                                    <th>Note</th>
+                                    <th>Date d'expiration</th>
+                                    <th>Statut</th>
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for devis in deviss %}
+                                    <tr>
+                                        <td><input type="checkbox" class="element" value="{{ devis.id }}" onchange="toggleThis();" /></td>
+                                        <td>{{ devis.dateDevis|date('d/m/y') }}</td>
+                                        <td><a onclick="loadEditDevis({{ devis.id }});">{{ devis.code }}</a></td>
+                                        <td>{{ devis.tiers.intitule }}</td>
+                                        <td>{{ devis.montant|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                                        <td>{% if devis.note != '' %}
+                                                <span class="glyphicon glyphicon-info-sign devis-note" aria-hidden="true" data-toggle="popover" data-placement="left" data-trigger="click" data-html="true" data-content="{{ devis.note }}"></span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ devis.finValidite|date('d/m/y') }}</td>
+                                        <td>
+                                    <span class="status {% if devis.status == 1 %}todo{% elseif devis.status == 2 %}won{% elseif devis.status == 3 %}lost{% endif %}">
+                                        {% if devis.status == 1 %}
+                                            {% set now = date('now'|date('Y/m/d')) %}
+                                            {% set echeance = date(devis.finValidite|date('Y/m/d')) %}
+                                            {% set difference = echeance.diff(now) %}
+                                            {% set leftdays = difference.days %}
+                                            {% if leftdays == 0 %}Aujourd'hui
+                                            {% elseif leftdays == 1 and echeance > now %}Dans 1 jour
+                                            {% elseif leftdays == 1 and echeance < now %}1 jour de retard
+                                            {% elseif leftdays > 1 and echeance > now %}Dans {{ leftdays }} jours
+                                            {% elseif leftdays > 1 and echeance < now %}{{ leftdays }} jours de retard
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if devis.status == 2 %}Gagné{% endif %}
+                                        {% if devis.status == 3 %}Perdu{% endif %}
+                                    </span>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="deleteDevis({{ devis.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if type == 'all' or type == 'commande' %}
+                    {% for commande in commandes %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view commande-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <p class="bloc-title"><a onclick="loadEditCommande({{ commande.id }});">Bon de commande {{ commande.code }}</a></p>
+                                    <p class="bloc-date">{{ commande.dateFacture|date('d/m/y') }}</p>
+                                    <p class="bloc-client">{{ commande.tiers.intitule }}</p>
+                                    <p class="bloc-rest">
+                                        {% if commande.dateExpedition|date('Y/m/d') != '-0001/11/30' %}
+                                            <span class="status {% if commande.statusBonCommande == 0 %}todo{% elseif commande.statusBonCommande == 1 %}won{% endif %}">
+                                        {% if commande.statusBonCommande == 0 %}
+                                            {% set now = date('now'|date('Y/m/d')) %}
+                                            {% set echeance = date(commande.dateExpedition|date('Y/m/d')) %}
+                                            {% set difference = echeance.diff(now) %}
+                                            {% set leftdays = difference.days %}
+                                            {% if leftdays == 0 %}Aujourd'hui
+                                            {% elseif leftdays == 1 and echeance > now %}Dans 1 jour
+                                            {% elseif leftdays == 1 and echeance < now %}1 jour de retard
+                                            {% elseif leftdays > 1 and echeance > now %}Dans {{ leftdays }} jours
+                                            {% elseif leftdays > 1 and echeance < now %}{{ leftdays }} jours de retard
+                                            {% endif %}
+                                        {% endif %}
+                                                {% if commande.statusBonCommande == 1 %}Vérouillé{% endif %}
+                                    </span>
+                                        {% endif %}
+                                        <span class="bill"></span>
+                                        <span class="amount">{{ commandeDetails[commande.id]['ttc']|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</span>
+                                    </p>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteCommande({{ commande.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if type == 'commande' %}
+                        <div class="col-md-12 list-view opportunite-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                                    <th>Date de la Commande</th>
+                                    <th>Bon de commande</th>
+                                    <th>Client/Prospect</th>
+                                    <th>Montant</th>
+                                    <th>Note</th>
+                                    <th>Date d'expédition</th>
+                                    <th>Statut</th>
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for commande in commandes %}
+                                    <tr>
+                                        <td><input type="checkbox" class="element" value="{{ commande.id }}" onchange="toggleThis();" /></td>
+                                        <td>{{ commande.dateFacture|date('d/m/y') }}</td>
+                                        <td><a onclick="loadEditCommande({{ commande.id }});">{{ commande.code }}</a></td>
+                                        <td>{{ commande.tiers.intitule }}</td>
+                                        <td>{{ commandeDetails[commande.id]['ttc']|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                                        <td>{% if commande.note != '' %}
+                                                <span class="glyphicon glyphicon-info-sign commande-note" aria-hidden="true" data-toggle="popover" data-placement="left" data-trigger="click" data-html="true" data-content="{{ commande.note }}"></span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{% if commande.dateExpedition|date('Y/m/d') != '-0001/11/30' %}{{ commande.dateExpedition|date('d/m/y') }}{% endif %}</td>
+                                        <td>
+                                            {% if commande.dateExpedition|date('Y/m/d') != '-0001/11/30' %}
+                                                <span class="status {% if commande.statusBonCommande == 0 %}todo{% elseif commande.statusBonCommande == 1 %}won{% endif %}">
+                                        {% if commande.statusBonCommande == 0 %}
+                                            {% set now = date('now'|date('Y/m/d')) %}
+                                            {% set echeance = date(commande.dateExpedition|date('Y/m/d')) %}
+                                            {% set difference = echeance.diff(now) %}
+                                            {% set leftdays = difference.days %}
+                                            {% if leftdays == 0 %}Aujourd'hui
+                                            {% elseif leftdays == 1 and echeance > now %}Dans 1 jour
+                                            {% elseif leftdays == 1 and echeance < now %}1 jour de retard
+                                            {% elseif leftdays > 1 and echeance > now %}Dans {{ leftdays }} jours
+                                            {% elseif leftdays > 1 and echeance < now %}{{ leftdays }} jours de retard
+                                            {% endif %}
+                                        {% endif %}
+                                                    {% if commande.statusBonCommande == 1 %}Vérouillé{% endif %}
+                                    </span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="deleteCommande({{ commande.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if type == 'all' or type == 'encaissement' %}
+                    {% for encaissement in encaissements %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view encaissement-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <p class="bloc-title"><a onclick="loadEditEncaissement({{ encaissement.id }});">{{ encaissement.code }}</a></p>
+                                    <p class="bloc-subtitle">{{ encaissement.oneTypeEncaissement.nom }}</p>
+                                    <p class="bloc-date">{{ encaissement.dateEncaissement|date('d/m/y') }}</p>
+                                    <p class="bloc-client">{{ encaissement.tiers.intitule }}</p>
+                                    <p class="bloc-rest">
+                                        <span class="bill"></span>
+                                        <span class="amount">{{ encaissementAmounts[encaissement.id]|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</span>
+                                    </p>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteEncaissement({{ encaissement.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if type == 'encaissement' %}
+                        <div class="col-md-12 list-view encaissement-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                                    <th>Date de réception</th>
+                                    <th>Encaissement de Vente</th>
+                                    <th>Client/Prospect</th>
+                                    <th>Type</th>
+                                    <th>Statut</th>
+                                    <th>Montant</th>
+                                    <th>Note</th>
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for encaissement in encaissements %}
+                                    <tr>
+                                        <td><input type="checkbox" class="element" value="{{ encaissement.id }}" onchange="toggleThis();" /></td>
+                                        <td>{{ encaissement.dateEncaissement|date('d/m/y') }}</td>
+                                        <td><a onclick="loadEditEncaissement({{ encaissement.id }});">{{ encaissement.code }}</a></td>
+                                        <td>{{ encaissement.tiers.intitule }}</td>
+                                        <td>{{ encaissement.oneTypeEncaissement.nom }}</td>
+                                        <td></td>
+                                        <td>{{ encaissementAmounts[encaissement.id]|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                                        <td>{% if encaissement.note != '' %}
+                                                <span class="glyphicon glyphicon-info-sign encaissement-note" aria-hidden="true" data-toggle="popover" data-placement="left" data-trigger="click" data-html="true" data-content="{{ encaissement.note }}"></span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="deleteEncaissement({{ encaissement.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if type == 'all' or type == 'paiement' %}
+                    {% for paiement in paiements %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view commande-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <p class="bloc-title"><a onclick="setFilterType('paiement');loadEditPaiement({{ paiement.id }});">Paiement {{ paiement.code }}</a></p>
+                                    <p class="bloc-date">{{ paiement.oneVente.dateFacture|date('d/m/y') }}</p>
+                                    <p class="bloc-client">{{ paiement.oneVente.tiers.intitule~' '~paiement.oneVente.code }}</p>
+                                    <p class="bloc-rest">
+                                        <span class="status won">Payé</span>
+                                        <span class="bill"></span>
+                                        <span class="amount">{{ paiement.montant|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</span>
+                                    </p>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="printPaiement({{ paiement.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Imprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if type == 'paiement' %}
+                        <div class="col-md-12 list-view opportunite-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Date de la Facture</th>
+                                    <th>Paiement</th>
+                                    <th>Client</th>
+                                    <th>Prochaine Echéance</th>
+                                    <th>Statut</th>
+                                    <th>Montant</th>
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for paiement in paiements %}
+                                    <tr>
+                                        <td>{{ paiement.oneVente.dateFacture|date('d/m/y') }}</td>
+                                        <td><a onclick="setFilterType('paiement');loadEditPaiement({{ paiement.id }});">Paiement {{ paiement.code }}</a></td>
+                                        <td>{{ paiement.oneVente.tiers.intitule }}</td>
+                                        <td></td>
+                                        <td>
+                                            <span class="status won">Payé</span>
+                                        </td>
+                                        <td>{{ paiement.montant|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="printPaiement({{ paiement.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Imprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if type == 'all' or type == 'avoir' %}
+                    {% for avoir in avoirs %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view avoir-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <p class="bloc-title"><a onclick="loadEditAvoir({{ avoir.id }});">Avoir {{ avoir.code }}</a></p>
+                                    <p class="bloc-date">{{ avoir.dateFacture|date('d/m/y') }}</p>
+                                    <p class="bloc-client">{{ avoir.tiers.intitule }}</p>
+                                    <p class="bloc-rest">
+                                    <span class="status {% if avoir.statusFacture == 0 %}todo{% elseif avoir.statusFacture == 1 %}won{% endif %}">
+                                        {% if avoir.statusFacture == 0 %}A payer{% endif %}
+                                        {% if avoir.statusFacture == 1 %}Payée{% endif %}
+                                    </span>
+                                        <span class="bill"></span>
+                                        <span class="amount">{{ avoirDetails[avoir.id]['ttc']|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</span>
+                                    </p>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteAvoir({{ avoir.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if type == 'avoir' %}
+                        <div class="col-md-12 list-view avoir-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                                    <th>Date de l'Avoir</th>
+                                    <th>Avoir</th>
+                                    <th>Client/Prospect</th>
+                                    <th>Montant</th>
+                                    <th>Reste à payer</th>
+                                    <th>Note</th>
+                                    <th>Prochaine Echéance</th>
+                                    <th>Statut</th>
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for avoir in avoirs %}
+                                    <tr>
+                                        <td><input type="checkbox" class="element" value="{{ avoir.id }}" onchange="toggleThis();" /></td>
+                                        <td>{{ avoir.dateFacture|date('d/m/y') }}</td>
+                                        <td><a onclick="loadEditAvoir({{ avoir.id }});">{{ avoir.code }}</a></td>
+                                        <td>{{ avoir.tiers.intitule }}</td>
+                                        <td>{{ avoirDetails[avoir.id]['ttc']|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                                        <td></td>
+                                        <td>{% if avoir.note != '' %}
+                                                <span class="glyphicon glyphicon-info-sign avoir-note" aria-hidden="true" data-toggle="popover" data-placement="left" data-trigger="click" data-html="true" data-content="{{ avoir.note }}"></span>
+                                            {% endif %}
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                    <span class="status {% if avoir.statusFacture == 0 %}todo{% elseif avoir.statusFacture == 1 %}won{% endif %}">
+                                        {% if avoir.statusFacture == 0 %}A payer{% endif %}
+                                        {% if avoir.statusFacture == 1 %}Payée{% endif %}
+                                    </span>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="deleteAvoir({{ avoir.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+
+                {% if type == 'all' or type == 'opportunite' %}
+                    {% for opportunite in opportunites %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view opportunite-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <span class="bloc-title"><a onclick="loadShowOpportunite({{ opportunite.id }});">{{ opportunite.nom }}</a></span>
+                                    <span class="bloc-client">{{ opportunite.tiers.intitule }}</span>
+                                    {#{% if opportunite.oneStatusOpp.id == 3 or opportunite.oneStatusOpp.id == 4 %}#}
+                                    {#<span class="bloc-status {% if opportunite.oneStatusOpp.id == 3 %}won{% else %}lost{% endif %}">{{ opportunite.oneStatusOpp.nom }}</span>#}
+                                    {#{% endif %}#}
+                                    <span class="bloc-avancement">{{ opportunite.oneStatusOpp.nom }}</span>
+                                    <span class="bloc-note">
+                                    {% if opportunite.note != '' %}
+                                        <span class="glyphicon glyphicon-info-sign opportunite-note" aria-hidden="true" data-toggle="popover" data-placement="left" data-trigger="click" data-html="true" data-content="{{ opportunite.note }}"></span>
+                                    {% endif %}
+                                </span>
+                                    <span class="bloc-montant pull-right">{{ opportunite.montant|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</span>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteOpportunite({{ opportunite.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if type == 'opportunite' %}
+                        <div class="col-md-12 list-view opportunite-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                                    <th>Titre</th>
+                                    <th>Client/Prospect</th>
+                                    <th>Contact</th>
+                                    <th>Montant</th>
+                                    <th>Note</th>
+                                    <th>Avancement</th>
+                                    <th>Prochaine Echéance</th>
+                                    {#<th>Statut</th>#}
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for opportunite in opportunites %}
+                                    <tr>
+                                        <td><input type="checkbox" class="element" value="{{ opportunite.id }}" onchange="toggleThis();" /></td>
+                                        <td><a onclick="loadShowOpportunite({{ opportunite.id }});">{{ opportunite.nom }}</a></td>
+                                        <td>{{ opportunite.tiers.intitule }}</td>
+                                        <td>{% if opportunite.oneContactClient %}{% if opportunite.oneContactClient.prenom != '' %}{{ opportunite.oneContactClient.prenom ~' ' }}{% endif %}{{ opportunite.oneContactClient.nom }}{% endif %}</td>
+                                        <td>{{ opportunite.montant|number_format(0, '.', ' ') ~' '~params.comptableDevise.symbole }}</td>
+                                        <td>{% if opportunite.note != '' %}
+                                                <span class="glyphicon glyphicon-info-sign opportunite-note" aria-hidden="true" data-toggle="popover" data-placement="left" data-trigger="click" data-html="true" data-content="{{ opportunite.note }}"></span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ opportunite.oneStatusOpp.nom }}</td>
+                                        <td>{{ opportunite.cloture|date('d/m/Y') }}</td>
+                                        {#<td>{{ opportunite.oneStatusOpp.nom }}</td>#}
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="deleteOpportunite({{ opportunite.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                {% if type == 'all' or type == 'tache' %}
+                    {% for tache in taches %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view tache-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <span class="bloc-title">
+                                        <a onclick="loadEditTache({{ tache.id }});">{{ tache.sujet|length > 24 ? tache.sujet|slice(0, 24) ~ '...' : tache.sujet }}</a>
+                                    </span>
+                                    <span class="bloc-created pull-right">{{ tache.creeLe|date('d/m/Y') }}</span>
+                                    {% if tache.tiers %}
+                                        <span class="bloc-client">
+                                            {{ tache.tiers.intitule }} {% if tache.oneContactClient %}{% if tache.oneContactClient.prenom != '' %}{{ tache.oneContactClient.prenom ~' ' }}{% endif %}{{ tache.oneContactClient.nom }}{% endif %}
+                                        </span>
+                                    {% endif %}
+                                    {% if tache.opportunite %}
+                                        <span class="bloc-opportunite">{{ tache.opportunite.nom }}</span>
+                                    {% endif %}
+
+                                    {% if tache.status == 0 %}
+                                        {% set now = date('now'|date('Y/m/d')) %}
+                                        {% set echeance = date(tache.echeance|date('Y/m/d')) %}
+                                        {% set difference = echeance.diff(now) %}
+                                        {% set leftdays = difference.days %}
+
+                                        {% if leftdays == 0 %}
+                                            {% set classname = "todo" %}
+                                            {% set text = "Aujourd'hui" %}
+                                        {% elseif leftdays == 1 and echeance > now %}
+                                            {% set classname = "todo" %}
+                                            {% set text = "Dans 1 jour" %}
+                                        {% elseif leftdays == 1 and echeance < now %}
+                                            {% set classname = "overdue" %}
+                                            {% set text = "1 jour de retard" %}
+                                        {% elseif leftdays > 1 and echeance > now %}
+                                            {% set classname = "todo" %}
+                                            {% set text = "Dans "~leftdays~" jours" %}
+                                        {% elseif leftdays > 1 and echeance < now %}
+                                            {% set classname = "overdue" %}
+                                            {% set text = ""~leftdays~" jours de retard" %}
+                                        {% endif %}
+                                    {% else %}
+                                        {% set classname = "done" %}
+                                        {% set text = "Fait - "~tache.modifieLe|date('d/m/Y') %}
+                                    {% endif %}
+                                    <span class="bloc-status {{ classname }}">
+                                        <br/>
+                                        {{ text }}
+                                    </span>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteTache({{ tache.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if type == 'tache' %}
+                        <div class="col-md-12 list-view tache-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                                    <th>Titre</th>
+                                    <th>Client/Prospect</th>
+                                    <th>Opportunité</th>
+                                    <th>Temps</th>
+                                    <th>Note</th>
+                                    <th>Date de Création</th>
+                                    <th>Fait sur</th>
+                                    <th>Prochaine Echéance</th>
+                                    <th>Statut</th>
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for tache in taches %}
+                                    <tr>
+                                        <td><input type="checkbox" class="element" value="{{ tache.id }}" onchange="toggleThis();" /></td>
+                                        <td><a onclick="loadEditTache({{ tache.id }});">{{ tache.sujet }}</a></td>
+                                        <td>{% if tache.tiers %}{{ tache.tiers.intitule }}{% endif %}</td>
+                                        <td>{% if tache.oneContactClient %}{% if tache.oneContactClient.prenom != '' %}{{ tache.oneContactClient.prenom ~' ' }}{% endif %}{{ tache.oneContactClient.nom }}{% endif %}</td>
+                                        <td></td>
+                                        <td>{{ tache.memo }}</td>
+                                        <td>{{ tache.creeLe|date('d/m/Y') }}</td>
+                                        <td></td>
+                                        <td>{{ tache.echeance|date('d/m/Y') }}</td>
+                                        <td>
+                                            {% if tache.status == 0 %}
+                                                {% set now = date('now'|date('Y/m/d')) %}
+                                                {% set echeance = date(tache.echeance|date('Y/m/d')) %}
+                                                {% set difference = echeance.diff(now) %}
+                                                {% set leftdays = difference.days %}
+                                                {% if leftdays == 0 %}
+                                                    <span class="todo">Aujourd'hui</span>
+                                                {% elseif leftdays == 1 and echeance > now %}
+                                                    <span class="todo">Dans 1 jour</span>
+                                                {% elseif leftdays == 1 and echeance < now %}
+                                                    <span class="overdue">1 jour de retard</span>
+                                                {% elseif leftdays > 1 and echeance > now %}
+                                                    <span class="todo">Dans {{ leftdays }} jours</span>
+                                                {% elseif leftdays > 1 and echeance < now %}
+                                                    <span class="overdue">{{ leftdays }} jours de retard</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="done">Fait</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="deleteTache({{ tache.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if type == 'all' or type == 'appel' %}
+                    {% for appel in appels %}
+                        <div class="col-md-4 col-sm-12 col-xs-12 bloc-view appel-bloc-view mt-25">
+                            <div class="bloc">
+                                <div class="bloc-content">
+                                    <span class="bloc-title"><a onclick="loadEditAppel({{ appel.id }});">{{ appel.sujet|length > 24 ? appel.sujet|slice(0, 24) ~ '...' : appel.sujet }}</a></span>
+                                    <span class="bloc-created pull-right">{{ appel.creeLe|date('d/m/Y') }}</span>
+                                    {% if appel.tiers %}
+                                        <span class="bloc-client">
+                                    {{ appel.tiers.intitule }} {% if appel.oneContactClient %}{% if appel.oneContactClient.prenom != '' %}{{ appel.oneContactClient.prenom ~' ' }}{% endif %}{{ appel.oneContactClient.nom }}{% endif %}
+                                </span>
+                                    {% endif %}
+                                    {% if appel.opportunite %}
+                                        <span class="bloc-opportunite">{{ appel.opportunite.nom }}</span>
+                                    {% endif %}
+
+                                    {% if appel.status == 0 %}
+                                        {% set now = date('now'|date('Y/m/d')) %}
+                                        {% set echeance = date(appel.echeance|date('Y/m/d')) %}
+                                        {% set difference = echeance.diff(now) %}
+                                        {% set leftdays = difference.days %}
+
+                                        {% if leftdays == 0 %}
+                                            {% set classname = "todo" %}
+                                            {% set text = "Aujourd'hui" %}
+                                        {% elseif leftdays == 1 and echeance > now %}
+                                            {% set classname = "todo" %}
+                                            {% set text = "Dans 1 jour" %}
+                                        {% elseif leftdays == 1 and echeance < now %}
+                                            {% set classname = "overdue" %}
+                                            {% set text = "1 jour de retard" %}
+                                        {% elseif leftdays > 1 and echeance > now %}
+                                            {% set classname = "todo" %}
+                                            {% set text = "Dans "~leftdays~" jours" %}
+                                        {% elseif leftdays > 1 and echeance < now %}
+                                            {% set classname = "overdue" %}
+                                            {% set text = ""~leftdays~" jours de retard" %}
+                                        {% endif %}
+                                    {% else %}
+                                        {% set classname = "done" %}
+                                        {% set text = "Fait - "~appel.modifieLe|date('d/m/Y') %}
+                                    {% endif %}
+                                    <span class="bloc-status {{ classname }}">{{ text }}</span>
+                                </div>
+                                <div class="bloc-footer">
+                                    <div class="dropdown">
+                                    <span class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                    </span>
+                                        <div class="clear-fix"></div>
+                                        <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                            <li class="remove-action">
+                                                <a onclick="deleteAppel({{ appel.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% if type == 'appel' %}
+                        <div class="col-md-12 list-view appel-list-view mt-25">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" onchange="toggleAll();" /></th>
+                                    <th>Titre</th>
+                                    <th>Client/Prospect</th>
+                                    <th>Note</th>
+                                    <th>Date de Création</th>
+                                    <th>Prochaine Echéance</th>
+                                    <th>Statut</th>
+                                    <th class="action"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for appel in appels %}
+                                    <tr>
+                                        <td><input type="checkbox" class="element" value="{{ appel.id }}" onchange="toggleThis();" /></td>
+                                        <td><a onclick="loadEditAppel({{ appel.id }});">{{ appel.sujet|length > 24 ? appel.sujet|slice(0, 24) ~ '...' : appel.sujet }}</a></td>
+                                        <td>{% if appel.tiers %}{{ appel.tiers.intitule }}{% endif %}</td>
+                                        <td>{{ appel.note }}</td>
+                                        <td>{{ appel.creeLe|date('d/m/Y') }}</td>
+                                        <td>{{ appel.echeance|date('d/m/Y') }}</td>
+                                        <td>
+                                            {% if appel.status == 0 %}
+                                                {% set now = date('now'|date('Y/m/d')) %}
+                                                {% set echeance = date(appel.echeance|date('Y/m/d')) %}
+                                                {% set difference = echeance.diff(now) %}
+                                                {% set leftdays = difference.days %}
+                                                {% if leftdays == 0 %}
+                                                    <span class="todo">Aujourd'hui</span>
+                                                {% elseif leftdays == 1 and echeance > now %}
+                                                    <span class="todo">Dans 1 jour</span>
+                                                {% elseif leftdays == 1 and echeance < now %}
+                                                    <span class="overdue">1 jour de retard</span>
+                                                {% elseif leftdays > 1 and echeance > now %}
+                                                    <span class="todo">Dans {{ leftdays }} jours</span>
+                                                {% elseif leftdays > 1 and echeance < now %}
+                                                    <span class="overdue">{{ leftdays }} jours de retard</span>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="done">Fait</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                        <span class="action" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <class class="glyphicon glyphicon-option-vertical" aria-hidden="true"></class>
+                                        </span>
+                                                <ul class="dropdown-menu dropdown-menu-right pull-right">
+                                                    <li class="remove-action">
+                                                        <a onclick="deleteAppel({{ appel.id }});"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Supprimer</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>

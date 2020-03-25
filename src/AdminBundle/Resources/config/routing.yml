@@ -1,0 +1,24 @@
+admin_homepage:
+    path:     /admin
+    defaults: { _controller: AdminBundle:Default:index }
+
+admin_content_clients:
+    path:      /admin/clients
+    defaults: { _controller: AdminBundle:Content:clients }
+    options:
+        expose: true
+admin_content_utilisateurs:
+    path:       /admin/utilisateurs
+    defaults: { _controller: AdminBundle:Content:utilisateurs }
+    options:
+        expose: true
+admin_content_menus:
+    path:   /admin/menus/{utilisateur}
+    defaults: { _controller: AdminBundle:Content:menus, utilisateur : '' }
+    options:
+        expose: true
+admin_content_edit_menu_utilisateur:
+    path: /admin/edit_menu_utilisateur/{menu}/{utilisateur}/{menu_utilisateur}
+    defaults: {_controller: AdminBundle:Content:editMenuDisabled, menu_utilisateur: 0}
+    options:
+        expose: true

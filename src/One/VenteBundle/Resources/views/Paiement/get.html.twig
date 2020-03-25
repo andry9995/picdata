@@ -1,0 +1,114 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="back glyphicon glyphicon-menu-left btn-back" onclick="loadListPaiement();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Echéance de paiement</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="filter-form">
+            <div class="form-group">
+                <label for="date-debut" class="col-md-4 control-label">Date Début*</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <div class="input-group date">
+                        <input type="text" class="form-control datepicker" id="date-debut" name="date-debut" value="{{ "now"|date_modify("-4 month")|date("d/m/Y") }}">
+                        <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="date-fin" class="col-md-4 control-label">Date Fin*</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <div class="input-group date">
+                        <input type="text" class="form-control datepicker" id="date-fin" name="date-fin" value="{{ "now"|date_modify("+1 month")|date("d/m/Y") }}">
+                        <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-default choose" onclick="loadUnpaidFacture();">
+                <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Appliquer le filtre
+            </button>
+        </form>
+    </div>
+</div>
+<div class="row unpaid-list hidden">     
+    <div class="col-md-12">
+        <hr />
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        <span>Pour transformer une Echéance en Encaissement sélectionnez une ligne puis cliquez sur le bouton ci-dessous.</span>
+        <hr />
+        <table class="table">
+            <thead>
+                <th>Cient</th>
+                <th>Facture</th>
+                <th>Date Echéance</th>
+                <th>Total</th>
+                <th>Payé</th>
+                <th>Restant</th>
+                <th>Restant%</th>
+                <th>Responsable</th>
+                <th>Projet</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+                        
+<div class="row option-button hidden">                   
+    <div class="col-md-12">
+        <button type="button" class="btn btn-default choose" onclick="createPaiement();">
+            <span class="glyphicon glyphicon-flash" aria-hidden="true"></span> Transformer l'Echéance sélectionnée en Paiement
+        </button>
+        <button type="button" class="btn btn-default choose" onclick="loadClientEncaissement();">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Allouer un encaissement
+        </button>
+        <button type="button" class="btn btn-default choose" onclick="loadClientAvoir();">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Utiliser un Avoir
+        </button>
+    </div>
+</div>
+                        
+<div class="row paiement-list hidden"> 
+    <br/>
+    <form class="form-horizontal" id="paiement-form">
+        <div class="col-md-12">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <span>Vous pouvez modifier manuellement le Montant Reçu et le Mode de Paiement.</span>
+            <hr />
+            <table class="table">
+                <thead>
+                    <th>Date</th>
+                    <th>Montant Reçu</th>
+                    <th>Mode Paiement</th>
+                    <th>Référence Bancaire</th>
+                    <th>Retard Jours</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </form>
+</div>
+                        
+<div class="row remove-button hidden">                   
+    <div class="col-md-12">
+        <button type="button" class="btn btn-default choose" onclick="removeSelectedPaiement();">
+            <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Supprimer le Paiement sélectionné
+        </button>
+    </div>
+</div>
+                        
+<input type="hidden" id="facture-selected" value="">
+<input type="hidden" id="paiement-selected" value="">
+<input type="hidden" id="clientid" value="">
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListPaiement();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="savePaiement();">Valider</button>
+        </div>
+    </div>
+</div>

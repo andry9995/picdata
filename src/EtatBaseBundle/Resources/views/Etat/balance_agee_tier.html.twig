@@ -1,0 +1,120 @@
+{% set clients_debiteurs = balance.comptes %}
+{% set clients_crediteurs = balance.debits %}
+{% set libelles = balance.credits %}
+{% set soldes = balance.soldes_debit %}
+{% set totals = balance.exercices %}
+{% set periodes = balance.soldes_credit %}
+{% set tiers = (type == 0) ? 'Fournisseur' : 'Client' %}
+{% set signe = (type == 0) ? -1 : 1 %}
+{% set tiersObjects = balance.comptes_str %}
+
+{% set width_compte = 10 %}
+{% set width_montant = 12 %}
+
+{% set total_periode = {} %}
+{% set total_periode_gen = {} %}
+{% set total = 0 %}
+{% set total_gen = 0 %}
+
+{% for periode in periodes %}
+    {% set total_periode = total_periode|merge({ (',' ~ periode) : 0 }) %}
+    {% set total_periode_gen = total_periode_gen|merge({ (',' ~ periode) : 0 }) %}
+{% endfor %}
+
+{% for i in 0..1 %}
+    {% if i == 0 %}
+        {% set debit_credit = 'D&eacute;biteurs' %}
+        {% set class_entete = 'text-primary' %}
+        {% set comptes = clients_debiteurs %}
+    {% else %}
+        {% set debit_credit = 'Cr&eacute;diteurs' %}
+        {% set class_entete = 'text-danger' %}
+        {% set comptes = clients_crediteurs %}
+    {% endif %}
+
+    {% if comptes|length != 0 %}
+        <div class="ibox gray-bordered">
+            <div class="ibox-title">
+                <h5 class="{{ class_entete }}"><strong>{{ tiers }}s&nbsp;{{ debit_credit|raw }}</strong></h5>
+                <div class="ibox-tools">
+                    <a class="fullscreen-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content no-padding">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr class="active">
+                            <th width="{{ width_compte ~ '%'}}">Compte</th>
+                            <th>{{ tiers }} {{ (i == 0) ? 'D&eacute;biteur' : 'Cr&eacute;diteur' }}</th>
+
+                            {% for i in  0..(periodes|length - 1) %}
+                                {% if periodes|length == 1 %}
+                                    {% set entete = '' %}
+                                {% elseif i == 0 %}
+                                    {% set entete = 'Moins de ' ~ periodes[i] %}
+                                {% elseif i == (periodes|length - 1) %}
+                                    {% set entete = 'Plus de ' ~ periodes[i - 1] %}
+                                {% else %}
+                                    {% set entete = 'De ' ~ periodes[i - 1] ~ ' &agrave; ' ~ periodes[i] %}
+                                {% endif %}
+                                <th class="text-right" width="{{ width_montant ~ '%'}}">{{ entete|raw }}</th>
+                            {% endfor %}
+                            <th class="text-right" width="{{ width_montant ~ '%'}}">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for compte in comptes %}
+                        {% if (totals[compte]) != 0 %}
+                        <tr>
+                            <td class="pointer {#js_show_detail_compte#}" data-id="">{{ tiersObjects[compte].compteStr }}</td>
+                            <td>{{ libelles[compte] }}</td>
+                            {% for periode in periodes %}
+                                {% set solde = (soldes[compte][periode] is defined) ? soldes[compte][periode] * signe : 0 %}
+                                <td class="text-right">{{ (solde != 0) ? solde|number_format(2, ',', '&nbsp;')|raw : '' }}</td>
+                                {% set total_periode = total_periode|merge({ (',' ~ periode) : (total_periode[',' ~ periode] + solde) }) %}
+                            {% endfor %}
+                            <td class="text-right">{{ (totals[compte] * signe)|number_format(2, ',', '&nbsp;')|raw }}</td>
+                            {% set total = total + (signe * totals[compte]) %}
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="active">
+                            <th class="text-right" colspan="2">{{ tiers }}s&nbsp;{{ debit_credit|raw }}</th>
+                            {% for periode in periodes %}
+                                <th class="text-right">{{ (total_periode[',' ~ periode] != 0) ? total_periode[',' ~ periode]|number_format(2, ',', '&nbsp;')|raw : ''  }}</th>
+                                {% set total_periode_gen = total_periode_gen|merge({ (',' ~ periode) : total_periode_gen[',' ~ periode] + total_periode[',' ~ periode] }) %}
+                                {% set total_periode = total_periode|merge({ (',' ~ periode) : 0 }) %}
+                            {% endfor %}
+                            <th class="text-right">{{ (total != 0) ? total|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                            {% set total_gen = total_gen + total %}
+                            {% set total = 0 %}
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+<div class="ibox gray-bordered">
+    <div class="ibox-content no-padding">
+        <table class="table table-condensed table-hover">
+            <tfoot>
+                <tr class="active">
+                    <th class="text-right" colspan="2"><strong>TOTAL&nbsp;GENERAL</strong></th>
+                    {% for periode in periodes %}
+                        <th width="{{ width_montant ~ '%'}}" class="text-right">{{ (total_periode_gen[',' ~ periode] != 0) ? total_periode_gen[',' ~ periode]|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                    {% endfor %}
+                    <th class="text-right" width="{{ width_montant ~ '%'}}">{{ (total_gen != 0) ? total_gen|number_format(2, ',', '&nbsp;')|raw : '' }}</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

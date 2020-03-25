@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-5">
+
+        <div class="form-group">
+            <label class="col-lg-1 control-label" style="padding-top: 5px;">Mois</label>
+            <div class="col-lg-5">
+                <select class="form-control"  name="cloture" id="js_mois">
+                    <option value="-1">Tous</option>
+                    <option value="1">Janvier</option>
+                    <option value="2">Février</option>
+                    <option value="3">Mars</option>
+                    <option value="4">Avril</option>
+                    <option value="5">Mai</option>
+                    <option value="6">Juin</option>
+                    <option value="7">Juillet</option>
+                    <option value="8">Août</option>
+                    <option value="9">Septembre</option>
+                    <option value="10">Octobre</option>
+                    <option value="11">Novembre</option>
+                    <option value="12">Décembre</option>
+                </select>
+            </div>
+
+        <div class="col-lg-4">
+            <select class="form-control" id="js_exercice">
+                <option></option>
+                {{ render(controller('ConsultationPieceBundle:ConsultationPiece:exercice')) }}
+            </select>
+        </div>
+
+        <div class="col-lg-2">
+            <button class="btn btn-primary" type="submit" id = "btn-go-scriptura" style="float: right;">Go</button>
+        </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<br/>
+
+<div class="row">
+    <table id="js_scriptura_liste" class="js-jqgrid-table"></table>
+    <div id="js_scriptura_pager"></div>
+</div>
+

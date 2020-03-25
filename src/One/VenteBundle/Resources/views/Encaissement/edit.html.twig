@@ -1,0 +1,290 @@
+<div class="row task-bar">
+    <div class="col-md-1">
+        <span class="glyphicon glyphicon-menu-left btn-back" onclick="loadListEncaissement();"></span>
+    </div>
+    <div class="col-md-8">
+        <h2 class="heading">Encaissement {{ encaissement.code }}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="encaissement-form" enctype="multipart/form-data">
+            <input type="hidden" id="id" name="id" value="{{ encaissement.id }}">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="type-encaissement" class="col-md-4 control-label">Type d'encaissement*</label>
+                    <div class="col-md-6">
+                        <select class="form-control" id="type-encaissement" name="type-encaissement" onchange="changeType(this.value);">
+                            {% for typeencaissement in typeencaissements %}
+                                <option value="{{ typeencaissement.id }}" {% if typeencaissement.id == encaissement.oneTypeEncaissement.id %}selected{% endif %}>{{ typeencaissement.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="client-prospect" class="col-md-4 control-label">Prospect ou Client*</label>
+                    <div class="col-lg-6">
+                        <select class="form-control" id="client-prospect" name="client-prospect">
+                            <option value=""></option>
+                            {% for clientProspect in clientProspects %}
+                                <option value="{{ clientProspect.id }}" {% if clientProspect.id == encaissement.tiers.id %}selected{% endif %}>{{ clientProspect.intitule }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            {#<div class="form-group">#}
+                {#<label for="type-encaissement" class="col-md-2 col-sm-3 col-xs-12 control-label">Type d'encaissement*</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="type-encaissement" name="type-encaissement" onchange="changeType(this.value);">#}
+                        {#{% for typeencaissement in typeencaissements %}#}
+                            {#<option value="{{ typeencaissement.id }}" {% if typeencaissement.id == encaissement.oneTypeEncaissement.id %}selected{% endif %}>{{ typeencaissement.nom }}</option>#}
+                        {#{% endfor %}#}
+                    {#</select>#}
+                {#</div>#}
+                {#<label for="client-prospect" class="col-md-2 col-sm-3 col-xs-12 control-label">Prospect ou Client*</label>#}
+                {#<div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">#}
+                    {#<select class="form-control" id="client-prospect" name="client-prospect">#}
+                        {#<option value=""></option>#}
+                        {#{% for clientProspect in clientProspects %}#}
+                            {#<option value="{{ clientProspect.id }}" {% if clientProspect.id == encaissement.tiers.id %}selected{% endif %}>{{ clientProspect.intitule }}</option>#}
+                        {#{% endfor %}#}
+                    {#</select>#}
+                {#</div>#}
+            {#</div>#}
+
+            <hr />
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="date-encaissement" class="col-md-4 control-label">Date</label>
+                        <div class="col-md-6">
+                            <div class="input-group date">
+                                <input type="text" class="form-control datepicker" id="date-encaissement" name="date-encaissement" value="{{ encaissement.dateEncaissement|date("d/m/Y") }}">
+                                <span class="input-group-addon" onclick="openDatepicker(this);"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status" class="col-md-4 control-label">Exercice de rattachement</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="exercice-rattachament" name="exercice-rattachement" placeholder="">
+                                {% set exerciceId = (encaissement.exercice is null) ? -1 : encaissement.exercice  %}
+                                <option value=""></option>
+                                {% for ex in exercices %}
+                                    <option value="{{ ex }}" {{ (exerciceId|number_format == ex|number_format) ? 'selected' : ''}}>{{ ex  }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="montant" class="col-md-4 control-label" readonly>Montant*</label>
+                        <div class="col-md-6">
+                            {% if encaissement.oneTypeEncaissement.id == 1 or encaissement.oneTypeEncaissement.id == 2 %}
+                                <input type="text" class="form-control number" id="montant" name="montant" value="{{ articles[0].montant|number_format(0, '.', ' ') }}">
+                            {% else %}
+                                <input type="text" class="form-control number" id="montant" name="montant" value="0" readonly>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="note" class="col-md-4 control-label">Notes</label>
+                        <div class="col-md-6">
+                            <textarea class="form-control" id="note" name="note">{{ encaissement.note }}</textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label for="moyen-paiement" class="col-md-4 control-label">Moyen de Paiement</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="moyen-paiement" name="moyen-paiement" placeholder="" >
+                                {% for moyenpaiement in moyenpaiements %}
+                                    <option value="{{ moyenpaiement.id }}" {% if moyenpaiement.id == encaissement.oneMoyenPaiement.id %}selected{% endif %}>{{ moyenpaiement.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="banque" class="col-md-4 control-label">Banque</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="banque" name="banque">
+                                <option value="-1"></option>
+                                {% for banque in banques %}
+                                    {% set nomBanque = (banque.banque is null) ? '' : banque.banque.nom %}
+                                    {% set banqueId = (encaissement.banqueCompte is null) ? -1 : encaissement.banqueCompte.id %}
+                                    <option value="{{ banque.id }}" {{ (banque.id == banqueId) ? 'selected': '' }}>{{ nomBanque }}</option>
+                                {% endfor %}
+                                {#<option value="">Déposer plus tard</option>#}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id-transaction" class="col-md-4 control-label" readonly>Id transaction</label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" id="id-transaction" name="id-transaction" value="{{ encaissement.idTransaction }}">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="acompte-type">
+                        <hr />
+                        <div class="form-group">
+                            <label for="compte" class="col-md-4 control-label">Compte</label>
+                            <div class="col-md-6 col-sm-8 col-xs-8">
+                                <select class="form-control" id="compte" name="compte">
+                                    <option value="-1"></option>
+                                    {% for pcc in pccs %}
+                                        <option value="{{ pcc.id }}">{{ pcc.compte ~' ('~pcc.intitule ~')' }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                    
+            {#<div class="acompte-type">#}
+                {#<hr />#}
+                {#<div class="form-group">#}
+                    {#<label for="compte" class="col-md-4 control-label">Compte</label>#}
+                    {#<div class="col-md-6 col-sm-8 col-xs-8">#}
+                        {#<select class="form-control" id="compte" name="compte">#}
+                            {#{% for compte in comptes %}#}
+                                {#<option value="{{ compte.id }}">{{ compte.libelle~' ('~compte.compte~')' }}</option>#}
+                            {#{% endfor %}#}
+                            {#<option value="-1"></option>#}
+                            {#{% for pcc in pccs %}#}
+                                {#<option value="{{ pcc.id }}">{{ pcc.compte ~' ('~pcc.intitule ~')' }}</option>#}
+                            {#{% endfor %}#}
+
+                        {#</select>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+                        
+            <div class="saisie-vente-type">
+                <hr />
+                <div class="items">
+                    <br />
+                    <table class="table table-hover article-list">
+                        <thead>
+                            <tr>
+                                <th>Compte</th>
+                                <th>Montant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if encaissement.oneTypeEncaissement.id > 2 %}
+                            {% for article in articles %}
+
+
+
+                                <tr id="{{ article.id~'-'~'now'|date('U') }}" class="{{ article.id }}" onclick="selectCompte(this);">
+                                    <td>
+                                        <select class="form-control item-compte" onchange="updateMontant();">
+                                            {#{% for compte in comptes %}#}
+                                                {#<option value="{{ compte.id }}" {% if compte.id == article.oneCompte.id %}selected{% endif %}>{{ compte.libelle~' ('~compte.compte~')' }}</option>#}
+                                            {#{% endfor %}#}
+                                            <option value="-1"></option>
+                                            {% set pccId = (article.pcc is null) ? -1 : article.pcc.id %}
+                                            {% for pcc in pccs %}
+                                                <option value="{{ pcc.id }}" {{ (pcc.id == pccId) ? 'selected' }}>{{ pcc.compte ~' ('~pcc.intitule ~')' }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                        </td>
+                                    <td>
+                                        <input type="text" class="form-control item-montant number" value="{{ article.montant|number_format(0, '.', ' ') }}" onchange="updateMontant();">
+                                        {#<input type="hidden" class="form-control serialized" name="articles[]" value="id={{ article.id }}&compte-id={{ article.oneCompte.id }}&montant={{ article.montant }}" />#}
+                                        <input type="hidden" class="form-control serialized" name="articles[]" value="id={{ article.id }}&compte-id={{ (article.pcc is null) ? -1 : article.pcc.id }}&montant={{ article.montant }}" />
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-default new-article" onclick="addNewCompte();">Ajouter compte</button>
+                    <button type="button" class="btn btn-default new-article" onclick="removeCompte();">Supprimer compte</button>
+                    <input type="hidden" id="article-to-remove" value="" />
+                </div>
+                <div id="articles-deleted"></div>
+                <br />
+                <br />
+            </div>
+                        
+            {#<hr />
+            <div class="form-group">
+                <label for="projet" class="col-md-4 control-label">Projet</label>
+                <div class="col-md-6 col-sm-8 col-xs-8">
+                    <select class="form-control" id="projet" name="projet">
+                        <option value=""></option>
+                        {% for projet in projets %}
+                            <option value="{{ projet.id }}" {% if encaissement.oneProjet and encaissement.oneProjet.id==projet.id %}selected{% endif %}>{{ projet.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>#}
+            <hr />
+            <div id="dropzone">
+                <h3 class="droptext">Faites glisser les fichiers à joindre</h3>
+                <span>ou parcourir vos fichier</span>
+                <input type="file" class="hidden" name="files" multiple />
+            </div>
+            <div id="dropzone-uploaded">
+                {% if fichiers|length > 0 %}
+                    {% for fichier in fichiers %}
+                        {% set uniqid_ext = fichier.nom|split('.') %}
+                        <div class="col-md-4" id="{{ uniqid_ext[0] }}">
+                            <div class="uploaded-content">
+                                <div class="content-image">
+                                    {% if uniqid_ext[1] == 'png' or uniqid_ext[1] == 'jpg' or uniqid_ext[1] == 'jpeg' %} 
+                                    <img src="{{ fichier.path }}{{ fichier.nom }}">
+                                    {% else %}
+                                    <img src="/bundles/oneprospect/img/default-file.png">
+                                    {% endif %}
+                                </div>
+                                <div class="content-footer">
+                                    <p>{{ fichier.nom }}</p>
+                                    <input type="hidden" name="uploaded-files[]" value="{{ fichier.path }}{{ fichier.nom }}" />
+                                </div>
+                            </div>
+                            <span onclick="deleteUploadedImage('{{ uniqid_ext[0] }}', '{{ fichier.nom }}')">x</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div id="dropzone-deleted"></div>
+        </form>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-default btn-back" onclick="loadListEncaissement();">Annuler</button>
+            <button type="button" class="btn btn-primary btn-save" onclick="saveEncaissement();">Enregistrer</button>
+        </div>
+    </div>
+</div>

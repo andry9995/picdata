@@ -1,0 +1,83 @@
+{% set margin = 15 %}
+
+{% if releve %}
+    {{ include('BanqueBundle:ReleveBanque:releve-line.html.twig', { 'releve': releve }) }}
+{% elseif banqueSousCategorieAutre %}
+    {{ include('BanqueBundle:ReleveBanque2:banque-sous-categorie-autre-line.html.twig', { 'banqueSousCategorieAutre': banqueSousCategorieAutre, 'negatif': negatif }) }}
+{% endif %}
+
+<div id="test-rp"></div>
+
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    {# type compta #}
+    <div class="col-lg-4">
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_engagement" value="0" {{ (methode == 0) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_engagement">Engagement</label>
+        </div>
+        <div class="radio radio-inline">
+            <input type="radio" id="js_id_tresorerie" value="1" {{ (methode == 1) ? 'checked' : '' }} name="radio-type-compta">
+            <label for="js_id_tresorerie">Tr&eacute;sorerie</label>
+        </div>
+    </div>
+
+    {# variation #}
+    <div class="col-lg-4">
+        <label>Exercice:&nbsp;</label>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n_1" value="-1">
+            <label for="js_id_n_1">N-1</label>
+        </div>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n" value="0" checked>
+            <label for="js_id_n">N</label>
+        </div>
+        <div class="checkbox checkbox-inline">
+            <input type="checkbox" class="js_variation" id="js_id_n_p_1" value="1">
+            <label for="js_id_n_p_1">N+1</label>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        {# sens #}
+        <div class="checkbox checkbox-inline hidden">
+            <input type="checkbox" id="js_id_sens">
+            <label for="js_id_sens">Sens&nbsp;-</label>
+        </div>
+
+        {# flagguer #}
+        <div class="checkbox checkbox-inline hidden">
+            <input type="checkbox" id="js_id_flagguer">
+            <label for="js_id_flagguer">Pi&egrave;ces&nbsp;Flaggu&eacute;es</label>
+        </div>
+    </div>
+</div>
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12 js_container_tb">
+        <table id="js_cl_tb_affecter"></table>
+    </div>
+</div>
+<div class="row bande white-bg" style="margin-bottom: {{ margin }}px!important;">
+    <div class="col-lg-12 js_container_tb">
+        <table id="js_cl_tb_ecriture"></table>
+    </div>
+</div>
+
+<input type="hidden" id="id_releve_ext" value="{{ (releveExt ? releveExt.id : 0)|boost }}">
+
+<div class="row bande white-bg">
+    <div class="col-lg-3">
+        <label>Non&nbsp;Pris:&nbsp;</label>
+        <span class="label js_ecart">&nbsp;</span>
+    </div>
+    <div class="col-lg-9">
+        <div class="text-right" data-type="{{ releve ? 0 : 1 }}">
+            <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+            {% if us %}
+                <span class="btn btn-sm btn-white js_id_pas_piece" data-type="1"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Non&nbsp;Lettrable</span>
+                <span class="btn btn-sm btn-primary hidden" id="js_id_valider_piece"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+                <span class="btn btn-sm btn-primary" disabled id="js_id_valider_piece_dis"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+            {% endif %}
+        </div>
+    </div>
+</div>

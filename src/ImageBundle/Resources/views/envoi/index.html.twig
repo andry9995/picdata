@@ -1,0 +1,38 @@
+{% extends 'DashboardBundle::dashboard.html.twig' %}
+
+{% block titre %}ENVOI IMAGES{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/plugins/dropzone/basic.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/dropzone/dropzone.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row" style="margin-bottom: 10px !important;">
+        <div class="col-sm-12">
+            <button class="btn btn-primary" id="js_upload_click"><i class="fa fa-arrow-circle-right"></i>&nbsp;Envoyer</button>
+            <button class="btn btn-warning" id="js_remove_all"><i class="fa fa-trash-o"></i>&nbsp;Vider la liste</button>
+        </div>
+    </div>
+    <div id="image-dropzone-area" style="overflow: scroll !important;">
+        <form id="my-awesome-dropzone" class="dropzone" action="{{ path('image_envoi') }}" method="post">
+            <button id="btn-upload" type="submit" class="btn btn-primary pull-right hidden">
+                Envoyer <span class="fa fa-arrow-circle-right"></span>
+            </button>
+            <div class="fallback">
+                <input name="file" type="file" multiple >
+            </div>
+            <input type="hidden" name="js_dossier_upl" id="js_dossier_upl" value="" >
+            <input type="hidden" name="js_exercice_upl" id="js_exercice_upl" value="" >
+            <input type="hidden" name="js_comment_upl" id="js_comment_upl" value="" >
+            <input type="hidden" name="js_analytique_upl" id="js_analytique_upl" value="{{ 0|boost }}" >
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/commun.js') }}"></script>
+    <script src="{{ asset('bundles/image/js/index.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,4 @@
+{% for famille in familles %}
+    <option value="{{ famille.id }}" {% if famille.id == selectedValue %}selected="selected"{% endif %}>{{ famille.nom }}</option>
+{% endfor %}
+<option onclick="loadNewFamilleArticleModal();">Créer une nouvelle</option>

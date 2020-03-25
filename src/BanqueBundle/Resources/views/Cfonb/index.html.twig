@@ -1,0 +1,88 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% block titre %}Cfonb{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/banque/js/cfonb/cfonb.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block wrapper_content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="ibox ibox-shadow">
+                <div class="ibox-title">
+                    <div class="col-sm-12"><h5>Gestion cfonb</h5></div>
+                </div>
+
+                <div class="ibox-content container-cfonb">
+                    <div class="scroller">
+                        <table id="js_gestion_cfonb_liste" class="js-jqgrid-table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">   
+            <div class="ibox ibox-shadow">
+                <div class="ibox-title">
+                    <div class="col-sm-12">
+                        <h5>Gestion filtre</h5>
+                        <div class="pull-right">
+                            <button id="btn-add-replace" class="btn btn-outline btn-primary btn-xs" style="margin-right: 20px;">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox-content container-cfonb-replace">
+                    <div class="scroller">
+                        <table id="js_gestion_replace_liste" class="js-jqgrid-replace-table"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# form to add filtre #}
+    <div id="js_hidden_add_filtre_cfonb" class="hidden">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group col-sm-5">
+                        <label class="col-lg-4 control-label" for="id_mot_cfonb">Mot</label>
+                        <div class="col-lg-8">
+                            <input type="text" id="id_mot_cfonb" name="id_mot_cfonb" class="form-control js_mot_cfonb">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-7">
+                        <label class="col-lg-6 control-label" for="id_replace_cfonb">Remplacer par</label>
+                        <div class="col-lg-6">
+                            <input type="text" id="id_replace_cfonb" name="id_replace_cfonb" class="form-control js_replace_cfonb">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-right">
+            <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+            <span class="btn btn-sm btn-primary js_add_filtre_cfonb_select"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Valider</span>
+        </div>
+    </div>
+    {# fin form add filtre #}
+
+    {# form to remove filtre #}
+    <div id="js_hidden_remove_filtre_cfonb" class="hidden">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <h4 class="text-center"><b>Voulez-vous vraiment supprimer cet enregistrement?</b></h4>
+            </div>
+            <div class="form-group text-right">
+                <span class="btn btn-sm btn-white js_close_modal"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Annuler</span>
+                <span class="btn btn-sm btn-primary js_remove_filtre_cfonb_select"><i class="fa fa-remove" aria-hidden="true"></i>&nbsp;Supprimer</span>
+            </div>
+        </div>
+    </div>
+    {# fin form remove filtre #}
+{% endblock %}

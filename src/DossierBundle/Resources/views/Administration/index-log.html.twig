@@ -1,0 +1,54 @@
+{% extends 'AdminBundle:Default:index.html.twig' %}
+{% block titre %}
+    {{ parent() }} - Log
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/tableauimage/js/tb-image-functions.js') }}?v=3.7"></script>
+    <script src="{{ asset('bundles/facturation/js/facturation-functions.js') }}?v=3.4"></script>
+    <script src="{{ asset('bundles/tableauimage/js/tableau.js') }}?v=3.5"></script>
+    <script src="{{ asset('bundles/tableauimage/js/rappel-log.js') }}?v=3.4"></script>
+{% endblock %}
+
+{% block wrapper_content %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div id="rappel-log">
+			    <input type="hidden" id="exercice-rappel-log" value="{{ 'now'|date('Y') }}">
+			    <div class="row">
+			        <div class="col-sm-4">
+			            {{ render(controller('AppBundle:Commun:clients', {'conteneur': '0', 'tous': '0', 'attr_id': 'client-rappel-log', 'label_col': 4, 'select_col': 8})) }}
+			        </div>
+			        <div class="col-sm-4">
+			            <form class="form-horizontal">
+			                <div class="form-group" style="margin-bottom: 10px;">
+			                    <label for="site-rappel-log" class="control-label col-lg-4">
+			                        <span>Site</span>
+			                        <span class="label label-warning" style="display:inline-block">0</span>
+			                    </label>
+			                    <div class="col-lg-8">
+			                        <select data-ref="" class="site form-control" id="site-rappel-log"></select>
+			                    </div>
+			                </div>
+			            </form>
+			        </div>
+			        <div class="col-sm-4">
+			            <form class="form-horizontal">
+			                <div class="form-group" style="margin-bottom: 10px;">
+			                    <label for="dossier-rappel-log" class="control-label col-lg-4">
+			                        <span>Dossier</span>
+			                        <span class="label label-warning" style="display:inline-block">0</span>
+			                    </label>
+			                    <div class="col-lg-8">
+			                        <select data-ref="" class="dossier form-control" id="dossier-rappel-log"></select>
+			                    </div>
+			                </div>
+			            </form>
+			        </div>
+			    </div>
+			    <table id="js_rappel_log1" class="js-jqgrid-table"></table>
+			    <div id="pager_rappel_log"></div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
